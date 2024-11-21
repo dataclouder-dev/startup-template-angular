@@ -1,0 +1,111 @@
+apply plugin: 'com.android.application'
+
+android {
+    namespace "dev.dataclouder.template"
+    compileSdk rootProject.ext.compileSdkVersion
+    defaultConfig {
+        applicationId "dev.dataclouder.template"
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        aaptOptions {
+             // Files and dirs to omit from the packaged assets dir, modified to accommodate modern web apps.
+             // Default: https://android.googlesource.com/platform/frameworks/base/+/282e181b58cf72b6ca770dc7ca5f91f135444502/tools/aapt/AaptAssets.cpp#61
+            ignoreAssetsPattern '!.svn:!.git:!.ds_store:!*.scc:.*:!CVS:!thumbs.db:!picasa.ini:!*~'
+        }
+    }
+        //  Ver todos los ambientes: keytool -keystore dataclouder.keystore -list -v
+    signingConfigs {
+        release {
+            storeFile file("dataclouder.keystore") // Replace with the actual path
+            storePassword "Hola1234"
+            keyAlias "pro"
+            keyPassword "Hola1234"
+        }
+
+        qa {
+            storeFile file("dataclouder.keystore") // Or the same as release
+            storePassword "Hola1234"
+            keyAlias "qa"
+            keyPassword "Hola1234"
+        }
+
+        dev {
+            storeFile file("dataclouder.keystore") // Or the same as release
+            storePassword "Hola1234"
+            keyAlias "pro"
+            keyPassword "Hola1234"
+        }
+    }
+    buildTypes {
+        debug {
+            // Debug es el default, pero no viene en el build.gradle, asi lo sobreescribo, 
+            signingConfig signingConfigs.debug
+            applicationIdSuffix ".dev" // Agrego el mismo de QA, ya que solo tengo 2 validos para Google Auth
+            resValue "string", "app_name", "DC Template Dev" // Solo para diferencias que es el debug
+            resValue "string", "title_activity_main", "DC Template Dev"
+        }
+        
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+            // Keep the default application ID for release
+            applicationIdSuffix ""
+            resValue "string", "app_name", "DC Template PRO"
+            resValue "string", "title_activity_main", "DC Template PRO"
+        }
+
+        qa {
+            minifyEnabled false
+            debuggable true
+            signingConfig signingConfigs.qa 
+            matchingFallbacks = ['debug']
+            // Add a suffix to the application ID for QA
+            applicationIdSuffix ".qa"
+            resValue "string", "app_name", "DC Template QA"
+            resValue "string", "title_activity_main", "DC Template QA"
+        }
+
+        dev {
+            minifyEnabled false
+            debuggable true
+            signingConfig signingConfigs.dev 
+            matchingFallbacks = ['debug']
+            applicationIdSuffix ".dev"
+            resValue "string", "app_name", "DC Template Dev"
+            resValue "string", "title_activity_main", "DC Template Dev"
+        }
+    }
+}
+
+repositories {
+    flatDir{
+        dirs '../capacitor-cordova-android-plugins/src/main/libs', 'libs'
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation "androidx.appcompat:appcompat:$androidxAppCompatVersion"
+    implementation "androidx.coordinatorlayout:coordinatorlayout:$androidxCoordinatorLayoutVersion"
+    implementation "androidx.core:core-splashscreen:$coreSplashScreenVersion"
+    implementation project(':capacitor-android')
+    testImplementation "junit:junit:$junitVersion"
+    androidTestImplementation "androidx.test.ext:junit:$androidxJunitVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$androidxEspressoCoreVersion"
+    implementation project(':capacitor-cordova-android-plugins')
+}
+
+apply from: 'capacitor.build.gradle'
+
+try {
+    def servicesJSON = file('google-services.json')
+    if (servicesJSON.text) {
+        apply plugin: 'com.google.gms.google-services'
+    }
+} catch(Exception e) {
+    logger.info("google-services.json not found, google-services plugin not applied. Push Notifications won't work")
+}

@@ -1,0 +1,50 @@
+<!-- <ion-app> -->
+
+<ion-content [fullscreen]="true">
+  <swiper-container [modules]="swiperModules" pagination="true" pagination-clickable="true" space-between="30" effect="fade" navigation="true">
+    <swiper-slide>
+      <!-- <img src=" https://swiperjs.com/demos/images/nature-1.jpg" /> -->
+      <div class="image" [ngStyle]="{'background-image': 'url(/assets/background/1w.jpg)'}">
+        <div class="text-in-view">
+          <h3>Todas las palabras que necesitas en el orden correcto</h3>
+        </div>
+      </div>
+    </swiper-slide>
+
+    <swiper-slide>
+      <div class="image" [ngStyle]="{'background-image': 'url(/assets/background/2w.jpg)'}">
+        <div class="text-in-view">
+          <h3></h3>
+          <h5>Contenido inteligente, las lecciones son acorde a tu nivel y progreso</h5>
+        </div>
+      </div>
+      <!-- <img src="https://swiperjs.com/demos/images/nature-2.jpg" /> -->
+    </swiper-slide>
+    <swiper-slide>
+      <div class="image" [ngStyle]="{'background-image': 'url(/assets/background/1ww.jpg)'}">
+        <div class="text-in-view">
+          <h3></h3>
+          <h5>El sistema más avanzado de conversación y retrolimentación con IA</h5>
+        </div>
+      </div>
+    </swiper-slide>
+    <swiper-slide>
+      <div class="image" [ngStyle]="{'background-image': 'url(/assets/background/3ww.jpg)'}">
+        <div class="text-in-view">
+          <h3>5 Idiomas</h3>
+          <h5>Ingles, Frances, Portugues, Italiano, Espanol</h5>
+        </div>
+      </div>
+    </swiper-slide>
+  </swiper-container>
+</ion-content>
+
+<ion-footer collapse="fade">
+  <ion-toolbar>
+    <ion-button expand="block" shape="round" size="large" [routerLink]="'/' + routeNames.Home">
+      <ion-text>Get Started</ion-text>
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>
+
+<!-- </ion-app> -->

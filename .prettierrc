@@ -1,0 +1,12 @@
+{
+    "printWidth": 145,
+    "singleQuote": true,
+    "trailingComma": "es5",
+    "bracketSpacing": true,
+    "arrowParens": "avoid",
+    "singleAttributePerLine": false,
+    "bracketSameLine": true,
+    "proseWrap": "never",
+    "objectCurlyNewline": false,
+    "objectPropertyNewline": false
+  }

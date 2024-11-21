@@ -1,0 +1,158 @@
+.landing-container {
+  width: 100%;
+  min-height: 100vh;
+  overflow: auto;
+  
+  .sticky-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+
+    .nav-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .logo {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #333;
+      }
+
+      .auth-buttons {
+        display: flex;
+        gap: 1rem;
+
+        button {
+          padding: 0.5rem 1rem;
+          border-radius: 4px;
+          border: none;
+          cursor: pointer;
+          transition: all 0.3s ease;
+
+          &.sign-in-btn {
+            background: transparent;
+            border: 1px solid #007bff;
+            color: #007bff;
+
+            &:hover {
+              background: #007bff;
+              color: white;
+            }
+          }
+
+          &.sign-up-btn {
+            background: #007bff;
+            color: white;
+
+            &:hover {
+              background: #0056b3;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 6rem 2rem 2rem;
+
+    .hero {
+      text-align: center;
+      padding: 4rem 0;
+
+      h1 {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+      }
+
+      .subtitle {
+        font-size: 1.5rem;
+        color: #666;
+      }
+    }
+
+    section {
+      margin: 4rem 0;
+
+      h2 {
+        font-size: 2rem;
+        margin-bottom: 2rem;
+      }
+
+      &.features {
+        .features-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+          gap: 2rem;
+
+          .feature-card {
+            padding: 2rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+
+            &:hover {
+              transform: translateY(-5px);
+            }
+
+            h3 {
+              margin-bottom: 1rem;
+            }
+
+            p {
+              color: #666;
+            }
+          }
+        }
+      }
+
+      &.cta {
+        text-align: center;
+        padding: 4rem 0;
+
+        .cta-button {
+          padding: 1rem 2rem;
+          font-size: 1.1rem;
+          background: #007bff;
+          color: white;
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;
+          transition: background 0.3s ease;
+
+          &:hover {
+            background: #0056b3;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .landing-container {
+    .content {
+      padding: 5rem 1rem 1rem;
+
+      .hero {
+        h1 {
+          font-size: 2rem;
+        }
+
+        .subtitle {
+          font-size: 1.2rem;
+        }
+      }
+    }
+  }
+}

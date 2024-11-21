@@ -1,0 +1,69 @@
+<ion-app>
+  <ion-split-pane contentId="main-content">
+    <ion-menu contentId="main-content" type="overlay">
+      <ion-content>
+        <ion-list id="inbox-list">
+          <ion-list-header>{{ projectName }}</ion-list-header>
+
+          <!-- <ion-note>Absolutamente todo el conocimiento </ion-note> -->
+
+          <br /><br />
+          <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
+            <ion-item routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" routerLinkActive="selected">
+              <ion-icon aria-hidden="true" slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
+              <ion-label>{{ p.title }}</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+        </ion-list>
+      </ion-content>
+
+      <ion-footer>
+        <ion-toolbar>
+          <span>{{ envName }} - {{ version }}</span>
+        </ion-toolbar>
+      </ion-footer>
+    </ion-menu>
+
+    <div class="ion-page" id="main-content">
+      <ion-header [translucent]="true">
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+          </ion-buttons>
+          <ion-title>{{ projectName }}</ion-title>
+
+          <ion-buttons slot="end">
+            <ion-button (click)="openActionSheet()">
+              <span>
+                <ion-avatar style="width: 3em; height: 3em">
+                  <img width="10px" alt="Silhouette of a person's head" [src]="user?.photoURL || '/assets/icon/favicon.png'" />
+                </ion-avatar>
+              </span>
+            </ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content class="ion-padding">
+        <router-outlet></router-outlet>
+      </ion-content>
+
+      <ion-tab-bar slot="bottom">
+        <ion-tab-button tab="home" (click)="navigateTo('page/home')">
+          <ion-icon name="home"></ion-icon>
+          Home
+        </ion-tab-button>
+
+        <ion-tab-button tab="eye" (click)="navigateTo('page/explore')">
+          <ion-icon name="eye"></ion-icon>
+          Explore
+        </ion-tab-button>
+
+        <ion-tab-button tab="code-working" (click)="navigateTo('page/test')">
+          <ion-icon name="code-working"></ion-icon>
+          Tests
+        </ion-tab-button>
+      </ion-tab-bar>
+    </div>
+  </ion-split-pane>
+</ion-app>

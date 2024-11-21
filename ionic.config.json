@@ -1,0 +1,7 @@
+{
+  "name": "dataclouder-template",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
