@@ -1,6 +1,8 @@
 <ion-content [fullscreen]="true">
   <!-- Login Page -->
-  <div class="container" *ngIf="screen === 'signin'">
+
+  @if( screen === 'signin'){
+  <div class="container">
     <h1 class="heading">👋 {{ 'welcome' | translate}}<br /><br /></h1>
     <p class="para">Sign in to continue!</p>
     <form [formGroup]="formData">
@@ -24,9 +26,13 @@
       >
     </form>
   </div>
+  }
 
   <!-- Sign up page -->
-  <div class="container" *ngIf="screen === 'signup'">
+
+  @if( screen === 'signup'){
+
+  <div class="container">
     <h1 class="heading">🚀 Create Account 🚀<br /><br /></h1>
     <p class="para">Sign up to get started!</p>
 
@@ -50,9 +56,13 @@
       >
     </form>
   </div>
+  }
 
   <!-- Forget password page -->
-  <div class="container" *ngIf="screen === 'forget'">
+
+  @if( screen === 'forget'){
+
+  <div class="container">
     <h1 class="heading">Forget Password?<br /><br /></h1>
     <p class="para">Enter email to reset</p>
     <ion-item lines="none" class="ion-item">
@@ -64,6 +74,7 @@
     <p class="signup-text">Rememberd Password&nbsp;<a (click)="change('signin')">Sign In?</a></p>
     <ion-button class="login-button" expand="block">Reset Password</ion-button>
   </div>
+  }
 </ion-content>
 <ion-footer color="white">
   <ion-toolbar>

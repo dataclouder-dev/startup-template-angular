@@ -100,6 +100,16 @@ This project is a template to create Angular/Ionic App connected with firebase a
 
 
 
+### Agregar iOS
+
+    Crear la credencial 
+    Extraer los datos de client Id y reverse client id
+    
+    Desde la interfaz  puse como variable $(REVERSED_CLIENT_ID) pero ahora aqui solo hay que agregar los datos a los archivos de configuración. 
+    Desde la interfaz creé los archivos de configuración para que modifique el pbxproj.
+
+    ### Como crear una configuación para tener un id diferente. 
+
 
 ### Ejecutar App
     npm run start

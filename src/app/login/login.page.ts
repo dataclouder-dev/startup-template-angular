@@ -9,13 +9,26 @@ import { environment } from 'src/environments/environment';
 import { RouteNames } from '../core/enums';
 
 import { FirebaseAuthService, SharedLoginComponent } from '@dataclouder/app-auth';
+import { IonItem, IonButton, IonIcon, IonContent, IonInput, IonToolbar, IonFooter, Platform } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-auth-component',
-  templateUrl: './login2.page.html',
+  templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, TranslateModule, SharedLoginComponent],
+  imports: [
+    IonFooter,
+    IonToolbar,
+    IonInput,
+    IonContent,
+    IonIcon,
+    IonButton,
+    IonItem,
+    FormsModule,
+    ReactiveFormsModule,
+    TranslateModule,
+    SharedLoginComponent,
+  ],
 })
 export class LoginComponent implements OnInit {
   screen: any = 'signin';
@@ -25,13 +38,29 @@ export class LoginComponent implements OnInit {
     password: ['', [Validators.required]],
   });
   isLoading: boolean = false;
-  constructor(private fb: FormBuilder, private auth: AuthService, private firebaseAuthService: FirebaseAuthService, private router: Router) {}
+  constructor(
+    private platform: Platform,
+    private fb: FormBuilder,
+    private auth: AuthService,
+    private firebaseAuthService: FirebaseAuthService,
+    private router: Router
+  ) {}
 
   public user: any;
 
   public envName = environment.envName;
 
-  async ngOnInit() {}
+  async ngOnInit() {
+    this.platform.ready().then(() => {
+      console.log('READY!');
+
+      GoogleAuth.initialize({
+        clientId: environment.iosClientId,
+        scopes: ['profile', 'email'],
+        grantOfflineAccess: true,
+      });
+    });
+  }
 
   change(event: 'signup' | 'forget' | 'signin') {
     this.screen = event;
@@ -79,14 +108,20 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  async signInGoogle() {
-    console.log('Credenciales', environment.clientId);
+  public test() {
+    console.log('Test');
+    debugger;
+    console.log('Test', environment.iosClientId);
+  }
 
-    await GoogleAuth.initialize({
-      clientId: environment.clientId,
-      scopes: ['profile', 'email'],
-      grantOfflineAccess: true,
-    });
+  async signInGoogle() {
+    debugger;
+    console.log('Credenciales');
+
+    // await GoogleAuth.initialize({
+    //   clientId: environment.iosClientId,
+    //   scopes: ['profile', 'email'],
+    // });
     debugger;
 
     console.log('Sign in google mostrando credenciales');
@@ -95,6 +130,9 @@ export class LoginComponent implements OnInit {
     debugger;
 
     this.user = await this.firebaseAuthService.signInWithCredential(GoogleAuthProvider.credential(user.authentication.idToken));
+    console.log('Sign in google mostrando credenciales', this.user);
+
+    this.router.navigateByUrl('/' + RouteNames.Home);
 
     // Registrar con Firebase.
   }

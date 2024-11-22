@@ -1,50 +1,60 @@
-<div class="landing-container">
-  <nav class="sticky-nav">
-    <div class="nav-content">
-      <div class="logo">{{ projectName }}</div>
-      <div class="auth-buttons">
-        <button class="sign-in-btn" (click)="goToSignin()">Sign In</button>
-        <button class="sign-up-btn" (click)="goToSignup()">Sign Up</button>
+<div class="ion-page" id="main-content">
+  <ion-header [translucent]="true">
+    <ion-toolbar>
+      <ion-title>{{ projectName.slice(0, 12) }}</ion-title>
+
+      <ion-buttons slot="end">
+        <ion-button shape="round" (click)="goToSignin()">
+          <ion-text>Sign In</ion-text>
+        </ion-button>
+
+        <ion-button shape="round" (click)="goToSignup()">
+          <ion-text>Sign Up</ion-text>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content class="ion-padding">
+    <div class="landing-container">
+      <br />
+      <div style="margin-top: 80px"></div>
+
+      <header class="hero">
+        <h1>Welcome to {{ projectName }}</h1>
+        <p class="subtitle">Explore the Future of Neural Networks</p>
+      </header>
+
+      <div class="content">
+        <section class="features">
+          <h2>Key Features</h2>
+          <div class="features-grid">
+            <div class="feature-card">
+              <h3>Advanced Analytics</h3>
+              <p>Powerful insights into neural network behavior</p>
+            </div>
+            <div class="feature-card">
+              <h3>Real-time Processing</h3>
+              <p>Immediate results and live data analysis</p>
+            </div>
+            <div class="feature-card">
+              <h3>Smart Integration</h3>
+              <p>Seamless connectivity with existing systems</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="about">
+          <h2>About Us</h2>
+          <p>Discover how we're revolutionizing neural network applications</p>
+        </section>
+
+        <section class="cta">
+          <h2>Get Started</h2>
+          <p>Ready to begin your journey?</p>
+          <button class="cta-button">Learn More</button>
+        </section>
       </div>
     </div>
-  </nav>
-
-  <br />
-  <div style="margin-top: 80px"></div>
-
-  <header class="hero">
-    <h1>Welcome to {{ projectName }}</h1>
-    <p class="subtitle">Explore the Future of Neural Networks</p>
-  </header>
-
-  <div class="content">
-    <section class="features">
-      <h2>Key Features</h2>
-      <div class="features-grid">
-        <div class="feature-card">
-          <h3>Advanced Analytics</h3>
-          <p>Powerful insights into neural network behavior</p>
-        </div>
-        <div class="feature-card">
-          <h3>Real-time Processing</h3>
-          <p>Immediate results and live data analysis</p>
-        </div>
-        <div class="feature-card">
-          <h3>Smart Integration</h3>
-          <p>Seamless connectivity with existing systems</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="about">
-      <h2>About Us</h2>
-      <p>Discover how we're revolutionizing neural network applications</p>
-    </section>
-
-    <section class="cta">
-      <h2>Get Started</h2>
-      <p>Ready to begin your journey?</p>
-      <button class="cta-button">Learn More</button>
-    </section>
-  </div>
+  </ion-content>
 </div>

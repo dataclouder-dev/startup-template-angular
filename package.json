@@ -15,6 +15,8 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "android:debug": "ionic cap run android -l --external",
+    "ios:dev": "ng build -c development && cap copy ios && npx cap run ios",
+    "ios:dev-sim": "ng build -c development && cap copy ios && npx cap run ios --target 3FFDE946-E48B-4215-A7CD-D7C1872FDAF2",
     "android:dev": "ng build -c development && cap copy android && cd android && ./gradlew assembleDev && adb install app/build/outputs/apk/dev/app-dev.apk && adb shell monkey -p dev.dataclouder.template.dev -c android.intent.category.LAUNCHER 1",
     "android:pro": "ng build -c production && cap copy android && cd android && ./gradlew assembleRelease && adb install app/build/outputs/apk/release/app-release.apk && adb shell monkey -p ${npm_package_config_appId} -c android.intent.category.LAUNCHER 1",
     "test": "ng test",
