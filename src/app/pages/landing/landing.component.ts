@@ -39,6 +39,8 @@ import { environment } from 'src/environments/environment';
 })
 export class LandingComponent {
   projectName = environment.projectName;
+  version = environment.version;
+  envName = environment.envName;
 
   constructor(private router: Router) {}
 

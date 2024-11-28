@@ -13,7 +13,7 @@ import { IonItem, IonButton, IonIcon, IonContent, IonInput, IonToolbar, IonFoote
 
 @Component({
   selector: 'app-auth-component',
-  templateUrl: './login.page.html',
+  templateUrl: './login2.page.html',
   styleUrls: ['./login.page.scss'],
   standalone: true,
   imports: [

@@ -1,9 +1,11 @@
+### Work in Progress
+    if you see this project by accident be aware that is very buggy at this point.
+    
 ## Dataclouder Template
 
 This project is a template to create Angular/Ionic App connected with firebase auth
 
 * Autentification system is ready. 
-
 * You only need to add the logic. 
 
 
@@ -13,10 +15,20 @@ This project is a template to create Angular/Ionic App connected with firebase a
 
 2) Rename project. 
 
+ what data you need?
+
+
+Project name: your-app-name
+Web Page: your-web-page.com
+Firebase: {...} 
+Apps ClientIds: com.your-web-page.app-name
+
+
     * package.json 
     * ionic.config.json
     * environment.ts
     * capacitor.config.ts // Nombre del app. debe ser unico. dev.dataclouder.template cambiar
+
 
     Android (Pendinte )
     *   build.gradle
@@ -102,8 +114,12 @@ This project is a template to create Angular/Ionic App connected with firebase a
 
 ### Agregar iOS
 
-    Crear la credencial 
-    Extraer los datos de client Id y reverse client id
+    1) Crear la credencial de autentificación ios:
+    2) Extraer los datos de client Id y reverse client id en la sección de Additional information
+    3) 
+    
+    TODO: entender como extraer el developer team,  script para cambiar el developer team 97TH9F3GM9. 
+
     
     Desde la interfaz  puse como variable $(REVERSED_CLIENT_ID) pero ahora aqui solo hay que agregar los datos a los archivos de configuración. 
     Desde la interfaz creé los archivos de configuración para que modifique el pbxproj.
@@ -112,7 +128,10 @@ This project is a template to create Angular/Ionic App connected with firebase a
 
 
 ### Ejecutar App
+
     npm run start
+
+
 
 
 
