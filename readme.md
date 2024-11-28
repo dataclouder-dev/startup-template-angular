@@ -13,22 +13,31 @@ This project is a template to create Angular/Ionic App connected with firebase a
 
 1) Clone the project. 
 
+    git clone https://github.com/dataclouder/dataclouder-template.git
+
 2) Rename project. 
 
- what data you need?
-
-
-Project name: your-app-name
-Web Page: your-web-page.com
-Firebase: {...} 
-Apps ClientIds: com.your-web-page.app-name
-
+There is an script to rename the project, basically will rename all the files and folders.
 
     * package.json 
     * ionic.config.json
     * environment.ts
     * capacitor.config.ts // Nombre del app. debe ser unico. dev.dataclouder.template cambiar
 
+you need. 
+Project name: your-app-name
+Apps ClientIds: com.your-web-page.app-name
+
+
+Example: 
+    python3 rename_project.py lobo-alfa com.loboalfa.app
+
+### change the firebase credentials. 
+
+Web Page: your-web-page.com
+Firebase: {...} 
+
+### Change android and ios ids. Future work...
 
     Android (Pendinte )
     *   build.gradle
@@ -139,3 +148,6 @@ Apps ClientIds: com.your-web-page.app-name
 
 1) Crear un proyecto de NEST con la plantilla. 
 2) Desplegar a Google Cloud. 
+
+
+python rename_project.py lobo-alfa
