@@ -15,9 +15,6 @@ def update_json_file(file_path, new_name, new_app_id):
             if 'config' in data:
                 data['config']['appId'] = new_app_id
                 data['config']['appIdDev'] = f"{new_app_id}.dev"
-        elif file_path.name == 'angular.json':
-            data['defaultProject'] = new_name
-            data['projects'][new_name] = data['projects'].pop(list(data['projects'].keys())[0])
         elif file_path.name == 'ionic.config.json':
             data['name'] = new_name
         elif file_path.name == '.firebaserc':
@@ -79,7 +76,6 @@ def rename_project(new_name, new_app_id):
     # Files to update
     files_to_update = {
         'package.json': update_json_file,
-        'angular.json': update_json_file,
         'ionic.config.json': update_json_file,
         '.firebaserc': update_json_file,
         'capacitor.config.ts': update_capacitor_config,

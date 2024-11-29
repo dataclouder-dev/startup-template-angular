@@ -34,8 +34,13 @@ Example:
 
 ### change the firebase credentials. 
 
-Web Page: your-web-page.com
-Firebase: {...} 
+get createntials from firebase console, (create a new project if you don't have one)
+copy and paste the credentials in the environment.ts
+
+Thats all at this point, you should be able to run the app and be able to signup, email or google.
+
+    npm run start
+
 
 ### Change android and ios ids. Future work...
 

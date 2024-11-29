@@ -27,6 +27,7 @@ import {
   NavController,
   IonAvatar,
   ActionSheetController,
+  IonTab,
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import {
@@ -61,6 +62,9 @@ import {
   eye,
   eyeOutline,
   eyeSharp,
+  chatbubbleEllipses,
+  chatbubbleEllipsesOutline,
+  chatbubbleEllipsesSharp,
 } from 'ionicons/icons';
 import { RouteNames } from '../core/enums';
 import { environment } from 'src/environments/environment';
@@ -72,6 +76,7 @@ import { FirebaseAuthService } from '@dataclouder/app-auth';
   styleUrl: './ionic-layout.component.css',
   standalone: true,
   imports: [
+    IonTab,
     IonAvatar,
     IonFooter,
     IonButton,
@@ -112,6 +117,7 @@ export class IonicLayoutComponent implements OnInit {
     { title: 'Home', url: '/page/home', icon: 'home' },
     { title: 'Explore', url: '/page/explore', icon: 'eye' },
     { title: 'Test', url: '/page/test', icon: 'code-working' },
+    { title: 'Chat', url: '/page/chat', icon: 'chatbubble-ellipses' },
   ];
   constructor(
     private firebaseAuthService: FirebaseAuthService,
@@ -143,6 +149,9 @@ export class IonicLayoutComponent implements OnInit {
       eye,
       eyeOutline,
       eyeSharp,
+      chatbubbleEllipses,
+      chatbubbleEllipsesOutline,
+      chatbubbleEllipsesSharp,
     });
     addIcons({ library, playCircle, radio, search });
     addIcons({ ellipsisHorizontal, ellipsisVertical, helpCircle, personCircle, search });

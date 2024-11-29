@@ -1,8 +1,10 @@
 export const environment = {
-  projectName: 'Dataclouder Template',
+  projectName: 'Lobo-Alfa',
   version: '0.0.1',
   envName: 'PRO',
   production: false,
+
+  backendUrl: 'http://localhost:8000',
 
   clientId: '',
   androidClientId: '',
