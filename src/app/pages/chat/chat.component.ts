@@ -18,7 +18,14 @@ import {
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { sendOutline, sendSharp, send } from 'ionicons/icons';
-import { ChatComponent, ConversationUserSettings, ConversationChatSettings, ChatRole } from '@dataclouder/conversation-system';
+import {
+  ChatComponent,
+  ConversationUserSettings,
+  ConversationChatSettings,
+  ChatRole,
+  ConversationCardListsComponent,
+} from '@dataclouder/conversation-system';
+import { NavigationExtras, Router } from '@angular/router';
 
 @Component({
   selector: 'app-chat',
@@ -42,6 +49,7 @@ import { ChatComponent, ConversationUserSettings, ConversationChatSettings, Chat
     IonAvatar,
     IonText,
     ChatComponent,
+    ConversationCardListsComponent,
   ],
 })
 export class ChatComponentPage implements OnInit {
@@ -73,11 +81,25 @@ export class ChatComponentPage implements OnInit {
   messages: any[] = [];
   newMessage: string = '';
 
-  constructor() {
+  constructor(private router: Router) {
     addIcons({ send, sendOutline, sendSharp });
   }
 
   ngOnInit() {
     // Initialize with some dummy messages
+  }
+
+  public goToDetails($event: any) {
+    console.log('goToDetails', $event);
+    const navigationExtras: NavigationExtras = {
+      state: {
+        conversation: $event,
+      },
+    };
+    this.router.navigate(['/page/conversation-details'], navigationExtras);
+  }
+
+  public goToEdit($event: any) {
+    this.router.navigate(['/page/stack/conversation-form']);
   }
 }

@@ -1,3 +1,4 @@
 <ion-content class="ion-padding">
-  <lib-chat [conversationChatSettings]="conversationChatSettings" [conversationUserSettings]="conversationUserSettings"></lib-chat>
+  <h1 (click)="goToEdit(null)">Crear nueva</h1>
+  <lib-conversation-card-lists (goToDetailsEvent)="goToDetails($event)" (goToEditEvent)="goToEdit($event)"></lib-conversation-card-lists>
 </ion-content>

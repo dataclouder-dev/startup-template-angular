@@ -1,0 +1,20 @@
+<ion-app>
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="/m"></ion-back-button>
+      </ion-buttons>
+      <ion-title>{{ currentPath }}</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content class="ion-padding">
+    <router-outlet></router-outlet>
+  </ion-content>
+
+  <ion-footer [translucent]="true" collapse="fade">
+    <ion-toolbar>
+      <ion-title>{{ projectName }}</ion-title>
+    </ion-toolbar>
+  </ion-footer>
+</ion-app>

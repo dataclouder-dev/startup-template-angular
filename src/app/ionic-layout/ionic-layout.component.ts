@@ -117,7 +117,7 @@ export class IonicLayoutComponent implements OnInit {
     { title: 'Home', url: '/page/home', icon: 'home' },
     { title: 'Explore', url: '/page/explore', icon: 'eye' },
     { title: 'Test', url: '/page/test', icon: 'code-working' },
-    { title: 'Chat', url: '/page/chat', icon: 'chatbubble-ellipses' },
+    { title: 'Conversation', url: '/page/chat', icon: 'chatbubble-ellipses' },
   ];
   constructor(
     private firebaseAuthService: FirebaseAuthService,

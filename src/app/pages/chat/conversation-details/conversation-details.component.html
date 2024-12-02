@@ -1,0 +1,14 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/page/chat"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Conversation Details</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div *ngIf="conversationId">
+    <lib-conversation-details [conversationCardId]="conversationId"></lib-conversation-details>
+  </div>
+</ion-content>

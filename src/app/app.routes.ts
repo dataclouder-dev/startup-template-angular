@@ -48,6 +48,23 @@ export const routes: Routes = [
       },
     ],
   },
+
+  {
+    path: 'page/stack',
+    loadComponent: () => import('./ionic-layout/stack-ionic/stack-ionic.component').then(m => m.StackIonicComponent),
+    children: [
+      {
+        path: 'conversation-form',
+        loadComponent: () => import('@dataclouder/conversation-system').then(m => m.ConversationFormComponent),
+      },
+    ],
+  },
+
+  {
+    path: 'page/conversation-details',
+    loadComponent: () => import('./pages/chat/conversation-details/conversation-details.component').then(m => m.ConversationDetailsPage),
+  },
+
   {
     path: 'page',
     canActivate: [AuthGuardService],

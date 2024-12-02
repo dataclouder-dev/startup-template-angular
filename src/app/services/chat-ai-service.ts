@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ChatRole, ConversationAIAbstractService, ConversationChatSettings } from '@dataclouder/conversation-system';
+import { ChatRole, ConversationAIAbstractService, ConversationChatSettings, IConversationCard } from '@dataclouder/conversation-system';
 import { HttpService } from './http.service';
 
 export type AudioGenerated = { blobUrl: string; transcription: any };
@@ -10,6 +10,17 @@ export type TTSRequest = { text: string; voice: string; generateTranscription: b
 })
 export class ConversationAIService implements ConversationAIAbstractService {
   constructor(private httpService: HttpService) {}
+
+  public findConversationCard(id: string): Promise<IConversationCard> {
+    return this.httpService.getDataFromService(`api/conversation-ai/conversation/${id}`);
+  }
+  public getAllConversationCards(): Promise<IConversationCard[]> {
+    return this.httpService.getDataFromService(`api/conversation-ai/conversation`);
+  }
+  public saveConversationCard(conversation: IConversationCard): Promise<IConversationCard> {
+    console.log('saveConversationCard', conversation);
+    return this.httpService.postDataToService(`api/conversation-ai/conversation`, conversation);
+  }
 
   // TODO: necesito ponerle un tipo al return.
 
