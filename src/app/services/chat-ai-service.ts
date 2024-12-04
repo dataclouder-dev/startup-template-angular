@@ -11,6 +11,10 @@ export type TTSRequest = { text: string; voice: string; generateTranscription: b
 export class ConversationAIService implements ConversationAIAbstractService {
   constructor(private httpService: HttpService) {}
 
+  public deleteConversationCard(id: string): Promise<IConversationCard> {
+    return this.httpService.deleteDataFromService(`api/conversation-ai/conversation/${id}`);
+  }
+
   public findConversationCard(id: string): Promise<IConversationCard> {
     return this.httpService.getDataFromService(`api/conversation-ai/conversation/${id}`);
   }
