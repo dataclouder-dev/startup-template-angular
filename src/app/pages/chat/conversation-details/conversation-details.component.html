@@ -9,6 +9,6 @@
 
 <ion-content class="ion-padding">
   <div *ngIf="conversationId">
-    <dc-conversation-details [conversationCardId]="conversationId"></dc-conversation-details>
+    <dc-conversation-details [conversationCardId]="conversationId" (onstartConversation)="startConversation($event)"></dc-conversation-details>
   </div>
 </ion-content>

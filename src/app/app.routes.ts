@@ -57,6 +57,16 @@ export const routes: Routes = [
         path: 'conversation-form',
         loadComponent: () => import('@dataclouder/conversation-system').then(m => m.ConversationFormComponent),
       },
+      {
+        path: 'conversation-form/:id',
+        loadComponent: () => import('@dataclouder/conversation-system').then(m => m.ConversationFormComponent),
+      },
+
+      {
+        path: 'chat',
+        loadComponent: () =>
+          import('./pages/chat/conversation-card-chat/conversation-card-chat.component').then(m => m.ConversationCardChatComponent),
+      },
     ],
   },
 
@@ -92,5 +102,9 @@ export const routes: Routes = [
   {
     path: 'profile',
     loadComponent: () => import('./pages/profile/profile.component').then(m => m.ProfileComponent),
+  },
+  {
+    path: '**',
+    loadComponent: () => import('./pages/not-found/not-found.component').then(m => m.NotFoundComponent),
   },
 ];

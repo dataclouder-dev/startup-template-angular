@@ -41,6 +41,9 @@ Thats all at this point, you should be able to run the app and be able to signup
 
     npm run start
 
+### Add storage to firebase.
+* Hay que cambiar proyecto a firebase blaze y agregar una cuenta de facturación.
+* Iniciar Storage en la consola y ponerle reglas, (Vale de pruebas para iniciar)
 
 ### Change android and ios ids. Future work...
 
@@ -129,11 +132,9 @@ Thats all at this point, you should be able to run the app and be able to signup
 ### Agregar iOS
 
     1) Crear la credencial de autentificación ios:
-    2) Extraer los datos de client Id y reverse client id en la sección de Additional information
-    3) 
+    2) Extraer los datos de client Id y reverse client id en la sección de Additional information.
     
     TODO: entender como extraer el developer team,  script para cambiar el developer team 97TH9F3GM9. 
-
     
     Desde la interfaz  puse como variable $(REVERSED_CLIENT_ID) pero ahora aqui solo hay que agregar los datos a los archivos de configuración. 
     Desde la interfaz creé los archivos de configuración para que modifique el pbxproj.
@@ -144,7 +145,6 @@ Thats all at this point, you should be able to run the app and be able to signup
 ### Ejecutar App
 
     npm run start
-
 
 
 

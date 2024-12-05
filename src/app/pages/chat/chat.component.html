@@ -1,4 +1,4 @@
 <ion-content class="ion-padding">
-  <h1 (click)="goToEdit(null)">Crear nueva</h1>
+  <ion-button color="primary" expand="block" (click)="goToEdit(null)">Crear nueva</ion-button>
   <dc-conversation-card-lists (goToDetailsEvent)="goToDetails($event)" (goToEditEvent)="goToEdit($event)"></dc-conversation-card-lists>
 </ion-content>

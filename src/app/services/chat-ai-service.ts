@@ -21,9 +21,13 @@ export class ConversationAIService implements ConversationAIAbstractService {
   public getAllConversationCards(): Promise<IConversationCard[]> {
     return this.httpService.getDataFromService(`api/conversation-ai/conversation`);
   }
-  public saveConversationCard(conversation: IConversationCard): Promise<IConversationCard> {
-    console.log('saveConversationCard', conversation);
-    return this.httpService.postDataToService(`api/conversation-ai/conversation`, conversation);
+
+  async saveConversationCard(conversation: IConversationCard): Promise<IConversationCard> {
+    if (conversation.id || conversation._id) {
+      return await this.httpService.putDataFromService(`api/conversation-ai/conversation/${conversation._id}`, conversation);
+    } else {
+      return await this.httpService.putDataFromService('api/conversation-ai/conversation', conversation);
+    }
   }
 
   // TODO: necesito ponerle un tipo al return.

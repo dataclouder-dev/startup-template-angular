@@ -63,6 +63,17 @@ export class HttpService {
     return lastValueFrom<T>(get$);
   }
 
+  public async putDataFromService(service: string, data: any, host = 'nodejs') {
+    const url = `${this.getHostUrl(host)}/${service}`;
+    const put$ = await this.httpClient.put<any>(url, data).pipe(
+      catchError(err => {
+        this.handleError(err);
+        return throwError(() => err);
+      })
+    );
+    return lastValueFrom<any>(put$);
+  }
+
   // public async getDataFromAPI<T = any[]>(service: string, host = 'nodejs') {
   //   const url = `${this.getHostUrl(host)}/${service}`;
 

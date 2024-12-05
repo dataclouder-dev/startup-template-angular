@@ -28,4 +28,13 @@ export class ConversationDetailsPage implements OnInit {
       this.router.navigate(['/page/chat']);
     }
   }
+
+  public startConversation($event: any) {
+    console.log('startConversation', $event);
+    this.router.navigate(['/page/stack/chat'], {
+      state: {
+        conversation: $event,
+      },
+    });
+  }
 }
