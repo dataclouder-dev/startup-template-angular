@@ -3,14 +3,14 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { IonHeader, IonToolbar, IonTitle, IonContent, IonBackButton, IonButtons } from '@ionic/angular/standalone';
 
-import { ConversationDetailsComponent } from '@dataclouder/conversation-system';
+import { DcConversationCardDetailsComponent } from '@dataclouder/conversation-system';
 
 @Component({
   selector: 'app-conversation-details',
   templateUrl: './conversation-details.component.html',
   styleUrls: ['./conversation-details.component.scss'],
   standalone: true,
-  imports: [CommonModule, IonHeader, IonToolbar, IonTitle, IonContent, IonBackButton, IonButtons, ConversationDetailsComponent],
+  imports: [CommonModule, IonHeader, IonToolbar, IonTitle, IonContent, IonBackButton, IonButtons, DcConversationCardDetailsComponent],
 })
 export class ConversationDetailsPage implements OnInit {
   conversationId: any;

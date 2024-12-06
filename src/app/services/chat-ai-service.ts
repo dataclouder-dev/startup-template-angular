@@ -26,7 +26,7 @@ export class ConversationAIService implements ConversationAIAbstractService {
     if (conversation.id || conversation._id) {
       return await this.httpService.putDataFromService(`api/conversation-ai/conversation/${conversation._id}`, conversation);
     } else {
-      return await this.httpService.putDataFromService('api/conversation-ai/conversation', conversation);
+      return await this.httpService.postDataToService('api/conversation-ai/conversation', conversation);
     }
   }
 
