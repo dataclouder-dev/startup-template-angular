@@ -11,6 +11,10 @@ This project is a template to create an Angular/Ionic App connected with Firebas
 
 ### Getting starting
 Use the scripts to download projects and use start_project script in every template.
+create the folder to contain all your projects.
+donwload the download-templates.sh script change name for project name and id, and run it. 
+download-templates.sh : should download all projects and future will install all the dependencies. 
+
 
 ### Instructions 
 
