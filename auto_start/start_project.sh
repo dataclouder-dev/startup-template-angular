@@ -1,5 +1,5 @@
-PROJECT_ID="prota-roto-25b"
-DISPLAY_NAME="Prota Roto"
+PROJECT_ID="pluma-y-pixel"
+DISPLAY_NAME="Pluma y Pixel"
 
 # make sure you have firebase-tools installed
 echo "_____Installing Firebase tools _____"
@@ -9,7 +9,14 @@ echo "_____Installing Firebase tools _____"
 echo "____ login with Firebase______"
 # firebase login
 
+firebase projects:create ${PROJECT_ID} --display-name "${DISPLAY_NAME}"
+
 echo "____ change .firebaserc or init so project can be as default for next instructions ____"
+
+# Enable Firebase Authentication
+echo "____ Enabling Firebase Authentication ____"
+# firebase services:enable --project=${PROJECT_ID} identitytoolkit.googleapis.com
+
 
 # Capture the Firebase create output and extract the sdkconfig command
 SDK_CONFIG=$(firebase apps:create WEB ${PROJECT_ID} | grep "firebase apps:sdkconfig" | awk '{$1=$1};1')
@@ -41,4 +48,11 @@ rm temp_config.txt
 
 # Update the environment.ts file with Firebase config
 echo "____ Updating Firebase configuration in environment.ts ____"
+
 node update-firebase-config.js "$CONFIG_JSON"
+
+echo "____ Installing dependencies ____"
+
+echo ___ Ready you can run or deploy ____
+
+echo "____ don't forget to rename the from root auto_start/rename_project.py ${PROJECT_ID} com.${PROJECT_ID}.app ____"

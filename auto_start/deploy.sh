@@ -5,10 +5,10 @@ set -e
 
 # Build the Angular app
 echo "Building the Angular app..."
-ng build --prod
+ng build
 
 # Navigate into the build output directory
-cd www
+cd ../www
 
 # Deploy to Firebase
 echo "Deploying to Firebase... using firebase.json config"
