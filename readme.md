@@ -1,13 +1,16 @@
 ### Work in Progress
-    if you see this project by accident be aware that is very buggy at this point.
+    If you see this project by accident, be aware that it is very buggy at this point.
     
 ## Dataclouder Template
 
-This project is a template to create Angular/Ionic App connected with firebase auth
+This project is a template to create an Angular/Ionic App connected with Firebase Auth.
 
-* Autentification system is ready. 
+* Authentication system is ready. 
 * You only need to add the logic. 
 
+
+### Getting starting
+Use the scripts to download projects and use start_project script in every template.
 
 ### Instructions 
 
@@ -15,83 +18,79 @@ This project is a template to create Angular/Ionic App connected with firebase a
 
     git clone https://github.com/dataclouder/dataclouder-template.git
 
-2) Rename project. 
+2) Rename the project. 
 
-There is an script to rename the project, basically will rename all the files and folders.
+There is a script to rename the project, which will rename all the files and folders.
 
     * package.json 
     * ionic.config.json
     * environment.ts
-    * capacitor.config.ts // Nombre del app. debe ser unico. dev.dataclouder.template cambiar
+    * capacitor.config.ts // The app name must be unique. Change dev.dataclouder.template
 
-you need. 
+You need: 
 Project name: your-app-name
-Apps ClientIds: com.your-web-page.app-name
-
+App ClientIds: com.your-web-page.app-name
 
 Example: 
     python3 rename_project.py lobo-alfa com.loboalfa.app
 
-### change the firebase credentials. 
+### Change the Firebase credentials. 
 
-get createntials from firebase console, (create a new project if you don't have one)
-copy and paste the credentials in the environment.ts
+Get credentials from the Firebase console (create a new project if you don't have one).
+Copy and paste the credentials in the environment.ts.
 
-Thats all at this point, you should be able to run the app and be able to signup, email or google.
+That's all at this point. You should be able to run the app and be able to sign up using email or Google.
 
     npm run start
 
-### Add storage to firebase.
-* Hay que cambiar proyecto a firebase blaze y agregar una cuenta de facturación.
-* Iniciar Storage en la consola y ponerle reglas, (Vale de pruebas para iniciar)
+### Add storage to Firebase.
+* You need to change the project to Firebase Blaze and add a billing account.
+* Initialize Storage in the console and set rules (testing rules to start).
 
-### Change android and ios ids. Future work...
+### Change Android and iOS IDs. Future work...
 
-    Android (Pendinte )
+    Android (Pending)
     *   build.gradle
     *   strings.xml
-    * MainActivity.java -> este me preocupa para es un nombre de paquete,
+    * MainActivity.java -> This concerns me as it is a package name.
 
-    Ios
+    iOS
     *   project.pbxproj
     * Info.plist
 
+2) Add Firebase variables in the environment.ts. Make sure your app is set with permissions to localhost. 
 
-2) Add firebase variables in the environment.ts make sure your app is set with permisions to localhost. 
+* Go to Firebase Authentication https://console.firebase.google.com/project/[your-project]/authentication
+* Add email authentication, add Google authentication 
+* Check authorized domains, by default it is localhost. 
+* Go to project settings -> your apps and create a new app or get the Firebase data if you already have it. Save this data in environment.ts.
+* Done. Sign in and verify at https://console.firebase.google.com/project/[your-project]/authentication/users that you have your new user. 
 
+3) Publish the web app. 
 
-* Go to firebase autentication https://console.firebase.google.com/project/[your-project]/authentication
-* Agrega autentificación con correo, Agrega autentificación con Google 
-* ver a dominios autorizados por default esta localhost. 
-* Ve a configuración de proyecto -> tus apps y crea una nueva app o obten los datos de firease si ya la tienes, guarda estos datos en environment.ts
-* listo inicia sesión y verifica en https://console.firebase.google.com/project/[tu-proyecto]/authentication/users que tienes tu nuevo usuario. 
-
-3) Publicar web. 
-
-* Activa el hosting https://console.firebase.google.com/project/[your-project]/apphosting
+* Enable hosting at https://console.firebase.google.com/project/[your-project]/apphosting
 
 * npm install -g firebase-tools
 
     firebase init hosting --project dataclouder-pro 
-    Contentar las preguntas 
-    directory -> www, single-web: y ->  github no -> override yes
+    Answer the questions 
+    directory -> www, single-page app: y -> GitHub no -> override yes
 
-    Todo es solo para tener los archivos firebase.json .firebaserc (tambien se puede copiar)
+    This is just to get the firebase.json and .firebaserc files (you can also copy them).
 
+4) Add Android
 
-4) Agregar android
-
-    1) Para no retrazar los otros pasos lo mejor es crear tu certificado de una. 
-        * Razones: Se requiere para la publicación, y que funcionen varios ambientes, 
-        * Se requiere para el login de Google
+    1) To avoid delaying other steps, it is best to create your certificate right away. 
+        * Reasons: It is required for publication and for multiple environments to work. 
+        * It is required for Google login.
         
-    2) Crear keystore. 
+    2) Create keystore. 
 
-        *   posicionate en la carpeta de android. cd android/app
+        * Navigate to the android folder. cd android/app
 
-        *   keytool -genkey -v -keystore dataclouder.keystore -alias pro -keyalg RSA -keysize 2048 -validity 10000
+        * keytool -genkey -v -keystore dataclouder.keystore -alias pro -keyalg RSA -keysize 2048 -validity 10000
 
-        * Preparado pregunta por 
+        * Prepare to answer:
             name: jordan
             unit: dev
             organization: dataclouder
@@ -100,59 +99,51 @@ Thats all at this point, you should be able to run the app and be able to signup
             country code: mx
             confirm: y
 
-        * Opcional: Crear una segunda clave para otro ambiente. mayor seguridad, o utiliza la misma para velocidad y practicidad
+        * Optional: Create a second key for another environment for greater security, or use the same one for speed and convenience.
         keytool -genkey -v -keystore dataclouder.keystore -alias dev -keyalg RSA -keysize 2048 -validity 10000
 
         pass: Hola1234
 
-    3)  Obtener los certificados correspondientes y guardarlos en las credenciales
+    3) Obtain the corresponding certificates and save them in the credentials.
     keytool -list -v -keystore dataclouder.keystore
 
-
-        * Ir a console de google cloud, https://console.cloud.google.com/apis/credentials?project=[your-project] , se verá una default de firbase es la que utiliza la web
+        * Go to Google Cloud Console, https://console.cloud.google.com/apis/credentials?project=[your-project], you will see a default Firebase one used by the web.
     
-        * Crear cliente de android  ->  Create OAuth client ID
+        * Create an Android client -> Create OAuth client ID
 
-        * Crear un certificado de android 
+        * Create an Android certificate.
 
-        * (Opcional) agregar la pantalla de concentimiento. 
+        * (Optional) Add the consent screen.
 
-        *  Selecciona tu id universal dev.dataclouder.template, 
+        * Select your universal ID dev.dataclouder.template.
 
-    4) Agregar android al proyecto (ionic add android ya esta pero solo para comparar cambios de archivos) o hacer configuraciones de archivos. 
+    4) Add Android to the project (ionic add android is already done but only to compare file changes) or make file configurations. 
 
-        * Build Gradle ya esta preparado, cambiar las variables y nombres de ambiente / TODO: Ver si puedo cambiar las variables. 
+        * Build Gradle is already prepared, change the variables and environment names / TODO: See if I can change the variables.
 
-        * Modificar archivos del proyecto principal. 
+        * Modify the main project files.
 
-        * Ejecutar proyecto y probar la autentificación con Google. 
+        * Run the project and test Google authentication.
 
+### Add iOS
 
-
-### Agregar iOS
-
-    1) Crear la credencial de autentificación ios:
-    2) Extraer los datos de client Id y reverse client id en la sección de Additional information.
+    1) Create the iOS authentication credential.
+    2) Extract the client ID and reverse client ID data in the Additional Information section.
     
-    TODO: entender como extraer el developer team,  script para cambiar el developer team 97TH9F3GM9. 
+    TODO: Understand how to extract the developer team, script to change the developer team 97TH9F3GM9. 
     
-    Desde la interfaz  puse como variable $(REVERSED_CLIENT_ID) pero ahora aqui solo hay que agregar los datos a los archivos de configuración. 
-    Desde la interfaz creé los archivos de configuración para que modifique el pbxproj.
+    From the interface, I set it as a variable $(REVERSED_CLIENT_ID) but here you just need to add the data to the configuration files. 
+    From the interface, I created the configuration files to modify the pbxproj.
 
-    ### Como crear una configuación para tener un id diferente. 
+    ### How to create a configuration to have a different ID. 
 
-
-### Ejecutar App
+### Run the App
 
     npm run start
 
-
-
-
 ### Backend 
 
-1) Crear un proyecto de NEST con la plantilla. 
-2) Desplegar a Google Cloud. 
-
+1) Create a NEST project with the template. 
+2) Deploy to Google Cloud. 
 
 python rename_project.py lobo-alfa
