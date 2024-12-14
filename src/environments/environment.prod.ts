@@ -4,7 +4,8 @@ export const environment = {
   envName: 'PRO',
   production: false,
 
-  backendUrl: 'http://localhost:8000',
+  backendNodeUrl: 'http://localhost:8080',
+  backendPythonUrl: 'http://localhost:8080',
 
   clientId: '',
   androidClientId: '',

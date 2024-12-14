@@ -1,5 +1,5 @@
-PROJECT_ID="prota-roto-25b"
-DISPLAY_NAME="Prota Roto"
+PROJECT_ID="poder-del-guion"
+DISPLAY_NAME="Poder del Guion"
 
 # make sure you have firebase-tools installed
 echo "_____Installing Firebase tools _____"
@@ -8,6 +8,8 @@ echo "_____Installing Firebase tools _____"
 # login with firebase
 echo "____ login with Firebase______"
 # firebase login
+
+firebase projects:create ${PROJECT_ID} --display-name "${DISPLAY_NAME}"
 
 echo "____ change .firebaserc or init so project can be as default for next instructions ____"
 
@@ -42,3 +44,22 @@ rm temp_config.txt
 # Update the environment.ts file with Firebase config
 echo "____ Updating Firebase configuration in environment.ts ____"
 node update-firebase-config.js "$CONFIG_JSON"
+
+echo "____ Installing dependencies ____"
+
+npm run install
+
+
+echo ___ Ready you can run or deploy use npm run start or firebase deploy ____
+
+# Closest method to automate this is using the Web Api
+#curl -X POST https://identitytoolkit.googleapis.com/v2/projects/${PROJECT_ID}/defaultAuthProviders:update' \
+#  --header 'Authorization: Bearer YOUR_ACCESS_TOKEN' --header 'Content-Type: application/json' \
+#  --data '{ "enabledAuthProviders": [ "google.com", "password" ] }'
+
+# TODO: Automate the step bellow
+echo "____ don't forget to rename the from root auto_start/rename_project.py poderdelguion com.poderdelguion.app ____"
+
+echo ___ unfortunately there is not method to enable autentication option so go to firebase console and enable it manually ____
+
+
