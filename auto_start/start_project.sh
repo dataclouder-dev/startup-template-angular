@@ -1,5 +1,5 @@
-PROJECT_ID="poder-del-guion"
-DISPLAY_NAME="Poder del Guion"
+PROJECT_ID="dataclouder-template"
+DISPLAY_NAME="Dataclouder Template"
 
 # make sure you have firebase-tools installed
 echo "_____Installing Firebase tools _____"
@@ -12,6 +12,11 @@ echo "____ login with Firebase______"
 firebase projects:create ${PROJECT_ID} --display-name "${DISPLAY_NAME}"
 
 echo "____ change .firebaserc or init so project can be as default for next instructions ____"
+
+# Enable Firebase Authentication
+echo "____ Enabling Firebase Authentication ____"
+# firebase services:enable --project=${PROJECT_ID} identitytoolkit.googleapis.com
+
 
 # Capture the Firebase create output and extract the sdkconfig command
 SDK_CONFIG=$(firebase apps:create WEB ${PROJECT_ID} | grep "firebase apps:sdkconfig" | awk '{$1=$1};1')
@@ -43,6 +48,7 @@ rm temp_config.txt
 
 # Update the environment.ts file with Firebase config
 echo "____ Updating Firebase configuration in environment.ts ____"
+
 node update-firebase-config.js "$CONFIG_JSON"
 
 echo "____ Installing dependencies ____"
