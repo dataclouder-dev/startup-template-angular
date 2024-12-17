@@ -55,11 +55,11 @@ export const routes: Routes = [
     children: [
       {
         path: 'conversation-form',
-        loadComponent: () => import('@dataclouder/conversation-system').then(m => m.ConversationFormComponent),
+        loadComponent: () => import('@dataclouder/conversation-system').then(m => m.DCConversationFormComponent),
       },
       {
         path: 'conversation-form/:id',
-        loadComponent: () => import('@dataclouder/conversation-system').then(m => m.ConversationFormComponent),
+        loadComponent: () => import('@dataclouder/conversation-system').then(m => m.DCConversationFormComponent),
       },
 
       {

@@ -17,7 +17,7 @@ export class HttpService {
   constructor(private httpClient: HttpClient) {}
 
   private getHostUrl(host: string = ''): string {
-    return environment.backendUrl;
+    return environment.backendNodeUrl;
   }
 
   public postDataToService<T = any>(service: string, data: any, host = 'nodejs'): Promise<T> {

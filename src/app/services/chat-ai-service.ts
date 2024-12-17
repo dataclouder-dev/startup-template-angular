@@ -11,6 +11,20 @@ export type TTSRequest = { text: string; voice: string; generateTranscription: b
 export class ConversationAIService implements ConversationAIAbstractService {
   constructor(private httpService: HttpService) {}
 
+  public async getTextAudioFile(tts: TTSRequest): Promise<AudioGenerated> {
+    // TODO check that is working
+    try {
+      const response = await this.httpService.postDataToService('api/conversation-ai/tts', tts);
+      return {
+        blobUrl: response.blobUrl,
+        transcription: response.transcription,
+      };
+    } catch (error) {
+      console.error('Error generating audio file:', error);
+      throw new Error('Failed to generate audio file');
+    }
+  }
+
   public deleteConversationCard(id: string): Promise<IConversationCard> {
     return this.httpService.deleteDataFromService(`api/conversation-ai/conversation/${id}`);
   }

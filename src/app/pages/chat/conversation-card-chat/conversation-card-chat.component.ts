@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ChatComponent } from '@dataclouder/conversation-system';
+import { DCChatComponent } from '@dataclouder/conversation-system';
 
 @Component({
   selector: 'app-conversation-card-chat',
   standalone: true,
-  imports: [CommonModule, ChatComponent],
+  imports: [CommonModule, DCChatComponent],
   templateUrl: './conversation-card-chat.component.html',
   styleUrls: ['./conversation-card-chat.component.scss'],
 })

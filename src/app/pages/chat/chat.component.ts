@@ -19,7 +19,7 @@ import {
 import { addIcons } from 'ionicons';
 import { sendOutline, sendSharp, send } from 'ionicons/icons';
 import {
-  ChatComponent,
+  DCChatComponent,
   ConversationUserSettings,
   ConversationChatSettings,
   ChatRole,
@@ -48,7 +48,7 @@ import { NavigationExtras, Router } from '@angular/router';
     IonList,
     IonAvatar,
     IonText,
-    ChatComponent,
+    DCChatComponent,
     ConversationCardListsComponent,
   ],
 })
