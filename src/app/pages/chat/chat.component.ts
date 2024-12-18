@@ -89,17 +89,17 @@ export class ChatComponentPage implements OnInit {
     // Initialize with some dummy messages
   }
 
-  public goToDetails($event: any) {
-    console.log('goToDetails', $event);
+  public goToDetails(idCard: any) {
+    console.log('goToDetails', idCard);
     const navigationExtras: NavigationExtras = {
       state: {
-        conversation: $event,
+        conversation: idCard,
       },
     };
-    this.router.navigate(['/page/conversation-details'], navigationExtras);
+    this.router.navigate(['/page/stack/conversation-details', idCard], navigationExtras);
   }
 
-  public goToEdit($event: any) {
-    this.router.navigate(['/page/stack/conversation-form']);
+  public goToEdit(idCard: any) {
+    this.router.navigate(['/page/stack/conversation-form', idCard]);
   }
 }

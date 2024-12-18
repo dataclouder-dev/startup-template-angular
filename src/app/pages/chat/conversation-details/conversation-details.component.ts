@@ -30,6 +30,7 @@ export class ConversationDetailsPage implements OnInit {
   }
 
   public startConversation($event: any) {
+    debugger;
     console.log('startConversation', $event);
     this.router.navigate(['/page/stack/chat'], {
       state: {

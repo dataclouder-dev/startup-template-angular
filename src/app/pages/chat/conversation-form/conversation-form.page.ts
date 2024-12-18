@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 
-import { ConversationFormComponent } from '@dataclouder/conversation-system';
+import { DCConversationFormComponent } from '@dataclouder/conversation-system';
 
 import {
   IonHeader,
@@ -32,6 +32,7 @@ import {
   IonTabBar,
   IonFooter,
   IonApp,
+  AlertController,
 } from '@ionic/angular/standalone';
 
 import { environment } from 'src/environments/environment';
@@ -69,7 +70,7 @@ import { environment } from 'src/environments/environment';
     IonHeader,
     CommonModule,
     RouterOutlet,
-    ConversationFormComponent,
+    DCConversationFormComponent,
   ],
   templateUrl: './conversation-form.page.html',
   styleUrl: './conversation-form.page.css',
@@ -80,9 +81,17 @@ export class ConversationFormPage implements OnInit {
 
   public projectName = environment.projectName;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private AlertController: AlertController) {}
 
   ngOnInit(): void {
     this.currentPath = this.router.url.split('/')[3];
+  }
+
+  public onSave() {
+    this.AlertController.create({
+      header: 'Save',
+      message: 'Conversation saved',
+      buttons: ['OK'],
+    }).then(alert => alert.present);
   }
 }
