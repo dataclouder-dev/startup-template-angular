@@ -21,9 +21,10 @@ import { sendOutline, sendSharp, send } from 'ionicons/icons';
 import {
   DCChatComponent,
   ConversationUserSettings,
-  ConversationChatSettings,
+  ConversationPromptSettings,
   ChatRole,
   ConversationCardListsComponent,
+  AudioSpeed,
 } from '@dataclouder/conversation-system';
 import { NavigationExtras, Router } from '@angular/router';
 
@@ -64,11 +65,11 @@ export class ChatComponentPage implements OnInit {
     synthVoice: false,
     modelName: '',
     provider: '',
-    speed: '',
+    speed: AudioSpeed.Regular,
     speedRate: 1,
   };
 
-  public conversationChatSettings: ConversationChatSettings = {
+  public ConversationPromptSettings: ConversationPromptSettings = {
     messages: [
       { role: ChatRole.System, content: 'you are a helpful assistant talking about fruits, vegetables and similar' },
       {

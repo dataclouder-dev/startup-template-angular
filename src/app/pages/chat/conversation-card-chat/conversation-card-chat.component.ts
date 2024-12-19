@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DCChatComponent, ConversationChatSettings, ConversationUserSettings, ChatRole } from '@dataclouder/conversation-system';
+import { DCChatComponent, ConversationPromptSettings, ConversationUserSettings, ChatRole, AudioSpeed } from '@dataclouder/conversation-system';
 
 @Component({
   selector: 'app-conversation-card-chat',
@@ -10,9 +10,8 @@ import { DCChatComponent, ConversationChatSettings, ConversationUserSettings, Ch
   styleUrls: ['./conversation-card-chat.component.scss'],
 })
 export class ConversationCardChatComponent implements OnInit {
-  public conversationChatSettings: ConversationChatSettings = {
+  public ConversationPromptSettings: ConversationPromptSettings = {
     messages: [{ text: 'you are having a conversation with?', content: 'bot', role: ChatRole.System }],
-
   };
   public conversationUserSettings: ConversationUserSettings = {
     realTime: false,
@@ -26,7 +25,7 @@ export class ConversationCardChatComponent implements OnInit {
     speedRate: 1,
     modelName: '',
     provider: '',
-    speed: '',
+    speed: AudioSpeed.Regular,
   };
   ngOnInit(): void {
     debugger;
