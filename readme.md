@@ -20,9 +20,11 @@ download-templates.sh : should download all projects and future will install all
 
 1) Clone the project. 
 
-    git clone https://github.com/dataclouder/dataclouder-template.git
+    git clone https://github.com/adamofig/dataclouder-template-ionic.git optional-renaming
 
 2) Rename the project. 
+run the command
+    python3 rename_project.py your-project-name com.your-project-name.app
 
 There is a script to rename the project, which will rename all the files and folders.
 

@@ -7,6 +7,8 @@ export const environment = {
   clientId: '',
   androidClientId: '',
   iosClientId: '',
+  backendNodeUrl: 'http://localhost:8080',
+  backendPythonUrl: 'http://localhost:8080',
 
   firebase: {
     apiKey: '',
