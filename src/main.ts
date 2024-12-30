@@ -38,7 +38,13 @@ bootstrapApplication(AppComponent, {
     provideIonicAngular(),
     provideRouter(routes, withPreloading(PreloadAllModules)),
     provideHttpClient(withInterceptors([authInterceptor])),
-    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideFirebaseApp(() => {
+      if (!environment.firebase?.apiKey || !environment.firebase?.projectId) {
+        alert('Please add the Firebase Credentials');
+        throw new Error('Firebase configuration is missing required fields');
+      }
+      return initializeApp(environment.firebase);
+    }),
     provideAuth(() => {
       if (Capacitor.isNativePlatform()) {
         return initializeAuth(getApp(), {

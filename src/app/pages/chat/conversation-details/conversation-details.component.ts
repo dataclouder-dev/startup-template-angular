@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { IonHeader, IonToolbar, IonTitle, IonContent, IonBackButton, IonButtons } from '@ionic/angular/standalone';
 
-import { DcConversationCardDetailsComponent } from '@dataclouder/conversation-system';
+import { DcConversationCardDetailsComponent, IConversationCard } from '@dataclouder/conversation-system';
 
 @Component({
   selector: 'app-conversation-details',
@@ -29,12 +29,11 @@ export class ConversationDetailsPage implements OnInit {
     }
   }
 
-  public startConversation($event: any) {
-    debugger;
-    console.log('startConversation', $event);
-    this.router.navigate(['/page/stack/chat'], {
+  public startConversation(card: IConversationCard) {
+    console.log('startConversation', card);
+    this.router.navigate(['/page/stack/chat', card._id], {
       state: {
-        conversation: $event,
+        conversation: card,
       },
     });
   }

@@ -109,25 +109,20 @@ export class LoginComponent implements OnInit {
   }
 
   public test() {
-    console.log('Test');
-    debugger;
     console.log('Test', environment.iosClientId);
   }
 
   async signInGoogle() {
-    debugger;
     console.log('Credenciales');
 
     // await GoogleAuth.initialize({
     //   clientId: environment.iosClientId,
     //   scopes: ['profile', 'email'],
     // });
-    debugger;
 
     console.log('Sign in google mostrando credenciales');
     const user: User = await GoogleAuth.signIn();
     console.log('Sign in google mostrando credenciales', user);
-    debugger;
 
     this.user = await this.firebaseAuthService.signInWithCredential(GoogleAuthProvider.credential(user.authentication.idToken));
     console.log('Sign in google mostrando credenciales', this.user);

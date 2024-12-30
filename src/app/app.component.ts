@@ -100,14 +100,5 @@ export class AppComponent {
       radio,
       search,
     });
-    // this.router.events.subscribe(event => {
-    //   if (event instanceof NavigationEnd) {
-    //     debugger;
-    //     console.log('[Router Event]', {
-    //       url: event.url,
-    //       urlAfterRedirects: event.urlAfterRedirects,
-    //     });
-    //   }
-    // });
   }
 }

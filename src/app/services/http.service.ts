@@ -22,7 +22,6 @@ export class HttpService {
 
   public postDataToService<T = any>(service: string, data: any, host = 'nodejs'): Promise<T> {
     const url = `${this.getHostUrl(host)}/${service}`;
-    debugger;
     const dataPlain = toPlainObject(data);
     const response$ = this.httpClient.post<T>(url, dataPlain).pipe(
       // tap(this.pipeCheckAppStatus.bind(this)),

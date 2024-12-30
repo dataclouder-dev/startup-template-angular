@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {
+  AudioSpeed,
   ChatRole,
   ConversationAIAbstractService,
   ConversationPromptSettings,
@@ -18,7 +19,22 @@ export class ConversationAIService implements ConversationAIAbstractService {
   constructor(private httpService: HttpService) {}
 
   getConversationChatSettings(): Promise<ConversationPromptSettings> {
-    throw new Error('Method not implemented.');
+    const defaultconvUserSettings: ConversationUserSettings = {
+      realTime: false,
+      repeatRecording: false,
+      fixGrammar: false,
+      superHearing: false,
+      voice: '',
+      autoTranslate: false,
+      highlightWords: true,
+      synthVoice: true,
+      modelName: '',
+      provider: 'google',
+      speed: AudioSpeed.Regular,
+      speedRate: 0, // temporal
+    };
+
+    return Promise.resolve(defaultconvUserSettings as ConversationPromptSettings);
   }
 
   getConversationUserSettings(): Promise<ConversationUserSettings> {
@@ -31,17 +47,21 @@ export class ConversationAIService implements ConversationAIAbstractService {
   }
 
   public async getTextAudioFile(tts: TTSRequest): Promise<AudioGenerated> {
-    // TODO check that is working
-    try {
-      const response = await this.httpService.postDataToService('api/conversation-ai/tts', tts);
-      return {
-        blobUrl: response.blobUrl,
-        transcription: response.transcription,
-      };
-    } catch (error) {
-      console.error('Error generating audio file:', error);
-      throw new Error('Failed to generate audio file');
+    debugger;
+    const httpReq: any = await this.httpService.receiveFile(`api/conversation-ai/tts`, tts);
+    const audioData: any = { blobUrl: null, transcription: null };
+
+    const transcription = httpReq?.headers.get('transcription');
+
+    if (transcription) {
+      const data = JSON.parse(transcription);
+      audioData.transcription = data;
     }
+
+    const mp3 = window.URL.createObjectURL(httpReq.body);
+    audioData.blobUrl = mp3;
+
+    return audioData;
   }
 
   public deleteConversationCard(id: string): Promise<IConversationCard> {

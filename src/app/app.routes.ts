@@ -67,6 +67,11 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./pages/chat/conversation-card-chat/conversation-card-chat.component').then(m => m.ConversationCardChatComponent),
       },
+      {
+        path: 'chat/:id',
+        loadComponent: () =>
+          import('./pages/chat/conversation-card-chat/conversation-card-chat.component').then(m => m.ConversationCardChatComponent),
+      },
 
       {
         path: 'conversation-details',
