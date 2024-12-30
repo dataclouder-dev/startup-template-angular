@@ -1,5 +1,5 @@
-PROJECT_ID="dataclouder-template"
-DISPLAY_NAME="Dataclouder Template"
+PROJECT_ID="conviertete-en-alfa"
+DISPLAY_NAME="Convierte en Alfa"
 
 # make sure you have firebase-tools installed
 echo "_____Installing Firebase tools _____"

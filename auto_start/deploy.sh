@@ -5,7 +5,7 @@ set -e
 
 # Build the Angular app
 echo "Building the Angular app..."
-ng build
+npm run build
 
 # Navigate into the build output directory
 cd ../www

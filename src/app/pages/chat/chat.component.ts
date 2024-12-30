@@ -101,6 +101,10 @@ export class ChatComponentPage implements OnInit {
   }
 
   public goToEdit(idCard: any) {
-    this.router.navigate(['/page/stack/conversation-form', idCard]);
+    if (idCard) {
+      this.router.navigate(['/page/stack/conversation-form', idCard]);
+    } else {
+      this.router.navigate(['/page/stack/conversation-form']);
+    }
   }
 }

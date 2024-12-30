@@ -22,9 +22,11 @@ download-templates.sh : should download all projects and future will install all
 
     git clone https://github.com/adamofig/dataclouder-template-ionic.git optional-renaming
 
-2) Rename the project. 
+2) Rename the project. use the AutoStarts scripts
+
+
 run the command
-    python3 rename_project.py your-project-name com.your-project-name.app
+    ```python3 rename_project.py your-project-name com.your-project-name.app```
 
 There is a script to rename the project, which will rename all the files and folders.
 
@@ -39,6 +41,21 @@ App ClientIds: com.your-web-page.app-name
 
 Example: 
     python3 rename_project.py lobo-alfa com.loboalfa.app
+
+### AutoStarts (WIP...)
+
+There is a better way to use the auto starts
+
+```cd auto_start```
+
+Create the project in firebase, and set the credentials for angular project. 
+```sh start_project```
+
+
+Basically this is the flow for the autostart
+
+![alt text](./docs/image.png)
+
 
 ### Change the Firebase credentials. 
 

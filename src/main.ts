@@ -17,8 +17,9 @@ import { Observable } from 'rxjs';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { Capacitor } from '@capacitor/core';
 import { AUTH_CONFIG } from '@dataclouder/app-auth';
-import { provideChatAIService } from '@dataclouder/conversation-system';
+import { provideChatAIService, provideToastAlert } from '@dataclouder/conversation-system';
 import { ConversationAIService } from './app/services/chat-ai-service';
+import { ToastAlertService } from './app/services/toast.service';
 
 export function loggingInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn): Observable<HttpEvent<unknown>> {
   console.log('Before interception request:', req.url);
@@ -56,6 +57,7 @@ bootstrapApplication(AppComponent, {
     }),
     { provide: FIREBASE_OPTIONS, useValue: environment.firebase },
     provideChatAIService(ConversationAIService),
+    provideToastAlert(ToastAlertService),
 
     importProvidersFrom(
       TranslateModule.forRoot({
