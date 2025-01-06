@@ -1,19 +1,48 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Profile</ion-title>
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/"></ion-back-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
+<form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+  <ion-list>
+    <ion-item>
+      <ion-label position="floating">Email</ion-label>
+      <ion-input type="email" formControlName="email"></ion-input>
+    </ion-item>
 
-<ion-content>
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title>User Profile</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <!-- Add profile content here -->
-    </ion-card-content>
-  </ion-card>
-</ion-content>
+    <!-- Personal Data Section -->
+    <ion-item-group formGroupName="personalData">
+      <ion-item-divider>
+        <ion-label>Personal Information</ion-label>
+      </ion-item-divider>
+
+      <ion-item>
+        <ion-label position="floating">First Name</ion-label>
+        <ion-input formControlName="firstname"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Last Name</ion-label>
+        <ion-input formControlName="lastname"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Gender</ion-label>
+        <ion-input formControlName="gender"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Birthday</ion-label>
+        <ion-datetime formControlName="birthday"></ion-datetime>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Nickname</ion-label>
+        <ion-input formControlName="nickname" type="text"></ion-input>
+      </ion-item>
+    </ion-item-group>
+
+    <!-- Profile Picture URL -->
+    <ion-item>
+      <ion-label position="floating">Profile Picture URL</ion-label>
+      <ion-input formControlName="urlPicture"></ion-input>
+    </ion-item>
+
+    <ion-button type="submit" expand="block" [disabled]="!profileForm.valid"> Save Profile </ion-button>
+  </ion-list>
+</form>

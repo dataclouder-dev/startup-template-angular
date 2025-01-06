@@ -190,7 +190,7 @@ export class IonicLayoutComponent implements OnInit {
           icon: 'share',
           handler: () => {
             // this.navController.navigateForward(RouteNames.Profile);
-            this.router.navigate(['/profile']);
+            this.router.navigate(['/page/stack/profile']);
           },
         },
 

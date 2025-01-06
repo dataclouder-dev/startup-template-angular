@@ -25,6 +25,7 @@ export enum RouteNames {
 
 export enum EndPoint {
   GetUser = 'api/user',
+  PostUser = 'api/user',
 }
 
 export enum AppHttpCode {

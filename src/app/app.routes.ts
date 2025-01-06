@@ -51,6 +51,8 @@ export const routes: Routes = [
 
   {
     path: 'page/stack',
+    canActivate: [AuthGuardService],
+
     loadComponent: () => import('./ionic-layout/stack-ionic/stack-ionic.component').then(m => m.StackIonicComponent),
     children: [
       {
@@ -82,6 +84,11 @@ export const routes: Routes = [
         path: 'conversation-details/:id',
         loadComponent: () => import('./pages/chat/conversation-details/conversation-details.component').then(m => m.ConversationDetailsPage),
       },
+
+      {
+        path: 'profile',
+        loadComponent: () => import('./pages/profile/profile.component').then(m => m.ProfileComponent),
+      },
     ],
   },
 
@@ -109,9 +116,10 @@ export const routes: Routes = [
       },
     ],
   },
+
   {
-    path: 'profile',
-    loadComponent: () => import('./pages/profile/profile.component').then(m => m.ProfileComponent),
+    path: 'not-found',
+    loadComponent: () => import('./pages/not-found/not-found.component').then(m => m.NotFoundComponent),
   },
   {
     path: '**',
