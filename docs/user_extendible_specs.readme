@@ -1,0 +1,60 @@
+### About the user specs dataclouder 
+
+**Understanding the needs**
+
+Basically every app need a user.
+Basic data is replicated in every project.
+user can be extensible depending on the bussiness logic.
+
+### How it works. 
+
+Basically after autentication app is able to retrive data from backend. 
+
+
+
+### About the specifications 
+
+```
+
+export interface IUser {
+  id: string;
+  email: string;
+  urlPicture: string;
+  authStrategy: string; // optional
+  personalData: Partial<PersonalData>;
+  claims: AppAuthClaims;
+}
+
+export class PersonalData {
+  firstname: string;
+  lastname: string;
+  gender: string;
+  birthday: Date;
+}
+
+
+```
+
+The here i have sugested extensions, 
+
+```
+//i use this for notificactions
+export class News {
+  date: Date;
+  title: string;
+  description: string;
+  viewed: boolean;
+  type: NewsType;
+}
+
+// this is for polilan multi languages
+export class UserSettings {
+  baseLanguage: string;
+  targetLanguage: string;
+  audioSpeed: number;
+  enableNotifications: boolean;
+  wordsNumber: number;
+  conversation: ConversationSettings;
+}
+
+```

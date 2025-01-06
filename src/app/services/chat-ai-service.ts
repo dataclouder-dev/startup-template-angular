@@ -18,26 +18,11 @@ export type TTSRequest = { text: string; voice: string; generateTranscription: b
 export class ConversationAIService implements ConversationAIAbstractService {
   constructor(private httpService: HttpService) {}
 
-  getConversationChatSettings(): Promise<ConversationPromptSettings> {
-    const defaultconvUserSettings: ConversationUserSettings = {
-      realTime: false,
-      repeatRecording: false,
-      fixGrammar: false,
-      superHearing: false,
-      voice: '',
-      autoTranslate: false,
-      highlightWords: true,
-      synthVoice: true,
-      modelName: '',
-      provider: 'google',
-      speed: AudioSpeed.Regular,
-      speedRate: 0, // temporal
-    };
-
-    return Promise.resolve(defaultconvUserSettings as ConversationPromptSettings);
+  saveConversationUserChatSettings(conversation: ConversationUserSettings): Promise<ConversationUserSettings> {
+    throw new Error('Method not implemented.');
   }
 
-  getConversationUserSettings(): Promise<ConversationUserSettings> {
+  getConversationUserChatSettings(): Promise<ConversationUserSettings> {
     throw new Error('Method not implemented.');
 
     return {} as any;

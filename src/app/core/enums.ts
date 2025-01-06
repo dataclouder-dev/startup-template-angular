@@ -23,6 +23,10 @@ export enum RouteNames {
   Auth = 'auth',
 }
 
+export enum EndPoint {
+  GetUser = 'api/user',
+}
+
 export enum AppHttpCode {
   GoodRefreshToken = 211,
   ErrorRefreshToken = 411,

@@ -1,0 +1,21 @@
+### Introduction
+After autentication succeed, app can get data user, so everything works fine. 
+
+This is my best strategy a little tricky but works well. 
+
+1) when auth succed, find user in backend sendding token. 
+1.1) When app reload get user first in guards.  
+2) this user is saved in service, now is availible for the rest of the navigation. 
+
+
+### Details 
+
+In the main routes  AuthGuardService defines who can activate the route, so this service is in charge of 
+
+Validate Auth  retrive  User from memory or retrive from  DB. (Advance mode with hydration)
+
+UserService: is the service to get and store everything related to userdata. 
+
+
+
+ 

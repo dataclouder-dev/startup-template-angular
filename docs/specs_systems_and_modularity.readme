@@ -1,0 +1,28 @@
+The goal of this project is be ready in seconds to starting the developing of new app. 
+
+due to my knowlegde preference time and limitation the project only works with my expertise technologies, probably this change in the future
+* Angular 
+* Firebase base
+* Google Cloud
+
+### What systems do you got here? 
+
+#### Autentication 
+Basically all relating to firabase conections and autostart tokens etc. should be handle here 
+
+#### Claims 
+This are the specification that restrict what user can do, roles and priviledges. 
+
+
+#### User Retrive Data 
+After authentication backend need to handle data for user, this is handle here check the specs how to extend the project for custom business logic. 
+
+#### Upload Files 
+This is for upload files to gcp usefull in multiple scenarios but is a library you need to install. 
+
+
+That is for know. 
+
+
+
+
