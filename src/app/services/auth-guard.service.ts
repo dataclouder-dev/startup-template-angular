@@ -4,7 +4,7 @@ import { ActivatedRouteSnapshot, RouterStateSnapshot, Router, UrlTree, Route, Ur
 import { from, fromEvent, Observable, of } from 'rxjs';
 import { mergeMap, concatMap, tap, first, catchError } from 'rxjs/operators';
 import { FirebaseAuthService } from './firebase-auth.service';
-import { UserService } from '../user-module/user.service';
+import { UserService } from '../dc-user-module/user.service';
 import { ToastAlertService } from './toast.service';
 
 @Injectable({

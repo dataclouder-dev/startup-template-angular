@@ -1,158 +1,188 @@
 .landing-container {
-  width: 100%;
-  min-height: 100vh;
-  overflow: auto;
-  
-  .sticky-nav {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    background: rgba(255, 255, 255, 0.95);
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
 
-    .nav-content {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 1rem 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+  section {
+    margin-bottom: 80px;
+    scroll-margin-top: 80px;
+  }
 
-      .logo {
-        font-size: 1.5rem;
-        font-weight: bold;
-        color: #333;
-      }
+  h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: var(--ion-color-primary);
+  }
 
-      .auth-buttons {
-        display: flex;
-        gap: 1rem;
+  h2 {
+    font-size: 2.5rem;
+    font-weight: 600;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+}
 
-        button {
-          padding: 0.5rem 1rem;
-          border-radius: 4px;
-          border: none;
-          cursor: pointer;
-          transition: all 0.3s ease;
+// Hero Section
+.hero-section {
+  text-align: center;
+  padding: 60px 0;
 
-          &.sign-in-btn {
-            background: transparent;
-            border: 1px solid #007bff;
-            color: #007bff;
+  .subtitle {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    color: var(--ion-color-medium);
+  }
 
-            &:hover {
-              background: #007bff;
-              color: white;
-            }
-          }
-
-          &.sign-up-btn {
-            background: #007bff;
-            color: white;
-
-            &:hover {
-              background: #0056b3;
-            }
-          }
-        }
-      }
+  .hero-image {
+    max-width: 100%;
+    margin: 2rem 0;
+    
+    img {
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
   }
 
-  .content {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 6rem 2rem 2rem;
+  .cta-button {
+    --padding-start: 2rem;
+    --padding-end: 2rem;
+    height: 54px;
+    font-size: 1.2rem;
+  }
+}
 
-    .hero {
-      text-align: center;
-      padding: 4rem 0;
+// Features Grid
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-top: 3rem;
 
-      h1 {
-        font-size: 3rem;
-        margin-bottom: 1rem;
-      }
+  .feature-card {
+    padding: 2rem;
+    border-radius: 10px;
+    background: var(--ion-color-light);
+    text-align: center;
+    transition: transform 0.3s ease;
 
-      .subtitle {
-        font-size: 1.5rem;
-        color: #666;
-      }
+    &:hover {
+      transform: translateY(-5px);
     }
 
-    section {
-      margin: 4rem 0;
-
-      h2 {
-        font-size: 2rem;
-        margin-bottom: 2rem;
-      }
-
-      &.features {
-        .features-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-          gap: 2rem;
-
-          .feature-card {
-            padding: 2rem;
-            background: #f8f9fa;
-            border-radius: 8px;
-            transition: transform 0.3s ease;
-
-            &:hover {
-              transform: translateY(-5px);
-            }
-
-            h3 {
-              margin-bottom: 1rem;
-            }
-
-            p {
-              color: #666;
-            }
-          }
-        }
-      }
-
-      &.cta {
-        text-align: center;
-        padding: 4rem 0;
-
-        .cta-button {
-          padding: 1rem 2rem;
-          font-size: 1.1rem;
-          background: #007bff;
-          color: white;
-          border: none;
-          border-radius: 4px;
-          cursor: pointer;
-          transition: background 0.3s ease;
-
-          &:hover {
-            background: #0056b3;
-          }
-        }
-      }
+    ion-icon {
+      font-size: 3rem;
+      color: var(--ion-color-primary);
+      margin-bottom: 1rem;
     }
   }
 }
 
-@media (max-width: 768px) {
-  .landing-container {
-    .content {
-      padding: 5rem 1rem 1rem;
+// Benefits Section
+.benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
 
-      .hero {
-        h1 {
-          font-size: 2rem;
-        }
+  .benefit-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: var(--ion-color-light);
+    border-radius: 8px;
 
-        .subtitle {
-          font-size: 1.2rem;
-        }
-      }
+    ion-icon {
+      font-size: 2rem;
+      color: var(--ion-color-primary);
     }
   }
+}
+
+// Testimonials Section
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+
+  .testimonial-card {
+    padding: 2rem;
+    background: var(--ion-color-light);
+    border-radius: 10px;
+    text-align: center;
+
+    img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      margin-bottom: 1rem;
+    }
+  }
+}
+
+// Pricing Section
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+
+  .pricing-card {
+    padding: 2rem;
+    background: var(--ion-color-light);
+    border-radius: 10px;
+    text-align: center;
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 2rem 0;
+    }
+
+    .select-plan-button {
+      width: 100%;
+    }
+  }
+}
+
+// Footer
+.landing-footer {
+  background: var(--ion-color-light);
+  padding: 3rem 0;
+  margin-top: 4rem;
+
+  .footer-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    text-align: center;
+  }
+
+  .legal-links {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+  }
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  .landing-container {
+    h1 {
+      font-size: 2rem;
+    }
+
+    h2 {
+      font-size: 1.8rem;
+    }
+  }
+
+  .hero-section .subtitle {
+    font-size: 1.2rem;
+  }
+}
+
+.version-info {
+  text-align: center;
+  margin-top: 2rem;
+  color: var(--ion-color-medium);
 }

@@ -8,6 +8,7 @@ import {
   IConversationCard,
 } from '@dataclouder/conversation-system';
 import { HttpService } from './http.service';
+import { UserService } from '../dc-user-module/user.service';
 
 export type AudioGenerated = { blobUrl: string; transcription: any };
 export type TTSRequest = { text: string; voice: string; generateTranscription: boolean; speedRate: number; speed?: string; ssml?: string };
@@ -16,26 +17,44 @@ export type TTSRequest = { text: string; voice: string; generateTranscription: b
   providedIn: 'root',
 })
 export class ConversationAIService implements ConversationAIAbstractService {
-  constructor(private httpService: HttpService) {}
+  constructor(private httpService: HttpService, private userService: UserService) {}
 
   saveConversationUserChatSettings(conversation: ConversationUserSettings): Promise<ConversationUserSettings> {
-    throw new Error('Method not implemented.');
+    debugger;
+    console.log('saveConversationUserChatSettings', conversation);
+    this.userService.saveUser({ conversationSettings: conversation });
+    return Promise.resolve(conversation);
   }
 
   getConversationUserChatSettings(): Promise<ConversationUserSettings> {
-    throw new Error('Method not implemented.');
-
-    return {} as any;
+    debugger;
+    if (this.userService.user?.conversationSettings) {
+      return Promise.resolve(this.userService.user?.conversationSettings as ConversationUserSettings);
+    } else {
+      return Promise.resolve({
+        realTime: false,
+        repeatRecording: false,
+        fixGrammar: false,
+        superHearing: false,
+        voice: 'en-US',
+        autoTranslate: false,
+        synthVoice: false,
+        highlightWords: false,
+        speedRate: 1,
+        modelName: '',
+        provider: '',
+        speed: AudioSpeed.Regular,
+      } as ConversationUserSettings);
+    }
   }
+
   getConversationPromptSettings(): Promise<ConversationPromptSettings> {
     throw new Error('Method not implemented.');
   }
 
   public async getTextAudioFile(tts: TTSRequest): Promise<AudioGenerated> {
-    debugger;
     const httpReq: any = await this.httpService.receiveFile(`api/conversation-ai/tts`, tts);
     const audioData: any = { blobUrl: null, transcription: null };
-
     const transcription = httpReq?.headers.get('transcription');
 
     if (transcription) {
@@ -67,8 +86,6 @@ export class ConversationAIService implements ConversationAIAbstractService {
       return await this.httpService.postDataToService('api/conversation-ai/conversation', conversation);
     }
   }
-
-  // TODO: necesito ponerle un tipo al return.
 
   public async callChatCompletion(conversation: ConversationPromptSettings): Promise<any> {
     console.log('callChatCompletion', conversation);

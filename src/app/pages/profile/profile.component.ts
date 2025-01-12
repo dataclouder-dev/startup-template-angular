@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { IUser, PlanType, PermissionType, RolType } from '../../user-module/user.class';
+import { IUser, PlanType, PermissionType, RolType } from '../../dc-user-module/user.class';
 import { CommonModule } from '@angular/common';
-import { UserService } from 'src/app/user-module/user.service';
+import { UserService } from 'src/app/dc-user-module/user.service';
 
 @Component({
   selector: 'app-profile',
