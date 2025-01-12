@@ -22,6 +22,8 @@ export enum PermissionType {
 
 export enum RolType {
   Admin = 'admin',
+  Teacher = 'teacher',
+  Tester = 'tester',
 }
 
 export type PermissionClaim = Record<PermissionType, { exp: Date; num: number }>;
@@ -54,3 +56,27 @@ export interface IUser {
   authStrategy: string;
   conversationSettings: ConversationUserSettings;
 }
+
+export const RolOptions = [
+  { name: 'Administrador', value: RolType.Admin },
+  { name: 'Profesor', value: RolType.Teacher },
+  { name: 'Tester', value: RolType.Tester },
+];
+
+export const PlanOptions = [
+  { name: 'Básico', value: PlanType.Basic },
+  { name: 'Beta', value: PlanType.Beta },
+  { name: 'Follower', value: PlanType.Follower },
+  { name: 'Premium', value: PlanType.Premium },
+];
+
+// TODO: move this to admin
+export const ExpireDateOptions = [
+  { name: 'No expira', value: null },
+  { name: '1 Mes', value: 1 },
+  { name: '2 Meses', value: 2 },
+  { name: '3 Meses', value: 3 },
+  { name: '4 Meses', value: 4 },
+  { name: '6 Meses', value: 6 },
+  { name: '1 Año', value: 12 },
+];

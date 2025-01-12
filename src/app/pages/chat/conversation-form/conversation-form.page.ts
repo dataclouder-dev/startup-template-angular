@@ -94,4 +94,8 @@ export class ConversationFormPage implements OnInit {
       buttons: ['OK'],
     }).then(alert => alert.present);
   }
+
+  public goToDetails(id: string) {
+    this.router.navigate(['/page/stack/conversation-details', id]);
+  }
 }

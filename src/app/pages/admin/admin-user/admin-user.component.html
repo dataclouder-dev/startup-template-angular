@@ -1,0 +1,148 @@
+<ion-content>
+  <p>Selecciona el usuario y los permisos</p>
+
+  <h3>1) Buscar Usuario</h3>
+
+  <ion-item>
+    <ion-input [formControl]="formGroup.controls.email" type="text" placeholder="Email" (keydown.enter)="getUserClaims()"></ion-input>
+  </ion-item>
+
+  <ion-button [disabled]="formGroup.controls.email.invalid" (click)="getUserClaims()" color="success"> Buscar usuario </ion-button>
+
+  @if(!existingUser){
+  <div>
+    <p>Buscar un usuario par ainiciar</p>
+    <p>Si el usuario no existe, puedes crearlo <a href="/admin/crear-usuario">aquí</a></p>
+  </div>
+
+  } @else {
+
+  <ion-item-divider></ion-item-divider>
+
+  <div>
+    <h3>Modificar Permisos</h3>
+
+    <ion-item>
+      <ion-label>Selecciona permiso</ion-label>
+      <ion-select [(ngModel)]="permissionInput.type" placeholder="Permisos">
+        <ion-select-option *ngFor="let option of permissionsOptions" [value]="option.value">
+          {{ option.name }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Selecciona una fecha</ion-label>
+      <ion-select [(ngModel)]="permissionInput.expMonths" (ionChange)="calculateExpireDate(permissionInput)" placeholder="Fecha de expiración">
+        <ion-select-option *ngFor="let option of expireDateOptions" [value]="option.value">
+          {{ option.name }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-datetime [(ngModel)]="permissionInput.exp" presentation="date"></ion-datetime>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Número de unidades (Opcional)</ion-label>
+      <ion-input [(ngModel)]="permissionInput.num" type="number" placeholder="Unidades"></ion-input>
+    </ion-item>
+
+    <ion-button [disabled]="formGroup.invalid || !existingUser" (click)="addPermissionFormGroup()" color="success"> Agregar Permiso </ion-button>
+
+    <div *ngIf="(formGroup.controls?.permissions?.value | json) == '{}'">👉 No tiene Permisos adicionales</div>
+
+    <ion-list>
+      <ion-item *ngFor="let iter of formGroup.controls?.permissions?.controls | keyvalue">
+        <ion-button slot="end" (click)="removeControl('permissions', iter.key)" color="danger" fill="clear">
+          <ion-icon name="close-circle"></ion-icon>
+        </ion-button>
+        <ion-label>
+          <b>Permiso {{ iter.key | permissionName }}</b>
+          - @if (iter.value.value) {
+          <span>{{ iter.value.value | json }}</span>
+          } @else {
+          <span>No Expira</span>
+          }
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </div>
+
+  <!-- Continue converting the rest similarly -->
+
+  <div>
+    <h3>Modificar Roles</h3>
+
+    <ion-item>
+      <ion-label>Selecciona rol</ion-label>
+      <ion-select [(ngModel)]="rolInput.type" placeholder="Roles">
+        <ion-select-option *ngFor="let option of rolOptions" [value]="option.value">
+          {{ option.name }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Selecciona una fecha</ion-label>
+      <ion-select [(ngModel)]="rolInput.expMonths" (ionChange)="calculateExpireDate(rolInput)" placeholder="Fecha de expiración">
+        <ion-select-option *ngFor="let option of expireDateOptions" [value]="option.value">
+          {{ option.name }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-datetime [(ngModel)]="rolInput.exp" presentation="date"></ion-datetime>
+    </ion-item>
+
+    <ion-button expand="block" [disabled]="formGroup.invalid || !existingUser" (click)="addRolFormGroup()" color="success">
+      Agregar Rol
+    </ion-button>
+
+    <div *ngIf="(formGroup.controls?.roles?.value | json) == '{}'">👉 No tiene Roles</div>
+
+    <ion-list>
+      <ion-item *ngFor="let iter of formGroup.controls?.roles?.controls | keyvalue">
+        <ion-label>
+          <b>👉 Rol {{ iter.key }}</b>
+          - @if (iter.value.value) {
+          <span>{{ iter.value.value }}</span>
+          } @else {
+          <span>No Expira</span>
+          }
+        </ion-label>
+        <ion-button slot="end" (click)="removeControl('roles', iter.key)" color="danger" fill="clear">
+          <ion-icon name="close-circle"></ion-icon>
+        </ion-button>
+      </ion-item>
+    </ion-list>
+  </div>
+
+  <!-- For the plan section -->
+  <h3>Cambia el plan</h3>
+
+  <ion-item>
+    <ion-select [(ngModel)]="planInput.type" placeholder="Tipo de plan">
+      <ion-select-option *ngFor="let option of planOptions" [value]="option.value">
+        {{ option.name }}
+      </ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <!-- Bottom buttons -->
+  <ion-button expand="block" color="success" [disabled]="formGroup.invalid || !existingUser" (click)="updateUser()">
+    Actualizar todo
+  </ion-button>
+
+  <h3>Eliminar usuario</h3>
+
+  <ion-item>
+    <ion-input [(ngModel)]="deleteUserForm" type="text" placeholder="Email" (keydown.enter)="deleteUser()"></ion-input>
+  </ion-item>
+
+  <ion-button expand="block" color="danger" (click)="deleteUser()"> Eliminar usuario </ion-button>
+
+  }
+</ion-content>

@@ -13,6 +13,15 @@ Basically all relating to firabase conections and autostart tokens etc. should b
 #### Claims 
 This are the specification that restrict what user can do, roles and priviledges. 
 
+
+User
+Permissions: everything custom user can do
+Roles: a set of permissions, and advanced permissions
+Plan: platform login for payed users
+
+
+
+
 #### User Retrive Data 
 After authentication backend need to handle data for user, this is handle here check the specs how to extend the project for custom business logic. 
 

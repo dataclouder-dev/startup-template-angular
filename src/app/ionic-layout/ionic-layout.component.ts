@@ -65,6 +65,12 @@ import {
   chatbubbleEllipses,
   chatbubbleEllipsesOutline,
   chatbubbleEllipsesSharp,
+  people,
+  peopleOutline,
+  peopleSharp,
+  settings,
+  settingsOutline,
+  settingsSharp,
 } from 'ionicons/icons';
 import { RouteNames } from '../core/enums';
 import { environment } from 'src/environments/environment';
@@ -119,6 +125,14 @@ export class IonicLayoutComponent implements OnInit {
     { title: 'Test', url: '/page/test', icon: 'code-working' },
     { title: 'Conversation', url: '/page/chat', icon: 'chatbubble-ellipses' },
   ];
+
+  public adminPages = [
+    { title: 'Admin Users', url: '/page/admin-user', icon: 'people' },
+    { title: 'Admin Other', url: '/page/admin-other', icon: 'settings' },
+  ];
+
+  public isAdmin: boolean = false;
+
   constructor(
     private firebaseAuthService: FirebaseAuthService,
     private router: Router,
@@ -152,6 +166,12 @@ export class IonicLayoutComponent implements OnInit {
       chatbubbleEllipses,
       chatbubbleEllipsesOutline,
       chatbubbleEllipsesSharp,
+      people,
+      peopleOutline,
+      peopleSharp,
+      settings,
+      settingsOutline,
+      settingsSharp,
     });
     addIcons({ library, playCircle, radio, search });
     addIcons({ ellipsisHorizontal, ellipsisVertical, helpCircle, personCircle, search });
@@ -165,7 +185,10 @@ export class IonicLayoutComponent implements OnInit {
           displayName: auth.displayName,
           photoURL: auth.photoURL,
           emailVerified: auth.emailVerified,
+          isAdmin: auth.email === 'admin@example.com',
         };
+        // this.isAdmin = this.user.isAdmin;
+        this.isAdmin = true;
       }
 
       console.log(this.user);

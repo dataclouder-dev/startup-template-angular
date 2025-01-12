@@ -1,6 +1,7 @@
 export enum RouteNames {
-  Home = 'page/home',
-  Profile = 'page/profile',
+  Page = 'page',
+  Home = 'home',
+  Profile = 'profile',
   SubscriptionPlan = 'plan',
   Words = 'my-words',
   Phrases = 'my-phrases',
@@ -21,12 +22,18 @@ export enum RouteNames {
   Terms = 'terms',
   Main = 'main',
   Auth = 'auth',
+  Stack = 'stack',
+  ConversationDetails = 'conversation-details',
 }
 
-export enum EndPoint {
-  GetUser = 'api/user',
-  PostUser = 'api/user',
-}
+export const EndPoint = {
+  GetUser: 'api/user',
+  PostUser: 'api/user',
+  AdminUser: 'api/admin/user',
+  Admin: {
+    Claims: 'api/admin/claims', // :email
+  },
+};
 
 export enum AppHttpCode {
   GoodRefreshToken = 211,
