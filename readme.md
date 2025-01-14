@@ -101,6 +101,9 @@ That's all at this point. You should be able to run the app and be able to sign 
 
     This is just to get the firebase.json and .firebaserc files (you can also copy them).
 
+    npm run build
+    firebase deploy --only hosting:dataclouder-pro
+
 4) Add Android
 
     1) To avoid delaying other steps, it is best to create your certificate right away. 

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { IonHeader, IonToolbar, IonTitle, IonContent, IonBackButton, IonButtons } from '@ionic/angular/standalone';
 
 import { DcConversationCardDetailsComponent, IConversationCard } from '@dataclouder/conversation-system';
@@ -15,11 +15,19 @@ import { DcConversationCardDetailsComponent, IConversationCard } from '@dataclou
 export class ConversationDetailsPage implements OnInit {
   conversationId: any;
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private route: ActivatedRoute) {
+    // First try to get from state
     const navigation = this.router.getCurrentNavigation();
     const state = navigation?.extras?.state as { conversation: any };
-    if (state) {
+    if (state?.conversation) {
       this.conversationId = state.conversation;
+    } else {
+      // If not in state, get from path params
+      this.route.params.subscribe(params => {
+        if (params['id']) {
+          this.conversationId = params['id'];
+        }
+      });
     }
   }
 

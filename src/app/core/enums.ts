@@ -33,6 +33,9 @@ export const EndPoint = {
   Admin: {
     Claims: 'api/admin/claims', // :email
   },
+  ConversationCard: {
+    TranslateConversation: 'api/conversation_card/translate',
+  },
 };
 
 export enum AppHttpCode {
