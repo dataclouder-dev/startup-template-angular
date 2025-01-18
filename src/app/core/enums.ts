@@ -26,7 +26,7 @@ export enum RouteNames {
   ConversationDetails = 'conversation-details',
 }
 
-export const EndPoint = {
+export const Endpoints = {
   GetUser: 'api/user',
   PostUser: 'api/user',
   AdminUser: 'api/admin/user',
@@ -35,6 +35,11 @@ export const EndPoint = {
   },
   ConversationCard: {
     TranslateConversation: 'api/conversation_card/translate',
+  },
+
+  Lessons: {
+    Lesson: 'api/lessonv2',
+    QueryLessons: 'api/lessonv2/query',
   },
 };
 

@@ -122,7 +122,6 @@ export class IonicLayoutComponent implements OnInit {
   public appPages = [
     { title: 'Home', url: '/page/home', icon: 'home' },
     { title: 'Explore', url: '/page/explore', icon: 'eye' },
-    { title: 'Test', url: '/page/test', icon: 'code-working' },
     { title: 'Conversation', url: '/page/chat', icon: 'chatbubble-ellipses' },
   ];
 
@@ -130,6 +129,8 @@ export class IonicLayoutComponent implements OnInit {
     { title: 'Admin Users', url: '/page/admin-user', icon: 'people' },
     { title: 'Admin Other', url: '/page/admin-other', icon: 'settings' },
   ];
+
+  public testingPages = [{ title: 'Test', url: '/page/test', icon: 'code-working' }];
 
   public isAdmin: boolean = false;
 

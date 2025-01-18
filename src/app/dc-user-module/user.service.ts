@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from '../services/http.service';
-import { EndPoint } from '../core/enums';
+import { Endpoints } from '../core/enums';
 import { IPersonalData, IUser } from './user.class';
 
 @Injectable({
@@ -11,7 +11,7 @@ export class UserService {
   public user: IUser | null = null;
 
   public async findUserWithToken(): Promise<IUser | null> {
-    this.user = await this.httpService.getDataFromService(EndPoint.GetUser);
+    this.user = await this.httpService.getDataFromService(Endpoints.GetUser);
     return this.user;
   }
 
@@ -22,7 +22,7 @@ export class UserService {
   public async saveUser(user: Partial<IUser>) {
     // need id and whatever attribute to update {id: 1, settings: {}}
     try {
-      const results = await this.httpService.postDataToService(EndPoint.PostUser, user);
+      const results = await this.httpService.postDataToService(Endpoints.PostUser, user);
       // this.user = user;
       return results;
     } catch (err) {

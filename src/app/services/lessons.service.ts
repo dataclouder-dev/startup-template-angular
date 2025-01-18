@@ -1,0 +1,97 @@
+import { Injectable } from '@angular/core';
+import { Lesson, LessonsAbstractService } from '@dataclouder/lessons';
+import { HttpService } from './http.service';
+import { UserService } from '../dc-user-module/user.service';
+import { Endpoints } from '../core/enums';
+
+type LessonPaginator = { rows: Lesson[]; count: number };
+
+@Injectable({
+  providedIn: 'root',
+})
+export class LessonsService implements LessonsAbstractService {
+  constructor(private httpService: HttpService, private userService: UserService) {}
+
+  public async postLesson(lesson: Lesson) {
+    // const langParams = this.userService.getUserLangOptions();
+    // return this.httpService.postDataToService<Lesson>(`${Endpoints.Lessons}?${langParams}`, lesson);
+  }
+
+  public async getLesson(id: string) {
+    return this.httpService.getDataFromService<Lesson>(`${Endpoints.Lessons.QueryLessons}/${id}`);
+  }
+
+  //   TODO: change to paginator
+  public async getLessons(paginator: any = null, unpublished = false) {
+    if (paginator) {
+      if (unpublished) {
+        // TODO: probably i can use the filter
+        // return this.httpService.postDataToService<LessonPaginator>(Endpoints.Lessons.GetUnpublishedLessons, paginator);
+        return null;
+      } else {
+        return this.httpService.postDataToService<LessonPaginator>(Endpoints.Lessons.QueryLessons, paginator);
+      }
+    } else {
+      return this.httpService.postDataToService<LessonPaginator>(Endpoints.Lessons.QueryLessons, null);
+    }
+  }
+
+  public async getPublicLessons() {
+    // return this.httpService.getDataFromService<Lesson[]>(LessonApi.GetPublicLessons);
+  }
+
+  public async deleteLesson(id: string) {
+    return this.httpService.deleteDataFromService(`${Endpoints.Lessons.QueryLessons}/${id}`);
+  }
+
+  public saveTakenLesson(lesson: { lessonId: string; status: string; score: number }) {
+    // return this.httpService.postDataToService(UserWebApi.LessonTaken, lesson);
+  }
+
+  public async generateAudiosForLesson(lessonId: string) {
+    // TODO: fix this
+    // return this.httpService.getDataFromService(`${Endpoints.GenerateMedia}/${lessonId}`, 'python');
+  }
+
+  public async postGenerateByAI(lessonId: string) {
+    // TODO fix this:
+    // return this.httpService.postDataToService(`${Endpoints.Lessons.GenerateLesson}`, { id: lessonId }, 'python');
+  }
+
+  public extractTextFromHtml(html: string) {
+    const r1 = new RegExp('~(.+?)~', 'g');
+
+    const lessonHtml = html.replace(r1, (_matching, jsonCoded) => {
+      const data = JSON.parse(jsonCoded);
+      return `<span>${data?.settings?.text}</span>`;
+    });
+    console.log('lessonHtml', lessonHtml);
+    const onlyText = this.extractTextFromHTML(lessonHtml);
+    return onlyText;
+  }
+
+  private extractTextFromHTML(htmlString: any) {
+    // Remove HTML tags
+    let text = htmlString.replace(/<[^>]*>/g, ' ');
+
+    // Remove style and script content
+    text = text.replace(/<style[^>]*>[\s\S]*?<\/style>/gi, ' ');
+    text = text.replace(/<script[^>]*>[\s\S]*?<\/script>/gi, ' ');
+
+    // Decode HTML entities
+    text = text.replace(/&nbsp;/g, ' ');
+    text = text.replace(/&amp;/g, '&');
+    text = text.replace(/&lt;/g, '<');
+    text = text.replace(/&gt;/g, '>');
+
+    // Remove extra whitespace
+    text = text.replace(/\s+/g, ' ').trim();
+
+    return text;
+  }
+
+  public getRecommendedLessons() {
+    // TODO fix this:
+    // return this.httpService.getDataFromService<Lesson[]>(LessonApi.Recommendations);
+  }
+}

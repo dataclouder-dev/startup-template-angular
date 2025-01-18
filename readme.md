@@ -103,6 +103,7 @@ That's all at this point. You should be able to run the app and be able to sign 
 
     npm run build
     firebase deploy --only hosting:dataclouder-pro
+    firebase deploy --only hosting:dataclouder-dev : change .firebaserc to dataclouder-dev
 
 4) Add Android
 

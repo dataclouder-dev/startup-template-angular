@@ -9,7 +9,7 @@ import {
 } from '@dataclouder/conversation-system';
 import { HttpService } from './http.service';
 import { UserService } from '../dc-user-module/user.service';
-import { EndPoint } from '../core/enums';
+import { Endpoints } from '../core/enums';
 
 export type AudioGenerated = { blobUrl: string; transcription: any };
 export type TTSRequest = { text: string; voice: string; generateTranscription: boolean; speedRate: number; speed?: string; ssml?: string };
@@ -22,7 +22,7 @@ export class ConversationAIService implements ConversationAIAbstractService {
 
   async translateConversation(currentLang: string, targetLang: string, idCard: string): Promise<ConversationUserSettings> {
     const response = await this.httpService.postDataToService(
-      `${EndPoint.ConversationCard.TranslateConversation}`,
+      `${Endpoints.ConversationCard.TranslateConversation}`,
       { currentLang, targetLang, idCard },
       'python'
     );

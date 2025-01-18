@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { RouteNames } from '../core/enums';
 
-import { FirebaseAuthService, SharedLoginComponent } from '@dataclouder/app-auth';
+import { FirebaseAuthService, DcLoginComponent } from '@dataclouder/app-auth';
 import { IonItem, IonButton, IonIcon, IonContent, IonInput, IonToolbar, IonFooter, Platform } from '@ionic/angular/standalone';
 
 @Component({
@@ -27,7 +27,7 @@ import { IonItem, IonButton, IonIcon, IonContent, IonInput, IonToolbar, IonFoote
     FormsModule,
     ReactiveFormsModule,
     TranslateModule,
-    SharedLoginComponent,
+    DcLoginComponent,
   ],
 })
 export class LoginComponent implements OnInit {
@@ -55,7 +55,7 @@ export class LoginComponent implements OnInit {
       console.log('READY!');
 
       GoogleAuth.initialize({
-        clientId: environment.iosClientId,
+        clientId: environment.mobile.iosClientId,
         scopes: ['profile', 'email'],
         grantOfflineAccess: true,
       });
@@ -109,7 +109,7 @@ export class LoginComponent implements OnInit {
   }
 
   public test() {
-    console.log('Test', environment.iosClientId);
+    console.log('Test', environment.mobile.iosClientId);
   }
 
   async signInGoogle() {

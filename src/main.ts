@@ -21,6 +21,9 @@ import { provideChatAIService, provideToastAlert } from '@dataclouder/conversati
 import { ConversationAIService } from './app/services/chat-ai-service';
 import { ToastAlertService } from './app/services/toast.service';
 
+import { provideLessonsService } from '@dataclouder/lessons';
+import { LessonsService } from './app/services/lessons.service';
+
 export function loggingInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn): Observable<HttpEvent<unknown>> {
   console.log('Before interception request:', req.url);
   console.log(req.url);
@@ -58,6 +61,7 @@ bootstrapApplication(AppComponent, {
     { provide: FIREBASE_OPTIONS, useValue: environment.firebase },
     provideChatAIService(ConversationAIService),
     provideToastAlert(ToastAlertService),
+    provideLessonsService(LessonsService),
 
     importProvidersFrom(
       TranslateModule.forRoot({
@@ -71,7 +75,19 @@ bootstrapApplication(AppComponent, {
 
     {
       provide: AUTH_CONFIG,
-      useValue: { firebase: environment.firebase, androidClientId: environment.androidClientId, webClientId: environment.clientId },
+      useValue: {
+        clientIds: {
+          androidClientId: environment.mobile.androidClientId,
+          webClientId: environment.mobile.iosClientId,
+          iosClientId: environment.mobile.iosClientId,
+        },
+        settings: {
+          loginRedirectUri: '/auth/signin',
+          signupRedirectUri: '/auth/signup',
+          afterLoginRedirectUri: '/',
+          appleRedirectURI: environment.mobile.appleRedirectURI,
+        },
+      },
     },
   ],
 });
