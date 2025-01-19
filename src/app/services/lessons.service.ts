@@ -11,6 +11,12 @@ type LessonPaginator = { rows: Lesson[]; count: number };
 })
 export class LessonsService implements LessonsAbstractService {
   constructor(private httpService: HttpService, private userService: UserService) {}
+  updateLesson(lesson: Lesson): Promise<any> {
+    throw new Error('Method not implemented.');
+  }
+  generateLesson(lesson: Lesson): Promise<any> {
+    throw new Error('Method not implemented.');
+  }
 
   public async postLesson(lesson: Lesson) {
     // const langParams = this.userService.getUserLangOptions();

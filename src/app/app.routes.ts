@@ -104,6 +104,12 @@ export const routes: Routes = [
       {
         path: 'explore',
         loadComponent: () => import('./pages/explore/explore.page').then(m => m.ExplorePage),
+        children: [
+          {
+            path: 'edit',
+            loadComponent: () => import('./pages/explore/explore-edit/explore-edit.component').then(m => m.ExploreEditComponent),
+          },
+        ],
       },
 
       {
