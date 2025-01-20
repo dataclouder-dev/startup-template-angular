@@ -38,7 +38,7 @@ export const Endpoints = {
   },
 
   Lessons: {
-    Lesson: 'api/lessonv2',
+    Lesson: 'api/lessonv2/lesson',
     QueryLessons: 'api/lessonv2/query',
   },
 };

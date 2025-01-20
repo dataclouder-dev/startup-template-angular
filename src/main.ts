@@ -8,21 +8,27 @@ import { HttpClient, HttpEvent, HttpHandlerFn, HttpRequest, provideHttpClient, w
 import { authInterceptor } from './app/services/interception.service';
 import { environment } from './environments/environment';
 import { getApp, initializeApp, provideFirebaseApp } from '@angular/fire/app';
-import { getAuth, indexedDBLocalPersistence, initializeAuth } from 'firebase/auth';
-import { provideAuth } from '@angular/fire/auth';
-import { importProvidersFrom } from '@angular/core';
+// import { getAuth, indexedDBLocalPersistence, initializeAuth } from 'firebase/auth';
+import { provideAuth, getAuth, initializeAuth, indexedDBLocalPersistence } from '@angular/fire/auth';
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
+
+import { importProvidersFrom } from '@angular/core';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { Capacitor } from '@capacitor/core';
 import { AUTH_CONFIG } from '@dataclouder/app-auth';
-import { provideChatAIService, provideToastAlert } from '@dataclouder/conversation-system';
+import { provideChatAIService } from '@dataclouder/conversation-system';
 import { ConversationAIService } from './app/services/chat-ai-service';
 import { ToastAlertService } from './app/services/toast.service';
 
 import { provideLessonsService } from '@dataclouder/lessons';
 import { LessonsService } from './app/services/lessons.service';
+import { provideToastAlert } from '@dataclouder/core-components';
+
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { providePrimeNG } from 'primeng/config';
+import MyPreset from './mypreset';
 
 export function loggingInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn): Observable<HttpEvent<unknown>> {
   console.log('Before interception request:', req.url);
@@ -37,6 +43,12 @@ export function createTranslateLoader(http: HttpClient) {
 
 bootstrapApplication(AppComponent, {
   providers: [
+    provideAnimationsAsync(),
+    providePrimeNG({
+      theme: {
+        preset: MyPreset,
+      },
+    }),
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
 
     provideIonicAngular(),

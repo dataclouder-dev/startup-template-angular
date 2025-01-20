@@ -19,8 +19,9 @@ export class LessonsService implements LessonsAbstractService {
   }
 
   public async postLesson(lesson: Lesson) {
+    debugger;
     // const langParams = this.userService.getUserLangOptions();
-    // return this.httpService.postDataToService<Lesson>(`${Endpoints.Lessons}?${langParams}`, lesson);
+    return this.httpService.postDataToService<Lesson>(`${Endpoints.Lessons.Lesson}`, lesson);
   }
 
   public async getLesson(id: string) {

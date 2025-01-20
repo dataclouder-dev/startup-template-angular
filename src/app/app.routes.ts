@@ -106,7 +106,19 @@ export const routes: Routes = [
         loadComponent: () => import('./pages/explore/explore.page').then(m => m.ExplorePage),
         children: [
           {
+            path: '',
+            loadComponent: () => import('./pages/explore/lesson-list/lesson-list.component').then(m => m.LessonListComponent),
+          },
+          {
+            path: 'list',
+            loadComponent: () => import('./pages/explore/lesson-list/lesson-list.component').then(m => m.LessonListComponent),
+          },
+          {
             path: 'edit',
+            loadComponent: () => import('./pages/explore/explore-edit/explore-edit.component').then(m => m.ExploreEditComponent),
+          },
+          {
+            path: 'edit/:id',
             loadComponent: () => import('./pages/explore/explore-edit/explore-edit.component').then(m => m.ExploreEditComponent),
           },
         ],
