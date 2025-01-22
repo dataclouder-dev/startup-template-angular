@@ -5,8 +5,7 @@ import { DCLessonListComponent } from '@dataclouder/lessons';
   selector: 'app-lesson-list',
   standalone: true,
   imports: [DCLessonListComponent],
-  template: `<p>lesson-list works!</p>
-    <dc-lesson-list></dc-lesson-list> `,
+  template: ` <dc-lesson-list></dc-lesson-list> `,
   styleUrl: './lesson-list.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

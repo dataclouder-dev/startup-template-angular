@@ -7,8 +7,7 @@ import { DCLessonEditorComponent } from '@dataclouder/lessons';
   selector: 'app-explore-edit',
   standalone: true,
   imports: [DCLessonEditorComponent],
-  template: `<p>explore-edit works!</p>
-    <dc-lesson-editor></dc-lesson-editor> `,
+  template: ` <dc-lesson-editor></dc-lesson-editor> `,
   styleUrl: './explore-edit.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

@@ -21,15 +21,18 @@ export class LessonsService implements LessonsAbstractService {
   public async postLesson(lesson: Lesson) {
     debugger;
     // const langParams = this.userService.getUserLangOptions();
-    return this.httpService.postDataToService<Lesson>(`${Endpoints.Lessons.Lesson}`, lesson);
+    const lessons = await this.httpService.postDataToService<Lesson>(`${Endpoints.Lessons.Lesson}`, lesson);
+    debugger;
+    return lessons;
   }
 
   public async getLesson(id: string) {
-    return this.httpService.getDataFromService<Lesson>(`${Endpoints.Lessons.QueryLessons}/${id}`);
+    return this.httpService.getDataFromService<Lesson>(`${Endpoints.Lessons.Lesson}/${id}`);
   }
 
   //   TODO: change to paginator
   public async getLessons(paginator: any = null, unpublished = false) {
+    debugger;
     if (paginator) {
       if (unpublished) {
         // TODO: probably i can use the filter
@@ -39,7 +42,8 @@ export class LessonsService implements LessonsAbstractService {
         return this.httpService.postDataToService<LessonPaginator>(Endpoints.Lessons.QueryLessons, paginator);
       }
     } else {
-      return this.httpService.postDataToService<LessonPaginator>(Endpoints.Lessons.QueryLessons, null);
+      const lessons = await this.httpService.postDataToService<LessonPaginator>(Endpoints.Lessons.QueryLessons, null);
+      return lessons;
     }
   }
 
