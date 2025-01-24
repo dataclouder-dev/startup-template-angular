@@ -6,6 +6,7 @@ import {
   ConversationPromptSettings,
   ConversationUserSettings,
   IConversationCard,
+  ModelName,
 } from '@dataclouder/conversation-system';
 import { HttpService } from './http.service';
 import { UserService } from '../dc-user-module/user.service';
@@ -20,6 +21,11 @@ export type TTSRequest = { text: string; voice: string; generateTranscription: b
 export class ConversationAIService implements ConversationAIAbstractService {
   constructor(private httpService: HttpService, private userService: UserService) {}
 
+  public async getListModels(provider: string): Promise<any> {
+    const data = await this.httpService.getDataFromService(`${Endpoints.ConversationCard.ListModels}?provider=${provider}`, 'python');
+    return data;
+  }
+
   async translateConversation(currentLang: string, targetLang: string, idCard: string): Promise<ConversationUserSettings> {
     const response = await this.httpService.postDataToService(
       `${Endpoints.ConversationCard.TranslateConversation}`,
@@ -30,10 +36,10 @@ export class ConversationAIService implements ConversationAIAbstractService {
     return response;
   }
 
-  saveConversationUserChatSettings(conversation: ConversationUserSettings): Promise<ConversationUserSettings> {
-    debugger;
+  async saveConversationUserChatSettings(conversation: ConversationUserSettings): Promise<ConversationUserSettings> {
     console.log('saveConversationUserChatSettings', conversation);
-    this.userService.saveUser({ conversationSettings: conversation });
+    const data = await this.userService.saveUser({ conversationSettings: conversation });
+    this.userService.user!.conversationSettings = conversation as ConversationUserSettings;
     return Promise.resolve(conversation);
   }
 
@@ -80,21 +86,21 @@ export class ConversationAIService implements ConversationAIAbstractService {
   }
 
   public deleteConversationCard(id: string): Promise<IConversationCard> {
-    return this.httpService.deleteDataFromService(`api/conversation-ai/conversation/${id}`);
+    return this.httpService.deleteDataFromService(`${Endpoints.ConversationCard.Conversation}/${id}`);
   }
 
   public findConversationCard(id: string): Promise<IConversationCard> {
-    return this.httpService.getDataFromService(`api/conversation-ai/conversation/${id}`);
+    return this.httpService.getDataFromService(`${Endpoints.ConversationCard.Conversation}/${id}`);
   }
   public getAllConversationCards(): Promise<IConversationCard[]> {
-    return this.httpService.getDataFromService(`api/conversation-ai/conversation`);
+    return this.httpService.getDataFromService(`${Endpoints.ConversationCard.Conversation}`);
   }
 
   async saveConversationCard(conversation: IConversationCard): Promise<IConversationCard> {
     if (conversation.id || conversation._id) {
-      return await this.httpService.putDataFromService(`api/conversation-ai/conversation/${conversation._id}`, conversation);
+      return await this.httpService.putDataFromService(`${Endpoints.ConversationCard.Conversation}/${conversation._id}`, conversation);
     } else {
-      return await this.httpService.postDataToService('api/conversation-ai/conversation', conversation);
+      return await this.httpService.postDataToService(`${Endpoints.ConversationCard.Conversation}`, conversation);
     }
   }
 
@@ -106,7 +112,7 @@ export class ConversationAIService implements ConversationAIAbstractService {
     messages = messages?.filter((m: any) => m.role != ChatRole.AssistantHelper);
     const conversationFiltered = { ...conversation, messages };
 
-    return await this.httpService.postDataToService(`api/conversation-ai/chat`, conversationFiltered, 'python');
+    return await this.httpService.postDataToService(`${Endpoints.ConversationCard.Conversation}`, conversationFiltered, 'python');
   }
 
   getText(): void {

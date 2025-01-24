@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
-import { IonHeader, IonToolbar, IonTitle, IonContent, IonBackButton, IonButtons } from '@ionic/angular/standalone';
 
 import { DcConversationCardDetailsComponent, IConversationCard } from '@dataclouder/conversation-system';
 
@@ -10,7 +9,7 @@ import { DcConversationCardDetailsComponent, IConversationCard } from '@dataclou
   templateUrl: './conversation-details.component.html',
   styleUrls: ['./conversation-details.component.scss'],
   standalone: true,
-  imports: [CommonModule, IonHeader, IonToolbar, IonTitle, IonContent, IonBackButton, IonButtons, DcConversationCardDetailsComponent],
+  imports: [CommonModule, DcConversationCardDetailsComponent],
 })
 export class ConversationDetailsPage implements OnInit {
   conversationId: any;

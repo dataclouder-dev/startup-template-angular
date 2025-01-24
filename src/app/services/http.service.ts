@@ -17,6 +17,9 @@ export class HttpService {
   constructor(private httpClient: HttpClient) {}
 
   private getHostUrl(host: string = ''): string {
+    if (host === 'python') {
+      return environment.backendPythonUrl;
+    }
     return environment.backendNodeUrl;
   }
 

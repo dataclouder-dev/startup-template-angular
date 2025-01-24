@@ -35,6 +35,9 @@ export const Endpoints = {
   },
   ConversationCard: {
     TranslateConversation: 'api/conversation_card/translate',
+    Conversation: 'api/conversation-ai-cards/conversation',
+    AgentChat: 'api/agent/chat',
+    ListModels: 'api/agent/list_models',
   },
 
   Lessons: {

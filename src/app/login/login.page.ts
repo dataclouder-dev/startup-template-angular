@@ -9,26 +9,14 @@ import { environment } from 'src/environments/environment';
 import { RouteNames } from '../core/enums';
 
 import { FirebaseAuthService, DcLoginComponent } from '@dataclouder/app-auth';
-import { IonItem, IonButton, IonIcon, IonContent, IonInput, IonToolbar, IonFooter, Platform } from '@ionic/angular/standalone';
+import { Platform } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-auth-component',
   templateUrl: './login2.page.html',
   styleUrls: ['./login.page.scss'],
   standalone: true,
-  imports: [
-    IonFooter,
-    IonToolbar,
-    IonInput,
-    IonContent,
-    IonIcon,
-    IonButton,
-    IonItem,
-    FormsModule,
-    ReactiveFormsModule,
-    TranslateModule,
-    DcLoginComponent,
-  ],
+  imports: [FormsModule, ReactiveFormsModule, TranslateModule, DcLoginComponent],
 })
 export class LoginComponent implements OnInit {
   screen: any = 'signin';
