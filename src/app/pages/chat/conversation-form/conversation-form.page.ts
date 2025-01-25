@@ -38,7 +38,7 @@ import {
 
 import { environment } from 'src/environments/environment';
 import { RouteNames } from 'src/app/core/enums';
-import { ConversationAIService } from 'src/app/services/chat-ai-service';
+import { ConversationCardsService } from 'src/app/services/conversation-cards-ai-service';
 
 @Component({
   selector: 'app-conversation-form',
@@ -54,7 +54,7 @@ export class ConversationFormPage implements OnInit {
   public projectName = environment.projectName;
 
   constructor(
-    private conversationAIService: ConversationAIService,
+    private conversationCardsService: ConversationCardsService,
     private route: ActivatedRoute,
     private router: Router,
     private AlertController: AlertController,
@@ -93,13 +93,13 @@ export class ConversationFormPage implements OnInit {
       delete originalCard.id;
       delete originalCard._id;
 
-      const response: any = await this.conversationAIService.translateConversation(dataEvent.currentLang, dataEvent.targetLang, dataEvent.id);
+      const response: any = await this.conversationCardsService.translateConversation(dataEvent.currentLang, dataEvent.targetLang, dataEvent.id);
       const trasnlatedCard: IConversationCard = {
         ...originalCard,
         characterCard: { ...originalCard.characterCard, data: response },
         lang: dataEvent.targetLang,
       };
-      await this.conversationAIService.saveConversationCard(trasnlatedCard);
+      await this.conversationCardsService.saveConversationCard(trasnlatedCard);
 
       const successToast = await this.toastController.create({
         message: 'Conversación traducida correctamente. Revisa para confirmar, vuelvelo a intentar si no es correcto.',

@@ -13,7 +13,6 @@ import {
   IonItem,
   IonIcon,
   IonLabel,
-  IonRouterOutlet,
   IonRouterLink,
   IonHeader,
   IonButtons,
@@ -27,7 +26,6 @@ import {
   NavController,
   IonAvatar,
   ActionSheetController,
-  IonTab,
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import {
@@ -72,7 +70,6 @@ import {
   settingsOutline,
   settingsSharp,
 } from 'ionicons/icons';
-import { RouteNames } from '../core/enums';
 import { environment } from 'src/environments/environment';
 import { FirebaseAuthService } from '@dataclouder/app-auth';
 
@@ -82,7 +79,6 @@ import { FirebaseAuthService } from '@dataclouder/app-auth';
   styleUrl: './ionic-layout.component.css',
   standalone: true,
   imports: [
-    IonTab,
     IonAvatar,
     IonFooter,
     IonButton,
@@ -108,7 +104,6 @@ import { FirebaseAuthService } from '@dataclouder/app-auth';
     IonIcon,
     IonLabel,
     IonRouterLink,
-    IonRouterOutlet,
     IonMenuToggle,
     IonMenuButton,
   ],

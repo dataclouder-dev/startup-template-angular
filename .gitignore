@@ -15,8 +15,8 @@ log.txt
 *.keystore
 *.environment*
 
-
-
+environment.ts
+environment.prod.ts
 
 /.sourcemaps
 /.versions

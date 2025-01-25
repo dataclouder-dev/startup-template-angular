@@ -19,7 +19,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { Capacitor } from '@capacitor/core';
 import { AUTH_CONFIG } from '@dataclouder/app-auth';
 import { provideChatAIService } from '@dataclouder/conversation-system';
-import { ConversationAIService } from './app/services/chat-ai-service';
+import { ConversationCardsService } from './app/services/conversation-cards-ai-service';
 import { ToastAlertService } from './app/services/toast.service';
 
 import { provideLessonsService } from '@dataclouder/lessons';
@@ -43,17 +43,17 @@ export function createTranslateLoader(http: HttpClient) {
 
 bootstrapApplication(AppComponent, {
   providers: [
+    // Angular Providers
     provideAnimationsAsync(),
-    providePrimeNG({
-      theme: {
-        preset: MyPreset,
-      },
-    }),
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-
-    provideIonicAngular(),
+    providePrimeNG({ theme: { preset: MyPreset } }),
     provideRouter(routes, withPreloading(PreloadAllModules)),
     provideHttpClient(withInterceptors([authInterceptor])),
+
+    // Ionic Providers
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    provideIonicAngular(),
+
+    // Firebase Providers
     provideFirebaseApp(() => {
       if (!environment.firebase?.apiKey || !environment.firebase?.projectId) {
         alert('Please add the Firebase Credentials');
@@ -71,20 +71,13 @@ bootstrapApplication(AppComponent, {
       }
     }),
     { provide: FIREBASE_OPTIONS, useValue: environment.firebase },
-    provideChatAIService(ConversationAIService),
+
+    // Dataclouder Providers
+    provideChatAIService(ConversationCardsService),
     provideToastAlert(ToastAlertService),
     provideLessonsService(LessonsService),
 
-    importProvidersFrom(
-      TranslateModule.forRoot({
-        loader: {
-          provide: TranslateLoader,
-          useFactory: createTranslateLoader,
-          deps: [HttpClient],
-        },
-      })
-    ),
-
+    // Dataclouder Auth Providers
     {
       provide: AUTH_CONFIG,
       useValue: {
@@ -101,5 +94,17 @@ bootstrapApplication(AppComponent, {
         },
       },
     },
+
+    // Translate Providers
+
+    importProvidersFrom(
+      TranslateModule.forRoot({
+        loader: {
+          provide: TranslateLoader,
+          useFactory: createTranslateLoader,
+          deps: [HttpClient],
+        },
+      })
+    ),
   ],
 });

@@ -18,7 +18,7 @@ export type TTSRequest = { text: string; voice: string; generateTranscription: b
 @Injectable({
   providedIn: 'root',
 })
-export class ConversationAIService implements ConversationAIAbstractService {
+export class ConversationCardsService implements ConversationAIAbstractService {
   constructor(private httpService: HttpService, private userService: UserService) {}
 
   public async getListModels(provider: string): Promise<any> {
