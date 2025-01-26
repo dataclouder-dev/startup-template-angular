@@ -5,6 +5,7 @@ import {
   ConversationAIAbstractService,
   ConversationPromptSettings,
   ConversationUserSettings,
+  FiltersConfig,
   IConversationCard,
   ModelName,
 } from '@dataclouder/conversation-system';
@@ -20,6 +21,12 @@ export type TTSRequest = { text: string; voice: string; generateTranscription: b
 })
 export class ConversationCardsService implements ConversationAIAbstractService {
   constructor(private httpService: HttpService, private userService: UserService) {}
+
+  public async getConversationCards(paginator: FiltersConfig): Promise<IConversationCard[]> {
+    const response = await this.httpService.postDataToService(`${Endpoints.ConversationCard.ConversationQuery}`, paginator);
+    debugger;
+    return response;
+  }
 
   public async getListModels(provider: string): Promise<any> {
     const data = await this.httpService.getDataFromService(`${Endpoints.ConversationCard.ListModels}?provider=${provider}`, 'python');

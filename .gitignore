@@ -15,8 +15,15 @@ log.txt
 *.keystore
 *.environment*
 
-/src/environments/environment.ts
-/src/environments/environment.prod.ts
+# Environment files
+/src/environments/environment.*
+/src/environments/*.ts
+*.environment.*
+environment.*.ts
+environment.ts
+environment.prod.ts
+environment.development.ts
+environment.local.ts
 
 /.sourcemaps
 /.versions
