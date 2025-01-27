@@ -13,6 +13,8 @@
     "start:qa": "ng serve -c qa",
     "start:prod": "ng serve -c production",
     "build": "ng build",
+    "build:dev": "ng build",
+    "build:prod": "ng build -c production",
     "watch": "ng build --watch --configuration development",
     "update:dc": "npm install @dataclouder/app-auth@latest @dataclouder/conversation-system@latest @dataclouder/lessons@latest @dataclouder/storage-uploader",
     "android:debug": "ionic cap run android -l --external",

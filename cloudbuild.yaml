@@ -1,13 +1,39 @@
 
 steps:
-# Fetch and create environment file from secret
+
+  - id: print-variables
+    name: 'gcr.io/cloud-builders/gcloud'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        echo "=== Default Cloud Build Substitutions ==="
+        echo "Project ID: ${PROJECT_ID}"
+        echo "Build ID: ${BUILD_ID}"
+        echo "=== Trigger-specific Substitutions ==="
+        echo "Trigger Name: ${TRIGGER_NAME}"
+        echo "Repository Name: ${REPO_NAME}"
+        echo "Branch Name: ${BRANCH_NAME}"
+        echo "Tag Name: ${TAG_NAME}"
+        echo "Ref Name: ${REF_NAME}"
+        echo "Service Account Email: ${SERVICE_ACCOUNT_EMAIL}"
+        echo "Service Account: ${SERVICE_ACCOUNT}"
+        echo "=== Environment ==="
+        echo " _ENV=${_ENV}"
+        echo "=== Secrets ==="
+        echo "ENVIRONMENT_CONFIG=${ENVIRONMENT_CONFIG}"
+
+
+# Fetch and create environment file from secret, temporal solution save in both files.
 - id: 'create-environment-file'
   name: 'bash'
   entrypoint: 'bash'
   args:
     - '-c'
     - |
-      echo "$$ENVIRONMENT_CONFIG" > src/environments/environment.${_ENV}.ts
+      echo "$$ENVIRONMENT_CONFIG" > src/environments/environment.ts
+      echo "$$ENVIRONMENT_CONFIG" > src/environments/environment.prod.ts
+
   secretEnv: ['ENVIRONMENT_CONFIG']
 
 # por ahora usararé --legacy-peer-deps 
