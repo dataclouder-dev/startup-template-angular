@@ -16,39 +16,30 @@ steps:
         echo "Ref Name: ${REF_NAME}"
         echo "Service Account Email: ${SERVICE_ACCOUNT_EMAIL}"
         echo "Service Account: ${SERVICE_ACCOUNT}"
-
-# Fetch and create environment file from secret, temporal solution save in both files.
-- id: 'create-environment-file'
-  name: 'bash'
-  entrypoint: 'bash'
-  args:
-    - '-c'
-    - |
-      echo "$$ENVIRONMENT_CONFIG" > src/environments/environment.ts
-      echo "$$ENVIRONMENT_CONFIG" > src/environments/environment.prod.ts
-
-  secretEnv: ['ENVIRONMENT_CONFIG']
-
-# por ahora usararé --legacy-peer-deps 
-- id: 'install-angular-dependencies'
-  name: 'node:22-alpine'
-  entrypoint: npm
-  args: ['install', '--legacy-peer-deps']
-
-- id: 'build-angular-for-env'
-  name: 'node:22-alpine'
-  entrypoint: npm
-  args: ['run', 'build:$_ENV']
-
-- id: deploy-to-hosting-firebase
-  name: 'gcr.io/$PROJECT_ID/firebase'
-  args: ['deploy', '--only=hosting', '--project=$PROJECT_ID']
-
-
+  - id: 'create-environment-file'
+    name: 'bash'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        echo "$$ENVIRONMENT_CONFIG" > src/environments/environment.ts
+        echo "$$ENVIRONMENT_CONFIG" > src/environments/environment.prod.ts
+    secretEnv: ['ENVIRONMENT_CONFIG']
+  - id: 'install-angular-dependencies'
+    name: 'node:22-alpine'
+    entrypoint: npm
+    args: ['install', '--legacy-peer-deps']
+  - id: 'build-angular-for-env'
+    name: 'node:22-alpine'
+    entrypoint: npm
+    args: ['run', 'build:$_ENV']
+  - id: deploy-to-hosting-firebase
+    name: 'gcr.io/$PROJECT_ID/firebase'
+    args: ['deploy', '--only=hosting', '--project=$PROJECT_ID']
+    
 availableSecrets:
   secretManager:
     - versionName: projects/514401908603/secrets/environment_secret/versions/1
       env: 'ENVIRONMENT_CONFIG'
-
 options:
   logging: CLOUD_LOGGING_ONLY
