@@ -21,7 +21,6 @@ steps:
         echo "=== Environment ==="
         echo " _ENV=${_ENV}"
         echo "=== Secrets ==="
-        echo "ENVIRONMENT_CONFIG=${ENVIRONMENT_CONFIG}"
 
 
 # Fetch and create environment file from secret, temporal solution save in both files.
