@@ -16,9 +16,6 @@ steps:
         echo "Ref Name: ${REF_NAME}"
         echo "Service Account Email: ${SERVICE_ACCOUNT_EMAIL}"
         echo "Service Account: ${SERVICE_ACCOUNT}"
-        echo "=== Environment ==="
-        echo " _ENV=${_ENV}"
-        echo "=== Secrets ==="
 
 # Fetch and create environment file from secret, temporal solution save in both files.
 - id: 'create-environment-file'
