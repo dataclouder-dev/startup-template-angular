@@ -1,6 +1,4 @@
-
 steps:
-
   - id: print-variables
     name: 'gcr.io/cloud-builders/gcloud'
     entrypoint: 'bash'
@@ -21,7 +19,6 @@ steps:
         echo "=== Environment ==="
         echo " _ENV=${_ENV}"
         echo "=== Secrets ==="
-
 
 # Fetch and create environment file from secret, temporal solution save in both files.
 - id: 'create-environment-file'
