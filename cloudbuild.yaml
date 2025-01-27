@@ -30,3 +30,6 @@ availableSecrets:
   secretManager:
     - versionName: projects/514401908603/secrets/environment_secret/versions/1
       env: 'ENVIRONMENT_CONFIG'
+
+options:
+  logging: CLOUD_LOGGING_ONLY
