@@ -24,7 +24,6 @@ export class ConversationCardsService implements ConversationAIAbstractService {
 
   public async getConversationCards(paginator: FiltersConfig): Promise<IConversationCard[]> {
     const response = await this.httpService.postDataToService(`${Endpoints.ConversationCard.ConversationQuery}`, paginator);
-    debugger;
     return response;
   }
 
@@ -77,7 +76,7 @@ export class ConversationCardsService implements ConversationAIAbstractService {
   }
 
   public async getTextAudioFile(tts: TTSRequest): Promise<AudioGenerated> {
-    const httpReq: any = await this.httpService.receiveFile(`api/conversation-ai/tts`, tts);
+    const httpReq: any = await this.httpService.receiveFile(`api/tts-library/tts`, tts, 'python');
     const audioData: any = { blobUrl: null, transcription: null };
     const transcription = httpReq?.headers.get('transcription');
 

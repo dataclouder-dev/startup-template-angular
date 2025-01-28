@@ -4,7 +4,6 @@
       <ion-content>
         <ion-list id="inbox-list">
           <ion-list-header>{{ projectName }}</ion-list-header>
-          <ion-note>{{ envName }} - v{{ version }}</ion-note>
 
           <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
             <ion-item routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" routerLinkActive="selected">
@@ -28,7 +27,7 @@
 
       <ion-footer>
         <ion-toolbar>
-          <span>{{ envName }} - {{ version }}</span>
+          <ion-note style="padding-left: 10px">{{ envName }} - v{{ version }}</ion-note>
         </ion-toolbar>
       </ion-footer>
     </ion-menu>

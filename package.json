@@ -4,7 +4,7 @@
     "appId": "dev.dataclouder.template",
     "appIdDev": "dev.dataclouder.template.dev"
   },
-  "version": "0.0.1",
+  "version": "0.0.4",
   "author": "Ionic Framework",
   "homepage": "dataclouder.dev",
   "scripts": {
@@ -19,6 +19,7 @@
     "update:dc": "npm install @dataclouder/app-auth@latest @dataclouder/conversation-system@latest @dataclouder/lessons@latest @dataclouder/storage-uploader",
     "android:debug": "ionic cap run android -l --external",
     "deploy": "npm run build && firebase deploy --only hosting:dataclouder-dev",
+    "prebuild": "npm version patch --no-git-tag-version && node scripts/sync-version.js",
     "ios:dev": "ng build -c development && cap copy ios && npx cap run ios",
     "ios:prod": "ng build -c production && cap copy ios && npx cap run ios --configuration Release",
     "ios:dev-sim": "ng build -c development && cap copy ios && npx cap run ios --target 3FFDE946-E48B-4215-A7CD-D7C1872FDAF2",

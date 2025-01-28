@@ -20,7 +20,7 @@ steps:
         echo "$$ENVIRONMENT_CONFIG"
     secretEnv: ['ENVIRONMENT_CONFIG']
 
-    
+
   - id: 'create-environment-file'
     name: 'bash'
     entrypoint: 'bash'
@@ -44,7 +44,8 @@ steps:
   - id: deploy-to-hosting-firebase
     name: 'gcr.io/$PROJECT_ID/firebase'
     args: ['deploy', '--only=hosting', '--project=$PROJECT_ID']
-    
+
+# Secrets you have to create in the secret manager and give access to the service account
 availableSecrets:
   secretManager:
     - versionName: projects/514401908603/secrets/environment_secret/versions/1

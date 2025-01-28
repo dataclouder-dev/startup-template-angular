@@ -101,11 +101,29 @@ That's all at this point. You should be able to run the app and be able to sign 
 
     This is just to get the firebase.json and .firebaserc files (you can also copy them).
 
+
+
+# Deploy to firebase 
+
+### Manual deploy 
+
+```bash 
     npm run build
     firebase deploy --only hosting:dataclouder-pro
     firebase deploy --only hosting:dataclouder-dev : change .firebaserc to dataclouder-dev
+```
 
-4) Add Android
+#### deploy using make 
+
+make deploy
+
+
+### Automatic deploy 
+Pending... 
+connect with Google Cloud Trigger.s
+
+
+# 4) Add Android
 
     1) To avoid delaying other steps, it is best to create your certificate right away. 
         * Reasons: It is required for publication and for multiple environments to work. 
@@ -152,8 +170,7 @@ That's all at this point. You should be able to run the app and be able to sign 
 
         * Run the project and test Google authentication.
 
-### Add iOS
-
+# Add iOS
     1) Create the iOS authentication credential.
     2) Extract the client ID and reverse client ID data in the Additional Information section.
     
@@ -165,8 +182,9 @@ That's all at this point. You should be able to run the app and be able to sign 
     ### How to create a configuration to have a different ID. 
 
 ### Run the App
-
     npm run start
+
+
 
 ### Backend 
 
