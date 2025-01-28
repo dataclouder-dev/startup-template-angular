@@ -19,10 +19,9 @@ export class LessonsService implements LessonsAbstractService {
   }
 
   public async postLesson(lesson: Lesson) {
-    debugger;
     // const langParams = this.userService.getUserLangOptions();
     const lessons = await this.httpService.postDataToService<Lesson>(`${Endpoints.Lessons.Lesson}`, lesson);
-    debugger;
+
     return lessons;
   }
 
@@ -32,7 +31,6 @@ export class LessonsService implements LessonsAbstractService {
 
   //   TODO: change to paginator
   public async getLessons(paginator: any = null, unpublished = false) {
-    debugger;
     if (paginator) {
       if (unpublished) {
         // TODO: probably i can use the filter

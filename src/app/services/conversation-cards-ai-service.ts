@@ -50,7 +50,6 @@ export class ConversationCardsService implements ConversationAIAbstractService {
   }
 
   getConversationUserChatSettings(): Promise<ConversationUserSettings> {
-    debugger;
     if (this.userService.user?.conversationSettings) {
       return Promise.resolve(this.userService.user?.conversationSettings as ConversationUserSettings);
     } else {
@@ -118,7 +117,7 @@ export class ConversationCardsService implements ConversationAIAbstractService {
     messages = messages?.filter((m: any) => m.role != ChatRole.AssistantHelper);
     const conversationFiltered = { ...conversation, messages };
 
-    return await this.httpService.postDataToService(`${Endpoints.ConversationCard.Conversation}`, conversationFiltered, 'python');
+    return await this.httpService.postDataToService(`${Endpoints.ConversationCard.AgentChat}`, conversationFiltered, 'python');
   }
 
   getText(): void {

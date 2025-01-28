@@ -8,6 +8,9 @@ SERVICE_NAME ?= python-server
 help:
 	@echo "Available commands:"
 
-deploy:	
+deploy:
+	npm run prebuild
 	npm run build
 	firebase deploy --only hosting:$(PROJECT_ID)
+
+

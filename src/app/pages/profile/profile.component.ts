@@ -34,13 +34,11 @@ export class ProfileComponent implements OnInit {
     if (user) {
       this.profileForm.patchValue(user);
     }
-    debugger;
   }
 
   ngOnInit() {}
 
   onSubmit() {
-    debugger;
     if (this.profileForm.valid) {
       const userData: IUser = this.profileForm.value;
       console.log('Form submitted:', userData);

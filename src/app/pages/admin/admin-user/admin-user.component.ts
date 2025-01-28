@@ -96,7 +96,6 @@ export class AdminUserComponent {
   }
 
   private addRolControl(rol: string, expireDate: Date | null): void {
-    debugger;
     if (this.formGroup.controls.roles.get(rol)) {
       this.formGroup.controls.roles.get(rol)?.setValue(expireDate);
     } else {
@@ -185,7 +184,7 @@ export class AdminUserComponent {
       // TODO: check that the endpoint is correct
       const claims = await this.httpService.postDataToService(EndPoint.Admin.Claims, updatedData);
       await this.showToast(`Los cambios se verán reflejados la próxima vez que ${updatedData.email} inicie sesión`);
-      debugger;
+
       // if (this.userService.getUserSnapshot().email === updatedData.email) {
       //   await this.userService.updateUserClaimsAndRefresh(claims);
       // }
