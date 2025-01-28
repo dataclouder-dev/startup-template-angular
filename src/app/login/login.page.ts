@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
 import { GoogleAuth, User } from '@codetrix-studio/capacitor-google-auth';
-import { GoogleAuthProvider } from 'firebase/auth';
+import { GoogleAuthProvider } from '@angular/fire/auth';
 import { TranslateModule } from '@ngx-translate/core';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
