@@ -41,6 +41,20 @@
           <ion-title>{{ projectName }}</ion-title>
 
           <ion-buttons slot="end">
+            <p-togglebutton
+              [(ngModel)]="isDarkMode"
+              onLabel=""
+              offLabel=""
+              styleClass="w-36"
+              ariaLabel="Do you confirm"
+              (onChange)="toggleDarkMode()">
+              <ng-template pTemplate="onicon" let-checked="checked">
+                <ion-icon [name]="checked ? 'sunny' : 'moon'"></ion-icon>
+              </ng-template>
+            </p-togglebutton>
+
+            <!-- <ion-toggle [checked]="isDarkMode" aria-label="Dark mode"> Dark Mode </ion-toggle> -->
+
             <ion-button (click)="openActionSheet()">
               <span>
                 <ion-avatar style="width: 3em; height: 3em">

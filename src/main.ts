@@ -8,7 +8,6 @@ import { HttpClient, HttpEvent, HttpHandlerFn, HttpRequest, provideHttpClient, w
 import { authInterceptor } from './app/services/interception.service';
 import { environment } from './environments/environment';
 import { getApp, initializeApp, provideFirebaseApp } from '@angular/fire/app';
-// import { getAuth, indexedDBLocalPersistence, initializeAuth } from 'firebase/auth';
 import { provideAuth, getAuth, initializeAuth, indexedDBLocalPersistence } from '@angular/fire/auth';
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
 

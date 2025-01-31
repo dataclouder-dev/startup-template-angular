@@ -26,6 +26,7 @@ import {
   NavController,
   IonAvatar,
   ActionSheetController,
+  IonToggle,
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import {
@@ -69,9 +70,15 @@ import {
   settings,
   settingsOutline,
   settingsSharp,
+  lockClosed,
+  lockOpen,
+  moon,
+  sunny,
 } from 'ionicons/icons';
 import { environment } from 'src/environments/environment';
 import { FirebaseAuthService } from '@dataclouder/app-auth';
+import { ToggleButtonModule } from 'primeng/togglebutton';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-ionic-layout',
@@ -106,6 +113,9 @@ import { FirebaseAuthService } from '@dataclouder/app-auth';
     IonRouterLink,
     IonMenuToggle,
     IonMenuButton,
+    IonToggle,
+    ToggleButtonModule,
+    FormsModule,
   ],
 })
 export class IonicLayoutComponent implements OnInit {
@@ -128,6 +138,9 @@ export class IonicLayoutComponent implements OnInit {
   public testingPages = [{ title: 'Test', url: '/page/test', icon: 'code-working' }];
 
   public isAdmin: boolean = false;
+
+  // Add this property to track dark mode state
+  public isDarkMode: boolean = false;
 
   constructor(
     private firebaseAuthService: FirebaseAuthService,
@@ -168,9 +181,17 @@ export class IonicLayoutComponent implements OnInit {
       settings,
       settingsOutline,
       settingsSharp,
+      lockClosed,
+      lockOpen,
+      moon,
+      sunny,
     });
     addIcons({ library, playCircle, radio, search });
     addIcons({ ellipsisHorizontal, ellipsisVertical, helpCircle, personCircle, search });
+
+    // Check if dark mode was previously enabled
+    this.isDarkMode = localStorage.getItem('darkMode') === 'true';
+    this.initializeDarkMode();
   }
 
   ngOnInit(): void {
@@ -229,5 +250,21 @@ export class IonicLayoutComponent implements OnInit {
   public goToStack(path: string) {
     // this.navController.navigateForward(path);
     this.router.navigate(['/page/profile']);
+  }
+
+  // Update the toggleDarkMode method
+  toggleDarkMode() {
+    // this.isDarkMode = !this.isDarkMode;
+    document.documentElement.classList.toggle('ion-palette-dark', this.isDarkMode);
+
+    document.body.classList.toggle('dark', this.isDarkMode);
+    localStorage.setItem('darkMode', this.isDarkMode.toString());
+  }
+
+  // Add this method to initialize dark mode on component creation
+  private initializeDarkMode() {
+    document.documentElement.classList.toggle('ion-palette-dark', this.isDarkMode);
+
+    document.body.classList.toggle('dark', this.isDarkMode);
   }
 }
