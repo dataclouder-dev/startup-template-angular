@@ -10,6 +10,12 @@ export const environment = {
   backendNodeUrl: 'http://localhost:8080',
   backendPythonUrl: 'http://localhost:8080',
 
+  mobile: {
+    appleAppId: '',
+    appleRedirectURI: '',
+    androidClientId: '',
+    iosClientId: '',
+  },
   firebase: {
     apiKey: '',
     authDomain: '',

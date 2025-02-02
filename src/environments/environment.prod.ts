@@ -10,7 +10,12 @@ export const environment = {
   clientId: '',
   androidClientId: '',
   iosClientId: '',
-
+  mobile: {
+    appleAppId: '',
+    appleRedirectURI: '',
+    androidClientId: '',
+    iosClientId: '',
+  },
   firebase: {
     apiKey: '',
     authDomain: '',
