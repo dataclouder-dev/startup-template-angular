@@ -1,29 +1,33 @@
-### Work in Progress
-    If you see this project by accident, be aware that it is very buggy at this point.
-    
-## Dataclouder Template
+# 🌩 Dataclouder Template Angular/Ionic
 
-This project is a template to create an Angular/Ionic App connected with Firebase Auth.
+A ready-to-use Angular/Ionic template with Firebase Authentication integration.
 
-* Authentication system is ready. 
-* You only need to add the logic. 
+> ⚠️ **Note**: This project is currently under development and may contain bugs.
+
+## ✨ Features
 
 
-### Getting starting
-Use the scripts to download projects and use start_project script in every template.
-create the folder to contain all your projects.
-donwload the download-templates.sh script change name for project name and id, and run it. 
-download-templates.sh : should download all projects and future will install all the dependencies. 
+## 🚀 Quick Start
 
 
-### Instructions 
+1. Navigate to auto_start directory:
+   ```bash
+   cd auto_start
+   ```
 
-1) Clone the project. 
+2. Run the start project script:
+   ```bash
+   sh start_project
+   ```
 
     git clone https://github.com/adamofig/dataclouder-template-ionic.git optional-renaming
 
-2) Rename the project. use the AutoStarts scripts
+### Option 2: Manual Setup
 
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/adamofig/dataclouder-template-ionic.git [optional-project-name]
+   ```
 
 run the command
     ```python3 rename_project.py your-project-name com.your-project-name.app```
@@ -42,11 +46,16 @@ App ClientIds: com.your-web-page.app-name
 Example: 
     python3 rename_project.py lobo-alfa com.loboalfa.app
 
-### AutoStarts (WIP...)
+## 🔧 Configuration
 
-There is a better way to use the auto starts
+### Firebase Setup
 
-```cd auto_start```
+1. Create a new Firebase project (or use existing)
+2. Copy Firebase credentials to `environment.ts`
+3. Enable Authentication methods:
+   - Navigate to Firebase Console → Authentication
+   - Enable Email/Password and Google sign-in
+   - Add authorized domains (localhost is included by default)
 
 Create the project in firebase, and set the credentials for angular project. 
 ```sh start_project```
@@ -179,16 +188,43 @@ connect with Google Cloud Trigger.s
     From the interface, I set it as a variable $(REVERSED_CLIENT_ID) but here you just need to add the data to the configuration files. 
     From the interface, I created the configuration files to modify the pbxproj.
 
-    ### How to create a configuration to have a different ID. 
+## 🚀 Development
 
-### Run the App
-    npm run start
+Start the development server:
+```bash
+npm run start
+```
 
-
+## 📄 License
 
 ### Backend 
 
-1) Create a NEST project with the template. 
-2) Deploy to Google Cloud. 
+This project also comes with ready to use backend in Nest.js and Python FastAPI.
 
-python rename_project.py lobo-alfa
+-> https://github.com/adamofig/dataclouder-python-template
+
+-> https://github.com/adamofig/dataclouder-template-node
+
+
+1) Create a NEST project with the template. 
+
+## 2) Deploy to Google Cloud. 
+
+Very easy step if you want to automate the deployment on Google Cloud. 
+
+#### 1) Create a new project in Google Cloud. 
+Or use the existing one.
+
+#### 3) Add the secrets for environments ts or upload your environment to your source code if project is private. 
+
+
+#### 2) Create firebase docker images to compile as intermediate steps. 
+
+#### 3) Create a new trigger. 
+
+
+
+
+
+
+
