@@ -6,6 +6,13 @@ A ready-to-use Angular/Ionic template with Firebase Authentication integration.
 
 ## ✨ Features
 
+* Firebase Authentication
+* Google, Apple, Email/Password Sign In
+* Mobile Support (Android, iOS)
+* Web Support
+* Backend Support (Nest.js, FastAPI)
+* CI/CD Automation (Google Cloud Build)
+* And more...
 
 ## 🚀 Quick Start
 
@@ -206,9 +213,8 @@ This project also comes with ready to use backend in Nest.js and Python FastAPI.
 -> https://github.com/adamofig/dataclouder-template-node
 
 
-1) Create a NEST project with the template. 
 
-## 2) Deploy to Google Cloud. 
+## 2) Automate the deployment to Google Cloud CI/CD
 
 Very easy step if you want to automate the deployment on Google Cloud. 
 
@@ -216,11 +222,25 @@ Very easy step if you want to automate the deployment on Google Cloud.
 Or use the existing one.
 
 #### 3) Add the secrets for environments ts or upload your environment to your source code if project is private. 
+* Add permissions to the service account -> Secret Manager Secret Accessor
 
+#### 4) Create new trigger pointing to the branch you want to deploy. 
+* create a varible for yaml building script usualy _ENV = dev or _ENV = pro.
+* this script is the one used in package.json build:dev 
 
-#### 2) Create firebase docker images to compile as intermediate steps. 
+#### 5) Create firebase docker images to compile as intermediate steps. 
 
-#### 3) Create a new trigger. 
+follow instructions here: 
+https://cloud.google.com/build/docs/deploying-builds/deploy-firebase
+
+    
+
+    Open terminal and run: 
+    git clone https://github.com/GoogleCloudPlatform/cloud-builders-community.git
+    # just enter to the folder for firebase
+    cd cloud-builders-community/firebase
+    # build the image, note this is saving the image in gcr.io but it should create in artifact registry in the future. 
+    gcloud builds submit .
 
 
 

@@ -48,7 +48,7 @@ steps:
 # Secrets you have to create in the secret manager and give access to the service account
 availableSecrets:
   secretManager:
-    - versionName: projects/$PROJECT_ID/secrets/environment_secret/versions/1
+    - versionName: projects/$PROJECT_ID/secrets/environment_secret/versions/latest
       env: 'ENVIRONMENT_CONFIG'
 options:
   logging: CLOUD_LOGGING_ONLY
