@@ -6,16 +6,17 @@ A ready-to-use Angular/Ionic template with Firebase Authentication integration.
 
 ## ✨ Features
 
-* Firebase Authentication
-* Google, Apple, Email/Password Sign In
-* Mobile Support (Android, iOS)
-* Web Support
-* Backend Support (Nest.js, FastAPI)
-* CI/CD Automation (Google Cloud Build)
-* And more...
+* 🔐 Firebase Authentication
+* 🔑 Google, Apple, Email/Password Sign In
+* 📱 Mobile Support (Android, iOS)
+* 🌐 Web Support
+* ⚡ Backend Support (Nest.js, FastAPI)
+* 🔄 CI/CD Automation (Google Cloud Build)
+* 🎯 And more...
 
-## 🚀 Quick Start
+## 🚀 Getting Started
 
+### Option 1: Auto Setup
 
 1. Navigate to auto_start directory:
    ```bash
@@ -36,26 +37,27 @@ A ready-to-use Angular/Ionic template with Firebase Authentication integration.
    git clone https://github.com/adamofig/dataclouder-template-ionic.git [optional-project-name]
    ```
 
-run the command
-    ```python3 rename_project.py your-project-name com.your-project-name.app```
+2. Rename the project using the provided script:
+```bash
+python3 rename_project.py your-project-name com.your-project-name.app
+```
 
-There is a script to rename the project, which will rename all the files and folders.
+The script will rename all necessary files and folders including:
+* `package.json`
+* `ionic.config.json`
+* `environment.ts`
+* `capacitor.config.ts` (Note: The app name must be unique)
 
-    * package.json 
-    * ionic.config.json
-    * environment.ts
-    * capacitor.config.ts // The app name must be unique. Change dev.dataclouder.template
-
-You need: 
-Project name: your-app-name
-App ClientIds: com.your-web-page.app-name
+Required parameters:
+* Project name: `your-app-name`
+* App ClientIds: `com.your-web-page.app-name`
 
 Example: 
     python3 rename_project.py lobo-alfa com.loboalfa.app
 
 ## 🔧 Configuration
 
-### Firebase Setup
+### 🔥 Firebase Setup
 
 1. Create a new Firebase project (or use existing)
 2. Copy Firebase credentials to `environment.ts`
@@ -232,19 +234,12 @@ Or use the existing one.
 
 follow instructions here: 
 https://cloud.google.com/build/docs/deploying-builds/deploy-firebase
-
-    
-
-    Open terminal and run: 
-    git clone https://github.com/GoogleCloudPlatform/cloud-builders-community.git
-    # just enter to the folder for firebase
-    cd cloud-builders-community/firebase
-    # build the image, note this is saving the image in gcr.io but it should create in artifact registry in the future. 
-    gcloud builds submit .
-
-
-
-
-
-
+is basically create image container that is able to compile the project, the important commands are:
+```bash
+# clone the repository
+git clone https://github.com/GoogleCloudPlatform/cloud-builders-community.git
+cd cloud-builders-community/firebase
+# build the image and upload to artifact registry
+gcloud builds submit .
+```
 
