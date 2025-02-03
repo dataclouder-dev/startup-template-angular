@@ -223,7 +223,7 @@ Very easy step if you want to automate the deployment on Google Cloud.
 #### 1) Create a new project in Google Cloud. 
 Or use the existing one.
 
-#### 3) Add the secrets for environments ts or upload your environment to your source code if project is private. 
+#### 3) Add the secrets for environments ts or upload your environment to your source code if project is private needs to be called, 'environment_secret'
 * Add permissions to the service account -> Secret Manager Secret Accessor
 
 #### 4) Create new trigger pointing to the branch you want to deploy. 

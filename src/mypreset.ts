@@ -2,9 +2,9 @@
 import { definePreset } from '@primeng/themes';
 // import Aura from '@primeng/themes/aura';
 
-import Lara from '@primeng/themes/lara';
+import Nora from '@primeng/themes/nora';
 
-const MyPreset = definePreset(Lara, {
+const MyPreset = definePreset(Nora, {
   semantic: {
     primary: {
       50: '{slate.50}',

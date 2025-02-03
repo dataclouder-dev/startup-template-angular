@@ -44,7 +44,15 @@ bootstrapApplication(AppComponent, {
   providers: [
     // Angular Providers
     provideAnimationsAsync(),
-    providePrimeNG({ theme: { preset: MyPreset } }),
+    providePrimeNG({
+      theme: {
+        preset: MyPreset,
+        options: {
+          // just a trick in meantime i undersand how to change the theme
+          darkModeSelector: '.my-app-dark',
+        },
+      },
+    }),
     provideRouter(routes, withPreloading(PreloadAllModules)),
     provideHttpClient(withInterceptors([authInterceptor])),
 
