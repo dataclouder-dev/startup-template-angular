@@ -39,6 +39,7 @@ export const Endpoints = {
     ConversationQuery: 'api/conversation-ai-cards/conversation/query',
     AgentChat: 'api/conversation/agent/chat',
     ListModels: 'api/conversation/agent/list_models',
+    Whisper: 'api/conversation/whisper',
   },
 
   Lessons: {

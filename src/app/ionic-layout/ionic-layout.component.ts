@@ -26,7 +26,6 @@ import {
   NavController,
   IonAvatar,
   ActionSheetController,
-  IonToggle,
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import {
@@ -113,7 +112,6 @@ import { FormsModule } from '@angular/forms';
     IonRouterLink,
     IonMenuToggle,
     IonMenuButton,
-    IonToggle,
     ToggleButtonModule,
     FormsModule,
   ],

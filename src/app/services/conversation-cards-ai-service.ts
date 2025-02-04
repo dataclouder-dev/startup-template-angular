@@ -8,6 +8,7 @@ import {
   FiltersConfig,
   IConversationCard,
   ModelName,
+  TranscriptionsWhisper,
 } from '@dataclouder/conversation-system';
 import { HttpService } from './http.service';
 import { UserService } from '../dc-user-module/user.service';
@@ -21,6 +22,11 @@ export type TTSRequest = { text: string; voice: string; generateTranscription: b
 })
 export class ConversationCardsService implements ConversationAIAbstractService {
   constructor(private httpService: HttpService, private userService: UserService) {}
+
+  public async getAudioTranscriptions(audioBlob: Blob, metadata: any = null): Promise<TranscriptionsWhisper> {
+    alert('revisar que ya funcionan  las transcriptions');
+    return await this.httpService.uploadAudioFile(`${Endpoints.ConversationCard.Whisper}`, audioBlob, metadata, 'python');
+  }
 
   public async getConversationCards(paginator: FiltersConfig): Promise<IConversationCard[]> {
     const response = await this.httpService.postDataToService(`${Endpoints.ConversationCard.ConversationQuery}`, paginator);
