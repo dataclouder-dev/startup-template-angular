@@ -16,8 +16,8 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { Capacitor } from '@capacitor/core';
-import { AUTH_CONFIG } from '@dataclouder/app-auth';
-import { provideChatAIService } from '@dataclouder/conversation-system';
+import { AUTH_CONFIG, provideAuthConfig } from '@dataclouder/app-auth';
+import { provideChatAIService, provideUserDataExchange } from '@dataclouder/conversation-system';
 import { ConversationCardsService } from './app/services/conversation-cards-ai-service';
 import { ToastAlertService } from './app/services/toast.service';
 
@@ -28,6 +28,8 @@ import { provideToastAlert } from '@dataclouder/core-components';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { providePrimeNG } from 'primeng/config';
 import MyPreset from './mypreset';
+import { UserDataExchangeService } from './app/core/user-data-exchange.service';
+import { provideStorage, getStorage } from '@angular/fire/storage';
 
 export function loggingInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn): Observable<HttpEvent<unknown>> {
   console.log('Before interception request:', req.url);
@@ -68,6 +70,8 @@ bootstrapApplication(AppComponent, {
       }
       return initializeApp(environment.firebase);
     }),
+    provideStorage(() => getStorage()),
+
     provideAuth(() => {
       if (Capacitor.isNativePlatform()) {
         return initializeAuth(getApp(), {
@@ -78,29 +82,6 @@ bootstrapApplication(AppComponent, {
       }
     }),
     { provide: FIREBASE_OPTIONS, useValue: environment.firebase },
-
-    // Dataclouder Providers
-    provideChatAIService(ConversationCardsService),
-    provideToastAlert(ToastAlertService),
-    provideLessonsService(LessonsService),
-
-    // Dataclouder Auth Providers
-    {
-      provide: AUTH_CONFIG,
-      useValue: {
-        clientIds: {
-          androidClientId: environment.mobile.androidClientId,
-          webClientId: environment.mobile.iosClientId,
-          iosClientId: environment.mobile.iosClientId,
-        },
-        settings: {
-          loginRedirectUri: '/auth/signin',
-          signupRedirectUri: '/auth/signup',
-          afterLoginRedirectUri: '/',
-          appleRedirectURI: environment.mobile.appleRedirectURI,
-        },
-      },
-    },
 
     // Translate Providers
 
@@ -113,5 +94,25 @@ bootstrapApplication(AppComponent, {
         },
       })
     ),
+
+    // Dataclouder Providers
+    provideChatAIService(ConversationCardsService),
+    provideToastAlert(ToastAlertService),
+    provideLessonsService(LessonsService),
+    // TODO: Create this service.
+    provideUserDataExchange(UserDataExchangeService),
+    provideAuthConfig({
+      clientIds: {
+        androidClientId: environment.mobile.androidClientId,
+        webClientId: environment.mobile.iosClientId,
+        iosClientId: environment.mobile.iosClientId,
+      },
+      settings: {
+        loginRedirectUri: '/auth/signin',
+        signupRedirectUri: '/auth/signup',
+        afterLoginRedirectUri: '/',
+        appleRedirectURI: environment.mobile.appleRedirectURI,
+      },
+    }),
   ],
 });
