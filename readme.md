@@ -28,13 +28,13 @@ A ready-to-use Angular/Ionic template with Firebase Authentication integration.
    sh start_project
    ```
 
-    git clone https://github.com/adamofig/dataclouder-template-ionic.git optional-renaming
+    git clone https://github.com/dataclouder-dev/dataclouder-template-ionic.git optional-renaming
 
 ### Option 2: Manual Setup
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/adamofig/dataclouder-template-ionic.git [optional-project-name]
+   git clone https://github.com/dataclouder-dev/dataclouder-template-ionic.git [optional-project-name]
    ```
 
 2. Rename the project using the provided script:
