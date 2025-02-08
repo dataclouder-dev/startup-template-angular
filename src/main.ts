@@ -10,6 +10,7 @@ import { environment } from './environments/environment';
 import { getApp, initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { provideAuth, getAuth, initializeAuth, indexedDBLocalPersistence } from '@angular/fire/auth';
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
+import { DialogService } from 'primeng/dynamicdialog';
 
 import { importProvidersFrom } from '@angular/core';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
@@ -84,7 +85,7 @@ bootstrapApplication(AppComponent, {
     { provide: FIREBASE_OPTIONS, useValue: environment.firebase },
 
     // Translate Providers
-
+    DialogService,
     importProvidersFrom(
       TranslateModule.forRoot({
         loader: {

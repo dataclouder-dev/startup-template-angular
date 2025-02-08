@@ -212,7 +212,7 @@ export class IonicLayoutComponent implements OnInit {
 
   logout() {
     console.log('logout');
-    this.firebaseAuthService.logOut('/auth/signin');
+    this.firebaseAuthService.logOut('/');
   }
 
   navigateTo(path: string) {

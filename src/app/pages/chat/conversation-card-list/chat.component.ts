@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonButton } from '@ionic/angular/standalone';
+import { IonContent } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { sendOutline, sendSharp, send } from 'ionicons/icons';
 import {
@@ -18,7 +18,7 @@ import { NavigationExtras, Router } from '@angular/router';
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, IonContent, IonButton, ConversationCardListsComponent],
+  imports: [CommonModule, FormsModule, IonContent, ConversationCardListsComponent],
 })
 export class ChatComponentPage implements OnInit {
   public conversationUserSettings: ConversationUserSettings = {

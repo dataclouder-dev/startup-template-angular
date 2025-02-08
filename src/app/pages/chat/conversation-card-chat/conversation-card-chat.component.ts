@@ -47,7 +47,7 @@ export class ConversationCardChatComponent implements OnInit {
       this.conversationCard = JSON.parse(params.get('conversationCard')!);
       if (!this.conversationCard) {
         const id = params.get('id') as string;
-        const card = await this.conversationCardsService.findConversationCard(id);
+        const card = await this.conversationCardsService.findConversationCardByID(id);
         console.log('card', card);
         this.conversationCard = card;
         this.cdr.detectChanges();

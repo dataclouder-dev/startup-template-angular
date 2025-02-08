@@ -8,6 +8,10 @@ SERVICE_NAME ?= python-server
 help:
 	@echo "Available commands:"
 
+update-dc:
+	npm run update:dc
+
+
 deploy:
 	npm run prebuild
 	npm run build

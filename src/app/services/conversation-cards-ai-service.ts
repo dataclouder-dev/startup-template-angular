@@ -23,6 +23,10 @@ export type TTSRequest = { text: string; voice: string; generateTranscription: b
 export class ConversationCardsService implements ConversationAIAbstractService {
   constructor(private httpService: HttpService, private userService: UserService) {}
 
+  async filterConversationCards(filters: FiltersConfig): Promise<any> {
+    return await this.httpService.postDataToService(`${Endpoints.ConversationCard.ConversationQuery}`, filters);
+  }
+
   public async getAudioTranscriptions(audioBlob: Blob, metadata: any = null): Promise<TranscriptionsWhisper> {
     alert('revisar que ya funcionan  las transcriptions');
     return await this.httpService.uploadAudioFile(`${Endpoints.ConversationCard.Whisper}`, audioBlob, metadata, 'python');
@@ -100,7 +104,7 @@ export class ConversationCardsService implements ConversationAIAbstractService {
     return this.httpService.deleteDataFromService(`${Endpoints.ConversationCard.Conversation}/${id}`);
   }
 
-  public findConversationCard(id: string): Promise<IConversationCard> {
+  public findConversationCardByID(id: string): Promise<IConversationCard> {
     return this.httpService.getDataFromService(`${Endpoints.ConversationCard.Conversation}/${id}`);
   }
   public getAllConversationCards(): Promise<IConversationCard[]> {
