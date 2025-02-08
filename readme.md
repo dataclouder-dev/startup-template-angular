@@ -16,48 +16,45 @@ A ready-to-use Angular/Ionic template with Firebase Authentication integration.
 
 ## 🚀 Getting Started
 
+This template provides a foundation for new projects. While you can run it locally, utilizing features like authentication, CI/CD, and Google Cloud Services requires setting up your own credentials and project names.
+
 ### Option 1: Auto Setup
 
-1. Navigate to auto_start directory:
-   ```bash
-   cd auto_start
-   ```
+Make is required for the auto setup. It usually comes pre-installed on Unix-based systems.
 
-2. Run the start project script:
-   ```bash
-   sh start_project
-   ```
-
-    git clone https://github.com/dataclouder-dev/dataclouder-template-ionic.git optional-renaming
-
-### Option 2: Manual Setup
-
-1. Clone the repository:
+0) Clone the repository:
    ```bash
    git clone https://github.com/dataclouder-dev/dataclouder-template-ionic.git [optional-project-name]
    ```
+   Update the Makefile variables with your project name and app ID.
 
-2. Rename the project using the provided script:
-```bash
-python3 rename_project.py your-project-name com.your-project-name.app
-```
+1) Rename the project:
+   ```bash
+   make rename-project
+   ```
+   This command will rename all necessary files and variables (requires Python).
 
-The script will rename all necessary files and folders including:
-* `package.json`
-* `ionic.config.json`
-* `environment.ts`
-* `capacitor.config.ts` (Note: The app name must be unique)
+   Required variables:
+   * `PROJECT_ID`: Your Firebase project ID
+   * `APP_ID`: Your application ID (format: com.your-domain.app-name)
+   * `DISPLAY_NAME`: The name that will be displayed in the title
 
-Required parameters:
-* Project name: `your-app-name`
-* App ClientIds: `com.your-web-page.app-name`
+   The script will update the following files:
+   * `package.json`
+   * `ionic.config.json`
+   * `environment.ts`
+   * `capacitor.config.ts` (Note: App name must be unique)
 
-Example: 
-    python3 rename_project.py lobo-alfa com.loboalfa.app
+2) Initialize the project:
+   ```bash
+   make init-project
+   ```
+   This will verify dependencies and create a new Firebase project automatically.
 
-## 🔧 Configuration
+## �� Configuration
 
-### 🔥 Firebase Setup
+### 🔥 Firebase Setup Manually 
+if you already have a firebase project, you can skip the auto setup and do it manually. 
 
 1. Create a new Firebase project (or use existing)
 2. Copy Firebase credentials to `environment.ts`
@@ -65,12 +62,6 @@ Example:
    - Navigate to Firebase Console → Authentication
    - Enable Email/Password and Google sign-in
    - Add authorized domains (localhost is included by default)
-
-Create the project in firebase, and set the credentials for angular project. 
-```sh start_project```
-
-
-Basically this is the flow for the autostart
 
 ![alt text](./docs/image.png)
 
