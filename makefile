@@ -1,7 +1,7 @@
 # Variables for deployment
-PROJECT_ID ?= dataclouder-dev
-PROJECT_NAME ?= Dataclouder Template
-APP_ID ?= dev.dataclouder.template
+PROJECT_ID ?= dataclouder-dev#Firebase/Google project ID
+PROJECT_NAME ?= dataclouder-template#Name of the project package format, use - instead of spaces
+APP_ID ?= dev.dataclouder.template # User for mobile apps.
 DISPLAY_NAME ?= $(PROJECT_NAME)
 
 help:
@@ -14,7 +14,7 @@ help:
 	@echo "  deploy         - Deploy to Firebase hosting"
 
 rename-project:
-	python3 scripts/rename_project.py $(PROJECT_NAME) $(APP_ID)
+	python3 scripts/rename_project.py "$(PROJECT_NAME)" "$(APP_ID)"
 
 update-dc:
 	npm run update:dc
@@ -32,27 +32,28 @@ install-deps:
 init-project: check-deps
 	@echo "Initializing Firebase project..."
 	firebase login
+	@echo "Creating Firebase project... firebase projects:create $(PROJECT_ID) --display-name "$(DISPLAY_NAME)""
 	firebase projects:create $(PROJECT_ID) --display-name "$(DISPLAY_NAME)"
-	firebase services:enable --project=$(PROJECT_ID) identitytoolkit.googleapis.com
-	$(eval SDK_CONFIG := $(shell firebase apps:create WEB $(PROJECT_ID) | grep "firebase apps:sdkconfig"))
-	@echo "Configuring Firebase SDK..."
-	@$(SDK_CONFIG) > temp_config.txt
-	node scripts/update-firebase-config.js "$$(cat temp_config.txt)"
-	@rm temp_config.txt
+	make create-firebase-app
 	@echo "Installing project dependencies..."
 	npm install
 	@echo "Project initialized successfully!"
-	@echo "IMPORTANT: Please manually enable authentication providers in Firebase Console"
-	@echo "You can now run 'make rename-project' to set up your project name and ID"
+	@echo "IMPORTANT: Please manually enable authentication and email, google and apple providers in https://console.firebase.google.com/project/$(PROJECT_ID)/authentication"
 
+create-firebase-app:
+	@echo "Configuring Firebase SDK..."
+	@echo "Creating Firebase App and Printing new firebase keys"
+	$(eval SDK_CONFIG := $(shell firebase apps:create WEB $(PROJECT_ID)  --project=$(PROJECT_ID) | grep "firebase apps:sdkconfig"))
+	@echo "SDK_CONFIG value: $(SDK_CONFIG)"
+	@$(SDK_CONFIG) > temp_config.txt
+	node scripts/update-firebase-config.js
+	@rm temp_config.txt
 
 deploy:
 	npm run build
 	firebase deploy --only hosting:$(PROJECT_ID)
 
-
 deploy-release:
 	npm run prebuild
 	npm run build:prod
 	firebase deploy --only hosting:$(PROJECT_ID)
-

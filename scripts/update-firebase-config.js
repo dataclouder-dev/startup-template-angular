@@ -1,25 +1,41 @@
 const fs = require('fs');
+const path = require('path');
 
-// Get Firebase configuration from command line argument
-const firebaseConfigStr = process.argv[2];
-if (!firebaseConfigStr) {
-    console.error('Firebase configuration must be provided as command line argument');
+// Read the temp_config.txt file
+const configFile = path.join(__dirname, '../temp_config.txt');
+let configContent;
+try {
+    configContent = fs.readFileSync(configFile, 'utf8');
+} catch (error) {
+    console.error('Failed to read temp_config.txt:', error);
     process.exit(1);
 }
 
-// Parse the Firebase configuration
+// Extract the configuration object from the content
 let firebaseConfig;
 try {
-    // Parse the configuration object directly
-    firebaseConfig = JSON.parse(firebaseConfigStr);
+    // Find the configuration object in the content using regex
+    const configMatch = configContent.match(/firebase\.initializeApp\(({[\s\S]*?})\);/);
+    if (!configMatch) {
+        throw new Error('Could not find Firebase configuration in temp_config.txt');
+    }
+    
+    // Parse the configuration object
+    firebaseConfig = JSON.parse(configMatch[1]);
 } catch (error) {
     console.error('Failed to parse Firebase configuration:', error);
     process.exit(1);
 }
 
 // Read environment.ts
-const envFile = '../src/environments/environment.ts';
-let envContent = fs.readFileSync(envFile, 'utf8');
+const envFile = path.join(__dirname, '../src/environments/environment.ts');
+let envContent;
+try {
+    envContent = fs.readFileSync(envFile, 'utf8');
+} catch (error) {
+    console.error('Failed to read environment.ts:', error);
+    process.exit(1);
+}
 
 // Create the new firebase config string
 const firebaseConfigString = `  firebase: {
@@ -38,5 +54,10 @@ const updatedContent = envContent.replace(
 );
 
 // Write back to file
-fs.writeFileSync(envFile, updatedContent);
-console.log('Firebase config updated successfully!');
+try {
+    fs.writeFileSync(envFile, updatedContent);
+    console.log('Firebase config updated successfully!');
+} catch (error) {
+    console.error('Failed to write to environment.ts:', error);
+    process.exit(1);
+}

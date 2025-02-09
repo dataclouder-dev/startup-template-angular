@@ -77,7 +77,7 @@ def rename_project(new_name, new_app_id):
     files_to_update = {
         'package.json': update_json_file,
         'ionic.config.json': update_json_file,
-        '.firebaserc': update_json_file,
+        # '.firebaserc': update_json_file, # i think i don't need to set a default instead pass --project on deploy
         'capacitor.config.ts': update_capacitor_config,
         'src/environments/environment.ts': update_environment_file,
         'src/environments/environment.prod.ts': update_environment_file
