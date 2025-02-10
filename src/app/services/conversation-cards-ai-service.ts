@@ -5,7 +5,7 @@ import {
   ConversationAIAbstractService,
   ConversationPromptSettings,
   ConversationUserSettings,
-  IConversationCard,
+  IAgentCard,
   ModelName,
   TranscriptionsWhisper,
 } from '@dataclouder/conversation-system';
@@ -32,7 +32,7 @@ export class ConversationCardsService implements ConversationAIAbstractService {
     return await this.httpService.uploadAudioFile(`${Endpoints.ConversationCard.Whisper}`, audioBlob, metadata, 'python');
   }
 
-  public async getConversationCards(paginator: FiltersConfig): Promise<IConversationCard[]> {
+  public async getConversationCards(paginator: FiltersConfig): Promise<IAgentCard[]> {
     const response = await this.httpService.postDataToService(`${Endpoints.ConversationCard.ConversationQuery}`, paginator);
     return response;
   }
@@ -100,18 +100,18 @@ export class ConversationCardsService implements ConversationAIAbstractService {
     return audioData;
   }
 
-  public deleteConversationCard(id: string): Promise<IConversationCard> {
+  public deleteConversationCard(id: string): Promise<IAgentCard> {
     return this.httpService.deleteDataFromService(`${Endpoints.ConversationCard.Conversation}/${id}`);
   }
 
-  public findConversationCardByID(id: string): Promise<IConversationCard> {
+  public findConversationCardByID(id: string): Promise<IAgentCard> {
     return this.httpService.getDataFromService(`${Endpoints.ConversationCard.Conversation}/${id}`);
   }
-  public getAllConversationCards(): Promise<IConversationCard[]> {
+  public getAllConversationCards(): Promise<IAgentCard[]> {
     return this.httpService.getDataFromService(`${Endpoints.ConversationCard.Conversation}`);
   }
 
-  async saveConversationCard(conversation: IConversationCard): Promise<IConversationCard> {
+  async saveConversationCard(conversation: IAgentCard): Promise<IAgentCard> {
     if (conversation.id || conversation._id) {
       return await this.httpService.putDataFromService(`${Endpoints.ConversationCard.Conversation}/${conversation._id}`, conversation);
     } else {

@@ -51,9 +51,9 @@ create-firebase-app:
 
 deploy:
 	npm run build
-	firebase deploy --only hosting:$(PROJECT_ID)
+	firebase deploy --project $(PROJECT_ID) --only hosting:$(PROJECT_ID)
 
 deploy-release:
 	npm run prebuild
 	npm run build:prod
-	firebase deploy --only hosting:$(PROJECT_ID)
+	firebase deploy --project $(PROJECT_ID) --only hosting:$(PROJECT_ID)

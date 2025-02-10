@@ -6,7 +6,7 @@ import {
   ConversationUserSettings,
   ChatRole,
   AudioSpeed,
-  IConversationCard,
+  IAgentCard,
 } from '@dataclouder/conversation-system';
 import { ActivatedRoute } from '@angular/router';
 import { ConversationCardsService } from 'src/app/services/conversation-cards-ai-service';
@@ -19,7 +19,7 @@ import { ConversationCardsService } from 'src/app/services/conversation-cards-ai
   styleUrls: ['./conversation-card-chat.component.scss'],
 })
 export class ConversationCardChatComponent implements OnInit {
-  @Input() conversationCard!: IConversationCard;
+  @Input() conversationCard!: IAgentCard;
   public ConversationPromptSettings: ConversationPromptSettings = {
     messages: [{ text: 'you are having a conversation with?', content: 'bot', role: ChatRole.System }],
   };

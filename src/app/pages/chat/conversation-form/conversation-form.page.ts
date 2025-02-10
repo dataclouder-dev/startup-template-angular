@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { NavController, ToastController } from '@ionic/angular/standalone';
 
-import { DCConversationFormComponent, IConversationCard } from '@dataclouder/conversation-system';
+import { DCAgentCardFormComponent, IAgentCard } from '@dataclouder/conversation-system';
 
 import {
   IonHeader,
@@ -43,7 +43,7 @@ import { ConversationCardsService } from 'src/app/services/conversation-cards-ai
 @Component({
   selector: 'app-conversation-form',
   standalone: true,
-  imports: [CommonModule, DCConversationFormComponent],
+  imports: [CommonModule, DCAgentCardFormComponent],
   templateUrl: './conversation-form.page.html',
   styleUrl: './conversation-form.page.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -78,7 +78,7 @@ export class ConversationFormPage implements OnInit {
     this.router.navigate([RouteNames.Page, RouteNames.Stack, RouteNames.ConversationDetails, id]);
   }
 
-  public async onTranslate(dataEvent: { card: IConversationCard; currentLang: string; targetLang: string; id: string }) {
+  public async onTranslate(dataEvent: { card: IAgentCard; currentLang: string; targetLang: string; id: string }) {
     console.log(dataEvent);
     try {
       const toast = await this.toastController.create({
@@ -94,7 +94,7 @@ export class ConversationFormPage implements OnInit {
       delete originalCard._id;
 
       const response: any = await this.conversationCardsService.translateConversation(dataEvent.currentLang, dataEvent.targetLang, dataEvent.id);
-      const trasnlatedCard: IConversationCard = {
+      const trasnlatedCard: IAgentCard = {
         ...originalCard,
         characterCard: { ...originalCard.characterCard, data: response },
         lang: dataEvent.targetLang,

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { DcConversationCardDetailsComponent, IConversationCard } from '@dataclouder/conversation-system';
+import { DcConversationCardDetailsComponent, IAgentCard } from '@dataclouder/conversation-system';
 
 @Component({
   selector: 'app-conversation-details',
@@ -36,7 +36,7 @@ export class ConversationDetailsPage implements OnInit {
     }
   }
 
-  public startConversation(card: IConversationCard) {
+  public startConversation(card: IAgentCard) {
     console.log('startConversation', card);
     this.router.navigate(['/page/stack/chat', card._id], {
       state: {
