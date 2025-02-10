@@ -1,36 +1,38 @@
 import { bootstrapApplication } from '@angular/platform-browser';
+import { importProvidersFrom } from '@angular/core';
 import { RouteReuseStrategy, provideRouter, withPreloading, PreloadAllModules } from '@angular/router';
-import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular/standalone';
-
-import { routes } from './app/app.routes';
-import { AppComponent } from './app/app.component';
 import { HttpClient, HttpEvent, HttpHandlerFn, HttpRequest, provideHttpClient, withInterceptors } from '@angular/common/http';
-import { authInterceptor } from './app/services/interception.service';
-import { environment } from './environments/environment';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+// Firebase
+import { provideStorage, getStorage } from '@angular/fire/storage';
 import { getApp, initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { provideAuth, getAuth, initializeAuth, indexedDBLocalPersistence } from '@angular/fire/auth';
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
+// Ionic
+import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular/standalone';
+import { Capacitor } from '@capacitor/core';
+// PrimeNG
 import { DialogService } from 'primeng/dynamicdialog';
-
-import { importProvidersFrom } from '@angular/core';
+import { providePrimeNG } from 'primeng/config';
+// Third Party
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { Capacitor } from '@capacitor/core';
-import { AUTH_CONFIG, provideAuthConfig } from '@dataclouder/app-auth';
+// DC Libs
 import { provideChatAIService, provideUserDataExchange } from '@dataclouder/conversation-system';
-import { ConversationCardsService } from './app/services/conversation-cards-ai-service';
-import { ToastAlertService } from './app/services/toast.service';
-
 import { provideLessonsService } from '@dataclouder/lessons';
-import { LessonsService } from './app/services/lessons.service';
+import { provideAuthConfig } from '@dataclouder/app-auth';
 import { provideToastAlert } from '@dataclouder/core-components';
-
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { providePrimeNG } from 'primeng/config';
+// Local
+import { environment } from './environments/environment';
+import { AgentCardService } from './app/services/conversation-cards-ai-service';
+import { ToastAlertService } from './app/services/toast.service';
+import { LessonsService } from './app/services/lessons.service';
+import { authInterceptor } from './app/services/interception.service';
 import MyPreset from './mypreset';
 import { UserDataExchangeService } from './app/core/user-data-exchange.service';
-import { provideStorage, getStorage } from '@angular/fire/storage';
+import { routes } from './app/app.routes';
+import { AppComponent } from './app/app.component';
 
 export function loggingInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn): Observable<HttpEvent<unknown>> {
   console.log('Before interception request:', req.url);
@@ -58,11 +60,9 @@ bootstrapApplication(AppComponent, {
     }),
     provideRouter(routes, withPreloading(PreloadAllModules)),
     provideHttpClient(withInterceptors([authInterceptor])),
-
     // Ionic Providers
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     provideIonicAngular(),
-
     // Firebase Providers
     provideFirebaseApp(() => {
       if (!environment.firebase?.apiKey || !environment.firebase?.projectId) {
@@ -95,12 +95,10 @@ bootstrapApplication(AppComponent, {
         },
       })
     ),
-
     // Dataclouder Providers
-    provideChatAIService(ConversationCardsService),
+    provideChatAIService(AgentCardService),
     provideToastAlert(ToastAlertService),
     provideLessonsService(LessonsService),
-    // TODO: Create this service.
     provideUserDataExchange(UserDataExchangeService),
     provideAuthConfig({
       clientIds: {

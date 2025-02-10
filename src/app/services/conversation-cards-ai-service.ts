@@ -20,7 +20,7 @@ export type TTSRequest = { text: string; voice: string; generateTranscription: b
 @Injectable({
   providedIn: 'root',
 })
-export class ConversationCardsService implements ConversationAIAbstractService {
+export class AgentCardService implements ConversationAIAbstractService {
   constructor(private httpService: HttpService, private userService: UserService) {}
 
   async filterConversationCards(filters: FiltersConfig): Promise<any> {

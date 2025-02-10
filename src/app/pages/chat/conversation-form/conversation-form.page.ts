@@ -38,7 +38,7 @@ import {
 
 import { environment } from 'src/environments/environment';
 import { RouteNames } from 'src/app/core/enums';
-import { ConversationCardsService } from 'src/app/services/conversation-cards-ai-service';
+import { AgentCardService } from 'src/app/services/conversation-cards-ai-service';
 
 @Component({
   selector: 'app-conversation-form',
@@ -54,7 +54,7 @@ export class ConversationFormPage implements OnInit {
   public projectName = environment.projectName;
 
   constructor(
-    private conversationCardsService: ConversationCardsService,
+    private conversationCardsService: AgentCardService,
     private route: ActivatedRoute,
     private router: Router,
     private AlertController: AlertController,

@@ -9,7 +9,7 @@ import {
   IAgentCard,
 } from '@dataclouder/conversation-system';
 import { ActivatedRoute } from '@angular/router';
-import { ConversationCardsService } from 'src/app/services/conversation-cards-ai-service';
+import { AgentCardService } from 'src/app/services/conversation-cards-ai-service';
 
 @Component({
   selector: 'app-conversation-card-chat',
@@ -39,7 +39,7 @@ export class ConversationCardChatComponent implements OnInit {
     speed: AudioSpeed.Regular,
   };
 
-  constructor(private route: ActivatedRoute, private conversationCardsService: ConversationCardsService, private cdr: ChangeDetectorRef) {}
+  constructor(private route: ActivatedRoute, private conversationCardsService: AgentCardService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(async params => {
