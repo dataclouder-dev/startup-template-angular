@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {
   AudioSpeed,
   ChatRole,
-  ConversationAIAbstractService,
+  AgentCardsAbstractService,
   ConversationPromptSettings,
   ConversationUserSettings,
   IAgentCard,
@@ -20,7 +20,7 @@ export type TTSRequest = { text: string; voice: string; generateTranscription: b
 @Injectable({
   providedIn: 'root',
 })
-export class AgentCardService implements ConversationAIAbstractService {
+export class AgentCardService implements AgentCardsAbstractService {
   constructor(private httpService: HttpService, private userService: UserService) {}
 
   async filterConversationCards(filters: FiltersConfig): Promise<any> {
@@ -32,7 +32,7 @@ export class AgentCardService implements ConversationAIAbstractService {
     return await this.httpService.uploadAudioFile(`${Endpoints.ConversationCard.Whisper}`, audioBlob, metadata, 'python');
   }
 
-  public async getConversationCards(paginator: FiltersConfig): Promise<IAgentCard[]> {
+  public async findAgentCards(paginator: FiltersConfig) {
     const response = await this.httpService.postDataToService(`${Endpoints.ConversationCard.ConversationQuery}`, paginator);
     return response;
   }
