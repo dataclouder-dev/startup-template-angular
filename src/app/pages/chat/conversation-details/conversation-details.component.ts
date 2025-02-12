@@ -2,14 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { DcConversationCardDetailsComponent, IAgentCard } from '@dataclouder/conversation-system';
+import { DcAgentCardDetailsComponent, IAgentCard } from '@dataclouder/conversation-system';
 
 @Component({
   selector: 'app-conversation-details',
   templateUrl: './conversation-details.component.html',
   styleUrls: ['./conversation-details.component.scss'],
   standalone: true,
-  imports: [CommonModule, DcConversationCardDetailsComponent],
+  imports: [CommonModule, DcAgentCardDetailsComponent],
 })
 export class ConversationDetailsPage implements OnInit {
   conversationId: any;
