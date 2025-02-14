@@ -53,7 +53,7 @@
     "@ckeditor/ckeditor5-build-balloon-block": "^38.1.0",
     "@codetrix-studio/capacitor-google-auth": "^3.4.0-rc.4",
     "@dataclouder/app-auth": "^0.0.36",
-    "@dataclouder/conversation-system": "^0.0.62",
+    "@dataclouder/conversation-system": "^0.0.64",
     "@dataclouder/core-components": "^0.0.14",
     "@dataclouder/dc-mic": "^0.0.2",
     "@dataclouder/lessons": "^0.0.21",

@@ -4,6 +4,14 @@
 // Dark theme
 :root {
   // ...existing code...
+  --ion-color-primary: var(--p-primary-500);
+  --ion-color-primary-rgb: 56, 128, 255;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+  --ion-color-primary-shade: var(--p-slate-700);
+  --ion-color-primary-tint: var(--p-stone-500);
+  --ion-background-color: linear-gradient(90deg,var(--p-slate-200), var(--p-stone-50));
+  --ion-text-color: var(--p-slate-800);
 }
 
 // :root[theme=dark] {
