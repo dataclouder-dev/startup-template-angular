@@ -46,6 +46,12 @@ export const Endpoints = {
     Lesson: 'api/lessonv2/lesson',
     QueryLessons: 'api/lessonv2/query',
   },
+  Notion: {
+    ListDBs: 'api/notion/list-dbs',
+    ListPages: 'api/notion/list-pages',
+    CreatePage: 'api/notion/create-page',
+    PageInSpecificFormat: 'api/notion/page-in-specific-format', // Get /{pageId}
+  },
 };
 
 export enum AppHttpCode {

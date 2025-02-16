@@ -70,6 +70,24 @@ def update_environment_file(file_path, new_name, new_app_id):
     except Exception as e:
         print(f"Error updating {file_path}: {str(e)}")
 
+def update_index_html(file_path, new_name):
+    try:
+        with open(file_path, 'r') as f:
+            content = f.read()
+        
+        # Update the title tag using regex
+        content = re.sub(
+            r'<title>.*?</title>',
+            f'<title>{new_name.title()}</title>',
+            content
+        )
+        
+        with open(file_path, 'w') as f:
+            f.write(content)
+        print(f"Updated {file_path}")
+    except Exception as e:
+        print(f"Error updating {file_path}: {str(e)}")
+
 def rename_project(new_name, new_app_id):
     project_root = Path.cwd()
     
@@ -80,7 +98,8 @@ def rename_project(new_name, new_app_id):
         # '.firebaserc': update_json_file, # i think i don't need to set a default instead pass --project on deploy
         'capacitor.config.ts': update_capacitor_config,
         'src/environments/environment.ts': update_environment_file,
-        'src/environments/environment.prod.ts': update_environment_file
+        'src/environments/environment.prod.ts': update_environment_file,
+        'src/index.html': lambda f, n, a: update_index_html(f, n)
     }
     
     for filename, update_func in files_to_update.items():

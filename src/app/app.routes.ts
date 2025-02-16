@@ -125,6 +125,29 @@ export const routes: Routes = [
       },
 
       {
+        path: 'generics',
+        loadComponent: () => import('./pages/generics/generics.component').then(m => m.GenericsComponent),
+        children: [
+          {
+            path: '',
+            loadComponent: () => import('./pages/generics/generic-list/generic-list.component').then(m => m.GenericListComponent),
+          },
+          {
+            path: 'edit',
+            loadComponent: () => import('./pages/generics/generic-form/generic-form.component').then(m => m.GenericFormComponent),
+          },
+          {
+            path: 'edit/:id',
+            loadComponent: () => import('./pages/generics/generic-form/generic-form.component').then(m => m.GenericFormComponent),
+          },
+          {
+            path: 'details/:id',
+            loadComponent: () => import('./pages/generics/generic-detail/generic-detail.component').then(m => m.GenericDetailComponent),
+          },
+        ],
+      },
+
+      {
         path: 'test',
         loadComponent: () => import('./pages/test/test.component').then(m => m.TestComponent),
       },

@@ -1,0 +1,20 @@
+<dc-filter-bar (onNew)="onNew()"></dc-filter-bar>
+<br />
+
+@for (generic of generics; track generic.id) {
+<div class="card-source">
+  <div style="position: absolute; top: 4px; right: 4px; z-index: 1000">
+    <p-speeddial
+      [model]="getCustomButtons(generic)"
+      [radius]="70"
+      type="semi-circle"
+      direction="left"
+      [buttonProps]="{ severity: 'primary', rounded: true, outlined: true }" />
+  </div>
+  <p-card [header]="generic.name">
+    <p class="m-0">{{ generic.description }}</p>
+    <span>{{ generic.updatedAt }}</span>
+  </p-card>
+</div>
+
+}

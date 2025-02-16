@@ -20,7 +20,7 @@ import { Observable } from 'rxjs';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 // DC Libs
 import { provideChatAIService, provideUserDataExchange } from '@dataclouder/conversation-system';
-import { provideLessonsService } from '@dataclouder/lessons';
+import { provideLessonsService, provideNotionService } from '@dataclouder/lessons';
 import { provideAuthConfig } from '@dataclouder/app-auth';
 import { provideToastAlert } from '@dataclouder/core-components';
 // Local
@@ -33,6 +33,7 @@ import MyPreset from './mypreset';
 import { UserDataExchangeService } from './app/core/user-data-exchange.service';
 import { routes } from './app/app.routes';
 import { AppComponent } from './app/app.component';
+import { NotionService } from './app/services/notion.service';
 
 export function loggingInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn): Observable<HttpEvent<unknown>> {
   console.log('Before interception request:', req.url);
@@ -100,6 +101,7 @@ bootstrapApplication(AppComponent, {
     provideToastAlert(ToastAlertService),
     provideLessonsService(LessonsService),
     provideUserDataExchange(UserDataExchangeService),
+    provideNotionService(NotionService),
     provideAuthConfig({
       clientIds: {
         androidClientId: environment.mobile.androidClientId,

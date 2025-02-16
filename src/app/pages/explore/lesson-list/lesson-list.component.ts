@@ -16,4 +16,10 @@ export class LessonListComponent {
     console.log('onNewLesson');
     this.router.navigate(['edit'], { relativeTo: this.route });
   }
+
+  public editLesson(lessonId: string) {
+    debugger;
+    console.log('onEditLesson', lessonId);
+    this.router.navigate(['edit', lessonId], { relativeTo: this.route });
+  }
 }
