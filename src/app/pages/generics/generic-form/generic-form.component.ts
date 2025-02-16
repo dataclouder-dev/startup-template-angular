@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IGenericLLM } from '../models/generics.model';
@@ -9,6 +9,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { DropdownModule } from 'primeng/dropdown';
 import { Textarea } from 'primeng/inputtextarea';
 import { ButtonModule } from 'primeng/button';
+import { TOAST_ALERTS_TOKEN, ToastAlertsAbstractService } from '@dataclouder/core-components';
 
 @Component({
   selector: 'app-source-form',
@@ -20,7 +21,13 @@ import { ButtonModule } from 'primeng/button';
 export class GenericFormComponent implements OnInit {
   genericForm: FormGroup;
 
-  constructor(private route: ActivatedRoute, private genericService: GenericService, private fb: FormBuilder, private router: Router) {
+  constructor(
+    private route: ActivatedRoute,
+    private genericService: GenericService,
+    private fb: FormBuilder,
+    private router: Router,
+    @Inject(TOAST_ALERTS_TOKEN) private toastService: ToastAlertsAbstractService
+  ) {
     this.genericForm = this.fb.group({
       name: ['', Validators.required],
       description: ['', Validators.required],
@@ -39,11 +46,19 @@ export class GenericFormComponent implements OnInit {
     }
   }
 
-  async onSubmit() {
+  async save() {
     if (this.genericForm.valid) {
-      const generic = await this.genericService.saveGeneric(this.genericForm.value);
-      debugger;
-      this.router.navigate(['../', generic.id], { relativeTo: this.route });
+      const generic = { ...this.genericForm.value, ...this.generic } as IGenericLLM;
+
+      const result = await this.genericService.saveGeneric(generic);
+
+      if (!this.genericId) {
+        this.router.navigate([result.id], { relativeTo: this.route });
+      }
+      this.toastService.success({
+        title: 'Origen guardado',
+        subtitle: 'El origen ha sido guardado correctamente',
+      });
     }
   }
 }

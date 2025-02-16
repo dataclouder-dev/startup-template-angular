@@ -12,8 +12,8 @@
       [buttonProps]="{ severity: 'primary', rounded: true, outlined: true }" />
   </div>
   <p-card [header]="generic.name">
-    <p class="m-0">{{ generic.description }}</p>
-    <span>{{ generic.updatedAt }}</span>
+    <p class="m-0">{{ generic.description | slice : 0 : 250 }}...</p>
+    <span>{{ generic.updatedAt | date : 'dd/MM/yyyy HH:mm' }}</span>
   </p-card>
 </div>
 

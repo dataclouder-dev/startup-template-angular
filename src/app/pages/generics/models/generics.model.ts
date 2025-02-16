@@ -5,6 +5,7 @@ export interface AuditDate {
 
 export interface IGenericLLM extends AuditDate {
   id: string;
-  name: string;
-  description: string;
+  name?: string;
+  description?: string;
+  tag?: string;
 }

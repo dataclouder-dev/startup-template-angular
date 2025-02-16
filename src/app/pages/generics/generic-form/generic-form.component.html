@@ -2,7 +2,7 @@
 
 <div class="source-form-card">
   <p-card [header]="genericId ? 'Edit Generic' : 'New Generic'">
-    <form [formGroup]="genericForm" (ngSubmit)="onSubmit()" class="flex flex-column gap-4">
+    <form [formGroup]="genericForm" class="flex flex-column gap-4">
       <div class="form-field">
         <label for="name" class="block">Name</label>
         <input id="name" type="text" pInputText formControlName="name" placeholder="Enter source name" class="w-full" />
@@ -17,10 +17,10 @@
         <label for="img" class="block">Image URL</label>
         <input id="img" type="text" pInputText formControlName="img" placeholder="Enter image URL" class="w-full" />
       </div>
-
-      <div class="flex justify-content-end mt-4">
-        <p-button type="submit" label="Save Source" [disabled]="!genericForm.valid" icon="pi pi-check" iconPos="right"> </p-button>
-      </div>
     </form>
+
+    <div class="flex justify-content-end mt-4">
+      <p-button (click)="save()" label="Save Source" [disabled]="!genericForm.valid" icon="pi pi-check" iconPos="right"> </p-button>
+    </div>
   </p-card>
 </div>

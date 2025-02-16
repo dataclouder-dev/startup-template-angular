@@ -11,17 +11,21 @@ export class GenericService {
   constructor(private httpService: HttpService) {}
 
   public async getGenerics(): Promise<IGenericLLM[]> {
-    // return this.httpService.getDataFromService<ISourceLLM[]>(Endpoints.Generic.Source);
     return [
-      {
-        id: '1',
-        name: 'Generic 1',
-        description: 'Description 1',
-      },
+      { id: '1', name: 'Generic 1', description: 'Description with short description', tag: 'tag1' },
       {
         id: '2',
         name: 'Generic 2',
-        description: 'Description 2',
+        description:
+          'Description  with a Medium description, lorep ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+        tag: 'tag2',
+      },
+      {
+        id: '3',
+        name: 'Generic 3',
+        description:
+          'Description  with a long description, lorep ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+        tag: 'tag3',
       },
     ];
   }
