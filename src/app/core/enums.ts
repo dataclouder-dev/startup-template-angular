@@ -30,6 +30,9 @@ export const Endpoints = {
   GetUser: 'api/user',
   PostUser: 'api/user',
   AdminUser: 'api/admin/user',
+  Generics: {
+    Generics: 'api/generics',
+  },
   Admin: {
     Claims: 'api/admin/claims', // :email
   },

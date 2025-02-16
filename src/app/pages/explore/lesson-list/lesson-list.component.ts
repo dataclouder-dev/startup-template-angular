@@ -18,7 +18,6 @@ export class LessonListComponent {
   }
 
   public editLesson(lessonId: string) {
-    debugger;
     console.log('onEditLesson', lessonId);
     this.router.navigate(['edit', lessonId], { relativeTo: this.route });
   }

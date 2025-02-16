@@ -16,5 +16,8 @@
     <span>{{ generic.updatedAt | date : 'dd/MM/yyyy HH:mm' }}</span>
   </p-card>
 </div>
-
+} @if (generics.length === 0) {
+<p-card>
+  <p>No generics found</p>
+</p-card>
 }

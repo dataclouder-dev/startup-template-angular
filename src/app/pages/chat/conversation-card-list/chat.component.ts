@@ -68,7 +68,6 @@ export class ChatComponentPage implements OnInit {
   }
 
   public goToEdit(idCard: any) {
-    debugger;
     if (idCard) {
       this.router.navigate(['/page/stack/conversation-form', idCard]);
     } else {

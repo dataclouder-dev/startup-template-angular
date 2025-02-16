@@ -49,7 +49,6 @@ export class GenericListComponent implements OnInit {
   ) {}
 
   public async doAction(action: string, item: any) {
-    debugger;
     switch (action) {
       case 'view':
         this.router.navigate(['./details', item.id], { relativeTo: this.route });
