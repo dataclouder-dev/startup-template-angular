@@ -110,9 +110,21 @@ That's all at this point. You should be able to run the app and be able to sign 
 
     This is just to get the firebase.json and .firebaserc files (you can also copy them).
 
+## Run the project
 
+```bash
+    
+    npm run install or make init-project
+    npm run start or make start
+```
 
-# Deploy to firebase 
+Note: you need to set backend in environment.ts in order to connect with methods. 
+check projects. 
+
+https://github.com/dataclouder-dev/dataclouder-template-node
+https://github.com/dataclouder-dev/dataclouder-template-python
+
+## Deploy to firebase 
 
 ### Manual deploy 
 
@@ -124,7 +136,7 @@ That's all at this point. You should be able to run the app and be able to sign 
 
 #### deploy using make 
 
-make deploy
+    make deploy
 
 
 ### Automatic deploy 

@@ -3,9 +3,22 @@ export interface AuditDate {
   updatedAt?: string;
 }
 
-export interface IGenericLLM extends AuditDate {
+export enum GenericType {
+  Gen1 = 'gen1',
+  Gen2 = 'gen2',
+  Gen3 = 'gen3',
+}
+
+export interface IGenericRelation {
+  id: string;
+  name: string;
+  description: string;
+}
+
+export interface IGeneric extends AuditDate {
   id: string;
   name?: string;
   description?: string;
-  tag?: string;
+  type?: string;
+  relation?: IGenericRelation;
 }

@@ -2,9 +2,9 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit }
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 
-import { DCFilterBarComponent, TOAST_ALERTS_TOKEN, ToastAlertsAbstractService } from '@dataclouder/core-components';
+import { DCFilterBarComponent, PaginationBase, TOAST_ALERTS_TOKEN, ToastAlertsAbstractService } from '@dataclouder/core-components';
 import { GenericService } from '../generics.service';
-import { IGenericLLM } from '../models/generics.model';
+import { IGeneric } from '../models/generics.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SpeedDialModule } from 'primeng/speeddial';
 import { MenuItem } from 'primeng/api';
@@ -18,8 +18,8 @@ import { DatePipe, SlicePipe } from '@angular/common';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 // TODO: extends PaginationBase this handle filter, pagination, and url params ?page=1
-export class GenericListComponent implements OnInit {
-  generics: IGenericLLM[] = [];
+export class GenericListComponent extends PaginationBase implements OnInit {
+  generics: IGeneric[] = [];
 
   getCustomButtons(item: any): MenuItem[] {
     return [
@@ -44,11 +44,22 @@ export class GenericListComponent implements OnInit {
   constructor(
     @Inject(TOAST_ALERTS_TOKEN) private toastService: ToastAlertsAbstractService,
     private sourceService: GenericService,
-    private router: Router,
-    private route: ActivatedRoute,
+    router: Router,
+    route: ActivatedRoute,
     private cdr: ChangeDetectorRef
-  ) {}
+  ) {
+    super(route, router);
+  }
 
+  async ngOnInit(): Promise<void> {
+    const response = await this.sourceService.getFilteredGenerics(this.filterConfig);
+    this.generics = response.rows;
+    this.cdr.detectChanges();
+  }
+
+  protected override loadData(): Promise<void> {
+    throw new Error('Method not implemented.');
+  }
   public async doAction(action: string, item: any) {
     switch (action) {
       case 'view':
@@ -70,11 +81,6 @@ export class GenericListComponent implements OnInit {
         this.router.navigate(['./edit', item.id], { relativeTo: this.route });
         break;
     }
-  }
-
-  async ngOnInit(): Promise<void> {
-    this.generics = await this.sourceService.getGenerics();
-    this.cdr.detectChanges();
   }
 
   onNew() {

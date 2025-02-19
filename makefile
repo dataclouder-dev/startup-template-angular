@@ -57,3 +57,6 @@ deploy-release:
 	npm run prebuild
 	npm run build:prod
 	firebase deploy --project $(PROJECT_ID) --only hosting:$(PROJECT_ID)
+
+start:
+	npm run start

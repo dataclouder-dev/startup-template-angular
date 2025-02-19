@@ -1,26 +1,39 @@
-<h3>Here the form</h3>
+<h3>Generics Form</h3>
 
 <div class="source-form-card">
   <p-card [header]="genericId ? 'Edit Generic' : 'New Generic'">
-    <form [formGroup]="genericForm" class="flex flex-column gap-4">
+    <form [formGroup]="genericForm">
       <div class="form-field">
         <label for="name" class="block">Name</label>
         <input id="name" type="text" pInputText formControlName="name" placeholder="Enter source name" class="w-full" />
       </div>
 
       <div class="form-field">
-        <label for="content" class="block">Content</label>
-        <textarea id="content" pInputTextarea formControlName="content" rows="5" class="w-full" placeholder="Enter source content"> </textarea>
+        <label for="description" class="block">description</label>
+        <textarea id="description" pInputTextarea formControlName="description" rows="5" class="w-full" placeholder="Enter source content">
+        </textarea>
       </div>
 
       <div class="form-field">
-        <label for="img" class="block">Image URL</label>
-        <input id="img" type="text" pInputText formControlName="img" placeholder="Enter image URL" class="w-full" />
+        <label for="type" class="block">Type</label>
+        <p-select
+          id="type"
+          [options]="genericTypes"
+          formControlName="type"
+          optionLabel="label"
+          optionValue="value"
+          placeholder="Select a type" />
+      </div>
+
+      <!-- Different is releation contains a whole object meanwhile type is only string -->
+      <div class="form-field">
+        <label for="relation" class="block">Relation</label>
+        <p-select id="relation" [options]="relationObjects" formControlName="relation" optionLabel="name" placeholder="Select a relation" />
       </div>
     </form>
 
-    <div class="flex justify-content-end mt-4">
-      <p-button (click)="save()" label="Save Source" [disabled]="!genericForm.valid" icon="pi pi-check" iconPos="right"> </p-button>
+    <div>
+      <p-button (click)="save()" label="Save Generic" [disabled]="!genericForm.valid" icon="pi pi-check" iconPos="right"> </p-button>
     </div>
   </p-card>
 </div>

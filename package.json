@@ -4,7 +4,7 @@
     "appId": "dev.dataclouder.template",
     "appIdDev": "dev.dataclouder.template.dev"
   },
-  "version": "0.0.8",
+  "version": "0.0.10",
   "author": "Ionic Framework",
   "homepage": "dataclouder.dev",
   "scripts": {

@@ -27,16 +27,6 @@ try {
     process.exit(1);
 }
 
-// Read environment.ts
-const envFile = path.join(__dirname, '../src/environments/environment.ts');
-let envContent;
-try {
-    envContent = fs.readFileSync(envFile, 'utf8');
-} catch (error) {
-    console.error('Failed to read environment.ts:', error);
-    process.exit(1);
-}
-
 // Create the new firebase config string
 const firebaseConfigString = `  firebase: {
     apiKey: '${firebaseConfig.apiKey}',
@@ -47,17 +37,35 @@ const firebaseConfigString = `  firebase: {
     appId: '${firebaseConfig.appId}',
   }`;
 
-// Replace the empty firebase config with the new one
-const updatedContent = envContent.replace(
-    /firebase:\s*{[^}]*}/,
-    firebaseConfigString
-);
+// Function to update environment file
+const updateEnvironmentFile = (filePath) => {
+    let envContent;
+    try {
+        envContent = fs.readFileSync(filePath, 'utf8');
+    } catch (error) {
+        console.error(`Failed to read ${filePath}:`, error);
+        process.exit(1);
+    }
 
-// Write back to file
-try {
-    fs.writeFileSync(envFile, updatedContent);
-    console.log('Firebase config updated successfully!');
-} catch (error) {
-    console.error('Failed to write to environment.ts:', error);
-    process.exit(1);
-}
+    // Replace the empty firebase config with the new one
+    const updatedContent = envContent.replace(
+        /firebase:\s*{[^}]*}/,
+        firebaseConfigString
+    );
+
+    // Write back to file
+    try {
+        fs.writeFileSync(filePath, updatedContent);
+        console.log(`Firebase config updated successfully in ${filePath}!`);
+    } catch (error) {
+        console.error(`Failed to write to ${filePath}:`, error);
+        process.exit(1);
+    }
+};
+
+// Update both environment files
+const envFile = path.join(__dirname, '../src/environments/environment.ts');
+const envProdFile = path.join(__dirname, '../src/environments/environment.prod.ts');
+
+updateEnvironmentFile(envFile);
+updateEnvironmentFile(envProdFile);
