@@ -17,6 +17,7 @@ import { DatePipe, SlicePipe } from '@angular/common';
   styleUrl: './generic-list.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
+// TODO: extends PaginationBase this handle filter, pagination, and url params ?page=1
 export class GenericListComponent implements OnInit {
   generics: IGenericLLM[] = [];
 
