@@ -1,26 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>DC Template</title>
 
-<head>
-  <meta charset="utf-8" />
-  <title>Ionic App</title>
+    <base href="/" />
 
-  <base href="/" />
+    <meta name="color-scheme" content="light dark" />
+    <meta
+      name="viewport"
+      content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
 
-  <meta name="color-scheme" content="light dark" />
-  <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <meta name="format-detection" content="telephone=no" />
-  <meta name="msapplication-tap-highlight" content="no" />
+    <link rel="icon" type="image/png" href="assets/icon/favicon.png" />
 
-  <link rel="icon" type="image/png" href="assets/icon/favicon.png" />
+    <!-- add to homescreen for ios -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
 
-  <!-- add to homescreen for ios -->
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-</head>
+    <style>
+      .app-loading {
+        position: fixed;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        width: 100%;
+        background: #fff;
+        z-index: 999999;
+        opacity: 1;
+        transition: opacity 0.5s ease-in-out;
+      }
 
-<body>
-  <app-root></app-root>
-</body>
+      .app-loading.hide {
+        opacity: 0;
+        pointer-events: none;
+      }
 
+      .app-loading .spinner {
+        width: 40px;
+        height: 40px;
+        border: 4px solid #f3f3f3;
+        border-top: 4px solid var(--p-primary-500); /* Ionic primary color */
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Loading spinner -->
+    <div class="app-loading" id="loading">
+      <div class="spinner"></div>
+    </div>
+
+    <app-root></app-root>
+
+    <script>
+      window.onload = function () {
+        // Wait for Angular to load
+        setTimeout(() => {
+          const loader = document.getElementById('loading');
+          if (loader) {
+            loader.classList.add('hide');
+            // Remove the loader from DOM after animation
+            setTimeout(() => {
+              loader.remove();
+            }, 500);
+          }
+        }, 500);
+      };
+    </script>
+  </body>
 </html>

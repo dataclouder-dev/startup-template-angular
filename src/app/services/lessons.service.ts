@@ -1,32 +1,32 @@
 import { Injectable } from '@angular/core';
-import { Lesson, LessonsAbstractService } from '@dataclouder/lessons';
+import { ILesson, LessonsAbstractService } from '@dataclouder/lessons';
 import { HttpService } from './http.service';
 import { UserService } from '../dc-user-module/user.service';
 import { Endpoints } from '../core/enums';
 
-type LessonPaginator = { rows: Lesson[]; count: number };
+type LessonPaginator = { rows: ILesson[]; count: number };
 
 @Injectable({
   providedIn: 'root',
 })
 export class LessonsService implements LessonsAbstractService {
   constructor(private httpService: HttpService, private userService: UserService) {}
-  updateLesson(lesson: Lesson): Promise<any> {
+  updateLesson(lesson: ILesson): Promise<any> {
     throw new Error('Method not implemented.');
   }
-  generateLesson(lesson: Lesson): Promise<any> {
+  generateLesson(lesson: ILesson): Promise<any> {
     throw new Error('Method not implemented.');
   }
 
-  public async postLesson(lesson: Lesson) {
+  public async postLesson(lesson: ILesson) {
     // const langParams = this.userService.getUserLangOptions();
-    const lessons = await this.httpService.postDataToService<Lesson>(`${Endpoints.Lessons.Lesson}`, lesson);
+    const lessons = await this.httpService.postDataToService<ILesson>(`${Endpoints.Lessons.Lesson}`, lesson);
 
     return lessons;
   }
 
   public async getLesson(id: string) {
-    return this.httpService.getDataFromService<Lesson>(`${Endpoints.Lessons.Lesson}/${id}`);
+    return this.httpService.getDataFromService<ILesson>(`${Endpoints.Lessons.Lesson}/${id}`);
   }
 
   //   TODO: change to paginator
@@ -50,7 +50,7 @@ export class LessonsService implements LessonsAbstractService {
   }
 
   public async deleteLesson(id: string) {
-    return this.httpService.deleteDataFromService(`${Endpoints.Lessons.QueryLessons}/${id}`);
+    return this.httpService.deleteDataFromService(`${Endpoints.Lessons.Lesson}/${id}`);
   }
 
   public saveTakenLesson(lesson: { lessonId: string; status: string; score: number }) {

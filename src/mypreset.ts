@@ -7,17 +7,17 @@ import Nora from '@primeng/themes/nora';
 const MyPreset = definePreset(Nora, {
   semantic: {
     primary: {
-      50: '{slate.50}',
-      100: '{slate.100}',
-      200: '{slate.200}',
-      300: '{slate.300}',
-      400: '{slate.400}',
-      500: '{slate.500}',
-      600: '{slate.600}',
-      700: '{slate.700}',
-      800: '{slate.800}',
-      900: '{slate.900}',
-      950: '{slate.950}',
+      50: '#f5f3f7',
+      100: '#cdc5d9',
+      200: '#a597bb',
+      300: '#7d689e',
+      400: '#553a80',
+      500: '#2d0c62',
+      600: '#260a53',
+      700: '#1f0845',
+      800: '#190736',
+      900: '#120527',
+      950: '#0b0319',
     },
   },
 });

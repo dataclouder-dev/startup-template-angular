@@ -56,7 +56,7 @@
     "@dataclouder/conversation-system": "^0.0.69",
     "@dataclouder/core-components": "^0.0.15",
     "@dataclouder/dc-mic": "^0.0.2",
-    "@dataclouder/lessons": "^0.0.22",
+    "@dataclouder/lessons": "^0.0.24",
     "@dataclouder/storage-uploader": "^0.0.18",
     "@ionic/angular": "^8.0.0",
     "@jcesarmobile/ssl-skip": "0.4.0",
