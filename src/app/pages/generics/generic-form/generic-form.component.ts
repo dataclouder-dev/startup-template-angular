@@ -12,17 +12,40 @@ import { InputTextModule } from 'primeng/inputtext';
 import { TextareaModule } from 'primeng/textarea';
 import { ChipModule } from 'primeng/chip';
 import { TooltipModule } from 'primeng/tooltip';
+import { AspectType, CropperComponentModal, CropImageSettings } from '@dataclouder/storage-uploader';
 
 import { TOAST_ALERTS_TOKEN, ToastAlertsAbstractService } from '@dataclouder/core-components';
 
 @Component({
   selector: 'app-source-form',
-  imports: [ReactiveFormsModule, CardModule, TextareaModule, DropdownModule, ButtonModule, SelectModule, InputTextModule, ChipModule, TooltipModule],
+  imports: [
+    ReactiveFormsModule,
+    CardModule,
+    TextareaModule,
+    DropdownModule,
+    ButtonModule,
+    SelectModule,
+    InputTextModule,
+    ChipModule,
+    TooltipModule,
+    CropperComponentModal,
+  ],
   templateUrl: './generic-form.component.html',
   styleUrl: './generic-form.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GenericFormComponent implements OnInit {
+  // public imageSettings: CropImageSettings = {
+  //   cropImageSettings: {
+  //     resizeToWidth: 1024,
+  //     path: 'testimonials',
+  //     fileName: 'image',
+  //   },
+
+  //   ratioType: AspectType.Square,
+  //   resolutions: [1024, 768],
+  // };
+
   public genericForm = this.fb.group({
     name: ['', Validators.required],
     description: [''],
