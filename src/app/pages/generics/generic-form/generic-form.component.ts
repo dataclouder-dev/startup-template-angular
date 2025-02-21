@@ -5,16 +5,19 @@ import { IGeneric } from '../models/generics.model';
 import { GenericService } from '../generics.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CardModule } from 'primeng/card';
-import { TextareaModule } from 'primeng/textarea';
 import { DropdownModule } from 'primeng/dropdown';
 import { ButtonModule } from 'primeng/button';
 import { SelectModule } from 'primeng/select';
+import { InputTextModule } from 'primeng/inputtext';
+import { TextareaModule } from 'primeng/textarea';
+import { ChipModule } from 'primeng/chip';
+import { TooltipModule } from 'primeng/tooltip';
 
 import { TOAST_ALERTS_TOKEN, ToastAlertsAbstractService } from '@dataclouder/core-components';
 
 @Component({
   selector: 'app-source-form',
-  imports: [ReactiveFormsModule, CardModule, TextareaModule, DropdownModule, ButtonModule, SelectModule],
+  imports: [ReactiveFormsModule, CardModule, TextareaModule, DropdownModule, ButtonModule, SelectModule, InputTextModule, ChipModule, TooltipModule],
   templateUrl: './generic-form.component.html',
   styleUrl: './generic-form.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -26,6 +29,14 @@ export class GenericFormComponent implements OnInit {
     type: [''],
     relation: [{ id: '', name: '', description: '' }],
   });
+
+  public peopleOptions = [
+    { id: '1', name: 'Yang Feng', description: 'Description with short description', image: 'assets/images/face-1.jpg' },
+    { id: '2', name: 'Juan Perez', description: 'Description ', image: 'assets/images/face-2.jpg' },
+    { id: '3', name: 'John Doe', description: 'Description with short description', image: 'assets/images/face-3.jpg' },
+  ];
+
+  public selectedPeople: any[] = [{ id: '3', name: 'John Doe', description: 'Description with short description', image: 'assets/images/face-3.jpg' }];
 
   public genericTypes = [
     { label: 'Type 1', value: 'type1' },
@@ -73,5 +84,14 @@ export class GenericFormComponent implements OnInit {
         subtitle: 'El origen ha sido guardado correctamente',
       });
     }
+  }
+
+  public addItemToList(event: any) {
+    this.selectedPeople.push(event.value);
+  }
+
+  public removeItemFromList(person: any) {
+    this.selectedPeople = this.selectedPeople.filter(p => p.id !== person.id);
+    console.log(this.selectedPeople);
   }
 }

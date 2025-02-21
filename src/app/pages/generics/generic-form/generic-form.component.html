@@ -5,30 +5,54 @@
     <form [formGroup]="genericForm">
       <div class="form-field">
         <label for="name" class="block">Name</label>
-        <input id="name" type="text" pInputText formControlName="name" placeholder="Enter source name" class="w-full" />
+        <input pInputText id="name" type="text" formControlName="name" placeholder="Enter source name" />
       </div>
 
       <div class="form-field">
-        <label for="description" class="block">description</label>
-        <textarea id="description" pInputTextarea formControlName="description" rows="5" class="w-full" placeholder="Enter source content">
-        </textarea>
+        <label for="description" class="block">Description</label>
+        <textarea id="description" pTextarea formControlName="description" rows="5" class="w-full" placeholder="Enter source content"> </textarea>
       </div>
 
       <div class="form-field">
         <label for="type" class="block">Type</label>
-        <p-select
-          id="type"
-          [options]="genericTypes"
-          formControlName="type"
-          optionLabel="label"
-          optionValue="value"
-          placeholder="Select a type" />
+        <p-select id="type" [options]="genericTypes" formControlName="type" optionLabel="label" optionValue="value" placeholder="Select a type" />
       </div>
 
       <!-- Different is releation contains a whole object meanwhile type is only string -->
       <div class="form-field">
-        <label for="relation" class="block">Relation</label>
+        <label for="relation" class="block" pTooltip="One object attached to the form">Relation</label>
         <p-select id="relation" [options]="relationObjects" formControlName="relation" optionLabel="name" placeholder="Select a relation" />
+      </div>
+
+      <div class="form-field">
+        <label class="block" pTooltip="List of Objects handled by custom methods">Testimonials</label>
+
+        <p-select [options]="peopleOptions" [placeholder]="'Select a testimonial'" [style]="{ width: '100%' }" (onChange)="addItemToList($event)">
+          <ng-template #selectedItem let-selectedOption>
+            @if(selectedOption) {
+            <div style="display: flex; align-items: center; gap: 10px">
+              <div>{{ selectedOption.name }}</div>
+            </div>
+            }
+          </ng-template>
+
+          <ng-template let-item #item>
+            <div style="display: flex; gap: 10px">
+              <img [src]="item.image" style="width: 18px" />
+              <div>{{ item?.name }}</div>
+            </div>
+          </ng-template>
+
+          <ng-template #dropdownicon>
+            <i class="pi pi-user-plus"></i>
+          </ng-template>
+        </p-select>
+
+        <div style="display: flex; gap: 10px; margin-top: 10px">
+          @for(person of selectedPeople; track person.id) {
+          <p-chip [label]="person.name" [image]="person.image" alt="Avatar image" [removable]="true" (onRemove)="removeItemFromList(person)" />
+          }
+        </div>
       </div>
     </form>
 

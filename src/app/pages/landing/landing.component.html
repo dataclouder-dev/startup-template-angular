@@ -1,7 +1,12 @@
 <div class="ion-page" id="main-content">
   <ion-header [translucent]="true">
     <ion-toolbar>
-      <ion-title>{{ projectName.slice(0, 12) }}</ion-title>
+      <ion-title>
+        <div style="display: flex; align-items: center; gap: 10px">
+          <ion-img src="assets/icon/logo.svg" class="header-logo"></ion-img>
+          <span>{{ projectName.slice(0, 12) }}</span>
+        </div>
+      </ion-title>
 
       <ion-buttons slot="end">
         <ion-button shape="round" (click)="goToSignin()">
@@ -22,6 +27,11 @@
         <h1>Your Project Title</h1>
         <p class="subtitle">A brief description of your project and its main value proposition.</p>
       </section>
+
+      <div class="feature-image-container">
+        <img class="feature-image" src="assets/images/default-feature-1.jpg" alt="Notion AI Integration" />
+        <div class="feature-image-overlay"></div>
+      </div>
 
       <!-- Services Section -->
       <section class="services-section">
@@ -44,6 +54,11 @@
           </div>
         </div>
       </section>
+
+      <div class="feature-image-container">
+        <img class="feature-image" src="assets/images/default-feature-2.jpg" alt="Notion AI Integration" />
+        <div class="feature-image-overlay"></div>
+      </div>
 
       <!-- Features Section -->
       <section class="features-section">
@@ -74,6 +89,10 @@
         <ion-button expand="block" class="contact-button">Contact Us</ion-button>
       </section>
 
+      <div class="feature-image-container">
+        <img class="feature-image" src="assets/images/default-feature-3.jpg" alt="Notion AI Integration" />
+        <div class="feature-image-overlay"></div>
+      </div>
       <!-- Footer -->
       <footer class="landing-footer">
         <div class="footer-content">
