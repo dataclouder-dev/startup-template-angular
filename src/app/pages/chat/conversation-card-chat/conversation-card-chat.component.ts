@@ -1,13 +1,6 @@
 import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  DCChatComponent,
-  ConversationPromptSettings,
-  ConversationUserSettings,
-  ChatRole,
-  AudioSpeed,
-  IAgentCard,
-} from '@dataclouder/conversation-system';
+import { DCChatComponent, IConversationSettings, ChatUserSettings, ChatRole, AudioSpeed, IAgentCard } from '@dataclouder/conversation-system';
 import { ActivatedRoute } from '@angular/router';
 import { AgentCardService } from 'src/app/services/conversation-cards-ai-service';
 
@@ -20,11 +13,11 @@ import { AgentCardService } from 'src/app/services/conversation-cards-ai-service
 })
 export class ConversationCardChatComponent implements OnInit {
   @Input() conversationCard!: IAgentCard;
-  public ConversationPromptSettings: ConversationPromptSettings = {
+  public IConversationSettings: IConversationSettings = {
     messages: [{ text: 'you are having a conversation with?', content: 'bot', role: ChatRole.System }],
   };
 
-  public conversationUserSettings: ConversationUserSettings = {
+  public chatUserSettings: ChatUserSettings = {
     realTime: false,
     repeatRecording: false,
     fixGrammar: false,
@@ -34,8 +27,6 @@ export class ConversationCardChatComponent implements OnInit {
     synthVoice: false,
     highlightWords: false,
     speedRate: 1,
-    modelName: '',
-    provider: '',
     speed: AudioSpeed.Regular,
   };
 

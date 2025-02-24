@@ -3,16 +3,18 @@ import {
   AudioSpeed,
   ChatRole,
   AgentCardsAbstractService,
-  ConversationPromptSettings,
-  ConversationUserSettings,
+  ConversationMessagesDTO,
+  ChatUserSettings,
   IAgentCard,
   ModelName,
   TranscriptionsWhisper,
+  IConversationSettings,
+  IAgentResponseDTO,
 } from '@dataclouder/conversation-system';
 import { HttpService } from './http.service';
 import { UserService } from '../dc-user-module/user.service';
 import { Endpoints } from '../core/enums';
-import { FiltersConfig } from '@dataclouder/core-components';
+import { FiltersConfig, IFilterQueryResponse } from '@dataclouder/core-components';
 
 export type AudioGenerated = { blobUrl: string; transcription: any };
 export type TTSRequest = { text: string; voice: string; generateTranscription: boolean; speedRate: number; speed?: string; ssml?: string };
@@ -22,6 +24,17 @@ export type TTSRequest = { text: string; voice: string; generateTranscription: b
 })
 export class AgentCardService implements AgentCardsAbstractService {
   constructor(private httpService: HttpService, private userService: UserService) {}
+
+  public async findFilteredAgentCards(paginator: FiltersConfig) {
+    const response = await this.httpService.postDataToService(`${Endpoints.ConversationCard.ConversationQuery}`, paginator);
+    return response;
+  }
+
+  public async findAgentCardByTitle(title: string): Promise<IAgentCard> {
+    const filters: FiltersConfig = { filters: { title } };
+    const response = await this.httpService.postDataToService<IFilterQueryResponse<IAgentCard>>(`${Endpoints.ConversationCard.ConversationQuery}`, filters);
+    return response.rows[0];
+  }
 
   async filterConversationCards(filters: FiltersConfig): Promise<any> {
     return await this.httpService.postDataToService(`${Endpoints.ConversationCard.ConversationQuery}`, filters);
@@ -42,7 +55,7 @@ export class AgentCardService implements AgentCardsAbstractService {
     return data;
   }
 
-  async translateConversation(currentLang: string, targetLang: string, idCard: string): Promise<ConversationUserSettings> {
+  async translateConversation(currentLang: string, targetLang: string, idCard: string): Promise<ChatUserSettings> {
     const response = await this.httpService.postDataToService(
       `${Endpoints.ConversationCard.TranslateConversation}`,
       { currentLang, targetLang, idCard },
@@ -52,16 +65,16 @@ export class AgentCardService implements AgentCardsAbstractService {
     return response;
   }
 
-  async saveConversationUserChatSettings(conversation: ConversationUserSettings): Promise<ConversationUserSettings> {
+  async saveConversationUserChatSettings(conversation: ChatUserSettings): Promise<ChatUserSettings> {
     console.log('saveConversationUserChatSettings', conversation);
     const data = await this.userService.saveUser({ conversationSettings: conversation });
-    this.userService.user!.conversationSettings = conversation as ConversationUserSettings;
+    this.userService.user!.conversationSettings = conversation as ChatUserSettings;
     return Promise.resolve(conversation);
   }
 
-  getConversationUserChatSettings(): Promise<ConversationUserSettings> {
+  getConversationUserChatSettings(): Promise<ChatUserSettings> {
     if (this.userService.user?.conversationSettings) {
-      return Promise.resolve(this.userService.user?.conversationSettings as ConversationUserSettings);
+      return Promise.resolve(this.userService.user?.conversationSettings as ChatUserSettings);
     } else {
       return Promise.resolve({
         realTime: false,
@@ -76,11 +89,11 @@ export class AgentCardService implements AgentCardsAbstractService {
         modelName: '',
         provider: '',
         speed: AudioSpeed.Regular,
-      } as ConversationUserSettings);
+      } as ChatUserSettings);
     }
   }
 
-  getConversationPromptSettings(): Promise<ConversationPromptSettings> {
+  getConversationPromptSettings(): Promise<ConversationMessagesDTO> {
     throw new Error('Method not implemented.');
   }
 
@@ -119,7 +132,7 @@ export class AgentCardService implements AgentCardsAbstractService {
     }
   }
 
-  public async callChatCompletion(conversation: ConversationPromptSettings): Promise<any> {
+  public async callChatCompletion(conversation: IConversationSettings | ConversationMessagesDTO): Promise<IAgentResponseDTO> {
     console.log('callChatCompletion', conversation);
 
     let messages = conversation.messages?.map((m: any) => ({ content: m.content, role: m.role }));

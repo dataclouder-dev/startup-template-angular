@@ -18,18 +18,7 @@ import { TOAST_ALERTS_TOKEN, ToastAlertsAbstractService } from '@dataclouder/cor
 
 @Component({
   selector: 'app-source-form',
-  imports: [
-    ReactiveFormsModule,
-    CardModule,
-    TextareaModule,
-    DropdownModule,
-    ButtonModule,
-    SelectModule,
-    InputTextModule,
-    ChipModule,
-    TooltipModule,
-    CropperComponentModal,
-  ],
+  imports: [ReactiveFormsModule, CardModule, TextareaModule, DropdownModule, ButtonModule, SelectModule, InputTextModule, ChipModule, TooltipModule],
   templateUrl: './generic-form.component.html',
   styleUrl: './generic-form.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -1,4 +1,4 @@
-import { ConversationUserSettings } from '@dataclouder/conversation-system';
+import { ChatUserSettings } from '@dataclouder/conversation-system';
 
 export enum PlanType {
   Basic = 'basic',
@@ -54,7 +54,7 @@ export interface IUser {
   personalData: Partial<IPersonalData>;
   claims: AppAuthClaims;
   authStrategy: string;
-  conversationSettings: ConversationUserSettings;
+  conversationSettings: ChatUserSettings;
 }
 
 export const RolOptions = [
