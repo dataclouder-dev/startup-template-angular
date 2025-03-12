@@ -28,6 +28,9 @@
     "activityBar.activeFocusBorder": "#ff1900",
     "activityBarTop.inactiveForeground": "#ff1900",
     "activityBarTop.dropBorder": "#ff1900",
-    "tab.activeBorderTop": "#ff1900"
+    "tab.activeBorderTop": "#ff1900",
+    "panel.border": "#ff1900",
+    "sideBar.border": "#ff1900",
+    
   }
 }

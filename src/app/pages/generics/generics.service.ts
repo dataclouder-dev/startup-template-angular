@@ -5,7 +5,7 @@ import { GenericType, IGeneric } from './models/generics.model';
 import { FiltersConfig, IFilterQueryResponse, TOAST_ALERTS_TOKEN } from '@dataclouder/core-components';
 import { ToastAlertService } from 'src/app/services/toast.service';
 
-const server = 'python';
+const server = 'node';
 @Injectable({
   providedIn: 'root',
 })
@@ -44,19 +44,14 @@ export class GenericService {
   }
 
   public async getGeneric(id: string): Promise<IGeneric> {
-    // return this.httpService.getDataFromService<ISourceLLM>(`${Endpoints.Sources.Source}/${id}`);
-    return {
-      id: '3',
-      name: 'Generic 3',
-      description: 'Description 3',
-    };
+    return this.httpService.getDataFromService<IGeneric>(`${Endpoints.Generics.Generics}/${id}`);
   }
 
   public async saveGeneric(generic: IGeneric): Promise<IGeneric> {
-    return this.httpService.postDataToService(Endpoints.Generics.Generics, generic, server);
+    return this.httpService.postDataToService(Endpoints.Generics.Generics, generic, 'node');
   }
 
   public async deleteGeneric(id: string) {
-    // return this.httpService.deleteDataFromService(`${Endpoints.Sources.Source}/${id}`);
+    return this.httpService.deleteDataFromService(`${Endpoints.Generics.Generics}/${id}`);
   }
 }

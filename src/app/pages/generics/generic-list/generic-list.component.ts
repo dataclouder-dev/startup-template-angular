@@ -9,10 +9,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { SpeedDialModule } from 'primeng/speeddial';
 import { MenuItem } from 'primeng/api';
 import { DatePipe, SlicePipe } from '@angular/common';
+import { PaginatorModule } from 'primeng/paginator';
 
 @Component({
   selector: 'app-generic-list',
-  imports: [CardModule, ButtonModule, DCFilterBarComponent, SpeedDialModule, DatePipe, SlicePipe],
+  imports: [CardModule, ButtonModule, DCFilterBarComponent, SpeedDialModule, DatePipe, SlicePipe, PaginatorModule],
   templateUrl: './generic-list.component.html',
   styleUrl: './generic-list.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

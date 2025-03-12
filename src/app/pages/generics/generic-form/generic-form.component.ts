@@ -22,6 +22,7 @@ import { TOAST_ALERTS_TOKEN, ToastAlertsAbstractService } from '@dataclouder/cor
   templateUrl: './generic-form.component.html',
   styleUrl: './generic-form.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
 })
 export class GenericFormComponent implements OnInit {
   // public imageSettings: CropImageSettings = {
@@ -83,6 +84,7 @@ export class GenericFormComponent implements OnInit {
   }
 
   async save() {
+    debugger;
     if (this.genericForm.valid) {
       const generic = { ...this.genericForm.value, ...this.generic } as IGeneric;
 

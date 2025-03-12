@@ -1,23 +1,38 @@
-<dc-filter-bar (onNew)="onNew()"></dc-filter-bar>
-<br />
+<div class="generic-list-container">
+  <dc-filter-bar (onNew)="onNew()"></dc-filter-bar>
 
-@for (generic of generics; track generic.id) {
-<div class="card-source">
-  <div style="position: absolute; top: 4px; right: 4px; z-index: 1000">
-    <p-speeddial
-      [model]="getCustomButtons(generic)"
-      [radius]="70"
-      type="semi-circle"
-      direction="left"
-      [buttonProps]="{ severity: 'primary', rounded: true, outlined: true }" />
+  <div class="generic-list-content">
+    @for (generic of generics; track generic.id) {
+    <div class="card-source">
+      <div style="position: absolute; top: 4px; right: 4px; z-index: 1000">
+        <p-speeddial
+          [model]="getCustomButtons(generic)"
+          [radius]="70"
+          type="quarter-circle"
+          direction="down-left"
+          [buttonProps]="{ severity: 'primary', rounded: true, outlined: true }" />
+      </div>
+      <p-card [header]="generic.name">
+        <p class="m-0">{{ generic.description | slice : 0 : 250 }}...</p>
+        <span>{{ generic.updatedAt | date : 'dd/MM/yyyy HH:mm' }}</span>
+      </p-card>
+    </div>
+    } @if (generics.length === 0) {
+    <p-card>
+      <p>No generics found</p>
+    </p-card>
+    }
   </div>
-  <p-card [header]="generic.name">
-    <p class="m-0">{{ generic.description | slice : 0 : 250 }}...</p>
-    <span>{{ generic.updatedAt | date : 'dd/MM/yyyy HH:mm' }}</span>
-  </p-card>
+
+  <div class="paginator-container">
+    <p-paginator
+      currentPageReportTemplate="{{ totalRecords }} conversations"
+      [showCurrentPageReport]="true"
+      (onPageChange)="onPageChange($event)"
+      [first]="paginatorFirst"
+      [rows]="paginatorRows"
+      [totalRecords]="totalRecords"
+      [rowsPerPageOptions]="[10, 20, 30]">
+    </p-paginator>
+  </div>
 </div>
-} @if (generics.length === 0) {
-<p-card>
-  <p>No generics found</p>
-</p-card>
-}
