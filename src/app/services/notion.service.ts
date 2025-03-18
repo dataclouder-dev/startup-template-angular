@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { IAgentCard } from '@dataclouder/conversation-system';
+import { IAgentCard } from '@dataclouder/ngx-agent-cards';
 import { Endpoints } from 'src/app/core/enums';
-import { NotionAbstractService, NotionDBResponse, NotionExportType, NotionPageResponse } from '@dataclouder/lessons';
+import { NotionAbstractService, NotionDBResponse, NotionExportType, NotionPageResponse } from '@dataclouder/ngx-lessons';
 import { HttpService } from './http.service';
 
 @Injectable({

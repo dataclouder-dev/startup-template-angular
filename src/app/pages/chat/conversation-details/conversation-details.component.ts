@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { DcAgentCardDetailsComponent, IAgentCard } from '@dataclouder/conversation-system';
+import { DcAgentCardDetailsComponent, IAgentCard } from '@dataclouder/ngx-agent-cards';
 
 @Component({
   selector: 'app-conversation-details',

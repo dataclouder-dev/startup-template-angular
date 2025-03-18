@@ -10,11 +10,11 @@ import {
   TranscriptionsWhisper,
   IConversationSettings,
   IAgentResponseDTO,
-} from '@dataclouder/conversation-system';
+} from '@dataclouder/ngx-agent-cards';
 import { HttpService } from './http.service';
 import { UserService } from '../dc-user-module/user.service';
 import { Endpoints } from '../core/enums';
-import { FiltersConfig, IFilterQueryResponse } from '@dataclouder/core-components';
+import { FiltersConfig, IFilterQueryResponse } from '@dataclouder/ngx-core';
 
 export type AudioGenerated = { blobUrl: string; transcription: any };
 export type TTSRequest = { text: string; voice: string; generateTranscription: boolean; speedRate: number; speed?: string; ssml?: string };
@@ -24,6 +24,14 @@ export type TTSRequest = { text: string; voice: string; generateTranscription: b
 })
 export class AgentCardService implements AgentCardsAbstractService {
   constructor(private httpService: HttpService, private userService: UserService) {}
+
+  public async callInstruction(text: string): Promise<any> {
+    if (!text) {
+      throw new Error('Text is required');
+    }
+    text = `Fix grammar and spelling errors in the following text: '${text}'`;
+    return await this.httpService.postDataToService(`${Endpoints.ConversationCard.AgentChat}`, { text });
+  }
 
   public async findFilteredAgentCards(paginator: FiltersConfig) {
     const response = await this.httpService.postDataToService(`${Endpoints.ConversationCard.ConversationQuery}`, paginator);

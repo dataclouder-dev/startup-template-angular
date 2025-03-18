@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit }
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 
-import { DCFilterBarComponent, PaginationBase, TOAST_ALERTS_TOKEN, ToastAlertsAbstractService } from '@dataclouder/ngx-core';
+import { PaginationBase, TOAST_ALERTS_TOKEN, ToastAlertsAbstractService } from '@dataclouder/ngx-core';
 import { GenericService } from '../generics.service';
 import { IGeneric } from '../models/generics.model';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
@@ -10,12 +10,13 @@ import { SpeedDialModule } from 'primeng/speeddial';
 import { MenuItem } from 'primeng/api';
 import { DatePipe, SlicePipe } from '@angular/common';
 import { PaginatorModule } from 'primeng/paginator';
+import { TableModule } from 'primeng/table';
 
 @Component({
   selector: 'app-generic-list',
-  imports: [CardModule, ButtonModule, DCFilterBarComponent, SpeedDialModule, DatePipe, SlicePipe, PaginatorModule, RouterModule],
-  templateUrl: './generic-list.component.html',
-  styleUrl: './generic-list.component.css',
+  imports: [CardModule, ButtonModule, SpeedDialModule, PaginatorModule, TableModule, RouterModule],
+  templateUrl: './generic-table.html',
+  styleUrl: './generic-table.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 // TODO: extends PaginationBase this handle filter, pagination, and url params ?page=1
@@ -61,6 +62,7 @@ export class GenericListComponent extends PaginationBase implements OnInit {
   protected override loadData(): Promise<void> {
     throw new Error('Method not implemented.');
   }
+
   public async doAction(action: string, item: any) {
     switch (action) {
       case 'view':

@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DCLessonListComponent, ILesson } from '@dataclouder/lessons';
+import { DCLessonListComponent, ILesson } from '@dataclouder/ngx-lessons';
 
 @Component({
   selector: 'app-lesson-list',

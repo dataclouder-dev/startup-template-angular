@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ILesson, LessonsAbstractService } from '@dataclouder/lessons';
+import { ILesson, LessonsAbstractService } from '@dataclouder/ngx-lessons';
 import { HttpService } from './http.service';
 import { UserService } from '../dc-user-module/user.service';
 import { Endpoints } from '../core/enums';

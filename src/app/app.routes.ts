@@ -66,13 +66,11 @@ export const routes: Routes = [
 
       {
         path: 'chat',
-        loadComponent: () =>
-          import('./pages/chat/conversation-card-chat/conversation-card-chat.component').then(m => m.ConversationCardChatComponent),
+        loadComponent: () => import('./pages/chat/conversation-card-chat/conversation-card-chat.component').then(m => m.ConversationCardChatComponent),
       },
       {
         path: 'chat/:id',
-        loadComponent: () =>
-          import('./pages/chat/conversation-card-chat/conversation-card-chat.component').then(m => m.ConversationCardChatComponent),
+        loadComponent: () => import('./pages/chat/conversation-card-chat/conversation-card-chat.component').then(m => m.ConversationCardChatComponent),
       },
 
       {
@@ -131,6 +129,10 @@ export const routes: Routes = [
           {
             path: '',
             loadComponent: () => import('./pages/generics/generic-list/generic-list.component').then(m => m.GenericListComponent),
+          },
+          {
+            path: 'table',
+            loadComponent: () => import('./pages/generics/generic-table/generic-table').then(m => m.GenericListComponent),
           },
           {
             path: 'edit',

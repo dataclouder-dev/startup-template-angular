@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { DCLessonRendererComponent, ILesson, LESSONS_TOKEN, LessonsAbstractService } from '@dataclouder/lessons';
+import { DCLessonRendererComponent, ILesson, LESSONS_TOKEN, LessonsAbstractService } from '@dataclouder/ngx-lessons';
 
 @Component({
   selector: 'app-lesson-details',

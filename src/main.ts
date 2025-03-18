@@ -19,10 +19,10 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 // DC Libs
-import { provideChatAIService, provideUserDataExchange } from '@dataclouder/conversation-system';
-import { provideLessonsService, provideNotionService } from '@dataclouder/lessons';
+import { provideChatAIService, provideUserDataExchange } from '@dataclouder/ngx-agent-cards';
+import { provideLessonsService, provideNotionService } from '@dataclouder/ngx-lessons';
 import { provideAuthConfig } from '@dataclouder/app-auth';
-import { provideToastAlert } from '@dataclouder/core-components';
+import { provideToastAlert } from '@dataclouder/ngx-core';
 // Local
 import { environment } from './environments/environment';
 import { AgentCardService } from './app/services/conversation-cards-ai-service';

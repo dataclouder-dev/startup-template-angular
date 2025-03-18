@@ -12,9 +12,9 @@ import { InputTextModule } from 'primeng/inputtext';
 import { TextareaModule } from 'primeng/textarea';
 import { ChipModule } from 'primeng/chip';
 import { TooltipModule } from 'primeng/tooltip';
-import { AspectType, CropperComponentModal, CropImageSettings } from '@dataclouder/storage-uploader';
+import { AspectType, CropperComponentModal, CropImageSettings } from '@dataclouder/ngx-cloud-storage';
 
-import { TOAST_ALERTS_TOKEN, ToastAlertsAbstractService } from '@dataclouder/core-components';
+import { TOAST_ALERTS_TOKEN, ToastAlertsAbstractService } from '@dataclouder/ngx-core';
 
 @Component({
   selector: 'app-source-form',
@@ -86,7 +86,7 @@ export class GenericFormComponent implements OnInit {
   async save() {
     debugger;
     if (this.genericForm.valid) {
-      const generic = { ...this.genericForm.value, ...this.generic } as IGeneric;
+      const generic = { ...this.generic, ...this.genericForm.value } as IGeneric;
 
       const result = await this.genericService.saveGeneric(generic);
 

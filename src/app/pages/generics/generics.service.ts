@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@angular/core';
 import { HttpService } from '../../services/http.service';
 import { Endpoints } from '../../core/enums';
 import { GenericType, IGeneric } from './models/generics.model';
-import { FiltersConfig, IFilterQueryResponse, TOAST_ALERTS_TOKEN } from '@dataclouder/core-components';
+import { FiltersConfig, IFilterQueryResponse, TOAST_ALERTS_TOKEN } from '@dataclouder/ngx-core';
 import { ToastAlertService } from 'src/app/services/toast.service';
 
 const server = 'node';

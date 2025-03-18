@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { DCLessonEditorComponent } from '@dataclouder/lessons';
+import { DCLessonEditorComponent } from '@dataclouder/ngx-lessons';
 
-// import { DCLessonEditorComponent } from '@dataclouder/lessons/src/lib/components/dc-lessons/editor/editor.component';
+// import { DCLessonEditorComponent } from '@dataclouder/ngx-lessons/src/lib/components/dc-lessons/editor/editor.component';
 
 @Component({
   selector: 'app-explore-edit',

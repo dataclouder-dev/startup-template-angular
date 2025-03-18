@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { NavController, ToastController } from '@ionic/angular/standalone';
 
-import { DCAgentCardFormComponent, IAgentCard } from '@dataclouder/conversation-system';
+import { DCAgentCardFormComponent, IAgentCard } from '@dataclouder/ngx-agent-cards';
 
 import {
   IonHeader,
