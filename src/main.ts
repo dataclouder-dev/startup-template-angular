@@ -34,6 +34,10 @@ import { UserDataExchangeService } from './app/core/user-data-exchange.service';
 import { routes } from './app/app.routes';
 import { AppComponent } from './app/app.component';
 import { NotionService } from './app/services/notion.service';
+import { ApplicationConfig } from '@angular/core';
+import { FormlyModule } from '@ngx-formly/core';
+import { FormlyFieldInput } from './app/pages/generics/generic-form/formly-components/input';
+import { FormlyFieldTextArea } from './app/pages/generics/generic-form/formly-components/textarea';
 
 export function loggingInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn): Observable<HttpEvent<unknown>> {
   console.log('Before interception request:', req.url);
@@ -46,7 +50,7 @@ export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
-bootstrapApplication(AppComponent, {
+export const appConfig: ApplicationConfig = {
   providers: [
     // Angular Providers
     provideAnimationsAsync(),
@@ -115,5 +119,16 @@ bootstrapApplication(AppComponent, {
         appleRedirectURI: environment.mobile.appleRedirectURI,
       },
     }),
+    importProvidersFrom(
+      FormlyModule.forRoot({
+        types: [
+          { name: 'input', component: FormlyFieldInput },
+          { name: 'textarea', component: FormlyFieldTextArea },
+        ],
+        validationMessages: [{ name: 'required', message: 'This field is required' }],
+      })
+    ),
   ],
-});
+};
+
+bootstrapApplication(AppComponent, appConfig).catch(err => console.error(err));
