@@ -4,7 +4,7 @@
 // Dark theme
 :root {
   // ...existing code...
-  --ion-color-primary: var(--p-primary-500);
+  --ion-color-primary: var(--primary-dark-color);
   --ion-color-primary-rgb: 56, 128, 255;
   --ion-color-primary-contrast: #ffffff;
   --ion-color-primary-contrast-rgb: 255, 255, 255;
@@ -12,21 +12,52 @@
   --ion-color-primary-tint: var(--p-stone-500);
   --ion-background-color: transparent;
   --ion-text-color: var(--p-slate-800);
+  --ion-border-color: #30085b !important;
+
+  --ion-text-color: #30085b ;
+  --ion-border-color: #30085b;
+  --ion-toolbar-segment-color: #30085b ;
+  --ion-toolbar-segment-background: #30085b ;
+  --ion-item-border-color: #30085b ;
+  --ion-item-color: #30085b ;
+  --ion-text-color-rgb: #30085b ;
+  --ion-backdrop-color: #30085b ;
 }
 
 
 
-// :root[theme=dark] {
-//   // ...existing code...
 
-//   --ion-item-background: #1e1e1e;
-//   --ion-item-color: #ffffff;
-//   --ion-input-background: #2a2a2a;
-//   --ion-input-color: #ffffff;
-//   --ion-input-placeholder-color: #888888;
-//   --ion-input-border-color: #444444;
+// Dark theme (using class instead of media query)
+:root.ion-palette-dark {
+  --primary-dark-color: #74FAC9;  // You can change this hex color
 
-//   // Add any other customizations for dark theme inputs here
-// }
+  --ion-text-color: #ffffff;
+  --ion-border-color: var(--primary-dark-color);
+  --ion-toolbar-segment-color: --primary-dark-color;
+  --ion-toolbar-segment-background: --primary-dark-color;
+  --ion-item-border-color: --primary-dark-color;
+  --ion-item-color: var(--primary-dark-color);
+  --ion-text-color-rgb: var(--primary-dark-color);
+  --ion-backdrop-color: var(--primary-dark-color);
+  --ion-overlay-background-color: var(--primary-dark-color);
+  --ion-toolbar-segment-background-checked: var(--primary-dark-color);
+  --ion-background-color: transparent;
+  --ion-tab-bar-background: transparent;
+  --ion-toolbar-background: transparent;
+  --ion-item-background: transparent !important;
+  --ion-item-backdrop: blur(3px) !important;
+
+
+  --ion-color-primary: var(--primary-dark-color);
+  --ion-color-primary-rgb: var(--primary-dark-color);
+  --ion-color-primary-contrast: var(--primary-dark-color);
+  --ion-color-primary-contrast-rgb: 255,255,255;
+  --ion-color-primary-shade: var(--primary-dark-color);
+  --ion-color-primary-tint: var(--primary-dark-color);
+}
+  
+
+
+
 
 // // ...existing code...

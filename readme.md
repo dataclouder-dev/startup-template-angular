@@ -251,3 +251,40 @@ cd cloud-builders-community/firebase
 # build the image and upload to artifact registry
 gcloud builds submit .
 ```
+
+### About the theme and palete.
+
+Soon...
+
+## My Color Palette
+
+<table>
+  <tr>
+    <td width="150" bgcolor="#2D0C62">#2D0C62</td>
+    <td>Primary Color</td>
+  </tr>
+  <tr>
+    <td bgcolor="#74FAC9">#74FAC9</td>
+    <td>Secondary Color</td>
+  </tr>
+  <tr>
+    <td bgcolor="#7FD6D2">#7FD6D2</td>
+    <td>Accent Color</td>
+  </tr>
+    <tr>
+    <td bgcolor="#5CBAE7">#5CBAE7</td>
+    <td>Accent Color</td>
+  </tr>
+    <tr>
+    <td bgcolor="#3677BD">#3677BD</td>
+    <td>Accent Color</td>
+  </tr>
+</table>
+
+https://coolors.co/2d0c62-74fac9-7fd6d2-5cbae7-3677bd
+
+### Want to continue receiving updates?
+
+Add as upstream.
+
+make merge-upstream, the first time will add your project, then ill ask you to fix conflicts.

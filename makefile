@@ -53,6 +53,23 @@ deploy:
 	npm run build
 	firebase deploy --project $(PROJECT_ID) --only hosting:$(PROJECT_ID)
 
+
+merge-upstream:
+	@echo "Fetching and merging updates from upstream repository..."
+	@if ! git config remote.upstream.url > /dev/null; then \
+		echo "Adding upstream remote..."; \
+		git remote add upstream https://github.com/dataclouder-dev/dataclouder-template-angular.git; \
+	fi
+	git fetch upstream
+	git checkout main
+	@echo "Merging upstream/main into local main branch..."
+	git merge upstream/main --allow-unrelated-histories || { \
+		echo "Merge conflicts detected. Please resolve conflicts and complete the merge manually."; \
+		echo "After resolving conflicts, commit changes and push to origin."; \
+		exit 1; \
+	}
+	
+
 deploy-release:
 	npm run prebuild
 	npm run build:prod

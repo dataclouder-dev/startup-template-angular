@@ -1,11 +1,35 @@
-//mypreset.ts
 import { definePreset } from '@primeng/themes';
 // import Aura from '@primeng/themes/aura';
 
 import Nora from '@primeng/themes/nora';
 
-const MyPreset = definePreset(Nora, {
+export const MyPreset = definePreset(Nora, {
   semantic: {
+    colorScheme: {
+      dark: {
+        primary: {
+          50: '#89FBD1',
+          100: '#75FAC9',
+          200: '#62F9C2',
+          300: '#4EF9BA',
+          400: '#74FAC9',
+          500: '#62F9C2',
+          600: '#4EF9BA',
+          700: '#26F7AB',
+          800: '#13F6A3',
+          900: '#09EC99',
+          950: '#08D98C',
+        },
+
+        card: {
+          root: {
+            background: '#0b0319',
+            color: '{content.color}',
+            shadow: '0 1px 4px 0 rgba(0, 0, 0, 0.1)',
+          },
+        },
+      },
+    },
     primary: {
       50: '#f5f3f7',
       100: '#cdc5d9',
@@ -21,5 +45,3 @@ const MyPreset = definePreset(Nora, {
     },
   },
 });
-
-export default MyPreset;

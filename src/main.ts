@@ -29,7 +29,7 @@ import { AgentCardService } from './app/services/conversation-cards-ai-service';
 import { ToastAlertService } from './app/services/toast.service';
 import { LessonsService } from './app/services/lessons.service';
 import { authInterceptor } from './app/services/interception.service';
-import MyPreset from './mypreset';
+import { MyPreset } from './mypreset';
 import { UserDataExchangeService } from './app/core/user-data-exchange.service';
 import { routes } from './app/app.routes';
 import { AppComponent } from './app/app.component';
@@ -58,8 +58,7 @@ export const appConfig: ApplicationConfig = {
       theme: {
         preset: MyPreset,
         options: {
-          // just a trick in meantime i undersand how to change the theme
-          darkModeSelector: '.my-app-dark',
+          darkModeSelector: '.dark',
         },
       },
     }),
