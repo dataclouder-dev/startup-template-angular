@@ -2,16 +2,20 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { SpeechRecognition } from '@capacitor-community/speech-recognition';
 import { Capacitor } from '@capacitor/core';
+import { GenericListComponent } from '../generics/generic-list/generic-list.component';
+import { DialogModule } from 'primeng/dialog';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-test',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, GenericListComponent, DialogModule, ButtonModule],
   templateUrl: './test.component.html',
   styleUrl: './test.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TestComponent implements OnInit {
+  isDialogVisible: boolean = false;
   constructor() {}
   ngOnInit(): void {
     console.log('TestComponent');

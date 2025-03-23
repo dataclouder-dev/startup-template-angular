@@ -13,14 +13,14 @@ import { PaginatorModule } from 'primeng/paginator';
 import { TableModule } from 'primeng/table';
 
 @Component({
-  selector: 'app-generic-list',
+  selector: 'app-generic-table',
   imports: [CardModule, ButtonModule, SpeedDialModule, PaginatorModule, TableModule, RouterModule],
   templateUrl: './generic-table.html',
   styleUrl: './generic-table.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 // TODO: extends PaginationBase this handle filter, pagination, and url params ?page=1
-export class GenericListComponent extends PaginationBase implements OnInit {
+export class GenericTableComponent extends PaginationBase implements OnInit {
   generics: IGeneric[] = [];
 
   getCustomButtons(item: any): MenuItem[] {

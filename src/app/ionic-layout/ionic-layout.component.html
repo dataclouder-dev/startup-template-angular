@@ -41,13 +41,7 @@
           <ion-title>{{ projectName }}</ion-title>
 
           <ion-buttons slot="end">
-            <p-togglebutton
-              [(ngModel)]="isDarkMode"
-              onLabel=""
-              offLabel=""
-              styleClass="w-36"
-              ariaLabel="Do you confirm"
-              (onChange)="toggleDarkMode()">
+            <p-togglebutton [(ngModel)]="isDarkMode" onLabel="" offLabel="" styleClass="w-36" ariaLabel="Do you confirm" (onChange)="toggleDarkMode()">
               <ng-template pTemplate="onicon" let-checked="checked">
                 <ion-icon [name]="checked ? 'sunny' : 'moon'"></ion-icon>
               </ng-template>
@@ -78,12 +72,12 @@
 
         <ion-tab-button tab="eye" (click)="navigateTo('page/explore')">
           <ion-icon name="eye"></ion-icon>
-          Explore
+          Lessons
         </ion-tab-button>
 
         <ion-tab-button tab="code-working" (click)="navigateTo('page/chat')">
           <ion-icon name="chatbubble-ellipses"></ion-icon>
-          Conversation
+          Agents Cards
         </ion-tab-button>
       </ion-tab-bar>
     </div>

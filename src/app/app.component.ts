@@ -3,6 +3,8 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
+
+import { LoadingBarService, LoadingBarComponent } from '@dataclouder/ngx-core';
 import {
   mailOutline,
   mailSharp,
@@ -29,7 +31,7 @@ import {
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
   standalone: true,
-  imports: [CommonModule, IonApp, IonRouterOutlet],
+  imports: [CommonModule, IonApp, IonRouterOutlet, LoadingBarComponent],
 })
 export class AppComponent {
   constructor(private router: Router) {

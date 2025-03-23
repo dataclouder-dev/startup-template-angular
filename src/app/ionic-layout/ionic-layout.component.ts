@@ -124,9 +124,10 @@ export class IonicLayoutComponent implements OnInit {
 
   public appPages = [
     { title: 'Home', url: '/page/home', icon: 'home' },
-    { title: 'Explore', url: '/page/explore', icon: 'eye' },
-    { title: 'Conversation', url: '/page/chat', icon: 'chatbubble-ellipses' },
+    { title: 'Lessons', url: '/page/explore', icon: 'eye' },
+    { title: 'Agents Conversation', url: '/page/chat', icon: 'chatbubble-ellipses' },
     { title: 'Generics', url: '/page/generics', icon: 'code-working' },
+    { title: 'Test', url: '/page/test', icon: 'code-working' },
   ];
 
   public adminPages = [

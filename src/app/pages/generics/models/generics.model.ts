@@ -1,3 +1,5 @@
+import { CloudStorageData } from '@dataclouder/ngx-cloud-storage';
+
 export interface AuditDate {
   createdAt?: string;
   updatedAt?: string;
@@ -18,6 +20,7 @@ export interface IGenericRelation {
 export interface IGeneric extends AuditDate {
   id: string;
   name?: string;
+  image?: CloudStorageData;
   description?: string;
   type?: string;
   relation?: IGenericRelation;

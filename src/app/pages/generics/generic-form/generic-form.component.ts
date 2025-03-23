@@ -12,17 +12,13 @@ import { InputTextModule } from 'primeng/inputtext';
 import { TextareaModule } from 'primeng/textarea';
 import { ChipModule } from 'primeng/chip';
 import { TooltipModule } from 'primeng/tooltip';
+import { AspectType, CropperComponentModal, ResolutionType, CloudStorageData } from '@dataclouder/ngx-cloud-storage';
 
 import { TOAST_ALERTS_TOKEN, ToastAlertsAbstractService } from '@dataclouder/ngx-core';
-import { ExtraForms } from './formly/formly.component';
-
-class User {
-  firstName: string = '';
-  lastName: string = '';
-  email: string = '';
-  age: number = 0;
-  isActive: boolean = false;
-}
+import { FormlyFieldConfig, FormlyModule } from '@ngx-formly/core';
+import { DialogModule } from 'primeng/dialog';
+import { GenericListComponent } from '../generic-list/generic-list.component';
+import { GenericTableComponent } from '../generic-table/generic-table';
 
 @Component({
   selector: 'app-source-form',
@@ -36,7 +32,11 @@ class User {
     InputTextModule,
     ChipModule,
     TooltipModule,
-    ExtraForms,
+    CropperComponentModal,
+    FormlyModule,
+    DialogModule,
+    GenericListComponent,
+    GenericTableComponent,
   ],
   templateUrl: './generic-form.component.html',
   styleUrl: './generic-form.component.css',
@@ -44,22 +44,23 @@ class User {
   standalone: true,
 })
 export class GenericFormComponent implements OnInit {
-  // public imageSettings: CropImageSettings = {
-  //   cropImageSettings: {
-  //     resizeToWidth: 1024,
-  //     path: 'testimonials',
-  //     fileName: 'image',
-  //   },
+  public storageImgSettings = {
+    path: `generics`,
+    cropSettings: { aspectRatio: AspectType.Square, resolutions: [ResolutionType.MediumLarge], resizeToWidth: 700 },
+  };
 
-  //   ratioType: AspectType.Square,
-  //   resolutions: [1024, 768],
-  // };
+  extraFields: FormlyFieldConfig[] = [
+    { key: 'title', type: 'input', props: { label: 'Title', placeholder: 'Title', required: false } },
+    { key: 'content', type: 'textarea', props: { label: 'Content', placeholder: 'Content', required: false } },
+  ];
 
   public genericForm = this.fb.group({
     name: ['', Validators.required],
     description: [''],
+    image: [{} as CloudStorageData],
     type: [''],
     relation: [{ id: '', name: '', description: '' }],
+    extension: new FormGroup({}),
   });
 
   public peopleOptions = [
@@ -123,4 +124,15 @@ export class GenericFormComponent implements OnInit {
     this.selectedPeople = this.selectedPeople.filter(p => p.id !== person.id);
     console.log(this.selectedPeople);
   }
+
+  public handleImageUpload(event: any) {
+    // this.genericForm.patchValue({ image: event });
+    alert('Image uploaded');
+  }
+
+  public searchRelation() {
+    alert('Search relation');
+  }
+
+  public isDialogVisible = false;
 }

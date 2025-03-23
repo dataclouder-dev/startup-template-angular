@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, Input, OnInit } from '@angular/core';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 
@@ -10,16 +10,18 @@ import { SpeedDialModule } from 'primeng/speeddial';
 import { MenuItem } from 'primeng/api';
 import { DatePipe, SlicePipe } from '@angular/common';
 import { PaginatorModule } from 'primeng/paginator';
+import { TableModule } from 'primeng/table';
 
 @Component({
   selector: 'app-generic-list',
-  imports: [CardModule, ButtonModule, DCFilterBarComponent, SpeedDialModule, DatePipe, SlicePipe, PaginatorModule, RouterModule],
+  imports: [CardModule, ButtonModule, DCFilterBarComponent, SpeedDialModule, DatePipe, SlicePipe, PaginatorModule, RouterModule, TableModule],
   templateUrl: './generic-list.component.html',
   styleUrl: './generic-list.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 // TODO: extends PaginationBase this handle filter, pagination, and url params ?page=1
 export class GenericListComponent extends PaginationBase implements OnInit {
+  @Input() viewType: 'table' | 'card' = 'table';
   generics: IGeneric[] = [];
 
   getCustomButtons(item: any): MenuItem[] {
@@ -87,5 +89,10 @@ export class GenericListComponent extends PaginationBase implements OnInit {
   onNew() {
     console.log('onNew');
     this.router.navigate(['./edit'], { relativeTo: this.route });
+  }
+
+  public toggleView() {
+    this.viewType = this.viewType === 'card' ? 'table' : 'card';
+    this.cdr.detectChanges();
   }
 }

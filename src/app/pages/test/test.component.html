@@ -1,2 +1,8 @@
 <h1>Test Page</h1>
 <h3>try what ever you want here</h3>
+
+<button pButton type="button" (click)="isDialogVisible = true" label="Show Dialog"></button>
+
+<p-dialog header="Dialog Header" [(visible)]="isDialogVisible">
+  <app-generic-list></app-generic-list>
+</p-dialog>

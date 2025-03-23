@@ -99,6 +99,7 @@ export const routes: Routes = [
         path: 'home',
         loadComponent: () => import('./pages/home/home.component').then(m => m.HomeComponent),
       },
+
       {
         path: 'explore',
         loadComponent: () => import('./pages/explore/explore.page').then(m => m.ExplorePage),
@@ -132,7 +133,7 @@ export const routes: Routes = [
           },
           {
             path: 'table',
-            loadComponent: () => import('./pages/generics/generic-table/generic-table').then(m => m.GenericListComponent),
+            loadComponent: () => import('./pages/generics/generic-table/generic-table').then(m => m.GenericTableComponent),
           },
           {
             path: 'edit',

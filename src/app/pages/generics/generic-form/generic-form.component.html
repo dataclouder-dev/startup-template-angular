@@ -1,21 +1,26 @@
 <h3>Generics Form</h3>
 
-<app-extra-forms></app-extra-forms>
-
-<hr />
-<br />
-
 <div class="source-form-card">
   <p-card [header]="genericId ? 'Edit Generic' : 'New Generic'">
     <form [formGroup]="genericForm">
-      <div class="form-field">
-        <label for="name" class="block">Name</label>
-        <input pInputText id="name" type="text" formControlName="name" placeholder="Enter source name" />
-      </div>
+      <div style="display: flex; gap: 10px">
+        <div class="form-field">
+          <label class="block" pTooltip="Image should be handle after upload">Subir imagen</label>
+          <img width="218px" src="assets/images/face-3.jpg" />
+          <dc-cropper-modal [imgStorageSettings]="storageImgSettings" (imageUploaded)="handleImageUpload($event)"></dc-cropper-modal>
+        </div>
 
-      <div class="form-field">
-        <label for="description" class="block">Description</label>
-        <textarea id="description" pTextarea formControlName="description" rows="5" class="w-full" placeholder="Enter source content"> </textarea>
+        <div style="width: 100%">
+          <div class="form-field">
+            <label for="name" class="block">Name</label>
+            <input pInputText id="name" type="text" formControlName="name" placeholder="Enter source name" />
+          </div>
+
+          <div class="form-field">
+            <label for="description" class="block">Description</label>
+            <textarea id="description" pTextarea formControlName="description" rows="5" class="w-full" placeholder="Enter source content"> </textarea>
+          </div>
+        </div>
       </div>
 
       <div class="form-field">
@@ -27,6 +32,14 @@
       <div class="form-field">
         <label for="relation" class="block" pTooltip="One object attached to the form">Relation</label>
         <p-select id="relation" [options]="relationObjects" formControlName="relation" optionLabel="name" placeholder="Select a relation" />
+      </div>
+
+      <div style="padding-left: 15px">
+        <div class="form-field">
+          <label class="block" pTooltip="Ejemplo use formly">Extension</label>
+
+          <formly-form [fields]="extraFields" [form]="genericForm.controls.extension"></formly-form>
+        </div>
       </div>
 
       <div class="form-field">
@@ -61,13 +74,15 @@
       </div>
     </form>
 
-    <div class="form-field">
-      <label class="block" pTooltip="Image should be handle after upload">Subir imagen</label>
-      <!-- <dc-cropper-modal [imageSettings]="imageSettings"></dc-cropper-modal> -->
-    </div>
-
     <div>
       <p-button (click)="save()" label="Save Generic" [disabled]="!genericForm.valid" icon="pi pi-check" iconPos="right"> </p-button>
     </div>
+
+    <div>
+      <p-button (click)="isDialogVisible = true" label="Search for relation" icon="pi pi-search" iconPos="right"> </p-button>
+    </div>
+    <p-dialog header="Search for relation" [(visible)]="isDialogVisible" [modal]="true">
+      <app-generic-table></app-generic-table>
+    </p-dialog>
   </p-card>
 </div>
