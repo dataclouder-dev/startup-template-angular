@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IGeneric } from '../models/generics.model';
@@ -18,7 +18,7 @@ import { TOAST_ALERTS_TOKEN, ToastAlertsAbstractService } from '@dataclouder/ngx
 import { FormlyFieldConfig, FormlyModule } from '@ngx-formly/core';
 import { DialogModule } from 'primeng/dialog';
 import { GenericListComponent } from '../generic-list/generic-list.component';
-import { GenericTableComponent } from '../generic-table/generic-table';
+import { QuickTableComponent } from '../quick-table/quick-table';
 
 @Component({
   selector: 'app-source-form',
@@ -36,7 +36,6 @@ import { GenericTableComponent } from '../generic-table/generic-table';
     FormlyModule,
     DialogModule,
     GenericListComponent,
-    GenericTableComponent,
   ],
   templateUrl: './generic-form.component.html',
   styleUrl: './generic-form.component.css',
@@ -88,7 +87,8 @@ export class GenericFormComponent implements OnInit {
     private genericService: GenericService,
     private fb: FormBuilder,
     private router: Router,
-    @Inject(TOAST_ALERTS_TOKEN) private toastService: ToastAlertsAbstractService
+    @Inject(TOAST_ALERTS_TOKEN) private toastService: ToastAlertsAbstractService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   public generic: IGeneric | null = null;
@@ -135,4 +135,11 @@ export class GenericFormComponent implements OnInit {
   }
 
   public isDialogVisible = false;
+
+  public handleRelationSelection(relation: IGeneric) {
+    // this.genericForm.patchValue({ relation: relation });
+    this.isDialogVisible = false;
+    this.cdr.detectChanges();
+    alert('Relation selected');
+  }
 }

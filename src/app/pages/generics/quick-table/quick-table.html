@@ -1,0 +1,29 @@
+<p-table [value]="tableData" [paginator]="true" [rows]="5" [tableStyle]="{ 'min-width': '50rem' }" [rowsPerPageOptions]="[5, 10, 20]">
+  <ng-template #header>
+    <tr>
+      @for (column of columns; track column) {
+      <th>{{ column }}</th>
+      }
+    </tr>
+  </ng-template>
+  <ng-template #body let-item>
+    <tr>
+      @for (column of columns; track column) {
+      <td>{{ item[column] }}</td>
+      }
+      <td>
+        @if (!onlyView) {
+        <div style="display: flex; gap: 5px">
+          <p-button icon="pi pi-pencil" severity="secondary" />
+          <p-button icon="pi pi-trash" severity="danger" />
+          <p-button icon="pi pi-eye" severity="primary" />
+        </div>
+        } @else {
+        <div>
+          <p-button (click)="selectItem(item)" icon="pi pi-check-square" severity="primary" />
+        </div>
+        }
+      </td>
+    </tr>
+  </ng-template>
+</p-table>

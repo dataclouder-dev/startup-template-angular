@@ -1,5 +1,6 @@
+@if (!onlyView) {
 <p-button [icon]="viewType === 'card' ? 'pi pi-table' : 'pi pi-list'" label="Change View" [link]="true" (click)="toggleView()" />
-
+}
 <div class="generic-list-container">
   <dc-filter-bar (onNew)="onNew()"></dc-filter-bar>
 
@@ -28,30 +29,8 @@
   </div>
   } @else if ( viewType == 'table'){
 
-  <p-table [value]="generics" [paginator]="true" [rows]="5" [tableStyle]="{ 'min-width': '50rem' }" [rowsPerPageOptions]="[5, 10, 20]">
-    <ng-template #header>
-      <tr>
-        <th style="width: 25%">Name</th>
-        <th style="width: 25%">Description</th>
-        <th style="width: 25%">Type</th>
-        <th style="width: 25%">Actions</th>
-      </tr>
-    </ng-template>
-    <ng-template #body let-item>
-      <tr>
-        <td>{{ item.name }}</td>
-        <td>{{ item.description }}</td>
-        <td>{{ item.type }}</td>
-        <td>
-          <div style="display: flex; gap: 5px">
-            <p-button icon="pi pi-pencil" severity="secondary" />
-            <p-button icon="pi pi-trash" severity="danger" />
-            <p-button icon="pi pi-eye" severity="primary" />
-          </div>
-        </td>
-      </tr>
-    </ng-template>
-  </p-table>
+  <app-quick-table [columns]="columns" [tableData]="generics" [onlyView]="onlyView" (onSelect)="onSelect.emit($event)"></app-quick-table>
+
   }
 
   <div class="paginator-container">

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 
@@ -11,10 +11,22 @@ import { MenuItem } from 'primeng/api';
 import { DatePipe, SlicePipe } from '@angular/common';
 import { PaginatorModule } from 'primeng/paginator';
 import { TableModule } from 'primeng/table';
+import { QuickTableComponent } from '../quick-table/quick-table';
 
 @Component({
   selector: 'app-generic-list',
-  imports: [CardModule, ButtonModule, DCFilterBarComponent, SpeedDialModule, DatePipe, SlicePipe, PaginatorModule, RouterModule, TableModule],
+  imports: [
+    CardModule,
+    ButtonModule,
+    DCFilterBarComponent,
+    SpeedDialModule,
+    DatePipe,
+    SlicePipe,
+    PaginatorModule,
+    RouterModule,
+    TableModule,
+    QuickTableComponent,
+  ],
   templateUrl: './generic-list.component.html',
   styleUrl: './generic-list.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -22,7 +34,11 @@ import { TableModule } from 'primeng/table';
 // TODO: extends PaginationBase this handle filter, pagination, and url params ?page=1
 export class GenericListComponent extends PaginationBase implements OnInit {
   @Input() viewType: 'table' | 'card' = 'table';
+  @Input() onlyView: boolean = true;
+  @Output() onSelect = new EventEmitter<IGeneric>();
+
   generics: IGeneric[] = [];
+  columns: any[] = ['name', 'description', 'updatedAt', 'image'];
 
   getCustomButtons(item: any): MenuItem[] {
     return [
@@ -55,6 +71,8 @@ export class GenericListComponent extends PaginationBase implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
+    this.filterConfig.returnProps = { _id: 1, name: 1, description: 1, updatedAt: 1, image: 1 };
+
     const response = await this.sourceService.getFilteredGenerics(this.filterConfig);
     this.generics = response.rows;
     this.cdr.detectChanges();
@@ -94,5 +112,10 @@ export class GenericListComponent extends PaginationBase implements OnInit {
   public toggleView() {
     this.viewType = this.viewType === 'card' ? 'table' : 'card';
     this.cdr.detectChanges();
+  }
+
+  public selectItem(generic: IGeneric) {
+    console.log('onSelect');
+    this.onSelect.emit(generic);
   }
 }

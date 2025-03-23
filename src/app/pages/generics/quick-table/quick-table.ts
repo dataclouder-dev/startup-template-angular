@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 
@@ -13,15 +13,18 @@ import { PaginatorModule } from 'primeng/paginator';
 import { TableModule } from 'primeng/table';
 
 @Component({
-  selector: 'app-generic-table',
+  selector: 'app-quick-table',
   imports: [CardModule, ButtonModule, SpeedDialModule, PaginatorModule, TableModule, RouterModule],
-  templateUrl: './generic-table.html',
-  styleUrl: './generic-table.css',
+  templateUrl: './quick-table.html',
+  styleUrl: './quick-table.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 // TODO: extends PaginationBase this handle filter, pagination, and url params ?page=1
-export class GenericTableComponent extends PaginationBase implements OnInit {
-  generics: IGeneric[] = [];
+export class QuickTableComponent extends PaginationBase implements OnInit {
+  @Input() onlyView: boolean = false;
+  @Input() columns: string[] = [];
+  @Input() tableData: any[] = [];
+  @Output() onSelect = new EventEmitter<IGeneric>();
 
   getCustomButtons(item: any): MenuItem[] {
     return [
@@ -55,7 +58,7 @@ export class GenericTableComponent extends PaginationBase implements OnInit {
 
   async ngOnInit(): Promise<void> {
     const response = await this.sourceService.getFilteredGenerics(this.filterConfig);
-    this.generics = response.rows;
+    this.tableData = response.rows;
     this.cdr.detectChanges();
   }
 
@@ -72,7 +75,7 @@ export class GenericTableComponent extends PaginationBase implements OnInit {
         const areYouSure = confirm('¿Estás seguro de querer eliminar este origen?');
         if (areYouSure) {
           await this.sourceService.deleteGeneric(item.id);
-          this.generics = this.generics.filter(generic => generic.id !== item.id);
+          this.tableData = this.tableData.filter(generic => generic.id !== item.id);
           this.toastService.success({
             title: 'Origen eliminado',
             subtitle: 'El origen ha sido eliminado correctamente',
@@ -89,5 +92,10 @@ export class GenericTableComponent extends PaginationBase implements OnInit {
   onNew() {
     console.log('onNew');
     this.router.navigate(['./edit'], { relativeTo: this.route });
+  }
+
+  public selectItem(generic: IGeneric) {
+    console.log('onSelect');
+    this.onSelect.emit(generic);
   }
 }

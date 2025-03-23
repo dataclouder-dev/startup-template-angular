@@ -132,10 +132,6 @@ export const routes: Routes = [
             loadComponent: () => import('./pages/generics/generic-list/generic-list.component').then(m => m.GenericListComponent),
           },
           {
-            path: 'table',
-            loadComponent: () => import('./pages/generics/generic-table/generic-table').then(m => m.GenericTableComponent),
-          },
-          {
             path: 'edit',
             loadComponent: () => import('./pages/generics/generic-form/generic-form.component').then(m => m.GenericFormComponent),
           },
