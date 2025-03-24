@@ -4,10 +4,10 @@ export const environment = {
   envName: 'DEV',
   production: false,
 
-  backendNodeUrl: 'http://localhost:8080',
-  // backendNodeUrl: 'https://node-server-514401908603.us-central1.run.app',
-  backendPythonUrl: 'http://localhost:8000',
-  // backendPythonUrl: 'https://python-server-514401908603.us-central1.run.app',
+  // backendNodeUrl: 'http://localhost:8080',
+  backendNodeUrl: 'https://node-server-514401908603.us-central1.run.app',
+  // backendPythonUrl: 'http://localhost:8000',
+  backendPythonUrl: 'https://python-server-514401908603.us-central1.run.app',
 
   mobile: {
     appleAppId: 'com.dc-template.app.dev',

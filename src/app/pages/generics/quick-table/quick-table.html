@@ -9,7 +9,7 @@
   <ng-template #body let-item>
     <tr>
       @for (column of columns; track column) {
-      <td>{{ item[column] }}</td>
+      <td>{{ item[column.field] }}</td>
       }
       <td>
         @if (!onlyView) {

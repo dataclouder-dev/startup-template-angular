@@ -72,15 +72,21 @@
           }
         </div>
       </div>
+      <div>
+        <p-button (click)="isDialogVisible = true" label="Search for relation" icon="pi pi-search" iconPos="right"> </p-button>
+      </div>
     </form>
 
-    <div>
+    <div style="display: flex; justify-content: flex-end">
       <p-button (click)="save()" label="Save Generic" [disabled]="!genericForm.valid" icon="pi pi-check" iconPos="right"> </p-button>
     </div>
 
     <div>
-      <p-button (click)="isDialogVisible = true" label="Search for relation" icon="pi pi-search" iconPos="right"> </p-button>
+      @for(relation of relationPopupSelector; track relation.id) {
+      <p-chip [label]="relation.name" [image]="relation.image" alt="Avatar image" [removable]="true" (onRemove)="removeRelationFromList(relation)" />
+      }
     </div>
+
     <p-dialog header="Search for relation" [(visible)]="isDialogVisible" [modal]="true">
       <app-generic-list [onlyView]="true" [viewType]="'table'" (onSelect)="handleRelationSelection($event)"></app-generic-list>
     </p-dialog>

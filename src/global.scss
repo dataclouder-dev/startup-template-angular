@@ -1,3 +1,4 @@
+// 1) Importing css libraries
 @import "primeicons/primeicons.css";
 
 /* Core CSS required for Ionic components to work properly */
@@ -17,7 +18,85 @@
 @import "@ionic/angular/css/flex-utils.css";
 
 
- @import "@ionic/angular/css/palettes/dark.class.css"; 
+@import "@ionic/angular/css/palettes/dark.class.css"; 
+
+// 2) defining addional variables
+// check all variables https://ionicframework.com/docs/theming/themes
+
+:root {
+    // this will change general ionic settings
+    --ion-background-color: transparent; // background apply for multiple ionic sections. 
+    --ion-text-color: var(--p-slate-600); // general text: 
+    --ion-backdrop-color: var(--p-zinc-100); // backdrop color, not sure where it aplies
+    --ion-color-primary: var(--p-primary-color);
+    --ion-backdrop-opacity: 0.6;
+    --ion-overlay-background-color: var(--p-zinc-100);
+    --ion-border-color: var(--p-primary-900);
+
+    // NOTE: tab bar is the one at the bottom. 
+    --ion-tab-bar-background: transparent;
+    --ion-tab-bar-background-focused: var(--p-primary-50);
+    --ion-tab-bar-color: var(--p-primary-color);
+    --ion-tab-bar-color-selected: var(--p-teal-600) ;
+    --ion-tab-bar-border-color: var(--p-primary-200);
+
+    // NOTE: tool bar is the one at the top
+    --ion-toolbar-background: transparent;
+    --ion-toolbar-border-color: var(--p-primary-200);
+    --ion-toolbar-color: var(--p-slate-800);
+    --ion-toolbar-segment-color: var(--p-primary-color);
+    --ion-toolbar-segment-background: var(--p-primary-color);
+
+    // Note: items exists on menu, this will change the left menu bar. 
+    --ion-item-border-color: var(--p-primary-100);
+    --ion-item-color: var(--p-primary-color) ; // this is the text in menu left bar.
+    --ion-text-color-rgb: var(--p-primary-color) ; // this control the icon not sure what other colors
+    --ion-item-backdrop: blur(3px) ;
+  }
+  
+
+//  Dark theme
+  :root.ion-palette-dark {
+    --primary-dark-color: #4EF9BA;
+    // --primary-dark-color: #74FAC9;  // You can change this hex color
+
+    --ion-background-color: transparent; // background apply for multiple ionic sections. 
+    --ion-text-color: var(--primary-dark-color); // general text: 
+    --ion-backdrop-color: var(--primary-dark-color); // backdrop color, not sure where it aplies
+    --ion-color-primary: var(--primary-dark-color);
+    --ion-backdrop-opacity: 0.6;
+    --ion-overlay-background-color: var(--primary-dark-color);
+    --ion-border-color: var(--primary-dark-color);
+
+    // NOTE: tab bar is the one at the bottom. 
+    --ion-tab-bar-background-focused: var(--p-primary-50);
+    --ion-tab-bar-color: var(--primary-dark-color);
+    --ion-tab-bar-color-selected: var(--p-teal-200) ;
+    --ion-tab-bar-border-color: var(--p-primary-200);
+    --ion-tab-bar-background: transparent;
+
+    // NOTE: tool bar is the one at the top
+    --ion-toolbar-background: transparent;
+    --ion-toolbar-border-color: var(--p-primary-200);
+    --ion-toolbar-color: var(--primary-dark-color);
+    --ion-toolbar-segment-color: var(--p-primary-color);
+    --ion-toolbar-segment-background: var(--primary-dark-color);
+
+    // Note: items exists on menu, this will change the left menu bar. 
+    --ion-item-border-color: var(--primary-dark-color);
+    --ion-item-color: var(--primary-dark-color) ; // this is the text in menu left bar.
+    --ion-text-color-rgb: var(--primary-dark-color) ; // this control the icon not sure what other colors
+    --ion-item-backdrop: blur(3px) ;
+    --ion-item-background: transparent;
+  }
+  
+  
+// 3) Global styles and Overrides
+
+.sc-ion-label-md-h{
+    font-size: 1.2rem ;
+    font-weight: 500 ;
+}
 
  body {
     position: relative;  // Required for pseudo-element positioning

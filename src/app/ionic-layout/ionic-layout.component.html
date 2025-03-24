@@ -3,7 +3,7 @@
     <ion-menu contentId="main-content" type="overlay">
       <ion-content>
         <ion-list id="inbox-list">
-          <ion-list-header>{{ projectName }}</ion-list-header>
+          <ion-list-header> {{ projectName }}</ion-list-header>
 
           <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
             <ion-item routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" routerLinkActive="selected">
@@ -38,7 +38,7 @@
           <ion-buttons slot="start">
             <ion-menu-button></ion-menu-button>
           </ion-buttons>
-          <ion-title>{{ projectName }}</ion-title>
+          <ion-title> {{ projectName }}</ion-title>
 
           <ion-buttons slot="end">
             <p-togglebutton [(ngModel)]="isDarkMode" onLabel="" offLabel="" styleClass="w-36" ariaLabel="Do you confirm" (onChange)="toggleDarkMode()">

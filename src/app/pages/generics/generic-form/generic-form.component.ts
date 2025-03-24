@@ -136,9 +136,19 @@ export class GenericFormComponent implements OnInit {
 
   public isDialogVisible = false;
 
+  public relationPopupSelector: any[] = [];
+
+  public removeRelationFromList(relation: any) {
+    this.relationPopupSelector = this.relationPopupSelector.filter(r => r.id !== relation.id);
+    console.log(this.relationPopupSelector);
+  }
+
   public handleRelationSelection(relation: IGeneric) {
+    console.log(relation);
+    debugger;
     // this.genericForm.patchValue({ relation: relation });
     this.isDialogVisible = false;
+    this.relationPopupSelector.push(relation);
     this.cdr.detectChanges();
     alert('Relation selected');
   }

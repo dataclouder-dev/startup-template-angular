@@ -254,7 +254,97 @@ gcloud builds submit .
 
 ### About the theme and palete.
 
-Soon...
+### What do you need to know to change the palete?
+
+the project uses primeng and ionic. so you need to change both.
+
+Check documentation: https://ionicframework.com/docs/theming/colors https://primeng.org/theming
+
+Quick intro:
+
+### 🎨 Prime NG Style
+
+Prime NG uses a combination of colors.
+
+emerald, green, lime, red, orange, amber, yellow, teal, cyan, sky, blue, indigo, violet, purple, fuchsia, pink, rose, slate, gray, zinc, neutral, stone
+
+Some of these colors are used by default for different PrimeNG severities (primary, secondary, success, danger, warning, info, dark, light). Example: htmlCopy<p-button icon="pi pi-trash" severity="danger" />
+
+Danger uses the red color Success uses the green color
+
+By default, you can override any color. 🖌️ 💡 Recommendation: The only colors I recommend changing are the primary color and surface color.
+
+--p-primary-color
+
+all variables can be overriden by declaring in css --p-primary-color para el colo principal o --p-primary-200 para la tonalidad.
+
+Color Variables
+
+--p-primary-color: For the main color You can override variables by declaring them in CSS Example: --p-primary-color for the main color or --p-primary-200 for a specific tone
+
+Important Note: There is no --p-primary-color-800, only primary color exists. 📂 File Structure
+
+/src/theme/variables.scss: Add your custom variables here /src/global.scss: Import IONIC CSS and override global styles
+
+You can style Cards, Inputs, and other important components using PrimeNG guidelines. 🛠️ 🕵️ Changing and Inspecting Styling If you're unsure what to change, look for hints like --ion-text-color-rgb. 🎨 Changing the Color Palette Key Concepts:
+
+📄 /src/my-preset.ts
+
+Start here Add the colors you want This will override the default Nora theme Access variables with --p-primary-color or --p-primary-200
+
+### 🌐 /src/global.scss
+
+Override Ionic variables Define PrimeNG component styles Note: Changes may not automatically apply to both PrimeNG and Ionic components
+
+Three sections in global.scss:
+
+Importing styles from other libraries Defining global variables and overriding Ionic ones Defining global styles or overriding current ones
+
+📱 Component Styling The main layout is handled using Ionic components, making it mobile-ready. 🚀
+
+No existe --p-primary-color-800 solo primary color
+
+- /src/theme/variables.scss: here i add my variables.
+
+- /src/global.scss: here i import the IONIC CSS Override the global styles
+
+you can style Cards, Inputs, etc and important compoents using primeng guidelines.
+
+### changing and inspecting styling
+
+if you dont know what to change some times you will see something like, --ion-text-color-rgb to see a clue.
+
+### Ok i want to change the palete.
+
+To start with, I higly recoment have alreay your palet.
+
+There are 3 important concepts:
+
+- /src/my-preset.ts // Start here add the colors you want. this will override default style for Nora (Just a theme) then you can access your variables with --p-primary-color or --p-primary-200 for specific color.
+
+- /src/global.scss: here is only to override Ionic variables. you defined for prime ng components, but undertunately this are not linked, also if you definition not change automatically, if you change varible example changing color for --p-primary-color works for prime ng components but not for ionic components. so since the very beggining you need to define darkmode or other teams if you want.
+
+i see this global.scss in 3 sections.
+
+1. importing styles from other libraries.
+2. defining global variables and override ionic ones
+3. define global style or otherride current ones.
+
+### Styling speficis components.
+
+The main layout is handled using ionic compoennts, this way is ready for mobile.
+
+### Menu Right Nav Bar:
+
+you can change.
+
+### Buttom Quick Access Nav Bar:
+
+you can change.
+
+### Header:
+
+you can change.
 
 ## My Color Palette
 
@@ -280,6 +370,16 @@ Soon...
     <td>Accent Color</td>
   </tr>
 </table>
+
+//
+
+| Color   | Name            | Sample                                                                                 |
+| ------- | --------------- | -------------------------------------------------------------------------------------- |
+| #2D0C62 | Primary Color   | <img src="https://via.placeholder.com/15/2D0C62/000000?text=+" width="15" height="15"> |
+| #74FAC9 | Secondary Color | <img src="https://via.placeholder.com/15/74FAC9/000000?text=+" width="15" height="15"> |
+| #7FD6D2 | Accent Color    | <img src="https://via.placeholder.com/15/7FD6D2/000000?text=+" width="15" height="15"> |
+| #5CBAE7 | Accent Color    | <img src="https://via.placeholder.com/15/5CBAE7/000000?text=+" width="15" height="15"> |
+| #3677BD | Accent Color    | <img src="https://via.placeholder.com/15/3677BD/000000?text=+" width="15" height="15"> |
 
 https://coolors.co/2d0c62-74fac9-7fd6d2-5cbae7-3677bd
 
