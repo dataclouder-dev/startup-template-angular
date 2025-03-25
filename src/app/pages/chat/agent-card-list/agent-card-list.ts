@@ -132,7 +132,6 @@ export class ChatComponentPage implements OnInit {
           // this.conversationCards = this.conversationCards.filter((card) => card._id !== id);
 
           this.toastService.success({ title: 'Conversation card deleted', subtitle: 'Pero tienes que actualizar la página para ver el cambio' });
-
           this.cdr.detectChanges();
         }
 
