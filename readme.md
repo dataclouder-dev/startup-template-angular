@@ -136,10 +136,6 @@ https://github.com/dataclouder-dev/dataclouder-template-node https://github.com/
     firebase deploy --only hosting:dataclouder-dev : change .firebaserc to dataclouder-dev
 ```
 
-### Change Theme
-
-There are two files that control css mypreset.ts overrides primeng and global.scss general style that also overides ionic
-
 #### deploy using make
 
     make deploy
@@ -332,19 +328,11 @@ i see this global.scss in 3 sections.
 
 ### Styling speficis components.
 
-The main layout is handled using ionic compoennts, this way is ready for mobile.
+The main layout is handled using Ionic components, this way is ready for mobile. check the the file global.css here are important variables to change theme, you can change:
 
-### Menu Right Nav Bar:
-
-you can change.
-
-### Buttom Quick Access Nav Bar:
-
-you can change.
-
-### Header:
-
-you can change.
+- Menu Right Nav Bar
+- Header
+- Bottom Quick Access Nav Bar
 
 ## My Color Palette
 

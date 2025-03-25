@@ -1,6 +1,6 @@
 export const environment = {
   projectName: 'Dataclouder Template',
-  version: '0.0.10',
+  version: '0.0.11',
   envName: 'DEV',
   production: false,
 
