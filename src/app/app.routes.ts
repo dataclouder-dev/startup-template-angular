@@ -152,7 +152,7 @@ export const routes: Routes = [
       },
       {
         path: 'chat',
-        loadComponent: () => import('./pages/chat/conversation-card-list/chat.component').then(m => m.ChatComponentPage),
+        loadComponent: () => import('./pages/chat/agent-card-list/agent-card-list').then(m => m.ChatComponentPage),
       },
     ],
   },

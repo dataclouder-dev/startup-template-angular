@@ -45,17 +45,17 @@ export class GenericListComponent extends PaginationBase implements OnInit {
       {
         tooltipOptions: { tooltipLabel: 'Ver detalles', tooltipPosition: 'bottom' },
         icon: 'pi pi-eye',
-        command: () => this.doAction('view', item),
+        // command: () => this.doAction({ item, action: 'view' }),
       },
       {
         label: 'Editar',
         icon: 'pi pi-pencil',
-        command: () => this.doAction('edit', item),
+        // command: () => this.doAction({ item, action: 'edit' }),
       },
       {
         label: 'Eliminar',
         icon: 'pi pi-trash',
-        command: () => this.doAction('delete', item),
+        // command: () => this.doAction({ item, action: 'delete' }),
       },
     ];
   }
@@ -81,8 +81,8 @@ export class GenericListComponent extends PaginationBase implements OnInit {
   protected override loadData(): Promise<void> {
     throw new Error('Method not implemented.');
   }
-  public async doAction(action: string, item: any) {
-    switch (action) {
+  public override async doAction({ item, action }: { item: any; action: MenuItem }) {
+    switch (action.title) {
       case 'view':
         this.router.navigate(['./details', item.id], { relativeTo: this.route });
         break;

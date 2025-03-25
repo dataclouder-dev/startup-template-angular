@@ -12,6 +12,7 @@ import { DCLessonListComponent, ILesson } from '@dataclouder/ngx-lessons';
 })
 export class LessonListComponent {
   constructor(private router: Router, private route: ActivatedRoute) {}
+
   public onNewLesson() {
     console.log('onNewLesson');
     this.router.navigate(['edit'], { relativeTo: this.route });

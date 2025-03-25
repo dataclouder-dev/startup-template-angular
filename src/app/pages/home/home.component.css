@@ -1,3 +1,9 @@
 :host {
   display: block;
 }
+
+.card-slider{
+  /* width: 400px; */
+  /* overflow: hidden; */
+  /* display: block; */
+}

@@ -8,7 +8,7 @@ import {
   ChatUserSettings,
   IConversationSettings,
   ChatRole,
-  ConversationCardListsComponent,
+  AgentCardListComponent,
   AudioSpeed,
   CONVERSATION_AI_TOKEN,
   AgentCardsAbstractService,
@@ -17,13 +17,14 @@ import {
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { TOAST_ALERTS_TOKEN, ToastAlertsAbstractService } from '@dataclouder/ngx-core';
 import { MenuItem } from 'primeng/api';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-chat',
-  templateUrl: './chat.component.html',
-  styleUrls: ['./chat.component.scss'],
+  templateUrl: './agent-card-list.html',
+  styleUrls: ['./agent-card-list.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, IonContent, ConversationCardListsComponent],
+  imports: [CommonModule, FormsModule, IonContent, AgentCardListComponent, ButtonModule],
 })
 export class ChatComponentPage implements OnInit {
   public chatUserSettings: ChatUserSettings = {
@@ -38,6 +39,8 @@ export class ChatComponentPage implements OnInit {
     speed: AudioSpeed.Regular,
     speedRate: 1,
   };
+
+  public viewMode: 'table' | 'cards' = 'table';
 
   public IConversationSettings: IConversationSettings = {
     messages: [
@@ -65,6 +68,12 @@ export class ChatComponentPage implements OnInit {
   ngOnInit() {
     // Initialize with some dummy messages
   }
+
+  public actions: MenuItem[] = [
+    { title: 'details', label: 'Ver detalles', icon: 'ionicons:pencil' },
+    { title: 'edit', label: 'Editar', icon: 'ionicons:edit' },
+    { title: 'delete', label: 'Eliminar', icon: 'ionicons:trash' },
+  ];
 
   public goToDetails(idCard: any) {
     console.log('goToDetails', idCard);
@@ -131,6 +140,20 @@ export class ChatComponentPage implements OnInit {
       case 'edit':
         this.router.navigate(['../stack/conversation-form', itemId], { relativeTo: this.route });
         break;
+    }
+  }
+
+  handleAction({ item, action }: { item: any; action: MenuItem }) {
+    debugger;
+    console.log('doAction', { item, action });
+    if (action.title === 'edit') {
+      this.goToEdit(item._id);
+    } else if (action.title === 'delete') {
+      this.doAction('delete', item);
+    } else if (action.title === 'details') {
+      this.goToDetails(item._id);
+    } else {
+      console.log('Unknown action:', action);
     }
   }
 }
