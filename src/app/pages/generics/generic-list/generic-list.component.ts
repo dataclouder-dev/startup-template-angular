@@ -81,28 +81,28 @@ export class GenericListComponent extends PaginationBase implements OnInit {
   protected override loadData(): Promise<void> {
     throw new Error('Method not implemented.');
   }
-  public override async doAction({ item, action }: { item: any; action: MenuItem }) {
-    switch (action.title) {
-      case 'view':
-        this.router.navigate(['./details', item.id], { relativeTo: this.route });
-        break;
-      case 'delete':
-        const areYouSure = confirm('¿Estás seguro de querer eliminar este origen?');
-        if (areYouSure) {
-          await this.sourceService.deleteGeneric(item.id);
-          this.generics = this.generics.filter(generic => generic.id !== item.id);
-          this.toastService.success({
-            title: 'Origen eliminado',
-            subtitle: 'El origen ha sido eliminado correctamente',
-          });
-          this.cdr.detectChanges();
-        }
-        break;
-      case 'edit':
-        this.router.navigate(['./edit', item.id], { relativeTo: this.route });
-        break;
-    }
-  }
+  // public override async doAction({ item, action }: { item: any; action: MenuItem }) {
+  //   switch (action.title) {
+  //     case 'view':
+  //       this.router.navigate(['./details', item.id], { relativeTo: this.route });
+  //       break;
+  //     case 'delete':
+  //       const areYouSure = confirm('¿Estás seguro de querer eliminar este origen?');
+  //       if (areYouSure) {
+  //         await this.sourceService.deleteGeneric(item.id);
+  //         this.generics = this.generics.filter(generic => generic.id !== item.id);
+  //         this.toastService.success({
+  //           title: 'Origen eliminado',
+  //           subtitle: 'El origen ha sido eliminado correctamente',
+  //         });
+  //         this.cdr.detectChanges();
+  //       }
+  //       break;
+  //     case 'edit':
+  //       this.router.navigate(['./edit', item.id], { relativeTo: this.route });
+  //       break;
+  //   }
+  // }
 
   onNew() {
     console.log('onNew');

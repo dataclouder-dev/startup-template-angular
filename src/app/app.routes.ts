@@ -57,30 +57,30 @@ export const routes: Routes = [
     children: [
       {
         path: 'conversation-form',
-        loadComponent: () => import('./pages/chat/conversation-form/conversation-form.page').then(m => m.ConversationFormPage),
+        loadComponent: () => import('./pages/agent-cards/conversation-form/conversation-form.page').then(m => m.ConversationFormPage),
       },
       {
         path: 'conversation-form/:id',
-        loadComponent: () => import('./pages/chat/conversation-form/conversation-form.page').then(m => m.ConversationFormPage),
+        loadComponent: () => import('./pages/agent-cards/conversation-form/conversation-form.page').then(m => m.ConversationFormPage),
       },
 
       {
         path: 'chat',
-        loadComponent: () => import('./pages/chat/conversation-card-chat/conversation-card-chat.component').then(m => m.ConversationCardChatComponent),
+        loadComponent: () => import('./pages/agent-cards/conversation-card-chat/conversation-card-chat.component').then(m => m.ConversationCardChatComponent),
       },
       {
         path: 'chat/:id',
-        loadComponent: () => import('./pages/chat/conversation-card-chat/conversation-card-chat.component').then(m => m.ConversationCardChatComponent),
+        loadComponent: () => import('./pages/agent-cards/conversation-card-chat/conversation-card-chat.component').then(m => m.ConversationCardChatComponent),
       },
 
       {
         path: 'conversation-details',
-        loadComponent: () => import('./pages/chat/conversation-details/conversation-details.component').then(m => m.ConversationDetailsPage),
+        loadComponent: () => import('./pages/agent-cards/conversation-details/conversation-details.component').then(m => m.ConversationDetailsPage),
       },
 
       {
         path: 'conversation-details/:id',
-        loadComponent: () => import('./pages/chat/conversation-details/conversation-details.component').then(m => m.ConversationDetailsPage),
+        loadComponent: () => import('./pages/agent-cards/conversation-details/conversation-details.component').then(m => m.ConversationDetailsPage),
       },
 
       {
@@ -152,7 +152,7 @@ export const routes: Routes = [
       },
       {
         path: 'chat',
-        loadComponent: () => import('./pages/chat/agent-card-list/agent-card-list').then(m => m.ChatComponentPage),
+        loadComponent: () => import('./pages/agent-cards/agent-card-list/agent-card-list').then(m => m.ChatComponentPage),
       },
     ],
   },

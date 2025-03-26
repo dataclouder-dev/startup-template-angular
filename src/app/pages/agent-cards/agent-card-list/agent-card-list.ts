@@ -15,7 +15,7 @@ import {
   IAgentCard,
 } from '@dataclouder/ngx-agent-cards';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
-import { TOAST_ALERTS_TOKEN, ToastAlertsAbstractService } from '@dataclouder/ngx-core';
+import { OnActionEvent, TOAST_ALERTS_TOKEN, ToastAlertsAbstractService } from '@dataclouder/ngx-core';
 import { MenuItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 
@@ -142,17 +142,17 @@ export class ChatComponentPage implements OnInit {
     }
   }
 
-  handleAction({ item, action }: { item: any; action: MenuItem }) {
+  handleAction(actionEvent: OnActionEvent) {
     debugger;
-    console.log('doAction', { item, action });
-    if (action.title === 'edit') {
-      this.goToEdit(item._id);
-    } else if (action.title === 'delete') {
-      this.doAction('delete', item);
-    } else if (action.title === 'details') {
-      this.goToDetails(item._id);
+    console.log('doAction', { item: actionEvent.item, action: actionEvent.action });
+    if (actionEvent.action === 'edit') {
+      this.goToEdit(actionEvent.item._id);
+    } else if (actionEvent.action === 'delete') {
+      this.doAction('delete', actionEvent.item);
+    } else if (actionEvent.action === 'details') {
+      this.goToDetails(actionEvent.item._id);
     } else {
-      console.log('Unknown action:', action);
+      console.log('Unknown action:', actionEvent.action);
     }
   }
 }

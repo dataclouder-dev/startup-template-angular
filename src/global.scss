@@ -135,3 +135,25 @@ body.dark::before {
 }
 
 
+.p-card{
+    background: --var(--p-primary-color) !important;
+    backdrop-filter: blur(1px);
+    border: 1px solid #16012c;
+    transition: all 0.3s ease;
+    box-shadow:  0 8px 32px rgba(0, 0, 0, 0.3), 0 3px 2px var(--p-primary-900);
+    margin: 4px;
+    border-radius: 1px;
+}
+
+.p-card:hover {
+    /* filter: drop-shadow(0 0 0.75rem rgb(0, 229, 255)); */
+    filter: drop-shadow(-1px 1px 1px rgb(40, 1, 64));
+    transform: translateY(-2px);
+    transform: scale(1.01);
+  }
+
+
+
+  .p-card-body{
+    // padding: 0 !important;
+  }
