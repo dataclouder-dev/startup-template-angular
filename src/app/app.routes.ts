@@ -101,24 +101,28 @@ export const routes: Routes = [
       },
 
       {
-        path: 'explore',
-        loadComponent: () => import('./pages/explore/explore.page').then(m => m.ExplorePage),
+        path: 'lessons',
+        loadComponent: () => import('./pages/lessons/explore.page').then(m => m.ExplorePage),
         children: [
           {
             path: '',
-            loadComponent: () => import('./pages/explore/lesson-list/lesson-list.component').then(m => m.LessonListComponent),
+            loadComponent: () => import('./pages/lessons/lesson-list/lesson-list.component').then(m => m.LessonListComponent),
+          },
+          {
+            path: 'details/:id',
+            loadComponent: () => import('./pages/lessons/lesson-details/lesson-details.component').then(m => m.LessonDetailsComponent),
           },
           {
             path: 'list',
-            loadComponent: () => import('./pages/explore/lesson-list/lesson-list.component').then(m => m.LessonListComponent),
+            loadComponent: () => import('./pages/lessons/lesson-list/lesson-list.component').then(m => m.LessonListComponent),
           },
           {
             path: 'edit',
-            loadComponent: () => import('./pages/explore/explore-edit/explore-edit.component').then(m => m.ExploreEditComponent),
+            loadComponent: () => import('./pages/lessons/explore-edit/explore-edit.component').then(m => m.ExploreEditComponent),
           },
           {
             path: 'edit/:id',
-            loadComponent: () => import('./pages/explore/explore-edit/explore-edit.component').then(m => m.ExploreEditComponent),
+            loadComponent: () => import('./pages/lessons/explore-edit/explore-edit.component').then(m => m.ExploreEditComponent),
           },
         ],
       },

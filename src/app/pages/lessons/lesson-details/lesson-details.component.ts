@@ -11,8 +11,8 @@ import { DCLessonRendererComponent, ILesson, LESSONS_TOKEN, LessonsAbstractServi
   imports: [CommonModule, DCLessonRendererComponent],
 })
 export class LessonDetailsComponent implements OnInit {
-  public lesson: ILesson;
-  public lessonId: string = this.activatedRoute.snapshot.paramMap.get('id');
+  public lesson!: ILesson;
+  public lessonId: string = this.activatedRoute.snapshot.paramMap.get('id')!;
 
   constructor(private activatedRoute: ActivatedRoute, @Inject(LESSONS_TOKEN) private lessonService: LessonsAbstractService) {}
   // Implementation will go here
