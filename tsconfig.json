@@ -3,7 +3,7 @@
   "compileOnSave": false,
   "compilerOptions": {
     "paths": {
-      "@live2dframework/*": ["./libs/live2d/framework/dist/*"],
+      "@framework/*": ["./libs/live2d/framework/dist/*"],
     },
     "baseUrl": "./",
     "outDir": "./dist/out-tsc",

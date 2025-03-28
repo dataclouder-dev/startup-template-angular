@@ -1,3 +1,29 @@
 :host {
   display: block;
 }
+
+.live2d-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 600px;
+  height: 600px;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* canvas {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 500px;
+  max-height: 500px;
+  border: 1px solid #ccc;
+} */
+
+/* Ensure other content appears above the canvas */
+app-generic-list, p-dialog {
+  position: relative;
+  z-index: 2;
+}
