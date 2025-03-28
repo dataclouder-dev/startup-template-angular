@@ -2,6 +2,9 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "paths": {
+      "@live2dframework/*": ["./libs/live2d/framework/dist/*"],
+    },
     "baseUrl": "./",
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
@@ -19,8 +22,14 @@
     "target": "es2022",
     "module": "es2020",
     "lib": ["es2018", "dom"],
-    "useDefineForClassFields": false
+    "useDefineForClassFields": false,
+    "skipLibCheck": true
   },
+
+  "include": [
+    "src/**/*.ts",
+  ],
+
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,

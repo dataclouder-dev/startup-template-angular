@@ -6,6 +6,11 @@ import { GenericListComponent } from '../generics/generic-list/generic-list.comp
 import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 
+import { CubismFramework } from '@live2dframework/live2dcubismframework';
+import { CSM_LOG_LEVEL, CSM_LOG_LEVEL_VERBOSE, CSM_LOG_LEVEL_DEBUG } from '@live2dframework/cubismframeworkconfig';
+
+declare const Live2DCubismCore: any;
+
 @Component({
   selector: 'app-test',
   standalone: true,
@@ -18,50 +23,8 @@ export class TestComponent implements OnInit {
   isDialogVisible: boolean = false;
   constructor() {}
   ngOnInit(): void {
-    console.log('TestComponent');
-    if (Capacitor.isNativePlatform()) {
-      // this.startListening();
-    } else {
-      console.log('Not a native platform!');
-    }
+    console.log('objecto', (window as any).Live2DCubismCore);
+    // const version = Live2DCubismCore.Version;
+    // console.log('version', version);
   }
-
-  public async startListening() {
-    const permission = await SpeechRecognition.checkPermissions();
-    console.log('startListening', permission);
-
-    const resultPermission = await SpeechRecognition.requestPermissions();
-    console.log('startListening', resultPermission);
-
-    console.log('startListening');
-    const isAvalible = await SpeechRecognition.available();
-    console.log('startListening', isAvalible);
-
-    SpeechRecognition.start({
-      language: 'en-US',
-      maxResults: 2,
-      prompt: 'Say something',
-      partialResults: true,
-      popup: true,
-    });
-
-    // listen to partial results
-
-    SpeechRecognition.addListener('partialResults', (data: any) => {
-      console.log('partialResults was fired', data.matches);
-    });
-  }
-
-  // SpeechRecognition.available();
-  // SpeechRecognition.start({
-  //   language: "en-US",
-  //   maxResults: 2,
-  //   prompt: "Say something",
-  //   partialResults: true,
-  //   popup: true,
-  // });
-  // // listen to partial results
-  // SpeechRecognition.addListener("partialResults", (data: any) => {
-  //   console.log("partialResults was fired", data.matches);
-  // });
 }
