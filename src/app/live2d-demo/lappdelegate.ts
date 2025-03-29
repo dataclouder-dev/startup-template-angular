@@ -167,6 +167,45 @@ export class LAppDelegate {
   }
 
   /**
+   * V2 version of initialize that accepts a canvas reference
+   * @param canvas The canvas element to use for Live2D rendering
+   * @returns boolean indicating if initialization was successful
+   */
+  public initializeV2(canvas: HTMLCanvasElement): boolean {
+    // Initialize Cubism SDK
+    this.initializeCubism();
+
+    // Initialize with the provided canvas
+    this.initializeSubdelegatesV2(canvas);
+    this.initializeEventListener();
+
+    return true;
+  }
+
+  /**
+   * V2 version of initializeSubdelegates that accepts a canvas reference
+   * @param canvas The canvas element to use for Live2D rendering
+   */
+  private initializeSubdelegatesV2(canvas: HTMLCanvasElement): void {
+    // Clear any existing canvases and subdelegates
+    this._canvases.clear();
+    this._subdelegates.clear();
+
+    // Add the provided canvas
+    this._canvases.pushBack(canvas);
+
+    // Create and initialize a single subdelegate for the canvas
+    const subdelegate = new LAppSubdelegate();
+    subdelegate.initialize(canvas);
+    this._subdelegates.pushBack(subdelegate);
+
+    // Check for context loss
+    if (subdelegate.isContextLost()) {
+      CubismLogError('The context for the provided canvas was lost, possibly because the acquisition limit for WebGLRenderingContext was reached.');
+    }
+  }
+
+  /**
    * イベントリスナーを設定する。
    */
   private initializeEventListener(): void {
@@ -249,7 +288,7 @@ export class LAppDelegate {
   /**
    * Privateなコンストラクタ
    */
-  private constructor() {
+  constructor() {
     this._cubismOption = new Option();
     this._subdelegates = new csmVector<LAppSubdelegate>();
     this._canvases = new csmVector<HTMLCanvasElement>();
@@ -268,7 +307,7 @@ export class LAppDelegate {
   /**
    * Subdelegate
    */
-  private _subdelegates: csmVector<LAppSubdelegate>;
+  public _subdelegates: csmVector<LAppSubdelegate>;
 
   /**
    * 登録済みイベントリスナー 関数オブジェクト

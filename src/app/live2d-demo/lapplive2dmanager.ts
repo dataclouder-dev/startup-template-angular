@@ -109,7 +109,7 @@ export class LAppLive2DManager {
    * サンプルアプリケーションではモデルセットの切り替えを行う。
    * @param index
    */
-  private changeScene(index: number): void {
+  public changeScene(index: number): void {
     this._sceneIndex = index;
 
     if (LAppDefine.DebugLogEnable) {

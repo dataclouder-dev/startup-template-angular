@@ -1,0 +1,94 @@
+<mat-toolbar>
+  <span>Live2D</span>
+</mat-toolbar>
+
+<div class="d-flex">
+  <ng-container *ngTemplateOutlet="canvasTemplate"></ng-container>
+  <ng-container *ngTemplateOutlet="modelControlsTemplate"></ng-container>
+</div>
+
+<ng-template #canvasTemplate>
+  <div #canvasContainer class="w-100 vh-100 overflow-hidden d-flex justify-content-center sticky-top"></div>
+</ng-template>
+
+<ng-template #modelControlsTemplate>
+  <div class="px-4 gap-3 d-flex flex-column">
+    <mat-form-field appearance="fill">
+      <mat-label>Character Select</mat-label>
+      <mat-select [(value)]="selectedModelName" (selectionChange)="handleCharacterSelectionChanged($event)">
+        <mat-option *ngFor="let modelName of live2dService.getModelNames()" [value]="modelName">
+          {{ modelName }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-button-toggle-group [value]="updateMode" (change)="handleUpdateModeChanged($event)" aria-label="Update Mode">
+      <mat-button-toggle class="flex-grow-1" [value]="UpdateMode.AUTOMATIC">Automatic</mat-button-toggle>
+      <mat-button-toggle class="flex-grow-1" [value]="UpdateMode.MANUAL">Manual</mat-button-toggle>
+    </mat-button-toggle-group>
+
+    <mat-accordion>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Model Parameters
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <ng-template matExpansionPanelContent>
+          <button mat-raised-button class="my-2" (click)="handleResetParamsClicked()">Reset To Default</button>
+          <div *ngFor="let parameter of parameters">
+            <div>{{ parameter.id }}</div>
+            <mat-slider discrete
+              [min]="parameter.minimumValue"
+              [max]="parameter.maximumValue"
+              step="0.1"
+            >
+              <input matSliderThumb
+                [value]="parameter.value"
+                (valueChange)="handleParameterSliderValueChanged(parameter, $event)"
+              >
+            </mat-slider>
+          </div>
+        </ng-template>
+      </mat-expansion-panel>
+    </mat-accordion>
+  
+    <moe-2d-slider *ngIf="updateMode === UpdateMode.AUTOMATIC"
+      [value]="{ x: 0.5, y: 0.5 }"
+      (valueChanged)="handleLookDirectionChanged($event)"
+    ></moe-2d-slider>
+  
+    <button mat-button *ngIf="updateMode === UpdateMode.AUTOMATIC" [matMenuTriggerFor]="expressionsMenu">Expressions</button>
+    <mat-menu #expressionsMenu="matMenu">
+      <mat-label *ngIf="expressionNames.length === 0" class="px-2">
+        No expressions available
+      </mat-label>
+      <button mat-menu-item *ngFor="let expressionName of expressionNames"
+        (click)="handleExpressionClicked(expressionName)"
+      >
+        {{ expressionName }}
+      </button>
+    </mat-menu>
+  
+    <button mat-button *ngIf="updateMode === UpdateMode.AUTOMATIC" [matMenuTriggerFor]="motionGroupsMenu">Motions</button>
+    <mat-menu #motionGroupsMenu="matMenu">
+      <mat-label *ngIf="motionGroupNames.length === 0" class="px-2">
+        No motions available
+      </mat-label>
+      <button mat-menu-item *ngFor="let motionGroupName of motionGroupNames"
+        (mouseover)="handleMotionGroupClicked(motionGroupName)"
+        [matMenuTriggerFor]="motionsMenu"
+      >
+        {{ motionGroupName }}
+      </button>
+    </mat-menu>
+  
+    <mat-menu #motionsMenu="matMenu">
+      <button mat-menu-item *ngFor="let motionName of motionNames; let index = index"
+        (click)="handleMotionClicked(selectedMotionGroupName, index)"
+      >
+        {{ motionName }}
+      </button>
+    </mat-menu>
+  </div>
+</ng-template>

@@ -1,25 +1,21 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, OnInit, ElementRef, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
-import { SpeechRecognition } from '@capacitor-community/speech-recognition';
-import { Capacitor } from '@capacitor/core';
-import { GenericListComponent } from '../generics/generic-list/generic-list.component';
+import { ChangeDetectionStrategy, Component, OnInit, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 // import { Live2DService } from '../../live2d/live2d.service';
-import { LAppModel } from '../../live2d-demo/lappmodel';
-import { LAppDelegate } from '../../live2d-demo/lappdelegate';
+import { LAppModel } from '../../../live2d-demo/lappmodel';
+import { LAppDelegate } from '../../../live2d-demo/lappdelegate';
 import { LAppLive2DManager } from 'src/app/live2d-demo/lapplive2dmanager';
 import { CubismModel } from '@framework/model/cubismmodel';
 
 @Component({
   selector: 'app-test',
   standalone: true,
-  imports: [CommonModule, GenericListComponent, DialogModule, ButtonModule],
-  templateUrl: './test.component.html',
-  styleUrl: './test.component.css',
+  imports: [CommonModule, DialogModule, ButtonModule],
+  templateUrl: './l2d-first-try.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TestComponent implements OnInit, AfterViewInit {
+export class L2DFirstTryComponent implements OnInit, AfterViewInit {
   @ViewChild('live2dCanvas') canvasRef!: ElementRef<HTMLCanvasElement>;
 
   isDialogVisible: boolean = false;
