@@ -5,7 +5,9 @@ import { Capacitor } from '@capacitor/core';
 import { GenericListComponent } from '../generics/generic-list/generic-list.component';
 import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
-import { Live2DService } from '../../live2d/live2d.service';
+// import { Live2DService } from '../../live2d/live2d.service';
+import { LAppModel } from '../../live2d-demo/lappmodel';
+import { LAppDelegate } from '../../live2d-demo/lappdelegate';
 
 @Component({
   selector: 'app-test',
@@ -15,19 +17,20 @@ import { Live2DService } from '../../live2d/live2d.service';
   styleUrl: './test.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TestComponent implements OnInit, AfterViewInit, OnDestroy {
+export class TestComponent implements OnInit {
   @ViewChild('live2dCanvas') canvasRef!: ElementRef<HTMLCanvasElement>;
 
   isDialogVisible: boolean = false;
 
-  constructor(private live2DService: Live2DService) {}
-
+  constructor() {}
   ngOnInit(): void {
-    // Any initialization logic can go here
-  }
-
-  ngAfterViewInit(): void {
-    this.initializeLive2D();
+    console.log('');
+    // Creo que tengo que inicializar el framework.
+    const app = LAppDelegate.getInstance();
+    app.initialize();
+    app.run();
+    // const model = new LAppModel();
+    // model.loadAssets('assets/Resources/Haru', 'Haru.model3.json');
   }
 
   private initializeLive2D(): void {
@@ -36,15 +39,5 @@ export class TestComponent implements OnInit, AfterViewInit, OnDestroy {
     // Set canvas size
     canvas.width = 300;
     canvas.height = 300;
-
-    if (this.live2DService.initialize(canvas)) {
-      this.live2DService.run();
-    } else {
-      console.error('Failed to initialize Live2D');
-    }
-  }
-
-  ngOnDestroy(): void {
-    this.live2DService.release();
   }
 }
