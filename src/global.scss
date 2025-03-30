@@ -53,6 +53,10 @@
     --ion-text-color-rgb: var(--p-primary-color) ; // this control the icon not sure what other colors
     --ion-item-backdrop: blur(3px) ;
     --ion-item-background: transparent; /* Changed to red color */
+
+    // Check if works is the side-width
+    --side-width: 270px;
+    --side-max-width: 300px;
   }
   
 
