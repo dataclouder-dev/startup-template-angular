@@ -52,6 +52,11 @@
     --ion-item-color: var(--p-primary-color) ; // this is the text in menu left bar.
     --ion-text-color-rgb: var(--p-primary-color) ; // this control the icon not sure what other colors
     --ion-item-backdrop: blur(3px) ;
+    --ion-item-background: transparent; /* Changed to red color */
+
+    // Check if works is the side-width
+    --side-width: 270px;
+    --side-max-width: 300px;
   }
   
 
@@ -92,6 +97,27 @@
   
   
 // 3) Global styles and Overrides
+
+/* Style for the menu only when in overlay mode (mobile view) */
+@media (max-width: 992px) {
+  /* Light theme (default) */
+  ion-menu.menu-type-overlay ion-content {
+    --background: var(--p-zinc-100) !important;
+  }
+
+  ion-menu.menu-type-overlay ion-footer {
+    --background: var(--p-zinc-100) !important;
+  }
+  
+  /* Dark theme */
+  :root.ion-palette-dark ion-menu.menu-type-overlay ion-content {
+    --background: var(--p-zinc-900) !important;
+  }
+  
+  :root.ion-palette-dark ion-menu.menu-type-overlay ion-footer {
+    --background: var(--p-zinc-900) !important;
+  }
+}
 
 .sc-ion-label-md-h{
     font-size: 1.2rem ;

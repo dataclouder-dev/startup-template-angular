@@ -1,4 +1,10 @@
 :host {
-    display: block;
-  }
-  
+  display: block;
+}
+
+/* Add animation to the split pane */
+ion-split-pane {
+  --side-width: 270px;
+  --side-max-width: 300px;
+}
+
