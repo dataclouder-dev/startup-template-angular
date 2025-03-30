@@ -1,29 +1,18 @@
 <div class="container">
   <h1>Live2D Model Inspector</h1>
-  
+
   <div class="model-controls">
     <div class="model-selector">
-      <p-dropdown 
-        [options]="availableModels" 
-        [(ngModel)]="selectedModel" 
-        optionLabel="name" 
-        (onChange)="onModelChange()"
-        placeholder="Select a model">
+      <p-dropdown [options]="availableModels" [(ngModel)]="selectedModel" optionLabel="name" (onChange)="onModelChange()" placeholder="Select a model">
       </p-dropdown>
     </div>
   </div>
-  
+
   <div class="content-container">
     <div class="model-display">
       <canvas id="canvas" width="600" height="600"></canvas>
     </div>
-    
-    <div class="model-info-container">
-      <app-model-info 
-        [modelParameters]="modelParameters" 
-        [modelParts]="modelParts"
-        (parameterChanged)="updateModelParameter($event)">
-      </app-model-info>
-    </div>
+
+    <app-model-info [modelParameters]="modelParameters" [modelParts]="modelParts" (parameterChanged)="updateModelParameter($event)"> </app-model-info>
   </div>
 </div>

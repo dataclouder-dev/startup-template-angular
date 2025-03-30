@@ -26,10 +26,10 @@
           <ng-template pTemplate="body" let-param>
             <tr>
               <td>{{ param.id }}</td>
-              <td>{{ param.min }}</td>
-              <td>{{ param.max }}</td>
-              <td>{{ param.default }}</td>
-              <td>{{ param.current }}</td>
+              <td>{{ param.min | number : '1.2-2' }}</td>
+              <td>{{ param.max | number : '1.2-2' }}</td>
+              <td>{{ param.default | number : '1.2-2' }}</td>
+              <td>{{ param.current | number : '1.2-2' }}</td>
               <td>
                 <div class="slider-container">
                   <p-slider

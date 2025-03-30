@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit, ElementRef, ViewChild, AfterViewInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { SpeechRecognition } from '@capacitor-community/speech-recognition';
 import { Capacitor } from '@capacitor/core';
 import { GenericListComponent } from '../generics/generic-list/generic-list.component';
@@ -7,9 +8,9 @@ import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
 import { AccordionModule } from 'primeng/accordion';
-import { FormsModule } from '@angular/forms';
 import { CardModule } from 'primeng/card';
 import { TableModule } from 'primeng/table';
+import { SliderModule } from 'primeng/slider';
 import { ModelInfoComponent } from '../../components/model-info/model-info.component';
 import { ModelParameters, ModelParts } from '../../models/live2d-types';
 
@@ -31,6 +32,7 @@ import { Application, Ticker } from 'pixi.js';
     FormsModule,
     CardModule,
     TableModule,
+    SliderModule,
     ModelInfoComponent,
   ],
   templateUrl: './test.component.html',
@@ -85,6 +87,7 @@ export class TestComponent implements AfterViewInit {
     // Load new model
     this.model = await Live2DModel.from(modelPath, {
       ticker: Ticker.shared,
+      autoUpdate: false, // Disable automatic updates
     });
 
     this.app.stage.addChild(this.model);
@@ -98,15 +101,50 @@ export class TestComponent implements AfterViewInit {
     this.model.scale.set(0.15, 0.15);
     this.model.anchor.set(0.5, 0.5);
 
-    // Add interaction
+    this.deactivateMotions();
+
+    // Add interaction (disabled to prevent motion triggering)
+    /*
     (this.model as any).on('hit', (hitAreas: string[]) => {
       if (hitAreas.includes('body')) {
         this.model.motion('tap_body');
       }
     });
+    */
 
     // Force change detection to update the UI
     this.cdr.detectChanges();
+  }
+
+  private deactivateMotions() {
+    // note only works if autoUpdate is false
+    // Disable automatic idle animations and motion manager
+    if (this.model.internalModel) {
+      // Disable auto idle motions
+      if (this.model.internalModel.motionManager) {
+        this.model.internalModel.motionManager.stopAllMotions();
+        this.model.internalModel.motionManager.update = () => {}; // Override update method
+      }
+
+      // Disable auto eye blinking
+      if (this.model.internalModel.eyeBlink) {
+        this.model.internalModel.eyeBlink.enabled = false;
+      }
+
+      // Disable breath animation
+      if (this.model.internalModel.breath) {
+        this.model.internalModel.breath.enabled = false;
+      }
+    }
+
+    // Set up manual update to only update parameter changes, not automatic movements
+    Ticker.shared.add(() => {
+      if (this.model && this.model.internalModel) {
+        // Only update the model's parameters, not its automatic animations
+        this.model.internalModel.coreModel?.update();
+        this.model.update(Ticker.shared.deltaMS); // Update the model with delta time
+      }
+    });
   }
 
   extractModelInfo(): void {
