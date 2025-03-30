@@ -5,12 +5,12 @@ import { Capacitor } from '@capacitor/core';
 import { GenericListComponent } from '../generics/generic-list/generic-list.component';
 import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
-// import { Live2DService } from '../../live2d/live2d.service';
-import { LAppModel } from '../../live2d-demo/lappmodel';
-import { LAppDelegate } from '../../live2d-demo/lappdelegate';
-import { LAppLive2DManager } from 'src/app/live2d-demo/lapplive2dmanager';
-import { CubismModel } from '@framework/model/cubismmodel';
 
+import { Live2DModel } from 'pixi-live2d-display-lipsyncpatch';
+// import { Live2DModel } from 'pixi-live2d-display-lipsyncpatch/cubism4';
+// import { Live2DModel } from 'pixi-live2d-display-lipsyncpatch/cubism2';
+
+import { Application, Ticker } from 'pixi.js';
 @Component({
   selector: 'app-test',
   standalone: true,
@@ -19,50 +19,34 @@ import { CubismModel } from '@framework/model/cubismmodel';
   styleUrl: './test.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TestComponent implements OnInit, AfterViewInit {
-  @ViewChild('live2dCanvas') canvasRef!: ElementRef<HTMLCanvasElement>;
+export class TestComponent implements AfterViewInit {
+  async ngAfterViewInit(): Promise<void> {
+    // throw new Error('Method not implemented.');
+    const app = new Application({
+      view: document.getElementById('canvas') as HTMLCanvasElement,
+    });
 
-  isDialogVisible: boolean = false;
+    const model = await Live2DModel.from('/assets/Resources/Hiyori/Hiyori.model3.json', {
+      // register Ticker for model
+      ticker: Ticker.shared,
+    });
 
-  // public live2dManager = LAppLive2DManager.getInstance();
+    app.stage.addChild(model);
 
-  constructor() {}
+    // transforms
+    model.x = 300;
+    model.y = 300;
+    model.rotation = Math.PI;
+    model.skew.x = Math.PI;
+    model.scale.set(0.2, 0.2);
+    model.anchor.set(0.5, 0.5);
+    // model.hitArea = new PIXI.Circle(0, 0, 100);
 
-  ngOnInit(): void {
-    // Remove initialization from here
-  }
-
-  public mainDelegate: LAppDelegate | null = null;
-
-  ngAfterViewInit(): void {
-    // Initialize canvas size this is required to do in code to work well
-    this.initializeLive2D();
-
-    // Initialize Live2D
-    this.mainDelegate = LAppDelegate.getInstance();
-    this.mainDelegate.initializeV2(this.canvasRef.nativeElement);
-    this.mainDelegate.run();
-  }
-
-  // With this code im able to initialize and change scenes.
-  public changeModel() {
-    // Get the first (and only) subdelegate
-    const subdelegate = this.mainDelegate!._subdelegates.at(0); // NOTE: it was private i changed to public
-    const manager: LAppLive2DManager = subdelegate.getLive2DManager();
-    manager.changeScene(1); // NOTE: it was private i changed to public
-
-    // Check model metadata
-    const modelApp: LAppModel = manager._models.at(0);
-    // const modelCubim: CubismModel = modelApp.getModel();
-
-    console.log('checking metadata', modelApp._motionCount);
-  }
-
-  private initializeLive2D(): void {
-    const canvas = this.canvasRef.nativeElement;
-
-    // Set canvas size
-    canvas.width = 700;
-    canvas.height = 500;
+    // interaction
+    (model as any).on('hit', (hitAreas: string[]) => {
+      if (hitAreas.includes('body')) {
+        model.motion('tap_body');
+      }
+    });
   }
 }
