@@ -1,0 +1,64 @@
+<div class="model-info">
+  <div class="tab-buttons">
+    <button pButton 
+      [ngClass]="{'active-tab': selectedTab === 'parameters'}"
+      (click)="setActiveTab('parameters')" 
+      label="Parameters">
+    </button>
+    <button pButton 
+      [ngClass]="{'active-tab': selectedTab === 'parts'}"
+      (click)="setActiveTab('parts')" 
+      label="Parts">
+    </button>
+  </div>
+  
+  <div class="tab-content">
+    <!-- Parameters Tab -->
+    <div *ngIf="selectedTab === 'parameters' && modelParameters">
+      <p-card header="Model Parameters ({{modelParameters.count}})">
+        <p-table [value]="getParametersTableData()" [scrollable]="true" scrollHeight="400px" styleClass="p-datatable-sm">
+          <ng-template pTemplate="header">
+            <tr>
+              <th>ID</th>
+              <th>Min</th>
+              <th>Max</th>
+              <th>Default</th>
+              <th>Current</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-param>
+            <tr>
+              <td>{{param.id}}</td>
+              <td>{{param.min}}</td>
+              <td>{{param.max}}</td>
+              <td>{{param.default}}</td>
+              <td>{{param.current}}</td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </p-card>
+    </div>
+    
+    <!-- Parts Tab -->
+    <div *ngIf="selectedTab === 'parts' && modelParts">
+      <p-card header="Model Parts ({{modelParts.count}})">
+        <p-table [value]="getPartsTableData()" [scrollable]="true" scrollHeight="400px" styleClass="p-datatable-sm">
+          <ng-template pTemplate="header">
+            <tr>
+              <th>ID</th>
+              <th>Opacity</th>
+              <th>Parent Index</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-part>
+            <tr>
+              <td>{{part.id}}</td>
+              <td>{{part.opacity}}</td>
+              <td>{{part.parentIndex}}</td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </p-card>
+    </div>
+  </div>
+</div>

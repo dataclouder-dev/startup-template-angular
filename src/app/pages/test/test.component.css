@@ -2,28 +2,52 @@
   display: block;
 }
 
-.live2d-container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 600px;
-  height: 600px;
-  z-index: 1;
-  pointer-events: none;
+.container {
+  padding: 20px;
+  font-family: var(--font-family);
 }
 
-/* canvas {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  max-width: 500px;
-  max-height: 500px;
-  border: 1px solid #ccc;
-} */
+.model-controls {
+  margin-bottom: 20px;
+}
 
-/* Ensure other content appears above the canvas */
+.content-container {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+.model-display {
+  flex: 0 0 600px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: rgba(0, 0, 0, 0.03);
+}
+
+.model-info-container {
+  flex: 1;
+  min-width: 500px;
+}
+
 app-generic-list, p-dialog {
   position: relative;
   z-index: 2;
+}
+
+@media (max-width: 1200px) {
+  .content-container {
+    flex-direction: column;
+  }
+  
+  .model-display {
+    flex: 0 0 auto;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .model-info {
+    width: 100%;
+  }
 }

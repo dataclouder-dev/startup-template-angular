@@ -1,0 +1,38 @@
+.model-info {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.tab-buttons {
+  display: flex;
+  margin-bottom: 1rem;
+}
+
+.tab-buttons button {
+  margin-right: 0.5rem;
+}
+
+.active-tab {
+  background-color: var(--primary-color, #3B82F6);
+  color: white;
+}
+
+.tab-content {
+  flex: 1;
+  overflow: auto;
+}
+
+:host ::ng-deep .p-card {
+  height: 100%;
+}
+
+:host ::ng-deep .p-card-body {
+  height: calc(100% - 60px);
+}
+
+:host ::ng-deep .p-card-content {
+  height: 100%;
+  padding: 0;
+}
