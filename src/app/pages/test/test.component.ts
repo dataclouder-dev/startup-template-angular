@@ -11,6 +11,7 @@ import { FormsModule } from '@angular/forms';
 import { CardModule } from 'primeng/card';
 import { TableModule } from 'primeng/table';
 import { ModelInfoComponent } from '../../components/model-info/model-info.component';
+import { ModelParameters, ModelParts } from '../../models/live2d-types';
 
 import { Live2DModel } from 'pixi-live2d-display-lipsyncpatch';
 // import { Live2DModel } from 'pixi-live2d-display-lipsyncpatch/cubism4';
@@ -20,7 +21,18 @@ import { Application, Ticker } from 'pixi.js';
 @Component({
   selector: 'app-test',
   standalone: true,
-  imports: [CommonModule, GenericListComponent, DialogModule, ButtonModule, DropdownModule, AccordionModule, FormsModule, CardModule, TableModule, ModelInfoComponent],
+  imports: [
+    CommonModule,
+    GenericListComponent,
+    DialogModule,
+    ButtonModule,
+    DropdownModule,
+    AccordionModule,
+    FormsModule,
+    CardModule,
+    TableModule,
+    ModelInfoComponent,
+  ],
   templateUrl: './test.component.html',
   styleUrl: './test.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -30,9 +42,8 @@ export class TestComponent implements AfterViewInit {
 
   app!: Application;
   model: any;
-  modelParameters: any = null;
-  modelParts: any = null;
-
+  modelParameters: ModelParameters | null = null;
+  modelParts: ModelParts | null = null;
 
   availableModels = [
     { name: 'Hiyori', path: '/assets/Resources/Hiyori/Hiyori.model3.json' },
@@ -134,5 +145,28 @@ export class TestComponent implements AfterViewInit {
 
   async onModelChange(): Promise<void> {
     await this.loadModel(this.selectedModel.path);
+  }
+
+  /**
+   * Updates a Live2D model parameter based on slider input
+   * @param event Parameter change event containing id, value, and index
+   */
+  updateModelParameter(event: { id: string; value: number; index: number }): void {
+    debugger;
+    if (!this.model || !this.model.internalModel || !this.model.internalModel.coreModel) {
+      console.error('Model not available for parameter update');
+      return;
+    }
+
+    // Update the parameter in the model
+    const coreModel = this.model.internalModel.coreModel;
+
+    // Update the parameter value
+    coreModel.setParameterValueById(event.id, event.value);
+
+    // Also update our local copy of parameters
+    if (this.modelParameters && this.modelParameters.currentValues) {
+      this.modelParameters.currentValues[event.index] = event.value;
+    }
   }
 }
