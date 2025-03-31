@@ -1,40 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Router, RouterOutlet } from '@angular/router';
-import { NavController, ToastController } from '@ionic/angular/standalone';
+import { Router } from '@angular/router';
+import { ToastController } from '@ionic/angular/standalone';
 
 import { DCAgentCardFormComponent, IAgentCard } from '@dataclouder/ngx-agent-cards';
 
-import {
-  IonHeader,
-  IonToolbar,
-  IonButtons,
-  IonBackButton,
-  IonTitle,
-  IonButton,
-  IonIcon,
-  IonContent,
-  IonRefresher,
-  IonRefresherContent,
-  IonCard,
-  IonCardHeader,
-  IonCardSubtitle,
-  IonCardTitle,
-  IonCardContent,
-  IonList,
-  IonListHeader,
-  IonItem,
-  IonAvatar,
-  IonLabel,
-  IonNote,
-  IonFab,
-  IonFabButton,
-  IonTabButton,
-  IonTabBar,
-  IonFooter,
-  IonApp,
-  AlertController,
-} from '@ionic/angular/standalone';
+import { AlertController } from '@ionic/angular/standalone';
 
 import { environment } from 'src/environments/environment';
 import { RouteNames } from 'src/app/core/enums';
@@ -48,17 +19,15 @@ import { AgentCardService } from 'src/app/services/conversation-cards-ai-service
   styleUrl: './conversation-form.page.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ConversationFormPage implements OnInit {
+export class AgentFormPage implements OnInit {
   public currentPath: string = ' ';
 
   public projectName = environment.projectName;
 
   constructor(
     private conversationCardsService: AgentCardService,
-    private route: ActivatedRoute,
     private router: Router,
     private AlertController: AlertController,
-    private navCtrl: NavController,
     private toastController: ToastController
   ) {}
 

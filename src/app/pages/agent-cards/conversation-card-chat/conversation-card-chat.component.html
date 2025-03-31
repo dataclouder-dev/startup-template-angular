@@ -1,6 +1,4 @@
-<div class="conversation-card">
-  @if(conversationCard){
-  <dc-chat [agentCard]="conversationCard" [chatUserSettings]="chatUserSettings"></dc-chat>
+@if(agentCard){
+<dc-chat style="height: 100%" [agentCard]="agentCard"></dc-chat>
 
-  }
-</div>
+}

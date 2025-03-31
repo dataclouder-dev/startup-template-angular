@@ -12,8 +12,8 @@ import { AgentCardService } from 'src/app/services/conversation-cards-ai-service
   styleUrls: ['./conversation-card-chat.component.scss'],
 })
 export class ConversationCardChatComponent implements OnInit {
-  @Input() conversationCard!: IAgentCard;
-  public IConversationSettings: IConversationSettings = {
+  @Input() agentCard!: IAgentCard;
+  public conversationSettings: IConversationSettings = {
     messages: [{ text: 'you are having a conversation with?', content: 'bot', role: ChatRole.System }],
   };
 
@@ -35,12 +35,12 @@ export class ConversationCardChatComponent implements OnInit {
   ngOnInit(): void {
     this.route.paramMap.subscribe(async params => {
       // TODO fix this, card can be passed as param (WIP), or fetched from the service
-      this.conversationCard = JSON.parse(params.get('conversationCard')!);
-      if (!this.conversationCard) {
+      this.agentCard = JSON.parse(params.get('conversationCard')!);
+      if (!this.agentCard) {
         const id = params.get('id') as string;
         const card = await this.conversationCardsService.findConversationCardByID(id);
         console.log('card', card);
-        this.conversationCard = card;
+        this.agentCard = card;
         this.cdr.detectChanges();
       }
     });

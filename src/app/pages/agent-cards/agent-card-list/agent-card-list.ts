@@ -20,13 +20,13 @@ import { MenuItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 
 @Component({
-  selector: 'app-chat',
+  selector: 'app-agent-card-list',
   templateUrl: './agent-card-list.html',
   styleUrls: ['./agent-card-list.scss'],
   standalone: true,
   imports: [CommonModule, FormsModule, IonContent, AgentCardListComponent, ButtonModule],
 })
-export class ChatComponentPage implements OnInit {
+export class AgentCardListPage implements OnInit {
   public chatUserSettings: ChatUserSettings = {
     realTime: false,
     repeatRecording: false,
@@ -85,7 +85,7 @@ export class ChatComponentPage implements OnInit {
     this.router.navigate(['/page/stack/conversation-details', idCard], navigationExtras);
   }
 
-  public goToEdit(idCard: any) {
+  public goToEdit(idCard: string | null = null) {
     if (idCard) {
       this.router.navigate(['/page/stack/conversation-form', idCard]);
     } else {
@@ -119,7 +119,6 @@ export class ChatComponentPage implements OnInit {
   }
 
   public async doAction(action: string, item: any) {
-    debugger;
     const itemId = item._id || item.id;
     switch (action) {
       case 'view':
@@ -143,10 +142,12 @@ export class ChatComponentPage implements OnInit {
   }
 
   handleAction(actionEvent: OnActionEvent) {
-    debugger;
     console.log('doAction', { item: actionEvent.item, action: actionEvent.action });
     if (actionEvent.action === 'edit') {
       this.goToEdit(actionEvent.item._id);
+    } else if (actionEvent.action === 'new') {
+      // this.createNew();
+      this.goToEdit();
     } else if (actionEvent.action === 'delete') {
       this.doAction('delete', actionEvent.item);
     } else if (actionEvent.action === 'details') {

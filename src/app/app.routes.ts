@@ -57,11 +57,11 @@ export const routes: Routes = [
     children: [
       {
         path: 'conversation-form',
-        loadComponent: () => import('./pages/agent-cards/conversation-form/conversation-form.page').then(m => m.ConversationFormPage),
+        loadComponent: () => import('./pages/agent-cards/conversation-form/conversation-form.page').then(m => m.AgentFormPage),
       },
       {
         path: 'conversation-form/:id',
-        loadComponent: () => import('./pages/agent-cards/conversation-form/conversation-form.page').then(m => m.ConversationFormPage),
+        loadComponent: () => import('./pages/agent-cards/conversation-form/conversation-form.page').then(m => m.AgentFormPage),
       },
 
       {
@@ -155,8 +155,8 @@ export const routes: Routes = [
         loadComponent: () => import('./pages/test/test.component').then(m => m.TestComponent),
       },
       {
-        path: 'chat',
-        loadComponent: () => import('./pages/agent-cards/agent-card-list/agent-card-list').then(m => m.ChatComponentPage),
+        path: 'agents',
+        loadComponent: () => import('./pages/agent-cards/agent-card-list/agent-card-list').then(m => m.AgentCardListPage),
       },
     ],
   },

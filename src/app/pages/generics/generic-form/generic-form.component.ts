@@ -145,7 +145,7 @@ export class GenericFormComponent implements OnInit {
 
   public handleRelationSelection(relation: IGeneric) {
     console.log(relation);
-    debugger;
+
     // this.genericForm.patchValue({ relation: relation });
     this.isDialogVisible = false;
     this.relationPopupSelector.push(relation);
