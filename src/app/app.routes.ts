@@ -57,30 +57,30 @@ export const routes: Routes = [
     children: [
       {
         path: 'conversation-form',
-        loadComponent: () => import('./pages/agent-cards/conversation-form/conversation-form.page').then(m => m.AgentFormPage),
+        loadComponent: () => import('./pages/agent-cards/agent-card-form/agent-card-form').then(m => m.AgentCardFormPage),
       },
       {
         path: 'conversation-form/:id',
-        loadComponent: () => import('./pages/agent-cards/conversation-form/conversation-form.page').then(m => m.AgentFormPage),
+        loadComponent: () => import('./pages/agent-cards/agent-card-form/agent-card-form').then(m => m.AgentCardFormPage),
       },
 
       {
         path: 'chat',
-        loadComponent: () => import('./pages/agent-cards/conversation-card-chat/conversation-card-chat.component').then(m => m.ConversationCardChatComponent),
+        loadComponent: () => import('./pages/agent-cards/agent-card-chat/agent-card-chat').then(m => m.AgentCardChatComponent),
       },
       {
         path: 'chat/:id',
-        loadComponent: () => import('./pages/agent-cards/conversation-card-chat/conversation-card-chat.component').then(m => m.ConversationCardChatComponent),
+        loadComponent: () => import('./pages/agent-cards/agent-card-chat/agent-card-chat').then(m => m.AgentCardChatComponent),
       },
 
       {
         path: 'conversation-details',
-        loadComponent: () => import('./pages/agent-cards/conversation-details/conversation-details.component').then(m => m.ConversationDetailsPage),
+        loadComponent: () => import('./pages/agent-cards/agent-card-details/agent-card-details').then(m => m.AgentCardDetailsPage),
       },
 
       {
         path: 'conversation-details/:id',
-        loadComponent: () => import('./pages/agent-cards/conversation-details/conversation-details.component').then(m => m.ConversationDetailsPage),
+        loadComponent: () => import('./pages/agent-cards/agent-card-details/agent-card-details').then(m => m.AgentCardDetailsPage),
       },
 
       {

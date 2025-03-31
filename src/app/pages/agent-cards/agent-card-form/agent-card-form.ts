@@ -12,14 +12,14 @@ import { RouteNames } from 'src/app/core/enums';
 import { AgentCardService } from 'src/app/services/conversation-cards-ai-service';
 
 @Component({
-  selector: 'app-conversation-form',
+  selector: 'app-agent-card-form',
   standalone: true,
   imports: [CommonModule, DCAgentCardFormComponent],
-  templateUrl: './conversation-form.page.html',
-  styleUrl: './conversation-form.page.css',
+  templateUrl: './agent-card-form.html',
+  styleUrl: './agent-card-form.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AgentFormPage implements OnInit {
+export class AgentCardFormPage implements OnInit {
   public currentPath: string = ' ';
 
   public projectName = environment.projectName;
