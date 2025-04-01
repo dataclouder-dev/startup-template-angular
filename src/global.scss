@@ -177,3 +177,7 @@ body.dark::before {
     transform: translateY(-2px);
     transform: scale(1.01);
   }
+
+
+  // Shepherd tour styles
+@import "./shepherd.scss";

@@ -9,6 +9,8 @@ import Swiper from 'swiper';
 import { register } from 'swiper/element/bundle';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
+import { AudioTourService } from 'src/app/services/audio-tour.service';
+import { stepsIntro } from './steps-tour-home';
 
 register();
 @Component({
@@ -24,10 +26,15 @@ export class HomeComponent {
   swiper?: Swiper;
   isDarkMode = false;
 
-  constructor() {
+  constructor(private audioTourService: AudioTourService) {
     // register();
 
     console.log('hola');
+  }
+
+  public startTour(): void {
+    this.audioTourService.setupTour(stepsIntro);
+    this.audioTourService.startTour();
   }
 
   swiperReady() {
