@@ -114,7 +114,6 @@ import { FormsModule } from '@angular/forms';
     IonLabel,
     IonRouterLink,
     IonMenuToggle,
-    IonMenuButton,
     ToggleButtonModule,
     FormsModule,
   ],

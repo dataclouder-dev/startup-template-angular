@@ -53,7 +53,7 @@
     "@ckeditor/ckeditor5-build-balloon-block": "^38.1.0",
     "@codetrix-studio/capacitor-google-auth": "^3.4.0-rc.4",
     "@dataclouder/app-auth": "^0.0.36",
-    "@dataclouder/ngx-agent-cards": "^0.0.85",
+    "@dataclouder/ngx-agent-cards": "^0.0.87",
     "@dataclouder/ngx-cloud-storage": "^0.0.21",
     "@dataclouder/ngx-core": "^0.1.9",
     "@dataclouder/ngx-lessons": "^0.0.30",
