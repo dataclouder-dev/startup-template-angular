@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Inject, Input, OnInit, Output, input } from '@angular/core';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 
@@ -34,7 +34,7 @@ import { QuickTableComponent } from '../quick-table/quick-table';
 // TODO: extends PaginationBase this handle filter, pagination, and url params ?page=1
 export class GenericListComponent extends PaginationBase implements OnInit {
   @Input() viewType: 'table' | 'card' = 'table';
-  @Input() onlyView: boolean = true;
+  readonly onlyView = input<boolean>(true);
   @Output() onSelect = new EventEmitter<IGeneric>();
 
   generics: IGeneric[] = [];

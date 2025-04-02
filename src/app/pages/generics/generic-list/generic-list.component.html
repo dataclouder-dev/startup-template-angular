@@ -1,4 +1,4 @@
-@if (!onlyView) {
+@if (!onlyView()) {
 <p-button [icon]="viewType === 'card' ? 'pi pi-table' : 'pi pi-list'" label="Change View" [link]="true" (click)="toggleView()" />
 }
 <div class="generic-list-container">
@@ -29,7 +29,7 @@
   </div>
   } @else if ( viewType == 'table'){
 
-  <app-quick-table [columns]="columns" [tableData]="generics" [onlyView]="onlyView" (onSelect)="onSelect.emit($event)"></app-quick-table>
+  <app-quick-table [columns]="columns" [tableData]="generics" [onlyView]="onlyView()" (onSelect)="onSelect.emit($event)"></app-quick-table>
 
   }
 
