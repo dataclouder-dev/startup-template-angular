@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
@@ -14,7 +14,12 @@ function toPlainObject(objectClass: any) {
   providedIn: 'root',
 })
 export class HttpService {
-  constructor(private httpClient: HttpClient) {}
+  private httpClient = inject(HttpClient);
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {}
 
   private getHostUrl(host: string = ''): string {
     if (host === 'python') {

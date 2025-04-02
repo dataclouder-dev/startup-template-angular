@@ -1,5 +1,5 @@
-import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { ChangeDetectorRef, Component, Input, OnInit, inject } from '@angular/core';
+
 import { DCChatComponent, IConversationSettings, ChatUserSettings, ChatRole, AudioSpeed, IAgentCard } from '@dataclouder/ngx-agent-cards';
 import { ActivatedRoute } from '@angular/router';
 import { AgentCardService } from 'src/app/services/conversation-cards-ai-service';
@@ -8,11 +8,15 @@ import { AgentCardService } from 'src/app/services/conversation-cards-ai-service
 @Component({
   selector: 'app-agent-card-chat',
   standalone: true,
-  imports: [CommonModule, DCChatComponent],
+  imports: [DCChatComponent],
   templateUrl: './agent-card-chat.html',
   styleUrls: ['./agent-card-chat.scss'],
 })
 export class AgentCardChatComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+  private conversationCardsService = inject(AgentCardService);
+  private cdr = inject(ChangeDetectorRef);
+
   @Input() agentCard!: IAgentCard;
   public conversationSettings: IConversationSettings = {
     messages: [{ text: 'you are having a conversation with?', content: 'bot', role: ChatRole.System }],
@@ -31,7 +35,10 @@ export class AgentCardChatComponent implements OnInit {
     speed: AudioSpeed.Regular,
   };
 
-  constructor(private route: ActivatedRoute, private conversationCardsService: AgentCardService, private cdr: ChangeDetectorRef) {}
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {}
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(async params => {

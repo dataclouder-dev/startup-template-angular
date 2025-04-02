@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { IUser, PlanType, PermissionType, RolType } from '../../dc-user-module/user.class';
-import { CommonModule } from '@angular/common';
+
 import { UserService } from 'src/app/dc-user-module/user.service';
 
 @Component({
@@ -10,12 +10,18 @@ import { UserService } from 'src/app/dc-user-module/user.service';
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss'],
   standalone: true,
-  imports: [IonicModule, ReactiveFormsModule, CommonModule],
+  imports: [IonicModule, ReactiveFormsModule],
 })
 export class ProfileComponent implements OnInit {
+  private fb = inject(FormBuilder);
+  private userService = inject(UserService);
+
   profileForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private userService: UserService) {
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {
     this.profileForm = this.fb.group({
       id: [''],
       urlPicture: [''],

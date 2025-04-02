@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IGeneric } from '../models/generics.model';
@@ -43,6 +43,13 @@ import { QuickTableComponent } from '../quick-table/quick-table';
   standalone: true,
 })
 export class GenericFormComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+  private genericService = inject(GenericService);
+  private fb = inject(FormBuilder);
+  private router = inject(Router);
+  private toastService = inject<ToastAlertsAbstractService>(TOAST_ALERTS_TOKEN);
+  private cdr = inject(ChangeDetectorRef);
+
   public storageImgSettings = {
     path: `generics`,
     cropSettings: { aspectRatio: AspectType.Square, resolutions: [ResolutionType.MediumLarge], resizeToWidth: 700 },
@@ -82,14 +89,10 @@ export class GenericFormComponent implements OnInit {
     { id: 'Relation 3', name: 'relation3', description: 'Description with short description' },
   ];
 
-  constructor(
-    private route: ActivatedRoute,
-    private genericService: GenericService,
-    private fb: FormBuilder,
-    private router: Router,
-    @Inject(TOAST_ALERTS_TOKEN) private toastService: ToastAlertsAbstractService,
-    private cdr: ChangeDetectorRef
-  ) {}
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {}
 
   public generic: IGeneric | null = null;
   public genericId = this.route.snapshot.params['id'];

@@ -1,5 +1,5 @@
-import { DatePipe, JsonPipe, KeyValuePipe, NgFor, NgIf } from '@angular/common';
-import { Component } from '@angular/core';
+import { DatePipe, JsonPipe, KeyValuePipe } from '@angular/common';
+import { Component, inject } from '@angular/core';
 import { FormBuilder, Validators, FormsModule, ReactiveFormsModule, FormControl } from '@angular/forms';
 import { FirebaseAuthService } from '@dataclouder/app-auth';
 // import { addMonths } from 'date-fns';
@@ -36,9 +36,15 @@ type InputClaim = {
   templateUrl: './admin-user.component.html',
   styleUrls: ['./admin-user.component.scss'],
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, JsonPipe, NgFor, NgIf, PermissionNamePipe, KeyValuePipe, IonicModule],
+  imports: [FormsModule, ReactiveFormsModule, JsonPipe, PermissionNamePipe, KeyValuePipe, IonicModule],
 })
 export class AdminUserComponent {
+  private formBuilder = inject(FormBuilder);
+  private httpService = inject(HttpService);
+  private userService = inject(UserService);
+  private firebaseAuthService = inject(FirebaseAuthService);
+  private toastController = inject(ToastController);
+
   public userType = PermissionType;
   public permissions = PermissionType;
   public deleteUserForm = '';
@@ -72,14 +78,10 @@ export class AdminUserComponent {
     roles: this.formBuilder.group<any>([]),
   });
 
-  constructor(
-    private formBuilder: FormBuilder,
-    private httpService: HttpService,
-    // private toastrService: ToastService,
-    private userService: UserService,
-    private firebaseAuthService: FirebaseAuthService,
-    private toastController: ToastController
-  ) {}
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {}
 
   public resetForm(): void {
     this.formGroup.controls.roles = this.formBuilder.group<any>([]);

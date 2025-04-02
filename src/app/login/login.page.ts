@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
 import { GoogleAuth, User } from '@codetrix-studio/capacitor-google-auth';
@@ -19,6 +19,12 @@ import { Platform } from '@ionic/angular/standalone';
   imports: [FormsModule, ReactiveFormsModule, TranslateModule, DcLoginComponent],
 })
 export class LoginComponent implements OnInit {
+  private platform = inject(Platform);
+  private fb = inject(FormBuilder);
+  private auth = inject(AuthService);
+  private firebaseAuthService = inject(FirebaseAuthService);
+  private router = inject(Router);
+
   screen: any = 'signin';
   formData: FormGroup = this.fb.group({
     name: ['', []],
@@ -26,13 +32,10 @@ export class LoginComponent implements OnInit {
     password: ['', [Validators.required]],
   });
   isLoading: boolean = false;
-  constructor(
-    private platform: Platform,
-    private fb: FormBuilder,
-    private auth: AuthService,
-    private firebaseAuthService: FirebaseAuthService,
-    private router: Router
-  ) {}
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+  constructor() {}
 
   public user: any;
 

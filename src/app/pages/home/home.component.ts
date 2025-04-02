@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, ElementRef, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, ViewChild, inject } from '@angular/core';
 
 import { InputTextModule } from 'primeng/inputtext';
 
@@ -22,11 +22,16 @@ register();
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class HomeComponent {
+  private audioTourService = inject(AudioTourService);
+
   @ViewChild('swiper') swiperRef: ElementRef | undefined;
   swiper?: Swiper;
   isDarkMode = false;
 
-  constructor(private audioTourService: AudioTourService) {
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {
     // register();
 
     console.log('hola');

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ShepherdService } from 'angular-shepherd';
 import { StepOptions } from 'shepherd.js';
 
@@ -6,9 +6,14 @@ import { StepOptions } from 'shepherd.js';
   providedIn: 'root'
 })
 export class AudioTourService {
+  private shepherdService = inject(ShepherdService);
+
   private audio: HTMLAudioElement | null = null;
 
-  constructor(private shepherdService: ShepherdService) {}
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {}
 
   /**
    * Plays an audio file

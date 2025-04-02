@@ -1,5 +1,5 @@
-import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
+
 import { FormsModule } from '@angular/forms';
 import { IonContent } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
@@ -24,9 +24,15 @@ import { ButtonModule } from 'primeng/button';
   templateUrl: './agent-card-list.html',
   styleUrls: ['./agent-card-list.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, IonContent, AgentCardListComponent, ButtonModule],
+  imports: [FormsModule, IonContent, AgentCardListComponent, ButtonModule],
 })
 export class AgentCardListPage implements OnInit {
+  private router = inject(Router);
+  private route = inject(ActivatedRoute);
+  private cdr = inject(ChangeDetectorRef);
+  private toastService = inject<ToastAlertsAbstractService>(TOAST_ALERTS_TOKEN);
+  private agentCardService = inject<AgentCardsAbstractService>(CONVERSATION_AI_TOKEN);
+
   public chatUserSettings: ChatUserSettings = {
     realTime: false,
     repeatRecording: false,
@@ -55,13 +61,10 @@ export class AgentCardListPage implements OnInit {
   messages: any[] = [];
   newMessage: string = '';
 
-  constructor(
-    private router: Router,
-    private route: ActivatedRoute,
-    private cdr: ChangeDetectorRef,
-    @Inject(TOAST_ALERTS_TOKEN) private toastService: ToastAlertsAbstractService,
-    @Inject(CONVERSATION_AI_TOKEN) private agentCardService: AgentCardsAbstractService
-  ) {
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {
     addIcons({ send, sendOutline, sendSharp });
   }
 

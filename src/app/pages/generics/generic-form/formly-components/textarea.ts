@@ -3,7 +3,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FieldType, FieldTypeConfig, FormlyFieldConfig, FormlyModule } from '@ngx-formly/core';
 import { FormlyFieldProps } from '@ngx-formly/primeng/form-field';
 import { TextareaModule } from 'primeng/textarea';
-import { CommonModule } from '@angular/common';
+
 
 interface TextAreaProps extends FormlyFieldProps {}
 
@@ -12,7 +12,7 @@ export interface FormlyTextAreaFieldConfig extends FormlyFieldConfig<TextAreaPro
 }
 
 @Component({
-  imports: [ReactiveFormsModule, TextareaModule, FormlyModule, CommonModule],
+  imports: [ReactiveFormsModule, TextareaModule, FormlyModule],
   selector: 'formly-field-primeng-textarea',
   template: `
     <div style="display: block; width: 100%; margin-bottom: .5rem;">

@@ -5,23 +5,27 @@
         <ion-list id="inbox-list">
           <ion-list-header> {{ projectName }}</ion-list-header>
 
-          <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
-            <ion-item routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" routerLinkActive="selected">
-              <ion-icon aria-hidden="true" slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
-              <ion-label>{{ p.title }}</ion-label>
-            </ion-item>
-          </ion-menu-toggle>
-
-          <!-- Admin Section -->
-          <ng-container *ngIf="isAdmin">
-            <ion-list-header>Admin Section</ion-list-header>
-            <ion-menu-toggle auto-hide="false" *ngFor="let p of adminPages; let i = index">
+          @for (p of appPages; track p; let i = $index) {
+            <ion-menu-toggle auto-hide="false">
               <ion-item routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" routerLinkActive="selected">
                 <ion-icon aria-hidden="true" slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
                 <ion-label>{{ p.title }}</ion-label>
               </ion-item>
             </ion-menu-toggle>
-          </ng-container>
+          }
+
+          <!-- Admin Section -->
+          @if (isAdmin) {
+            <ion-list-header>Admin Section</ion-list-header>
+            @for (p of adminPages; track p; let i = $index) {
+              <ion-menu-toggle auto-hide="false">
+                <ion-item routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" routerLinkActive="selected">
+                  <ion-icon aria-hidden="true" slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
+                  <ion-label>{{ p.title }}</ion-label>
+                </ion-item>
+              </ion-menu-toggle>
+            }
+          }
         </ion-list>
       </ion-content>
 

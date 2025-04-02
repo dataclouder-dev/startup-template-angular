@@ -1,5 +1,5 @@
-import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+
+import { Component, OnInit, inject } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import {
   IonApp,
@@ -100,7 +100,6 @@ import { FormsModule } from '@angular/forms';
     IonHeader,
     RouterLink,
     RouterLinkActive,
-    CommonModule,
     IonApp,
     IonSplitPane,
     IonMenu,
@@ -115,10 +114,16 @@ import { FormsModule } from '@angular/forms';
     IonRouterLink,
     IonMenuToggle,
     ToggleButtonModule,
-    FormsModule,
-  ],
+    FormsModule
+],
 })
 export class IonicLayoutComponent implements OnInit {
+  private firebaseAuthService = inject(FirebaseAuthService);
+  private router = inject(Router);
+  private navController = inject(NavController);
+  private actionSheetController = inject(ActionSheetController);
+  private menuController = inject(MenuController);
+
   public envName = environment.envName;
   public projectName = environment.projectName;
   public version = environment.version;
@@ -145,13 +150,10 @@ export class IonicLayoutComponent implements OnInit {
   // Add this property to track dark mode state
   public isDarkMode: boolean = false;
 
-  constructor(
-    private firebaseAuthService: FirebaseAuthService,
-    private router: Router,
-    private navController: NavController,
-    private actionSheetController: ActionSheetController,
-    private menuController: MenuController
-  ) {
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {
     addIcons({
       mailOutline,
       mailSharp,

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Inject, Input, OnInit, Output, input } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output, input, inject } from '@angular/core';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 
@@ -33,6 +33,10 @@ import { QuickTableComponent } from '../quick-table/quick-table';
 })
 // TODO: extends PaginationBase this handle filter, pagination, and url params ?page=1
 export class GenericListComponent extends PaginationBase implements OnInit {
+  private toastService = inject<ToastAlertsAbstractService>(TOAST_ALERTS_TOKEN);
+  private sourceService = inject(GenericService);
+  private cdr = inject(ChangeDetectorRef);
+
   @Input() viewType: 'table' | 'card' = 'table';
   readonly onlyView = input<boolean>(true);
   @Output() onSelect = new EventEmitter<IGeneric>();
@@ -60,13 +64,13 @@ export class GenericListComponent extends PaginationBase implements OnInit {
     ];
   }
 
-  constructor(
-    @Inject(TOAST_ALERTS_TOKEN) private toastService: ToastAlertsAbstractService,
-    private sourceService: GenericService,
-    router: Router,
-    route: ActivatedRoute,
-    private cdr: ChangeDetectorRef
-  ) {
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {
+    const router = inject(Router);
+    const route = inject(ActivatedRoute);
+
     super(route, router);
   }
 

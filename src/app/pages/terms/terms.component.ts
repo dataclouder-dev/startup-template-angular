@@ -1,4 +1,4 @@
-import { AfterViewInit, Component } from '@angular/core';
+import { AfterViewInit, Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -8,6 +8,11 @@ import { Router } from '@angular/router';
   standalone: true,
 })
 export class TermsComponent {
-  constructor(private router: Router) {}
+  private router = inject(Router);
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {}
   lang = 'en';
 }

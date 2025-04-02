@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { UserDataExchange, UserDataExchangeAbstractService } from '@dataclouder/ngx-agent-cards';
 import { UserService } from '../dc-user-module/user.service';
 
@@ -6,7 +6,12 @@ import { UserService } from '../dc-user-module/user.service';
   providedIn: 'root',
 })
 export class UserDataExchangeService implements UserDataExchangeAbstractService {
-  constructor(private userService: UserService) {}
+  private userService = inject(UserService);
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {}
 
   getUserDataExchange(): UserDataExchange {
     const userData = this.userService.getUser()?.personalData;

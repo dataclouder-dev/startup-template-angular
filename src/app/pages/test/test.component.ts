@@ -1,5 +1,5 @@
-import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 
 import { GenericListComponent } from '../generics/generic-list/generic-list.component';
 import { DialogModule } from 'primeng/dialog';
@@ -10,15 +10,20 @@ import { stepsIntro } from '../home/steps-tour-home';
 @Component({
   selector: 'app-test',
   standalone: true,
-  imports: [CommonModule, GenericListComponent, DialogModule, ButtonModule],
+  imports: [GenericListComponent, DialogModule, ButtonModule],
   templateUrl: './test.component.html',
   styleUrl: './test.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TestComponent implements OnInit {
+  private audioTourService = inject(AudioTourService);
+
   isDialogVisible: boolean = false;
 
-  constructor(private audioTourService: AudioTourService) {}
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {}
 
   ngOnInit(): void {
     console.log('TestComponent');

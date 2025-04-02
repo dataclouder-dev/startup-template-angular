@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ToastAlertsAbstractService, ToastData } from '@dataclouder/ngx-core';
 import { ToastController } from '@ionic/angular';
 // import { ToastAlertsAbstractService, ToastData } from '@dataclouder/ngx-agent-cards';
@@ -7,7 +7,12 @@ import { ToastController } from '@ionic/angular';
   providedIn: 'root',
 })
 export class ToastAlertService extends ToastAlertsAbstractService {
-  constructor(private toastController: ToastController) {
+  private toastController = inject(ToastController);
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {
     super();
   }
 

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OnActionEvent } from '@dataclouder/ngx-core';
 import { DCLessonListComponent, ILesson } from '@dataclouder/ngx-lessons';
@@ -12,7 +12,13 @@ import { DCLessonListComponent, ILesson } from '@dataclouder/ngx-lessons';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LessonListComponent {
-  constructor(private router: Router, private route: ActivatedRoute) {}
+  private router = inject(Router);
+  private route = inject(ActivatedRoute);
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {}
 
   public onNewLesson() {
     console.log('onNewLesson');

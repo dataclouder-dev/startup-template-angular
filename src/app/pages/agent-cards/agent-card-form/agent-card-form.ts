@@ -1,5 +1,5 @@
-import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular/standalone';
 
@@ -14,22 +14,25 @@ import { AgentCardService } from 'src/app/services/conversation-cards-ai-service
 @Component({
   selector: 'app-agent-card-form',
   standalone: true,
-  imports: [CommonModule, DCAgentCardFormComponent],
+  imports: [DCAgentCardFormComponent],
   templateUrl: './agent-card-form.html',
   styleUrl: './agent-card-form.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AgentCardFormPage implements OnInit {
+  private conversationCardsService = inject(AgentCardService);
+  private router = inject(Router);
+  private AlertController = inject(AlertController);
+  private toastController = inject(ToastController);
+
   public currentPath: string = ' ';
 
   public projectName = environment.projectName;
 
-  constructor(
-    private conversationCardsService: AgentCardService,
-    private router: Router,
-    private AlertController: AlertController,
-    private toastController: ToastController
-  ) {}
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {}
 
   ngOnInit(): void {
     this.currentPath = this.router.url.split('/')[3];

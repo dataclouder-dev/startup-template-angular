@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpService } from '../../services/http.service';
 import { Endpoints } from '../../core/enums';
 import { GenericType, IGeneric } from './models/generics.model';
@@ -10,7 +10,13 @@ const server = 'node';
   providedIn: 'root',
 })
 export class GenericService {
-  constructor(private httpService: HttpService, @Inject(TOAST_ALERTS_TOKEN) private toastService: ToastAlertService) {}
+  private httpService = inject(HttpService);
+  private toastService = inject<ToastAlertService>(TOAST_ALERTS_TOKEN);
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {}
 
   public async getGenerics(): Promise<IGeneric[]> {
     try {
