@@ -4,7 +4,7 @@
   <h3>1) Buscar Usuario</h3>
 
   <ion-item>
-    <ion-input [formControl]="formGroup.controls.email" type="text" placeholder="Email" (keydown.enter)="getUserClaims()"></ion-input>
+    <ion-input [formControl]="formGroup.controls.email" type="text" placeholder="Email" (keydown.enter)="getUserClaims()" />
   </ion-item>
 
   <ion-button [disabled]="formGroup.controls.email.invalid" (click)="getUserClaims()" color="success"> Buscar usuario </ion-button>
@@ -17,7 +17,7 @@
 
   } @else {
 
-    <ion-item-divider></ion-item-divider>
+    <ion-item-divider />
 
     <div>
       <h3>Modificar Permisos</h3>
@@ -157,7 +157,7 @@
 <h3>Eliminar usuario</h3>
 
 <ion-item>
-  <ion-input [(ngModel)]="deleteUserForm" type="text" placeholder="Email" (keydown.enter)="deleteUser()"></ion-input>
+  <ion-input [(ngModel)]="deleteUserForm" type="text" placeholder="Email" (keydown.enter)="deleteUser()" />
 </ion-item>
 
 <ion-button expand="block" color="danger" (click)="deleteUser()"> Eliminar usuario </ion-button>

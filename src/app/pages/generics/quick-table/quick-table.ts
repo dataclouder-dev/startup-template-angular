@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output, input, inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit, input, inject, output } from '@angular/core';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 
@@ -29,7 +29,7 @@ export class QuickTableComponent extends PaginationBase implements OnInit {
   readonly onlyView = input<boolean>(false);
   @Input() columns: PColumn[] = [];
   @Input() tableData: any[] = [];
-  @Output() onSelect = new EventEmitter<any>();
+  readonly onSelect = output<any>();
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[]);

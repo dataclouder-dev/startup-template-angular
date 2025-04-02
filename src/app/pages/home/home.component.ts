@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, ElementRef, ViewChild, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, inject, viewChild } from '@angular/core';
 
 import { InputTextModule } from 'primeng/inputtext';
 
@@ -24,7 +24,7 @@ register();
 export class HomeComponent {
   private audioTourService = inject(AudioTourService);
 
-  @ViewChild('swiper') swiperRef: ElementRef | undefined;
+  readonly swiperRef = viewChild<ElementRef>('swiper');
   swiper?: Swiper;
   isDarkMode = false;
 
@@ -43,7 +43,7 @@ export class HomeComponent {
   }
 
   swiperReady() {
-    this.swiper = this.swiperRef?.nativeElement.swiper;
+    this.swiper = this.swiperRef()?.nativeElement.swiper;
   }
 
   swiperSlideChanged(e: any) {

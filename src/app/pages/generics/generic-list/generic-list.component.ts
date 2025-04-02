@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output, input, inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit, input, inject, output } from '@angular/core';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 
@@ -39,7 +39,7 @@ export class GenericListComponent extends PaginationBase implements OnInit {
 
   @Input() viewType: 'table' | 'card' = 'table';
   readonly onlyView = input<boolean>(true);
-  @Output() onSelect = new EventEmitter<IGeneric>();
+  readonly onSelect = output<IGeneric>();
 
   generics: IGeneric[] = [];
   columns: any[] = ['name', 'description', 'updatedAt', 'image'];
