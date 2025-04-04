@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { UserDataExchange, UserDataExchangeAbstractService } from '@dataclouder/ngx-agent-cards';
+import { ChatUserSettings, UserDataExchange, UserDataExchangeAbstractService } from '@dataclouder/ngx-agent-cards';
 import { UserService } from '../dc-user-module/user.service';
 
 @Injectable({
@@ -33,5 +33,15 @@ export class UserDataExchangeService implements UserDataExchangeAbstractService 
     return {
       user: userData.name,
     };
+  }
+
+  getUserChatSettings(): ChatUserSettings {
+    const settings = {
+      realTime: true,
+      superHearing: true,
+      repeatRecording: true,
+      fixGrammar: true,
+    };
+    return settings;
   }
 }

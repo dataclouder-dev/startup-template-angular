@@ -1,86 +1,36 @@
-
 import { Component, OnInit, inject } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
-import {
-  IonApp,
-  IonSplitPane,
-  IonMenu,
-  IonContent,
-  IonList,
-  IonListHeader,
-  IonNote,
-  IonMenuToggle,
-  IonItem,
-  IonIcon,
-  IonLabel,
-  IonRouterLink,
-  IonHeader,
-  IonButtons,
-  IonToolbar,
-  IonTitle,
-  IonMenuButton,
-  IonTabBar,
-  IonTabButton,
-  IonButton,
-  IonFooter,
-  NavController,
-  IonAvatar,
-  ActionSheetController,
-  MenuController,
-} from '@ionic/angular/standalone';
+import * as ionicons from 'ionicons/icons'; // import all icons
+
 import { addIcons } from 'ionicons';
-import {
-  mailOutline,
-  mailSharp,
-  paperPlaneOutline,
-  paperPlaneSharp,
-  heartOutline,
-  heartSharp,
-  archiveOutline,
-  archiveSharp,
-  trashOutline,
-  trashSharp,
-  warningOutline,
-  warningSharp,
-  bookmarkOutline,
-  bookmarkSharp,
-  library,
-  playCircle,
-  radio,
-  search,
-  ellipsisHorizontal,
-  ellipsisVertical,
-  personCircle,
-  helpCircle,
-  home,
-  homeOutline,
-  homeSharp,
-  codeWorking,
-  codeWorkingOutline,
-  codeWorkingSharp,
-  eye,
-  eyeOutline,
-  eyeSharp,
-  chatbubbleEllipses,
-  chatbubbleEllipsesOutline,
-  chatbubbleEllipsesSharp,
-  people,
-  peopleOutline,
-  peopleSharp,
-  settings,
-  settingsOutline,
-  settingsSharp,
-  lockClosed,
-  lockOpen,
-  moon,
-  sunny,
-  menu,
-  menuOutline,
-} from 'ionicons/icons';
+
 import { environment } from 'src/environments/environment';
 import { FirebaseAuthService } from '@dataclouder/app-auth';
 import { ToggleButtonModule } from 'primeng/togglebutton';
 import { FormsModule } from '@angular/forms';
+import { ActionSheetController, MenuController } from '@ionic/angular';
+import {
+  IonApp,
+  IonIcon,
+  IonSplitPane,
+  IonTabButton,
+  IonTabBar,
+  IonContent,
+  IonAvatar,
+  IonList,
+  IonButton,
+  IonListHeader,
+  IonButtons,
+  IonTitle,
+  IonToolbar,
+  IonLabel,
+  IonHeader,
+  IonNote,
+  IonFooter,
+  IonMenu,
+  IonMenuToggle,
+  IonItem,
+} from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-ionic-layout',
@@ -88,39 +38,36 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './ionic-layout.component.css',
   standalone: true,
   imports: [
-    IonAvatar,
     IonFooter,
-    IonButton,
-    IonTabButton,
-    IonTabBar,
-    RouterOutlet,
-    IonTitle,
-    IonToolbar,
-    IonButtons,
-    IonHeader,
-    RouterLink,
-    RouterLinkActive,
-    IonApp,
-    IonSplitPane,
-    IonMenu,
-    IonContent,
-    IonList,
-    IonListHeader,
     IonNote,
+    IonHeader,
+    IonLabel,
+    IonToolbar,
+    IonTitle,
+    IonButtons,
+    IonListHeader,
+    IonButton,
+    IonList,
+    IonAvatar,
+    IonContent,
+    IonTabBar,
+    IonTabButton,
+    IonSplitPane,
+    IonIcon,
+    IonApp,
+    IonMenu,
     IonMenuToggle,
     IonItem,
-    IonIcon,
-    IonLabel,
-    IonRouterLink,
-    IonMenuToggle,
+    RouterOutlet,
+    RouterLink,
+    RouterLinkActive,
     ToggleButtonModule,
-    FormsModule
-],
+    FormsModule,
+  ],
 })
 export class IonicLayoutComponent implements OnInit {
   private firebaseAuthService = inject(FirebaseAuthService);
   private router = inject(Router);
-  private navController = inject(NavController);
   private actionSheetController = inject(ActionSheetController);
   private menuController = inject(MenuController);
 
@@ -154,48 +101,7 @@ export class IonicLayoutComponent implements OnInit {
   constructor(...args: unknown[]);
 
   constructor() {
-    addIcons({
-      mailOutline,
-      mailSharp,
-      paperPlaneOutline,
-      paperPlaneSharp,
-      heartOutline,
-      heartSharp,
-      archiveOutline,
-      archiveSharp,
-      trashOutline,
-      trashSharp,
-      warningOutline,
-      warningSharp,
-      bookmarkOutline,
-      bookmarkSharp,
-      home,
-      homeOutline,
-      homeSharp,
-      codeWorking,
-      codeWorkingOutline,
-      codeWorkingSharp,
-      eye,
-      eyeOutline,
-      eyeSharp,
-      chatbubbleEllipses,
-      chatbubbleEllipsesOutline,
-      chatbubbleEllipsesSharp,
-      people,
-      peopleOutline,
-      peopleSharp,
-      settings,
-      settingsOutline,
-      settingsSharp,
-      lockClosed,
-      lockOpen,
-      moon,
-      sunny,
-      menu,
-      menuOutline,
-    });
-    addIcons({ library, playCircle, radio, search });
-    addIcons({ ellipsisHorizontal, ellipsisVertical, helpCircle, personCircle, search });
+    addIcons(ionicons);
 
     // Check if dark mode was previously enabled
     this.isDarkMode = localStorage.getItem('darkMode') === 'true';
