@@ -1,4 +1,13 @@
 @if(agentCard){
-<dc-chat style="height: 100%" [agentCard]="agentCard" />
+<div class="image-background">
+  <div class="blur-background">
+    <div class="image-container">
+      <img class="centered-image" [src]="(agentCard?.assets?.image?.url) || 'assets/images/default_conversation_card.webp'" alt="Background image" />
+    </div>
+  </div>
 
+  <div class="content">
+    <dc-chat style="height: 100%" [agentCard]="agentCard" />
+  </div>
+</div>
 }
