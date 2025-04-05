@@ -33,4 +33,10 @@ Unfortunetly the core core and framework is not the same with the one i already 
 
 Its all about canvas, pixi is a library to optimize some controls, i understand is not the foucus of live2d so somehow this 2 libraries works well, but i this point there are a lot of thinks that i don't understand.
 
-https://github.com/RaSan147/pixi-live2d-display
+It's been 3 years since the last update of original repo. https://github.com/guansss/pixi-live2d-display
+
+Last documentation says it uses pixi 6, but there is a beta versión, using pixi 7.
+
+however there is a fork outstanding, he even publish library with a slighly diferent name. so i can add with npm https://github.com/RaSan147/pixi-live2d-display
+
+i

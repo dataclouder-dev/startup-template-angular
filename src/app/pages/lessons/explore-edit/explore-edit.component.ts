@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DCLessonEditorComponent } from '@dataclouder/ngx-lessons';
 
@@ -13,5 +13,10 @@ import { DCLessonEditorComponent } from '@dataclouder/ngx-lessons';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ExploreEditComponent {
-  constructor(private route: ActivatedRoute) {}
+  private route = inject(ActivatedRoute);
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {}
 }

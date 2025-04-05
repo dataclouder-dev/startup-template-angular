@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { IAgentCard } from '@dataclouder/ngx-agent-cards';
 import { Endpoints } from 'src/app/core/enums';
 import { NotionAbstractService, NotionDBResponse, NotionExportType, NotionPageResponse } from '@dataclouder/ngx-lessons';
@@ -8,7 +8,12 @@ import { HttpService } from './http.service';
   providedIn: 'root',
 })
 export class NotionService implements NotionAbstractService {
-  constructor(private httpService: HttpService) {}
+  private httpService = inject(HttpService);
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {}
 
   public getDBAvailible(): Promise<NotionDBResponse> {
     return this.httpService.getDataFromService(Endpoints.Notion.ListDBs);

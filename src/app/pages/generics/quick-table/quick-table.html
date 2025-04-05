@@ -12,7 +12,7 @@
       <td>{{ item[column.field] }}</td>
       }
       <td>
-        @if (!onlyView) {
+        @if (!onlyView()) {
         <div style="display: flex; gap: 5px">
           <p-button icon="pi pi-pencil" severity="secondary" />
           <p-button icon="pi pi-trash" severity="danger" />

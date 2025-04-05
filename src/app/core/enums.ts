@@ -39,8 +39,8 @@ export const Endpoints = {
   },
   ConversationCard: {
     TranslateConversation: 'api/conversation_card/translate',
-    Conversation: 'api/conversation-ai-cards/conversation',
-    ConversationQuery: 'api/conversation-ai-cards/conversation/query',
+    Conversation: 'api/agent-cards/conversation',
+    ConversationQuery: 'api/agent-cards/conversation/query',
     AgentChat: 'api/conversation/agent/chat',
     ListModels: 'api/conversation/agent/list_models',
     Whisper: 'api/conversation/whisper',

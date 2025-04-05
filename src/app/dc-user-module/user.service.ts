@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpService } from '../services/http.service';
 import { Endpoints } from '../core/enums';
 import { IPersonalData, IUser } from './user.class';
@@ -7,7 +7,12 @@ import { IPersonalData, IUser } from './user.class';
   providedIn: 'root',
 })
 export class UserService {
-  constructor(private httpService: HttpService) {}
+  private httpService = inject(HttpService);
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {}
   public user: IUser | null = null;
 
   public async findUserWithToken(): Promise<IUser | null> {

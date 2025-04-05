@@ -1,66 +1,38 @@
-import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Router, RouterOutlet } from '@angular/router';
-import { NavController, ToastController } from '@ionic/angular/standalone';
+
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
+import { Router } from '@angular/router';
+import { ToastController } from '@ionic/angular/standalone';
 
 import { DCAgentCardFormComponent, IAgentCard } from '@dataclouder/ngx-agent-cards';
 
-import {
-  IonHeader,
-  IonToolbar,
-  IonButtons,
-  IonBackButton,
-  IonTitle,
-  IonButton,
-  IonIcon,
-  IonContent,
-  IonRefresher,
-  IonRefresherContent,
-  IonCard,
-  IonCardHeader,
-  IonCardSubtitle,
-  IonCardTitle,
-  IonCardContent,
-  IonList,
-  IonListHeader,
-  IonItem,
-  IonAvatar,
-  IonLabel,
-  IonNote,
-  IonFab,
-  IonFabButton,
-  IonTabButton,
-  IonTabBar,
-  IonFooter,
-  IonApp,
-  AlertController,
-} from '@ionic/angular/standalone';
+import { AlertController } from '@ionic/angular/standalone';
 
 import { environment } from 'src/environments/environment';
 import { RouteNames } from 'src/app/core/enums';
 import { AgentCardService } from 'src/app/services/conversation-cards-ai-service';
 
 @Component({
-  selector: 'app-conversation-form',
+  selector: 'app-agent-card-form',
   standalone: true,
-  imports: [CommonModule, DCAgentCardFormComponent],
-  templateUrl: './conversation-form.page.html',
-  styleUrl: './conversation-form.page.css',
+  imports: [DCAgentCardFormComponent],
+  templateUrl: './agent-card-form.html',
+  styleUrl: './agent-card-form.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ConversationFormPage implements OnInit {
+export class AgentCardFormPage implements OnInit {
+  private conversationCardsService = inject(AgentCardService);
+  private router = inject(Router);
+  private AlertController = inject(AlertController);
+  private toastController = inject(ToastController);
+
   public currentPath: string = ' ';
 
   public projectName = environment.projectName;
 
-  constructor(
-    private conversationCardsService: AgentCardService,
-    private route: ActivatedRoute,
-    private router: Router,
-    private AlertController: AlertController,
-    private navCtrl: NavController,
-    private toastController: ToastController
-  ) {}
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {}
 
   ngOnInit(): void {
     this.currentPath = this.router.url.split('/')[3];

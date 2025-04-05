@@ -1,12 +1,17 @@
-import { Injectable } from '@angular/core';
-import { UserDataExchange, UserDataExchangeAbstractService } from '@dataclouder/ngx-agent-cards';
+import { Injectable, inject } from '@angular/core';
+import { ChatUserSettings, UserDataExchange, UserDataExchangeAbstractService } from '@dataclouder/ngx-agent-cards';
 import { UserService } from '../dc-user-module/user.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserDataExchangeService implements UserDataExchangeAbstractService {
-  constructor(private userService: UserService) {}
+  private userService = inject(UserService);
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {}
 
   getUserDataExchange(): UserDataExchange {
     const userData = this.userService.getUser()?.personalData;
@@ -28,5 +33,15 @@ export class UserDataExchangeService implements UserDataExchangeAbstractService 
     return {
       user: userData.name,
     };
+  }
+
+  getUserChatSettings(): ChatUserSettings {
+    const settings = {
+      realTime: true,
+      superHearing: true,
+      repeatRecording: true,
+      fixGrammar: true,
+    };
+    return settings;
   }
 }

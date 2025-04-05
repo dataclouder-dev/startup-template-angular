@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {
   AudioSpeed,
   ChatRole,
@@ -23,7 +23,13 @@ export type TTSRequest = { text: string; voice: string; generateTranscription: b
   providedIn: 'root',
 })
 export class AgentCardService implements AgentCardsAbstractService {
-  constructor(private httpService: HttpService, private userService: UserService) {}
+  private httpService = inject(HttpService);
+  private userService = inject(UserService);
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {}
 
   public async callInstruction(text: string): Promise<any> {
     if (!text) {

@@ -1,6 +1,8 @@
 <h1>Bienvenido</h1>
 <h2>Aquí verá tu progreso y novedades de la app</h2>
-<swiper-container paginator="true" space-between="30" slides-per-view="2.30">
+
+<p-button label="Start Tour" (click)="startTour()" />
+<swiper-container id="swiper-1" paginator="true" space-between="30" slides-per-view="2.30">
   <swiper-slide>
     <p-card class="card-slider">
       <ng-template #header>

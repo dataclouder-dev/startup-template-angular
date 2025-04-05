@@ -1,19 +1,24 @@
-import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { ChangeDetectorRef, Component, Input, OnInit, inject } from '@angular/core';
+
 import { DCChatComponent, IConversationSettings, ChatUserSettings, ChatRole, AudioSpeed, IAgentCard } from '@dataclouder/ngx-agent-cards';
 import { ActivatedRoute } from '@angular/router';
 import { AgentCardService } from 'src/app/services/conversation-cards-ai-service';
 
+// TODO cambiar este nombre.
 @Component({
-  selector: 'app-conversation-card-chat',
+  selector: 'app-agent-card-chat',
   standalone: true,
-  imports: [CommonModule, DCChatComponent],
-  templateUrl: './conversation-card-chat.component.html',
-  styleUrls: ['./conversation-card-chat.component.scss'],
+  imports: [DCChatComponent],
+  templateUrl: './agent-card-chat.html',
+  styleUrls: ['./agent-card-chat.scss'],
 })
-export class ConversationCardChatComponent implements OnInit {
-  @Input() conversationCard!: IAgentCard;
-  public IConversationSettings: IConversationSettings = {
+export class AgentCardChatComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+  private conversationCardsService = inject(AgentCardService);
+  private cdr = inject(ChangeDetectorRef);
+
+  @Input() agentCard!: IAgentCard;
+  public conversationSettings: IConversationSettings = {
     messages: [{ text: 'you are having a conversation with?', content: 'bot', role: ChatRole.System }],
   };
 
@@ -30,17 +35,20 @@ export class ConversationCardChatComponent implements OnInit {
     speed: AudioSpeed.Regular,
   };
 
-  constructor(private route: ActivatedRoute, private conversationCardsService: AgentCardService, private cdr: ChangeDetectorRef) {}
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {}
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(async params => {
       // TODO fix this, card can be passed as param (WIP), or fetched from the service
-      this.conversationCard = JSON.parse(params.get('conversationCard')!);
-      if (!this.conversationCard) {
+      this.agentCard = JSON.parse(params.get('conversationCard')!);
+      if (!this.agentCard) {
         const id = params.get('id') as string;
         const card = await this.conversationCardsService.findConversationCardByID(id);
         console.log('card', card);
-        this.conversationCard = card;
+        this.agentCard = card;
         this.cdr.detectChanges();
       }
     });

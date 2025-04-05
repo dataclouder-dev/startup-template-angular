@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot, RouterStateSnapshot, Router, UrlTree, Route, UrlSegment } from '@angular/router';
 
 import { from, fromEvent, Observable, of } from 'rxjs';
@@ -11,12 +11,15 @@ import { FirebaseAuthService } from '@dataclouder/app-auth';
   providedIn: 'root',
 })
 export class AuthGuardService {
-  constructor(
-    private fbAuthService: FirebaseAuthService,
-    private router: Router,
-    private userService: UserService,
-    private toastAlertService: ToastAlertService
-  ) {}
+  private fbAuthService = inject(FirebaseAuthService);
+  private router = inject(Router);
+  private userService = inject(UserService);
+  private toastAlertService = inject(ToastAlertService);
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {}
 
   offlineEvent = fromEvent(window, 'offline');
 

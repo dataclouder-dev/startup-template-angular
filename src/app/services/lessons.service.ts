@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ILesson, LessonsAbstractService } from '@dataclouder/ngx-lessons';
 import { HttpService } from './http.service';
 import { UserService } from '../dc-user-module/user.service';
@@ -10,7 +10,13 @@ type LessonPaginator = { rows: ILesson[]; count: number };
   providedIn: 'root',
 })
 export class LessonsService implements LessonsAbstractService {
-  constructor(private httpService: HttpService, private userService: UserService) {}
+  private httpService = inject(HttpService);
+  private userService = inject(UserService);
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {}
   updateLesson(lesson: ILesson): Promise<any> {
     throw new Error('Method not implemented.');
   }

@@ -1,5 +1,5 @@
-import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
+
 import { FormsModule } from '@angular/forms';
 import { IonContent } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
@@ -20,13 +20,19 @@ import { MenuItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 
 @Component({
-  selector: 'app-chat',
+  selector: 'app-agent-card-list',
   templateUrl: './agent-card-list.html',
   styleUrls: ['./agent-card-list.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, IonContent, AgentCardListComponent, ButtonModule],
+  imports: [FormsModule, IonContent, AgentCardListComponent, ButtonModule],
 })
-export class ChatComponentPage implements OnInit {
+export class AgentCardListPage implements OnInit {
+  private router = inject(Router);
+  private route = inject(ActivatedRoute);
+  private cdr = inject(ChangeDetectorRef);
+  private toastService = inject<ToastAlertsAbstractService>(TOAST_ALERTS_TOKEN);
+  private agentCardService = inject<AgentCardsAbstractService>(CONVERSATION_AI_TOKEN);
+
   public chatUserSettings: ChatUserSettings = {
     realTime: false,
     repeatRecording: false,
@@ -55,13 +61,10 @@ export class ChatComponentPage implements OnInit {
   messages: any[] = [];
   newMessage: string = '';
 
-  constructor(
-    private router: Router,
-    private route: ActivatedRoute,
-    private cdr: ChangeDetectorRef,
-    @Inject(TOAST_ALERTS_TOKEN) private toastService: ToastAlertsAbstractService,
-    @Inject(CONVERSATION_AI_TOKEN) private agentCardService: AgentCardsAbstractService
-  ) {
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {
     addIcons({ send, sendOutline, sendSharp });
   }
 
@@ -85,7 +88,7 @@ export class ChatComponentPage implements OnInit {
     this.router.navigate(['/page/stack/conversation-details', idCard], navigationExtras);
   }
 
-  public goToEdit(idCard: any) {
+  public goToEdit(idCard: string | null = null) {
     if (idCard) {
       this.router.navigate(['/page/stack/conversation-form', idCard]);
     } else {
@@ -119,7 +122,6 @@ export class ChatComponentPage implements OnInit {
   }
 
   public async doAction(action: string, item: any) {
-    debugger;
     const itemId = item._id || item.id;
     switch (action) {
       case 'view':
@@ -143,10 +145,12 @@ export class ChatComponentPage implements OnInit {
   }
 
   handleAction(actionEvent: OnActionEvent) {
-    debugger;
     console.log('doAction', { item: actionEvent.item, action: actionEvent.action });
     if (actionEvent.action === 'edit') {
       this.goToEdit(actionEvent.item._id);
+    } else if (actionEvent.action === 'new') {
+      // this.createNew();
+      this.goToEdit();
     } else if (actionEvent.action === 'delete') {
       this.doAction('delete', actionEvent.item);
     } else if (actionEvent.action === 'details') {
