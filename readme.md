@@ -27,7 +27,7 @@ Make is required for the auto setup. It usually comes pre-installed on Unix-base
 0. Clone the repository:
 
    ```bash
-   git clone https://github.com/dataclouder-dev/dataclouder-template-ionic.git [optional-project-name]
+   git clone https://github.com/dataclouder-dev/startup-template-angular.git [optional-project-name]
    ```
 
    Update the Makefile variables with your project name and app ID.
