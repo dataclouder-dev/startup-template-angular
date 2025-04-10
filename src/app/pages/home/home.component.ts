@@ -1,9 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, ElementRef, inject, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, inject, viewChild, effect, signal } from '@angular/core'; // Import effect
 
 import { InputTextModule } from 'primeng/inputtext';
 
-// import { register } from 'swiper/element/bundle';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import Swiper from 'swiper';
 import { register } from 'swiper/element/bundle';
@@ -12,29 +11,70 @@ import { CardModule } from 'primeng/card';
 import { AudioTourService } from 'src/app/services/audio-tour.service';
 import { stepsIntro } from './steps-tour-home';
 
+// Define card interface for type safety
+interface CardItem {
+  imageUrl: string;
+  title: string;
+  subtitle: string;
+  content: string;
+}
+
 register();
 @Component({
   selector: 'app-home',
   standalone: true,
   imports: [CommonModule, ButtonModule, InputTextModule, CardModule],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.css',
+  styleUrls: ['./home.component.css'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomeComponent {
+  // Services
   private audioTourService = inject(AudioTourService);
+  
+  // View Child
+  readonly swiperRef = viewChild<ElementRef>('mainSwiper');
 
-  readonly swiperRef = viewChild<ElementRef>('swiper');
-  swiper?: Swiper;
+  // States
   isDarkMode = false;
+  swiper?: Swiper; // You might not need this property if you access via swiperRef().nativeElement.swiper
 
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[]);
+  // Card data using signal for reactivity
+  cards = signal<CardItem[]>([
+    {
+      imageUrl: 'assets/images/default-feature-1.jpg',
+      title: 'Advanced Card',
+      subtitle: 'Card subtitle',
+      content: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!'
+    },
+    {
+      imageUrl: 'assets/images/default-feature-2.jpg',
+      title: 'Advanced Card',
+      subtitle: 'Card subtitle',
+      content: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!'
+    },
+    {
+      imageUrl: 'assets/images/default-feature-3.jpg',
+      title: 'Advanced Card',
+      subtitle: 'Card subtitle',
+      content: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!'
+    }
+  ]);
 
   constructor() {
-    // register();
-
-    console.log('hola');
+    // Add an effect to react when swiperRef is available
+    effect(() => {
+      const swiperElement = this.swiperRef()?.nativeElement;
+      if (swiperElement) {
+        console.log('Swiper reference is now available:', swiperElement);
+        // You could also access the swiper instance here if needed immediately:
+        // console.log('Swiper instance:', swiperElement.swiper);
+        // this.swiper = swiperElement.swiper; // Assign if still needed
+      } else {
+        console.log('Swiper reference not available yet.');
+      }
+    });
   }
 
   public startTour(): void {
@@ -42,13 +82,8 @@ export class HomeComponent {
     this.audioTourService.startTour();
   }
 
-  swiperReady() {
-    this.swiper = this.swiperRef()?.nativeElement.swiper;
-  }
-
   swiperSlideChanged(e: any) {
     const index = e.target.swiper.activeIndex;
-    // this.selectedSegment = this.segmentList[index]
   }
 
   toggleDarkMode() {

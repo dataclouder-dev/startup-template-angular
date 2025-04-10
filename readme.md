@@ -4,6 +4,8 @@ A ready-to-use Angular/Ionic template with Firebase Authentication integration.
 
 > ⚠️ **Note**: This project is currently under development and may contain bugs.
 
+for fundamental overview about the whole template read the [Overview](docs/overview-template.md)
+
 ## ✨ Features
 
 - 🔐 Firebase Authentication

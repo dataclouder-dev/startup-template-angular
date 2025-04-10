@@ -64,9 +64,6 @@ export class GenericListComponent extends PaginationBase implements OnInit {
     ];
   }
 
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[]);
-
   constructor() {
     const router = inject(Router);
     const route = inject(ActivatedRoute);
