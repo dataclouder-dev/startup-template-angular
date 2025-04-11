@@ -6,7 +6,7 @@
 
 swiper-container {
   width: 100%;
-  height: 450px; /* Increased height for vertical cards */
+  height: 750px; /* Increased height for vertical cards */
   padding: 20px 0;
 }
 
@@ -15,24 +15,18 @@ swiper-slide {
   justify-content: center;
   align-items: center;
   height: auto;
-  transition: transform 0.3s;
+  padding: 10px;
+  transition: transform 0.5s;
 }
 
 /* Active slide styling */
-:host ::ng-deep swiper-slide.swiper-slide-active .card {
+swiper-slide.swiper-slide-active .card {
   transform: scale(1.15); /* Increased scale for active card */
-  border: 3px solid #3880ff;
+  border: 3px solid var(--p-primary-color);
   box-shadow: 0 10px 25px rgba(56, 128, 255, 0.3);
   z-index: 1; /* Ensure active card appears above others */
 }
 
-/* Alternative selector for active slide */
-:host ::ng-deep .swiper-slide-active .card {
-  transform: scale(1.15); /* Increased scale for active card */
-  border: 3px solid #3880ff;
-  box-shadow: 0 10px 25px rgba(56, 128, 255, 0.3);
-  z-index: 1; /* Ensure active card appears above others */
-}
 
 /* Card styling */
 .card {
@@ -44,7 +38,7 @@ swiper-slide {
   overflow: hidden;
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
   background-color: white;
-  transition: transform 0.3s, box-shadow 0.3s;
+  transition: transform 0.5s, box-shadow 0.3s;
 }
 
 .card:hover {
@@ -110,7 +104,7 @@ swiper-slide {
 
 .card-button {
   padding: 8px 16px;
-  background-color: #3880ff;
+  background-color: var(--p-primary-color);
   color: white;
   border: none;
   border-radius: 4px;
@@ -120,24 +114,7 @@ swiper-slide {
 }
 
 .card-button:hover {
-  background-color: #2d6fef;
+  background-color: var(--p-primary-color);
 }
 
-/* Swiper pagination customization */
-::ng-deep .swiper-pagination-bullet {
-  width: 10px;
-  height: 10px;
-  background: #3880ff;
-  opacity: 0.5;
-}
-
-::ng-deep .swiper-pagination-bullet-active {
-  opacity: 1;
-}
-
-/* Swiper navigation buttons customization */
-::ng-deep .swiper-button-next,
-::ng-deep .swiper-button-prev {
-  color: #3880ff;
-}
 

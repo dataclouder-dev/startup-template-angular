@@ -1,0 +1,9 @@
+<swiper-container #swiper (slidechange)="onSlideChange($event)" slides-per-view="2">
+  @for (slide of slides(); track slide.id) {
+  <swiper-slide>
+    <div class="card-image-container">
+      <img [src]="slide.image" [alt]="slide.alt" />
+    </div>
+  </swiper-slide>
+  }
+</swiper-container>

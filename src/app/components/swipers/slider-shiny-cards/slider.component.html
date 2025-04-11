@@ -1,0 +1,29 @@
+<!-- Prevent auto-initialization, we'll do it in TS -->
+<swiper-container slides-per-view="auto" centered-slides="true" effect="cards" #swiperShinyCards>
+  <!-- Keep slidechange if needed, or remove -->
+  @for (slide of slides(); track slide.id) {
+  <swiper-slide>
+    <!-- Pokemon Card Structure -->
+    <div class="pokemon-card">
+      <div class="card-inner" [style.background]="slide.gradient">
+        <div class="card-content">
+          <div class="card-number">{{ slide.number }}</div>
+          <div class="pokemon-image">
+            <img [src]="slide.imageUrl" [alt]="slide.name" />
+          </div>
+          <div class="pokemon-info">
+            <h2>{{ slide.name }}</h2>
+            <div class="type-container">
+              @for(type of slide.types; track type.name) {
+              <span class="type-badge" [ngClass]="type.class">{{ type.name }}</span>
+              }
+            </div>
+          </div>
+          <div class="shiny-effect"></div>
+        </div>
+      </div>
+    </div>
+    <!-- End Pokemon Card Structure -->
+  </swiper-slide>
+  }
+</swiper-container>

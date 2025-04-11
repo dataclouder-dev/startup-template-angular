@@ -1,36 +1,37 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import {
+  IonApp,
+  IonSplitPane,
+  IonMenu,
+  IonContent,
+  IonList,
+  IonListHeader,
+  IonNote,
+  IonMenuToggle,
+  IonItem,
+  IonIcon,
+  IonLabel,
+  IonRouterLink,
+  IonHeader,
+  IonButtons,
+  IonToolbar,
+  IonTitle,
+  IonTabBar,
+  IonTabButton,
+  IonButton,
+  IonFooter,
+  IonAvatar,
+  ActionSheetController,
+  MenuController,
+} from '@ionic/angular/standalone';
 import * as ionicons from 'ionicons/icons'; // import all icons
-
-import { addIcons } from 'ionicons';
 
 import { environment } from 'src/environments/environment';
 import { FirebaseAuthService } from '@dataclouder/app-auth';
 import { ToggleButtonModule } from 'primeng/togglebutton';
 import { FormsModule } from '@angular/forms';
-import { ActionSheetController, MenuController } from '@ionic/angular';
-import {
-  IonApp,
-  IonIcon,
-  IonSplitPane,
-  IonTabButton,
-  IonTabBar,
-  IonContent,
-  IonAvatar,
-  IonList,
-  IonButton,
-  IonListHeader,
-  IonButtons,
-  IonTitle,
-  IonToolbar,
-  IonLabel,
-  IonHeader,
-  IonNote,
-  IonFooter,
-  IonMenu,
-  IonMenuToggle,
-  IonItem,
-} from '@ionic/angular/standalone';
+import { addIcons } from 'ionicons';
 
 @Component({
   selector: 'app-ionic-layout',
@@ -38,29 +39,31 @@ import {
   styleUrl: './ionic-layout.component.css',
   standalone: true,
   imports: [
-    IonFooter,
-    IonNote,
-    IonHeader,
-    IonLabel,
-    IonToolbar,
-    IonTitle,
-    IonButtons,
-    IonListHeader,
-    IonButton,
-    IonList,
     IonAvatar,
-    IonContent,
-    IonTabBar,
+    IonFooter,
+    IonButton,
     IonTabButton,
-    IonSplitPane,
-    IonIcon,
-    IonApp,
-    IonMenu,
-    IonMenuToggle,
-    IonItem,
+    IonTabBar,
     RouterOutlet,
+    IonTitle,
+    IonToolbar,
+    IonButtons,
+    IonHeader,
     RouterLink,
     RouterLinkActive,
+    IonApp,
+    IonSplitPane,
+    IonMenu,
+    IonContent,
+    IonList,
+    IonListHeader,
+    IonNote,
+    IonMenuToggle,
+    IonItem,
+    IonIcon,
+    IonLabel,
+    IonRouterLink,
+    IonMenuToggle,
     ToggleButtonModule,
     FormsModule,
   ],
@@ -96,9 +99,6 @@ export class IonicLayoutComponent implements OnInit {
 
   // Add this property to track dark mode state
   public isDarkMode: boolean = false;
-
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[]);
 
   constructor() {
     addIcons(ionicons);

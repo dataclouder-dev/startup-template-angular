@@ -1,0 +1,24 @@
+<swiper-container #swiper (slidechange)="onSlideChange($event)">
+  @for (slide of slides(); track slide.id) {
+  <swiper-slide>
+    <div class="flip-card" [class.flipped]="isFlipped(slide.id)" (click)="flipCard(slide.id)">
+      <div class="flip-card-inner">
+        <div class="flip-card-front">
+          <img [src]="slide.image" [alt]="slide.title" />
+          <button class="flip-button">Flip</button>
+        </div>
+        <div class="flip-card-back">
+          <img [src]="slide.backImage" [alt]="slide.title" />
+          <button class="flip-button">Flip Back</button>
+        </div>
+      </div>
+    </div>
+  </swiper-slide>
+  }
+</swiper-container>
+
+@if (!slides().length) {
+  <div class="no-slides-message">
+    <p>No slides available</p>
+  </div>
+}
