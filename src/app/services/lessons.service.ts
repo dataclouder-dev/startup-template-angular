@@ -3,6 +3,7 @@ import { ILesson, LessonsAbstractService } from '@dataclouder/ngx-lessons';
 import { HttpService } from './http.service';
 import { UserService } from '../dc-user-module/user.service';
 import { Endpoints } from '../core/enums';
+import { FiltersConfig } from '@dataclouder/ngx-core';
 
 type LessonPaginator = { rows: ILesson[]; count: number };
 
@@ -35,19 +36,23 @@ export class LessonsService implements LessonsAbstractService {
     return this.httpService.getDataFromService<ILesson>(`${Endpoints.Lessons.Lesson}/${id}`);
   }
 
-  //   TODO: change to paginator
-  public async getLessons(paginator: any = null, unpublished = false) {
-    if (paginator) {
-      if (unpublished) {
-        // TODO: probably i can use the filter
-        // return this.httpService.postDataToService<LessonPaginator>(Endpoints.Lessons.GetUnpublishedLessons, paginator);
-        return null;
-      } else {
-        return this.httpService.postDataToService<LessonPaginator>(Endpoints.Lessons.QueryLessons, paginator);
-      }
+  public async getLessons(filterConfig: FiltersConfig = {}, isPublished = true) {
+    filterConfig.returnProps = {
+      targetLang: 1,
+      baseLang: 1,
+      level: 1,
+      title: 1,
+      description: 1,
+      createdDate: 1,
+      tags: 1,
+      media: 1,
+    };
+    if (filterConfig) {
+      filterConfig.filters = { ...filterConfig.filters };
+      filterConfig.sort = { level: 1, ...filterConfig.sort };
+      return this.httpService.postDataToService<LessonPaginator>(Endpoints.Lessons.QueryLessons, filterConfig);
     } else {
-      const lessons = await this.httpService.postDataToService<LessonPaginator>(Endpoints.Lessons.QueryLessons, null);
-      return lessons;
+      return this.httpService.postDataToService<LessonPaginator>(Endpoints.Lessons.QueryLessons, null);
     }
   }
 

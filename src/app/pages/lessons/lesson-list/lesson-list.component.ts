@@ -50,6 +50,9 @@ export class LessonListComponent {
       case 'remove':
         this.removeLesson(event.item);
         break;
+      case 'new':
+        this.onNewLesson();
+        break;
     }
   }
 }
