@@ -8,8 +8,12 @@ import { UserService } from '../dc-user-module/user.service';
 export class UserDataExchangeService implements UserDataExchangeAbstractService {
   private userService = inject(UserService);
 
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[]);
+  getUserDataDescriptions(): { key: string; value: any; description: string }[] {
+    return [];
+  }
+  getUserDataInformation(): string {
+    return 'There is no user data yet';
+  }
 
   constructor() {}
 
@@ -20,6 +24,7 @@ export class UserDataExchangeService implements UserDataExchangeAbstractService 
     return {
       name: userData?.firstname || 'Usuario',
       gender: userData?.gender || 'Masculino',
+      imgUrl: 'assets/images/default_conversation_card.webp',
       // age: new Date().getFullYear() - new Date(userData?.birthday).getFullYear(),
       age: 20,
     };

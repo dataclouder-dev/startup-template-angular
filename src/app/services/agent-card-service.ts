@@ -6,7 +6,6 @@ import {
   ConversationMessagesDTO,
   ChatUserSettings,
   IAgentCard,
-  ModelName,
   TranscriptionsWhisper,
   IConversationSettings,
   IAgentResponseDTO,
@@ -25,11 +24,6 @@ export type TTSRequest = { text: string; voice: string; generateTranscription: b
 export class AgentCardService implements AgentCardsAbstractService {
   private httpService = inject(HttpService);
   private userService = inject(UserService);
-
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[]);
-
-  constructor() {}
 
   public async callInstruction(text: string): Promise<any> {
     if (!text) {

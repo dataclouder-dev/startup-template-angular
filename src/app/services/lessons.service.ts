@@ -14,8 +14,12 @@ export class LessonsService implements LessonsAbstractService {
   private httpService = inject(HttpService);
   private userService = inject(UserService);
 
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[]);
+  postImproveMDWithAI(lessonId: string, markdownText: string): Promise<any> {
+    // throw new Error('Method not implemented.');
+    console.error('lessonId', lessonId);
+
+    return Promise.resolve();
+  }
 
   constructor() {}
   updateLesson(lesson: ILesson): Promise<any> {

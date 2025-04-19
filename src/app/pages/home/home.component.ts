@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, ElementRef, inject, viewChild, effect, signal } from '@angular/core'; // Import effect
+import { ChangeDetectionStrategy, Component, ElementRef, inject, viewChild, effect, signal, OnInit } from '@angular/core'; // Import effect
 
 import { InputTextModule } from 'primeng/inputtext';
 
@@ -10,6 +10,11 @@ import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { AudioTourService } from 'src/app/services/audio-tour.service';
 import { stepsIntro } from './steps-tour-home';
+import { LessonsService } from 'src/app/services/lessons.service';
+import { AgentCardService } from 'src/app/services/agent-card-service';
+import { IAgentCard, DCConversationCardUIComponent } from '@dataclouder/ngx-agent-cards';
+import { ILesson } from '@dataclouder/ngx-lessons';
+import { DcLessonCardComponent } from '@dataclouder/ngx-lessons';
 
 // Define card interface for type safety
 interface CardItem {
@@ -23,16 +28,22 @@ register();
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, ButtonModule, InputTextModule, CardModule],
+  imports: [CommonModule, ButtonModule, InputTextModule, CardModule, DcLessonCardComponent, DCConversationCardUIComponent],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
   // Services
   private audioTourService = inject(AudioTourService);
-  
+  private lessonsService = inject(LessonsService);
+  private agentCardService = inject(AgentCardService);
+
+  // Input States
+  agentCards = signal<IAgentCard[]>([]);
+  lessons = signal<ILesson[]>([]);
+
   // View Child
   readonly swiperRef = viewChild<ElementRef>('mainSwiper');
 
@@ -46,20 +57,23 @@ export class HomeComponent {
       imageUrl: 'assets/images/default-feature-1.jpg',
       title: 'Advanced Card',
       subtitle: 'Card subtitle',
-      content: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!'
+      content:
+        'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!',
     },
     {
       imageUrl: 'assets/images/default-feature-2.jpg',
       title: 'Advanced Card',
       subtitle: 'Card subtitle',
-      content: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!'
+      content:
+        'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!',
     },
     {
       imageUrl: 'assets/images/default-feature-3.jpg',
       title: 'Advanced Card',
       subtitle: 'Card subtitle',
-      content: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!'
-    }
+      content:
+        'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!',
+    },
   ]);
 
   constructor() {
@@ -68,13 +82,18 @@ export class HomeComponent {
       const swiperElement = this.swiperRef()?.nativeElement;
       if (swiperElement) {
         console.log('Swiper reference is now available:', swiperElement);
-        // You could also access the swiper instance here if needed immediately:
-        // console.log('Swiper instance:', swiperElement.swiper);
-        // this.swiper = swiperElement.swiper; // Assign if still needed
       } else {
         console.log('Swiper reference not available yet.');
       }
     });
+  }
+
+  async ngOnInit(): Promise<void> {
+    const agents = await this.agentCardService.findAgentCards({});
+    this.agentCards.set(agents.rows);
+    const lessons = await this.lessonsService.getLessons({});
+
+    this.lessons.set(lessons.rows);
   }
 
   public startTour(): void {
@@ -89,5 +108,9 @@ export class HomeComponent {
   toggleDarkMode() {
     this.isDarkMode = !this.isDarkMode;
     document.body.classList.toggle('dark');
+  }
+
+  public goToLesson(lesson: any) {
+    console.log('goToLesson', lesson);
   }
 }

@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component, Input, OnInit, inject } from '@angular/co
 
 import { DCChatComponent, IConversationSettings, ChatUserSettings, ChatRole, AudioSpeed, IAgentCard } from '@dataclouder/ngx-agent-cards';
 import { ActivatedRoute } from '@angular/router';
-import { AgentCardService } from 'src/app/services/conversation-cards-ai-service';
+import { AgentCardService } from 'src/app/services/agent-card-service';
 
 // TODO cambiar este nombre.
 @Component({

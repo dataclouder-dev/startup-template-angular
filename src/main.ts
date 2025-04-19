@@ -25,7 +25,7 @@ import { provideAuthConfig } from '@dataclouder/app-auth';
 import { provideToastAlert } from '@dataclouder/ngx-core';
 // Local
 import { environment } from './environments/environment';
-import { AgentCardService } from './app/services/conversation-cards-ai-service';
+import { AgentCardService } from './app/services/agent-card-service';
 import { ToastAlertService } from './app/services/toast.service';
 import { LessonsService } from './app/services/lessons.service';
 import { authInterceptor } from './app/services/interception.service';

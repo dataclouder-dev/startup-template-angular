@@ -1,4 +1,3 @@
-
 import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular/standalone';
@@ -9,7 +8,7 @@ import { AlertController } from '@ionic/angular/standalone';
 
 import { environment } from 'src/environments/environment';
 import { RouteNames } from 'src/app/core/enums';
-import { AgentCardService } from 'src/app/services/conversation-cards-ai-service';
+import { AgentCardService } from 'src/app/services/agent-card-service';
 
 @Component({
   selector: 'app-agent-card-form',
