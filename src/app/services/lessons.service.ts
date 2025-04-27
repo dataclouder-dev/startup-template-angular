@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { ILesson, LessonsAbstractService } from '@dataclouder/ngx-lessons';
+import { ILesson, ILessonTaken, LessonsAbstractService } from '@dataclouder/ngx-lessons';
 import { HttpService } from './http.service';
 import { UserService } from '../dc-user-module/user.service';
 import { Endpoints } from '../core/enums';
@@ -68,7 +68,7 @@ export class LessonsService implements LessonsAbstractService {
     return this.httpService.deleteDataFromService(`${Endpoints.Lessons.Lesson}/${id}`);
   }
 
-  public saveTakenLesson(lesson: { lessonId: string; status: string; score: number }) {
+  public async saveTakenLesson(lesson: ILessonTaken) {
     // return this.httpService.postDataToService(UserWebApi.LessonTaken, lesson);
   }
 

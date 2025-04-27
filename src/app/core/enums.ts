@@ -37,13 +37,13 @@ export const Endpoints = {
   Admin: {
     Claims: 'api/admin/claims', // :email
   },
-  ConversationCard: {
+  AgentCard: {
     TranslateConversation: 'api/conversation_card/translate',
     Conversation: 'api/agent-cards/conversation',
     ConversationQuery: 'api/agent-cards/conversation/query',
-    AgentChat: 'api/conversation/agent/chat',
-    ListModels: 'api/conversation/agent/list_models',
-    Whisper: 'api/conversation/whisper',
+    Chat: 'api/agent-cards/chat',
+    ListModels: 'api/agent-cards/list_models',
+    Whisper: 'api/agent-cards/whisper',
   },
 
   Lessons: {
