@@ -118,21 +118,21 @@ export class AgentCardService implements AgentCardsAbstractService {
   }
 
   public deleteConversationCard(id: string): Promise<IAgentCard> {
-    return this.httpService.deleteDataFromService(`${Endpoints.AgentCard.Conversation}/${id}`);
+    return this.httpService.deleteDataFromService(`${Endpoints.AgentCard.Card}/${id}`);
   }
 
   public findConversationCardByID(id: string): Promise<IAgentCard> {
-    return this.httpService.getDataFromService(`${Endpoints.AgentCard.Conversation}/${id}`);
+    return this.httpService.getDataFromService(`${Endpoints.AgentCard.Card}/${id}`);
   }
   public getAllConversationCards(): Promise<IAgentCard[]> {
-    return this.httpService.getDataFromService(`${Endpoints.AgentCard.Conversation}`);
+    return this.httpService.getDataFromService(`${Endpoints.AgentCard.Card}`);
   }
 
   async saveConversationCard(conversation: IAgentCard): Promise<IAgentCard> {
     if (conversation.id || conversation._id) {
-      return await this.httpService.putDataFromService(`${Endpoints.AgentCard.Conversation}/${conversation._id}`, conversation);
+      return await this.httpService.putDataFromService(`${Endpoints.AgentCard.Card}/${conversation._id}`, conversation);
     } else {
-      return await this.httpService.postDataToService(`${Endpoints.AgentCard.Conversation}`, conversation);
+      return await this.httpService.postDataToService(`${Endpoints.AgentCard.Card}`, conversation);
     }
   }
 

@@ -1,9 +1,10 @@
 import { Injectable, inject } from '@angular/core';
-import { ILesson, ILessonTaken, LessonsAbstractService } from '@dataclouder/ngx-lessons';
-import { HttpService } from './http.service';
-import { UserService } from '../dc-user-module/user.service';
-import { Endpoints } from '../core/enums';
+import { ILesson, ILessonTaken, LessonPrompts, LessonsAbstractService } from '@dataclouder/ngx-lessons';
+import { HttpService } from '../../services/http.service';
+import { UserService } from '../../dc-user-module/user.service';
+import { Endpoints } from '../../core/enums';
 import { FiltersConfig } from '@dataclouder/ngx-core';
+import { getContentLessonGeneration, getDescriptionPrompt, getImageSuggestion } from './lesson-prompts';
 
 type LessonPaginator = { rows: ILesson[]; count: number };
 
@@ -22,6 +23,9 @@ export class LessonsService implements LessonsAbstractService {
   }
 
   constructor() {}
+  getPrompts(): LessonPrompts {
+    return { description: getDescriptionPrompt, banner: getImageSuggestion, content: getContentLessonGeneration };
+  }
   updateLesson(lesson: ILesson): Promise<any> {
     throw new Error('Method not implemented.');
   }
@@ -31,13 +35,13 @@ export class LessonsService implements LessonsAbstractService {
 
   public async postLesson(lesson: ILesson) {
     // const langParams = this.userService.getUserLangOptions();
-    const lessons = await this.httpService.postDataToService<ILesson>(`${Endpoints.Lessons.Lesson}`, lesson);
+    const lessons = await this.httpService.postDataToService<ILesson>(`${Endpoints.Lessons.Save}`, lesson);
 
     return lessons;
   }
 
   public async getLesson(id: string) {
-    return this.httpService.getDataFromService<ILesson>(`${Endpoints.Lessons.Lesson}/${id}`);
+    return this.httpService.getDataFromService<ILesson>(`${Endpoints.Lessons.Main}/${id}`);
   }
 
   public async getLessons(filterConfig: FiltersConfig = {}, isPublished = true) {
@@ -65,7 +69,7 @@ export class LessonsService implements LessonsAbstractService {
   }
 
   public async deleteLesson(id: string) {
-    return this.httpService.deleteDataFromService(`${Endpoints.Lessons.Lesson}/${id}`);
+    return this.httpService.deleteDataFromService(`${Endpoints.Lessons.Main}/${id}`);
   }
 
   public async saveTakenLesson(lesson: ILessonTaken) {

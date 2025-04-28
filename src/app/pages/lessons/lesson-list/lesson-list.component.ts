@@ -15,11 +15,6 @@ export class LessonListComponent {
   private router = inject(Router);
   private route = inject(ActivatedRoute);
 
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[]);
-
-  constructor() {}
-
   public onNewLesson() {
     console.log('onNewLesson');
     this.router.navigate(['edit'], { relativeTo: this.route });
@@ -40,9 +35,10 @@ export class LessonListComponent {
   }
 
   public handleAction(event: OnActionEvent) {
+    debugger;
     switch (event.action) {
       case 'edit':
-        this.editLesson(event.item);
+        this.editLesson(event.item.id || event.item._id);
         break;
       case 'select':
         this.takeLesson(event.item);

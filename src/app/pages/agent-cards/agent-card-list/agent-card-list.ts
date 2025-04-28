@@ -70,6 +70,7 @@ export class AgentCardListPage implements OnInit {
 
   ngOnInit() {
     // Initialize with some dummy messages
+    debugger;
   }
 
   public actions: MenuItem[] = [

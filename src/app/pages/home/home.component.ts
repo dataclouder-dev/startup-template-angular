@@ -10,7 +10,7 @@ import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { AudioTourService } from 'src/app/services/audio-tour.service';
 import { stepsIntro } from './steps-tour-home';
-import { LessonsService } from 'src/app/services/lessons.service';
+import { LessonsService } from 'src/app/pages/lessons/lessons.service';
 import { AgentCardService } from 'src/app/services/agent-card-service';
 import { IAgentCard, DCConversationCardUIComponent } from '@dataclouder/ngx-agent-cards';
 import { ILesson } from '@dataclouder/ngx-lessons';

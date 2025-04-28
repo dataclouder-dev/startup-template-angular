@@ -22,12 +22,12 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { provideChatAIService, provideUserDataExchange } from '@dataclouder/ngx-agent-cards';
 import { provideLessonsService, provideNotionService } from '@dataclouder/ngx-lessons';
 import { provideAuthConfig } from '@dataclouder/app-auth';
-import { provideToastAlert } from '@dataclouder/ngx-core';
+import { HTTP_CORE_CONFIG, provideToastAlert } from '@dataclouder/ngx-core';
 // Local
 import { environment } from './environments/environment';
 import { AgentCardService } from './app/services/agent-card-service';
 import { ToastAlertService } from './app/services/toast.service';
-import { LessonsService } from './app/services/lessons.service';
+import { LessonsService } from './app/pages/lessons/lessons.service';
 import { authInterceptor } from './app/services/interception.service';
 import { MyPreset } from './mypreset';
 import { UserDataExchangeService } from './app/core/user-data-exchange.service';
@@ -75,6 +75,8 @@ export const appConfig: ApplicationConfig = {
       }
       return initializeApp(environment.firebase);
     }),
+    { provide: HTTP_CORE_CONFIG, useValue: { primaryUrl: environment.backendNodeUrl, secondaryUrl: environment.backendNodeUrl } },
+
     provideStorage(() => getStorage()),
 
     provideAuth(() => {

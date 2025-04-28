@@ -39,16 +39,17 @@ export const Endpoints = {
   },
   AgentCard: {
     TranslateConversation: 'api/conversation_card/translate',
-    Conversation: 'api/agent-cards/conversation',
-    ConversationQuery: 'api/agent-cards/conversation/query',
+    Card: 'api/agent-cards',
+    ConversationQuery: 'api/agent-cards/query',
     Chat: 'api/agent-cards/chat',
     ListModels: 'api/agent-cards/list_models',
     Whisper: 'api/agent-cards/whisper',
   },
 
   Lessons: {
-    Lesson: 'api/lessonv2/lesson',
-    QueryLessons: 'api/lessonv2/query',
+    Save: 'api/lesson/lesson',
+    Main: 'api/lesson',
+    QueryLessons: 'api/lesson/query',
   },
   Notion: {
     ListDBs: 'api/notion/list-dbs',
