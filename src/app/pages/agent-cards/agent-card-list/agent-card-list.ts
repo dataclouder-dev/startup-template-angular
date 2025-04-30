@@ -70,7 +70,6 @@ export class AgentCardListPage implements OnInit {
 
   ngOnInit() {
     // Initialize with some dummy messages
-    debugger;
   }
 
   public actions: MenuItem[] = [
@@ -146,7 +145,6 @@ export class AgentCardListPage implements OnInit {
   }
 
   handleAction(actionEvent: OnActionEvent) {
-    debugger;
     console.log('doAction', { item: actionEvent.item, action: actionEvent.action });
     if (actionEvent.action === 'edit') {
       this.goToEdit(actionEvent.item._id);

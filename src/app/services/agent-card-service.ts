@@ -137,7 +137,6 @@ export class AgentCardService implements AgentCardsAbstractService {
   }
 
   public async callChatCompletion(conversation: IConversationSettings | ConversationMessagesDTO): Promise<IAgentResponseDTO> {
-    debugger;
     console.log('callChatCompletion', conversation);
 
     let messages = conversation.messages?.map((m: any) => ({ content: m.content, role: m.role }));

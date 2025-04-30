@@ -35,7 +35,6 @@ export class LessonListComponent {
   }
 
   public handleAction(event: OnActionEvent) {
-    debugger;
     switch (event.action) {
       case 'edit':
         this.editLesson(event.item.id || event.item._id);

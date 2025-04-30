@@ -54,6 +54,7 @@ export class LessonsService implements LessonsAbstractService {
       createdDate: 1,
       tags: 1,
       media: 1,
+      metadata: 1,
     };
     if (filterConfig) {
       filterConfig.filters = { ...filterConfig.filters };
