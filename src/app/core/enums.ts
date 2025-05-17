@@ -34,6 +34,12 @@ export const Endpoints = {
     Generics: 'api/generic',
     GenericsFiltered: 'api/generic/query',
   },
+  Whisper: {
+    TranscribeBytes: 'api/whisper/transcribe-bytes',
+  },
+  Vertex: {
+    tts: 'api/vertex/tts/synthesize',
+  },
   Admin: {
     Claims: 'api/admin/claims', // :email
   },

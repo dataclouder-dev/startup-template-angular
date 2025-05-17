@@ -4,7 +4,6 @@ import { DCChatComponent, IConversationSettings, ChatUserSettings, ChatRole, Aud
 import { ActivatedRoute } from '@angular/router';
 import { AgentCardService } from 'src/app/services/agent-card-service';
 
-// TODO cambiar este nombre.
 @Component({
   selector: 'app-agent-card-chat',
   standalone: true,
@@ -35,11 +34,6 @@ export class AgentCardChatComponent implements OnInit {
     speed: AudioSpeed.Regular,
   };
 
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[]);
-
-  constructor() {}
-
   ngOnInit(): void {
     this.route.paramMap.subscribe(async params => {
       // TODO fix this, card can be passed as param (WIP), or fetched from the service
@@ -53,5 +47,6 @@ export class AgentCardChatComponent implements OnInit {
       }
     });
   }
+
   // Add your component logic here
 }

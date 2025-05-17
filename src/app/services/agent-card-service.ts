@@ -22,6 +22,15 @@ export type TTSRequest = { text: string; voice: string; generateTranscription: b
   providedIn: 'root',
 })
 export class AgentCardService implements AgentCardsAbstractService {
+  completeAgentCard(idCard: string): Promise<any> {
+    alert('Please implement this method');
+    throw new Error('Method not implemented.');
+  }
+  generateMainImage(idCard: string): Promise<any> {
+    alert('Please implement this method');
+    throw new Error('Method not implemented.');
+  }
+
   private httpService = inject(HttpService);
   private userService = inject(UserService);
 
@@ -49,8 +58,9 @@ export class AgentCardService implements AgentCardsAbstractService {
   }
 
   public async getAudioTranscriptions(audioBlob: Blob, metadata: any = null): Promise<TranscriptionsWhisper> {
-    alert('revisar que ya funcionan  las transcriptions');
-    return await this.httpService.uploadAudioFile(`${Endpoints.AgentCard.Whisper}`, audioBlob, metadata, 'python');
+    return await this.httpService.uploadAudioFile(`${Endpoints.Whisper.TranscribeBytes}`, audioBlob, metadata, 'node');
+
+    // return await this.httpService.uploadAudioFile(`${Endpoints.AgentCard.Whisper}`, audioBlob, metadata, 'python');
   }
 
   public async findAgentCards(paginator: FiltersConfig) {
@@ -102,8 +112,10 @@ export class AgentCardService implements AgentCardsAbstractService {
   }
 
   public async getTextAudioFile(tts: TTSRequest): Promise<AudioGenerated> {
-    const httpReq: any = await this.httpService.receiveFile(`api/tts-library/tts`, tts, 'python');
+    debugger;
+    const httpReq: any = await this.httpService.postFile(`${Endpoints.Vertex.tts}`, tts, 'node');
     const audioData: any = { blobUrl: null, transcription: null };
+
     const transcription = httpReq?.headers.get('transcription');
 
     if (transcription) {
@@ -137,6 +149,7 @@ export class AgentCardService implements AgentCardsAbstractService {
   }
 
   public async callChatCompletion(conversation: IConversationSettings | ConversationMessagesDTO): Promise<IAgentResponseDTO> {
+    debugger;
     console.log('callChatCompletion', conversation);
 
     let messages = conversation.messages?.map((m: any) => ({ content: m.content, role: m.role }));

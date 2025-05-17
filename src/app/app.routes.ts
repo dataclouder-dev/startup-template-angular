@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { AuthGuardService } from './services/auth-guard.service';
 import { redirectToIfAuth } from '@dataclouder/app-auth';
+
 import { RouteNames } from './core/enums';
 
 export const routes: Routes = [
@@ -26,7 +27,6 @@ export const routes: Routes = [
       },
     ],
   },
-
   {
     path: 'auth',
     children: [
@@ -98,6 +98,17 @@ export const routes: Routes = [
       {
         path: 'home',
         loadComponent: () => import('./pages/home/home.component').then(m => m.HomeComponent),
+      },
+
+      {
+        path: 'admin',
+        loadComponent: () => import('./pages/admin/admin').then(m => m.AdminComponent),
+        children: [
+          {
+            path: '',
+            loadComponent: () => import('./pages/admin/admin-user/admin-user.component').then(m => m.AdminUserComponent),
+          },
+        ],
       },
 
       {
