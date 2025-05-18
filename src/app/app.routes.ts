@@ -106,7 +106,11 @@ export const routes: Routes = [
         children: [
           {
             path: '',
-            loadComponent: () => import('./pages/admin/admin-user/admin-user.component').then(m => m.AdminUserComponent),
+            loadComponent: () => import('./pages/admin/admin').then(m => m.AdminComponent),
+          },
+          {
+            path: 'users',
+            loadComponent: () => import('@dataclouder/ngx-users').then(m => m.AdminUserComponent),
           },
         ],
       },

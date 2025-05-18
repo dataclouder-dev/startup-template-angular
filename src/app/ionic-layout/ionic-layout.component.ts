@@ -89,8 +89,8 @@ export class IonicLayoutComponent implements OnInit {
   ];
 
   public adminPages = [
-    { title: 'Admin Users', url: '/page/admin-user', icon: 'people' },
-    { title: 'Admin Other', url: '/page/admin-other', icon: 'settings' },
+    { title: 'Admin Users', url: '/page/admin/users', icon: 'people' },
+    { title: 'Admin Other', url: '/page/admin', icon: 'settings' },
   ];
 
   public testingPages = [{ title: 'Test', url: '/page/test', icon: 'code-working' }];
