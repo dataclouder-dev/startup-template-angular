@@ -1,10 +1,43 @@
-# 🌩 Dataclouder Template Angular/Ionic
+# 🌩 Startup Template Frontend Angular/Ionic
 
 A ready-to-use Angular/Ionic template with Firebase Authentication integration.
 
 > ⚠️ **Note**: This project is currently under development and may contain bugs.
 
 for fundamental overview about the whole template read the [Overview](docs/overview-template.md)
+
+## ⚡ TLDR;
+
+Run these commands to get started quickly:
+
+```bash
+# Clone the repository
+git clone https://github.com/dataclouder-dev/startup-template-angular.git my-startup-name
+
+cd my-startup-name
+
+# IMPORTANT: Update Makefile variables (PROJECT_ID, APP_ID, DISPLAY_NAME) manually in the Makefile
+# These are required for the rename-project and init-project steps.
+
+# Rename the project (requires Python)
+make rename-project
+
+# Initialize the project (verifies dependencies, creates Firebase project if configured)
+make init-project
+
+# Start the development server
+npm run start
+# Or using make: make start
+
+# Build the project for production
+npm run build
+
+# Deploy to Firebase (ensure .firebaserc is configured for 'my-startup-name'
+
+# Deploy using make (uses configuration from Makefile and .firebaserc)
+make deploy
+
+```
 
 ## ✨ Features
 
@@ -20,11 +53,19 @@ for fundamental overview about the whole template read the [Overview](docs/overv
 
 This template provides a foundation for new projects. While you can run it locally, utilizing features like authentication, CI/CD, and Google Cloud Services requires setting up your own credentials and project names.
 
-### Option 1: Auto Setup
+![alt text](./docs/getting-started-flow.png)
+
+### Prerequisites
+
+- Node.js
+- npm
+- Make
 
 Make is required for the auto setup. It usually comes pre-installed on Unix-based systems.
 
-0. Clone the repository:
+### Option 1: Auto Setup
+
+1. Clone the repository:
 
    ```bash
    git clone https://github.com/dataclouder-dev/startup-template-angular.git [optional-project-name]
@@ -32,7 +73,7 @@ Make is required for the auto setup. It usually comes pre-installed on Unix-base
 
    Update the Makefile variables with your project name and app ID.
 
-1. Rename the project:
+2. Rename the project:
 
    ```bash
    make rename-project
@@ -53,7 +94,7 @@ Make is required for the auto setup. It usually comes pre-installed on Unix-base
    - `environment.ts`
    - `capacitor.config.ts` (Note: App name must be unique)
 
-2. Initialize the project:
+3. Initialize the project:
    ```bash
    make init-project
    ```
@@ -71,8 +112,6 @@ if you already have a firebase project, you can skip the auto setup and do it ma
    - Navigate to Firebase Console → Authentication
    - Enable Email/Password and Google sign-in
    - Add authorized domains (localhost is included by default)
-
-![alt text](./docs/image.png)
 
 ### Change the Firebase credentials.
 
