@@ -11,30 +11,24 @@ for fundamental overview about the whole template read the [Overview](docs/overv
 Run these commands to get started quickly:
 
 ```bash
-# Clone the repository
-git clone https://github.com/dataclouder-dev/startup-template-angular.git my-startup-name
+# 1. Clone the repository (replace 'your-project-directory' with your desired directory name)
+git clone https://github.com/dataclouder-dev/startup-template-angular.git your-project-directory
+cd your-project-directory
 
-cd my-startup-name
+# 2. Run the setup script
+# This script will ask for your domain, then update the Makefile,
+# rename the project, and initialize Firebase.
+node scripts/setup_project.js
 
-# IMPORTANT: Update Makefile variables (PROJECT_ID, APP_ID, DISPLAY_NAME) manually in the Makefile
-# These are required for the rename-project and init-project steps.
-
-# Rename the project (requires Python)
-make rename-project
-
-# Initialize the project (verifies dependencies, creates Firebase project if configured)
-make init-project
-
-# Start the development server
+# 3. Start the development server
 npm run start
 # Or using make: make start
 
-# Build the project for production
+# 4. Build the project for production
 npm run build
 
-# Deploy to Firebase (ensure .firebaserc is configured for 'my-startup-name'
-
-# Deploy using make (uses configuration from Makefile and .firebaserc)
+# 5. Deploy to Firebase
+# (Ensure .firebaserc is configured correctly by the init-project step)
 make deploy
 
 ```

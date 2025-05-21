@@ -1,7 +1,9 @@
 # Variables for deployment
-PROJECT_ID ?= dataclouder-dev#Firebase/Google project ID
-PROJECT_NAME ?= dataclouder-template#Name of the project package format, use - instead of spaces
-APP_ID ?= dev.dataclouder.template # User for mobile apps.
+ENV ?= dev
+EXT ?= io
+PROJECT_NAME ?= neuro
+PROJECT_ID ?= $(PROJECT_NAME)-$(ENV) #Firebase/Google project ID
+APP_ID ?= $(EXT).$(PROJECT_NAME).$(ENV) # User for mobile apps. example com.my-startup.app
 DISPLAY_NAME ?= $(PROJECT_NAME)
 
 help:
