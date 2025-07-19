@@ -1,8 +1,34 @@
-# 🌩 Dataclouder Template Angular/Ionic
+# 🌩 Startup Template Frontend Angular/Ionic
 
 A ready-to-use Angular/Ionic template with Firebase Authentication integration.
 
 > ⚠️ **Note**: This project is currently under development and may contain bugs.
+
+for fundamental overview about the whole template read the [Overview](docs/overview-template.md)
+
+## ⚡ TLDR;
+
+The whole project aims is to create startup quickly, consist in multiple templates ready to use. For now uses google cloud as cloud provider,
+
+This repository contains the ionic/angular template.
+
+Run these commands to get started quickly:
+
+```bash
+# 1. Clone the repository (replace 'your-project-directory' with your desired directory name)
+git clone https://github.com/dataclouder-dev/startup-template-angular.git
+
+# 2. Run the setup script will ask you for a name to rename the project.
+node scripts/setup_project.js
+
+# 3. Deploy to Firebase
+make deploy
+
+```
+
+Then understand architecture and install backend in the other repository.
+
+![alt text](./docs/overview-tech.png)
 
 ## ✨ Features
 
@@ -18,22 +44,34 @@ A ready-to-use Angular/Ionic template with Firebase Authentication integration.
 
 This template provides a foundation for new projects. While you can run it locally, utilizing features like authentication, CI/CD, and Google Cloud Services requires setting up your own credentials and project names.
 
-### Option 1: Auto Setup
+![alt text](./docs/getting-started-flow.png)
+
+### Prerequisites
+
+- Node.js
+- npm
+- Make
 
 Make is required for the auto setup. It usually comes pre-installed on Unix-based systems.
 
-0. Clone the repository:
+### Option 1: Auto Setup
+
+1. Clone the repository:
 
    ```bash
-   git clone https://github.com/dataclouder-dev/dataclouder-template-ionic.git [optional-project-name]
+   git clone https://github.com/dataclouder-dev/startup-template-angular.git [optional-project-name]
    ```
 
    Update the Makefile variables with your project name and app ID.
 
-1. Rename the project:
+2. Rename the project or run the setup script (Requires python in the future i'll build with node. ):
 
    ```bash
+   # Rename the project just rename files, but dont create new project in firebase.
    make rename-project
+
+   # Run the setup script renate and create files needed to deploy to firebase
+   node scripts/setup_project.js
    ```
 
    This command will rename all necessary files and variables (requires Python).
@@ -51,9 +89,9 @@ Make is required for the auto setup. It usually comes pre-installed on Unix-base
    - `environment.ts`
    - `capacitor.config.ts` (Note: App name must be unique)
 
-2. Initialize the project:
+3. Initialize the project:
    ```bash
-   make init-project
+   make init-firebase
    ```
    This will verify dependencies and create a new Firebase project automatically.
 
@@ -69,8 +107,6 @@ if you already have a firebase project, you can skip the auto setup and do it ma
    - Navigate to Firebase Console → Authentication
    - Enable Email/Password and Google sign-in
    - Add authorized domains (localhost is included by default)
-
-![alt text](./docs/image.png)
 
 ### Change the Firebase credentials.
 
@@ -118,7 +154,7 @@ That's all at this point. You should be able to run the app and be able to sign 
 
 ```bash
 
-    npm run install or make init-project
+    npm run install or make init-firebase
     npm run start or make start
 ```
 
@@ -208,6 +244,15 @@ Start the development server:
 ```bash
 npm run start
 ```
+
+### Start a new component.
+
+In the future i'll create a script to do this.
+
+1. Generante in app/pages
+2. Most likely create a service. 2.1) Select and icon https://ionic.io/ionicons and get only the name, app will adjust depending platform.
+3. Go to Ionic-Layout.component.html and change the bottom tool, this shows at the buttom.
+4. Go to ionic-layout.component.ts and appPages this shows in the left menu.
 
 ## 📄 License
 
@@ -306,7 +351,7 @@ No existe --p-primary-color-800 solo primary color
 
 you can style Cards, Inputs, etc and important compoents using primeng guidelines.
 
-### changing and inspecting styling
+## 💇‍♂️changing and inspecting styling 🖍️
 
 if you dont know what to change some times you will see something like, --ion-text-color-rgb to see a clue.
 
@@ -316,9 +361,13 @@ To start with, I higly recoment have alreay your palet.
 
 There are 3 important concepts:
 
-- /src/my-preset.ts // Start here add the colors you want. this will override default style for Nora (Just a theme) then you can access your variables with --p-primary-color or --p-primary-200 for specific color.
+**/src/my-preset.ts**
 
-- /src/global.scss: here is only to override Ionic variables. you defined for prime ng components, but undertunately this are not linked, also if you definition not change automatically, if you change varible example changing color for --p-primary-color works for prime ng components but not for ionic components. so since the very beggining you need to define darkmode or other teams if you want.
+- Start here add the colors you want. this will override default style for Nora (Just a theme) then you can access your variables with `--p-primary-color` or `--p-primary-200` for specific color.
+
+**/src/global.scss**
+
+- here is only to override Ionic variables. you defined for prime ng components, but undertunately this are not linked, also if you definition not change automatically, if you change varible example changing color for `--p-primary-color` works for prime ng components but not for ionic components. so since the very beggining you need to define darkmode or other teams if you want.
 
 i see this global.scss in 3 sections.
 
@@ -376,3 +425,26 @@ https://coolors.co/2d0c62-74fac9-7fd6d2-5cbae7-3677bd
 Add as upstream.
 
 make merge-upstream, the first time will add your project, then ill ask you to fix conflicts.
+
+# Docker For Complete App.
+
+### Create Image
+
+I leave 2 versions, dockerfile and dockerfile.complete
+
+- dockerfile: only copy your build, so ng build --prod first.
+
+- dockerfile.complete is for the app and the backend.
+
+// El flujo es crear mis imagenes y exportar en la otra maquina.
+
+```
+docker build -t dc-angular .
+
+docker run -p 8080:80 dc-angular
+
+docker save dc-angular > dc-angular.tar
+
+docker load < dc-angular.tar
+
+```

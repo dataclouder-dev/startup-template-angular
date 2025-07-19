@@ -136,12 +136,7 @@ export class HttpService {
     return throwError(() => err);
   }
 
-  public postObservable<ReturnType, DataType>(
-    service: string,
-    data: DataType,
-    skipErrorHandling = false,
-    host = 'nodejs'
-  ): Observable<ReturnType | any> {
+  public postObservable<ReturnType, DataType>(service: string, data: DataType, skipErrorHandling = false, host = 'nodejs'): Observable<ReturnType | any> {
     const hostUrl = this.getHostUrl(host);
     const url = `${hostUrl}/${service}`;
     return this.httpClient.post<ReturnType>(url, data).pipe(
@@ -152,6 +147,32 @@ export class HttpService {
         return throwError(() => err);
       })
     );
+  }
+
+  public async postFile(service: string, data: any, host = 'nodejs') {
+    // use this to get raw response, file with headers simple versión getFile$
+    const hostUrl = this.getHostUrl(host);
+    const url = `${hostUrl}/${service}`;
+    const response$ = this.httpClient.post(url, data, { observe: 'response', responseType: 'blob' }).pipe(
+      catchError(async (err: HttpErrorResponse) => {
+        // Convert blob error response to JSON
+
+        if (err.error instanceof Blob) {
+          try {
+            const errorText = await err.error.text();
+            (err as any).error = JSON.parse(errorText);
+            console.log(errorText);
+          } catch (e) {
+            console.log(e);
+            // If parsing fails, create a generic error
+            (err as any).error = { error_message: 'Error processing file', explanation: 'Unable to process server response' };
+          }
+        }
+        this.handleError(err);
+        return throwError(() => err);
+      })
+    );
+    return lastValueFrom(response$);
   }
 
   public deleteObservable<ReturnType>(service: string, host = 'nodejs'): Observable<ReturnType> {

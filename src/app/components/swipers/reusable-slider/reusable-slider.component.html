@@ -1,0 +1,33 @@
+<!-- Use the ViewChild reference 'swiperContainer' -->
+<div class="swiper" #swiperContainer>
+  <div class="swiper-wrapper">
+    <!-- Iterate over the items signal's value -->
+    @for (item of items(); track $index) {
+    <div class="swiper-slide">
+      <!-- Dynamically render the component provided by slideComponentType signal's value -->
+      <!-- Pass the current 'item' to the 'data' input of the dynamic component -->
+      <ng-container *ngComponentOutlet="slideComponentType(); inputs: { data: item }"></ng-container>
+    </div>
+    } @empty {
+    <!-- Optional: Content when items array is empty -->
+    <div class="swiper-slide">
+      <p>No items to display.</p>
+    </div>
+    }
+  </div>
+
+  <!-- Optional Swiper elements (add based on swiperOptions signal's value) -->
+  <!-- Example: Add pagination if options specify it -->
+  @if (swiperOptions()?.pagination) {
+  <div class="swiper-pagination"></div>
+  }
+  <!-- Example: Add navigation buttons if options specify it -->
+  @if (swiperOptions()?.navigation) {
+  <div class="swiper-button-prev"></div>
+  <div class="swiper-button-next"></div>
+  }
+  <!-- Example: Add scrollbar if options specify it -->
+  @if (swiperOptions()?.scrollbar) {
+  <div class="swiper-scrollbar"></div>
+  }
+</div>

@@ -1,39 +1,20 @@
+<p-button label="Start Tour" (click)="startTour()" />
+
 <h1>Bienvenido</h1>
 <h2>Aquí verá tu progreso y novedades de la app</h2>
 
-<p-button label="Start Tour" (click)="startTour()" />
-<swiper-container id="swiper-1" paginator="true" space-between="30" slides-per-view="2.30">
-  <swiper-slide>
-    <p-card class="card-slider">
-      <ng-template #header>
-        <img alt="Card" class="w-full" src="assets/images/default-feature-1.jpg" />
-      </ng-template>
-      <ng-template #title> Advanced Card </ng-template>
-      <ng-template #subtitle> Card subtitle </ng-template>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt quisquam repellat libero
-        asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!
-      </p>
-      <ng-template #footer>
-        <div class="flex gap-4 mt-1">
-          <p-button label="Cancel" severity="secondary" class="w-full" [outlined]="true" styleClass="w-full" />
-          <p-button label="Save" class="w-full" styleClass="w-full" />
-        </div>
-      </ng-template>
-    </p-card>
-  </swiper-slide>
+<h1>Conversaciónes por practicar</h1>
 
+<swiper-container #mainSwiper paginator="true" space-between="30" slides-per-view="2.30">
+  @for (card of cards(); track $index) {
   <swiper-slide>
     <p-card class="card-slider">
       <ng-template #header>
-        <img alt="Card" class="w-full" src="assets/images/default-feature-2.jpg" />
+        <img alt="Card" class="w-full" [src]="card.imageUrl" />
       </ng-template>
-      <ng-template #title> Advanced Card </ng-template>
-      <ng-template #subtitle> Card subtitle </ng-template>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt quisquam repellat libero
-        asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!
-      </p>
+      <ng-template #title>{{ card.title }}</ng-template>
+      <ng-template #subtitle>{{ card.subtitle }}</ng-template>
+      <p>{{ card.content }}</p>
       <ng-template #footer>
         <div class="flex gap-4 mt-1">
           <p-button label="Cancel" severity="secondary" class="w-full" [outlined]="true" styleClass="w-full" />
@@ -42,37 +23,43 @@
       </ng-template>
     </p-card>
   </swiper-slide>
-
-  <swiper-slide>
-    <p-card class="card-slider">
-      <ng-template #header>
-        <img alt="Card" class="w-full" src="assets/images/default-feature-3.jpg" />
-      </ng-template>
-      <ng-template #title> Advanced Card </ng-template>
-      <ng-template #subtitle> Card subtitle </ng-template>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt quisquam repellat libero
-        asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!
-      </p>
-      <ng-template #footer>
-        <div class="flex gap-4 mt-1">
-          <p-button label="Cancel" severity="secondary" class="w-full" [outlined]="true" styleClass="w-full" />
-          <p-button label="Save" class="w-full" styleClass="w-full" />
-        </div>
-      </ng-template>
-    </p-card>
-  </swiper-slide>
+  }
 </swiper-container>
 
 <hr />
 
-<div style="display: flex; gap: 10px">
-  <p-button label="Primary" [rounded]="true" severity="primary" />
-  <p-button label="Secondary" [rounded]="true" severity="secondary" />
-  <p-button label="Success" [rounded]="true" severity="success" />
-  <p-button label="Info" [rounded]="true" severity="info" />
-  <p-button label="Warn" [rounded]="true" severity="warn" />
-  <p-button label="Help" [rounded]="true" severity="help" />
-  <p-button label="Danger" [rounded]="true" severity="danger" />
-  <p-button label="Contrast" [rounded]="true" severity="contrast" />
-</div>
+<h1>Lecciones Recomendadas</h1>
+
+@if(lessons()){
+<swiper-container
+  paginator="true"
+  space-between="30"
+  slides-per-view="1.5"
+  breakpoints='{"640": {"slidesPerView": 1.5}, "880": {"slidesPerView": 2.5}, "1320": {"slidesPerView": 3.4}}'>
+  @for (lesson of lessons(); track lesson.id) {
+  <swiper-slide style="padding: 10px">
+    <dc-lesson-card [showOptions]="false" [lesson]="lesson" (onAction)="goToLesson($event)"></dc-lesson-card>
+  </swiper-slide>
+  }
+</swiper-container>
+
+} @else {
+<p>No tienes lecciones pendientes</p>
+}
+
+<!-- @if(agentCards()){
+<swiper-container
+  paginator="true"
+  space-between="30"
+  slides-per-view="1.5"
+  breakpoints='{"640": {"slidesPerView": 1.5}, "880": {"slidesPerView": 2.5}, "1320": {"slidesPerView": 3.4}}'>
+  @for (agentCard of agentCards(); track agentCard.id) {
+  <swiper-slide style="padding: 10px">
+    <dc-agent-card-default-ui [agentCard]="agentCard"></dc-agent-card-default-ui>
+  </swiper-slide>
+  }
+</swiper-container>
+
+} @else {
+<p>No tienes lecciones pendientes</p>
+} -->

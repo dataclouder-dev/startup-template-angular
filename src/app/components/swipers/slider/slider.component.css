@@ -1,0 +1,120 @@
+.slider-container {
+  width: 100%;
+  margin: 20px 0;
+  padding: 0 15px;
+}
+
+swiper-container {
+  width: 100%;
+  height: 750px; /* Increased height for vertical cards */
+  padding: 20px 0;
+}
+
+swiper-slide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: auto;
+  padding: 10px;
+  transition: transform 0.5s;
+}
+
+/* Active slide styling */
+swiper-slide.swiper-slide-active .card {
+  transform: scale(1.15); /* Increased scale for active card */
+  border: 3px solid var(--p-primary-color);
+  box-shadow: 0 10px 25px rgba(56, 128, 255, 0.3);
+  z-index: 1; /* Ensure active card appears above others */
+}
+
+
+/* Card styling */
+.card {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  background-color: white;
+  transition: transform 0.5s, box-shadow 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+.vertical-card {
+  height: 450px; /* Increased height for vertical cards */
+  display: flex;
+  flex-direction: column;
+}
+
+.card-image-container {
+  flex: 3; /* Take up 3/4 of the available space */
+  overflow: hidden;
+  position: relative;
+}
+
+.card-image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.card:hover .card-image-container img {
+  transform: scale(1.1);
+}
+
+.card-content {
+  flex: 1; /* Take up 1/4 of the available space */
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  background-color: white;
+}
+
+.card-title {
+  margin: 0 0 10px 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.card-description {
+  flex: 1;
+  margin: 0;
+  font-size: 0.9rem;
+  color: #666;
+  line-height: 1.4;
+}
+
+.card-footer {
+  margin-top: 15px;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.card-button {
+  padding: 8px 16px;
+  background-color: var(--p-primary-color);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.card-button:hover {
+  background-color: var(--p-primary-color);
+}
+
+

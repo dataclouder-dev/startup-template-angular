@@ -1,36 +1,40 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import {
+  IonApp,
+  IonSplitPane,
+  IonMenu,
+  IonContent,
+  IonList,
+  IonListHeader,
+  IonNote,
+  IonMenuToggle,
+  IonItem,
+  IonIcon,
+  IonLabel,
+  IonRouterLink,
+  IonHeader,
+  IonButtons,
+  IonToolbar,
+  IonTitle,
+  IonTabBar,
+  IonTabButton,
+  IonButton,
+  IonFooter,
+  IonAvatar,
+  ActionSheetController,
+  MenuController,
+} from '@ionic/angular/standalone';
 import * as ionicons from 'ionicons/icons'; // import all icons
-
-import { addIcons } from 'ionicons';
 
 import { environment } from 'src/environments/environment';
 import { FirebaseAuthService } from '@dataclouder/app-auth';
 import { ToggleButtonModule } from 'primeng/togglebutton';
 import { FormsModule } from '@angular/forms';
-import { ActionSheetController, MenuController } from '@ionic/angular';
-import {
-  IonApp,
-  IonIcon,
-  IonSplitPane,
-  IonTabButton,
-  IonTabBar,
-  IonContent,
-  IonAvatar,
-  IonList,
-  IonButton,
-  IonListHeader,
-  IonButtons,
-  IonTitle,
-  IonToolbar,
-  IonLabel,
-  IonHeader,
-  IonNote,
-  IonFooter,
-  IonMenu,
-  IonMenuToggle,
-  IonItem,
-} from '@ionic/angular/standalone';
+import { addIcons } from 'ionicons';
+import { UserService } from '../dc-user-module/user.service';
+import { IUser } from '@dataclouder/ngx-users';
+import { PwaInstallComponent } from '../components/pwa-install/pwa-install.component';
 
 @Component({
   selector: 'app-ionic-layout',
@@ -38,31 +42,34 @@ import {
   styleUrl: './ionic-layout.component.css',
   standalone: true,
   imports: [
-    IonFooter,
-    IonNote,
-    IonHeader,
-    IonLabel,
-    IonToolbar,
-    IonTitle,
-    IonButtons,
-    IonListHeader,
-    IonButton,
-    IonList,
     IonAvatar,
-    IonContent,
-    IonTabBar,
+    IonFooter,
+    IonButton,
     IonTabButton,
-    IonSplitPane,
-    IonIcon,
-    IonApp,
-    IonMenu,
-    IonMenuToggle,
-    IonItem,
+    IonTabBar,
     RouterOutlet,
+    IonTitle,
+    IonToolbar,
+    IonButtons,
+    IonHeader,
     RouterLink,
     RouterLinkActive,
+    IonApp,
+    IonSplitPane,
+    IonMenu,
+    IonContent,
+    IonList,
+    IonListHeader,
+    IonNote,
+    IonMenuToggle,
+    IonItem,
+    IonIcon,
+    IonLabel,
+    IonRouterLink,
+    IonMenuToggle,
     ToggleButtonModule,
     FormsModule,
+    PwaInstallComponent,
   ],
 })
 export class IonicLayoutComponent implements OnInit {
@@ -70,24 +77,26 @@ export class IonicLayoutComponent implements OnInit {
   private router = inject(Router);
   private actionSheetController = inject(ActionSheetController);
   private menuController = inject(MenuController);
+  public userService = inject(UserService);
 
   public envName = environment.envName;
   public projectName = environment.projectName;
   public version = environment.version;
-  public user: any = {};
+  public user: IUser | null = this.userService.getUser();
   public menuVisible: boolean = true;
 
   public appPages = [
     { title: 'Home', url: '/page/home', icon: 'home' },
     { title: 'Lessons', url: '/page/lessons', icon: 'eye' },
-    { title: 'Agents Conversation', url: '/page/chat', icon: 'chatbubble-ellipses' },
+    { title: 'Agents Conversation', url: '/page/agents', icon: 'chatbubble-ellipses' },
     { title: 'Generics', url: '/page/generics', icon: 'code-working' },
     { title: 'Test', url: '/page/test', icon: 'code-working' },
+    { title: 'Profile', url: '/page/stack/profile', icon: 'person' },
   ];
 
   public adminPages = [
-    { title: 'Admin Users', url: '/page/admin-user', icon: 'people' },
-    { title: 'Admin Other', url: '/page/admin-other', icon: 'settings' },
+    { title: 'Admin Users', url: '/page/admin/users', icon: 'people' },
+    { title: 'Admin Other', url: '/page/admin', icon: 'settings' },
   ];
 
   public testingPages = [{ title: 'Test', url: '/page/test', icon: 'code-working' }];
@@ -96,9 +105,6 @@ export class IonicLayoutComponent implements OnInit {
 
   // Add this property to track dark mode state
   public isDarkMode: boolean = false;
-
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[]);
 
   constructor() {
     addIcons(ionicons);
@@ -111,13 +117,6 @@ export class IonicLayoutComponent implements OnInit {
   ngOnInit(): void {
     this.firebaseAuthService.authState$.subscribe((auth: any) => {
       if (auth) {
-        this.user = {
-          email: auth.email,
-          displayName: auth.displayName,
-          photoURL: auth.photoURL,
-          emailVerified: auth.emailVerified,
-          isAdmin: auth.email === 'admin@example.com',
-        };
         // this.isAdmin = this.user.isAdmin;
         this.isAdmin = true;
       }

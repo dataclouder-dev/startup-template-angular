@@ -1,3 +1,9 @@
+@use "./shepherd.scss";
+@use 'swiper/css/bundle';
+
+@use 'tailwindcss';
+
+
 // 1) Importing css libraries
 @import "primeicons/primeicons.css";
 
@@ -19,6 +25,9 @@
 
 
 @import "@ionic/angular/css/palettes/dark.class.css"; 
+
+
+
 
 // 2) defining addional variables
 // check all variables https://ionicframework.com/docs/theming/themes
@@ -180,4 +189,3 @@ body.dark::before {
 
 
   // Shepherd tour styles
-@import "./shepherd.scss";

@@ -2,7 +2,14 @@
 <div class="image-background">
   <div class="blur-background">
     <div class="image-container">
-      <img class="centered-image" [src]="(agentCard?.assets?.image?.url) || 'assets/images/default_conversation_card.webp'" alt="Background image" />
+      <img
+        class="centered-image mobile-image"
+        [src]="(agentCard.assets?.image?.url) || 'assets/defaults/images/default_conversation_card.webp'"
+        alt="Background image" />
+      <img
+        class="centered-image desktop-banner"
+        [src]="(agentCard.assets?.banner?.url) || 'assets/defaults/images/default_conversation_card.webp'"
+        alt="Background banner" />
     </div>
   </div>
 

@@ -1,0 +1,16 @@
+{
+  "name": "DC Startup Template",
+  "short_name": "Startup Template",
+  "theme_color": "#800080",
+  "background_color": "#F97068",
+  "display": "standalone",
+  "scope": "./",
+  "start_url": "./",
+  "icons": [
+    {
+      "src": "assets/icons/icon.svg",
+      "sizes": "any",
+      "type": "image/webp"
+    }
+  ]
+}

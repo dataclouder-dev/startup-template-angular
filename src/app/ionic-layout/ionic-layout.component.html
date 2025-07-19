@@ -1,5 +1,6 @@
 <ion-app>
   <ion-split-pane contentId="main-content">
+    <!-- LEFT SIDE MENU -->
     <ion-menu contentId="main-content" type="overlay">
       <ion-content>
         <ion-list id="inbox-list">
@@ -35,6 +36,7 @@
       </ion-footer>
     </ion-menu>
 
+    <!-- TOP BAR  -->
     <div class="ion-page" id="main-content">
       <ion-header [translucent]="true">
         <ion-toolbar>
@@ -46,6 +48,8 @@
           <ion-title> {{ projectName }}</ion-title>
 
           <ion-buttons slot="end">
+            <h3>hola</h3>
+            <app-pwa-install />
             <p-togglebutton [(ngModel)]="isDarkMode" onLabel="" offLabel="" styleClass="w-36" ariaLabel="Do you confirm" (onChange)="toggleDarkMode()">
               <ng-template pTemplate="onicon" let-checked="checked">
                 <ion-icon [name]="checked ? 'sunny' : 'moon'"></ion-icon>
@@ -56,8 +60,12 @@
 
             <ion-button (click)="openActionSheet()">
               <span>
-                <ion-avatar style="width: 3em; height: 3em">
-                  <img width="10px" alt="Silhouette of a person's head" [src]="user?.photoURL || '/assets/icon/favicon.png'" />
+                <ion-avatar style="width: 3em; height: 3em; position: relative">
+                  <i style="right: -2px; top: -2px; position: absolute; color: rgb(255, 149, 0)" class="pi pi-key"></i>
+
+                  <i style="left: -2px; bottom: -2px; position: absolute; color: rgb(255, 149, 0)" class="pi pi-star-fill"></i>
+
+                  <img width="10px" alt="Silhouette of a person's head" [src]="user?.urlPicture || '/assets/defaults/icons/default-avatar.png'" />
                 </ion-avatar>
               </span>
             </ion-button>

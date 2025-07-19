@@ -6,3 +6,11 @@
   width: -webkit-fill-available;
   overflow-y: auto;
 }
+
+::ng-deep .app-bottom-overlay {
+    background: var(--p-primary-color) !important;
+    backdrop-filter: blur(1px);
+    border: 3px solid #16012c;
+    transition: all 0.3s ease;
+    height: 750px !important;
+}

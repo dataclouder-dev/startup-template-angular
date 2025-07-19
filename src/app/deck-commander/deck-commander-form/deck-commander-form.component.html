@@ -1,0 +1,46 @@
+<h3>DeckCommanders Form</h3>
+
+<div class="source-form-card">
+  <p-card [header]="deckCommanderId ? 'Edit DeckCommander' : 'New DeckCommander'">
+    <form [formGroup]="form">
+      <div class="form-field">
+        <label for="name" class="block">Name</label>
+        <input pInputText id="name" type="text" formControlName="name" placeholder="Enter source name" />
+      </div>
+
+      <div class="form-field">
+        <label for="description" class="block">Description</label>
+        <textarea id="description" pTextarea formControlName="description" rows="5" class="w-full" placeholder="Enter source content"></textarea>
+      </div>
+
+      <div class="form-field">
+        <label for="img" class="block">Image URL</label>
+        <input pInputText id="img" type="text" formControlName="img" placeholder="Enter image URL" />
+      </div>
+
+      <div class="form-field">
+        <label for="type" class="block">Type</label>
+        <p-select id="type" [options]="commandTypes" formControlName="type" optionLabel="label" optionValue="value" placeholder="Select a type" />
+      </div>
+
+      <div class="form-field">
+        <label for="command" class="block">Command</label>
+        <input pInputText id="command" type="text" formControlName="command" placeholder="Enter command" />
+      </div>
+
+      <div class="form-field">
+        <label for="action" class="block">Action</label>
+        <input pInputText id="action" type="text" formControlName="action" placeholder="Enter action" />
+      </div>
+
+      <div class="form-field">
+        <label for="emoji" class="block">Emoji</label>
+        <input pInputText id="emoji" type="text" formControlName="emoji" placeholder="Enter emoji" />
+      </div>
+    </form>
+
+    <div style="display: flex; justify-content: flex-end; margin-top: 1rem">
+      <p-button (click)="save()" label="Save DeckCommander" [disabled]="!form.valid" icon="pi pi-check" iconPos="right"></p-button>
+    </div>
+  </p-card>
+</div>

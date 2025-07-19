@@ -1,4 +1,4 @@
-import { ChatUserSettings } from '@dataclouder/ngx-agent-cards';
+import { ChatUserSettings } from '@dataclouder/ngx-core';
 
 export enum PlanType {
   Basic = 'basic',

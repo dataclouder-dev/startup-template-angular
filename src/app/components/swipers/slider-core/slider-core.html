@@ -1,0 +1,20 @@
+<!-- Slider main container -->
+<div class="swiper">
+  <!-- Additional required wrapper -->
+  <div class="swiper-wrapper">
+    <!-- Slides generated dynamically -->
+    @for (slide of slides(); track slide.id) {
+    <div class="swiper-slide">
+      <img [src]="slide.image" [alt]="slide.alt" />
+    </div>
+    } @empty {
+    <!-- Optional: Content to display if slides array is empty -->
+    <div class="swiper-slide">No slides available.</div>
+    }
+  </div>
+  <!-- If we need pagination -->
+  <div class="swiper-pagination"></div>
+  <div class="swiper-button-prev"></div>
+  <div class="swiper-button-next"></div>
+  <div class="swiper-scrollbar"></div>
+</div>

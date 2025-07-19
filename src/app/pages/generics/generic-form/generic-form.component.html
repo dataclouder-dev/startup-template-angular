@@ -6,7 +6,7 @@
       <div style="display: flex; gap: 10px">
         <div class="form-field">
           <label class="block" pTooltip="Image should be handle after upload">Subir imagen</label>
-          <img width="218px" src="assets/images/face-3.jpg" />
+          <img width="218px" src="assets/defaults/images/face-3.jpg" />
           <dc-cropper-modal [imgStorageSettings]="storageImgSettings" (imageUploaded)="handleImageUpload($event)"></dc-cropper-modal>
         </div>
 
@@ -87,7 +87,7 @@
       }
     </div>
 
-    <p-dialog header="Search for relation" [(visible)]="isDialogVisible" [modal]="true">
+    <p-dialog header="Search for relation" [(visible)]="isDialogVisible" [modal]="true" [style]="{ width: '50vw' }" draggable="false">
       <app-generic-list [onlyView]="true" [viewType]="'table'" (onSelect)="handleRelationSelection($event)"></app-generic-list>
     </p-dialog>
   </p-card>

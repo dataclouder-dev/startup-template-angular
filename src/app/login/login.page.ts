@@ -13,7 +13,7 @@ import { Platform } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-auth-component',
-  templateUrl: './login2.page.html',
+  templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
   standalone: true,
   imports: [FormsModule, ReactiveFormsModule, TranslateModule, DcLoginComponent],

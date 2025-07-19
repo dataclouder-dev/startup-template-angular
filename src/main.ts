@@ -19,25 +19,25 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 // DC Libs
-import { provideChatAIService, provideUserDataExchange } from '@dataclouder/ngx-agent-cards';
+import { DefaultAgentCardsService, provideAgentCardService, provideUserDataExchange } from '@dataclouder/ngx-agent-cards';
 import { provideLessonsService, provideNotionService } from '@dataclouder/ngx-lessons';
 import { provideAuthConfig } from '@dataclouder/app-auth';
-import { provideToastAlert } from '@dataclouder/ngx-core';
+import { HTTP_CORE_CONFIG, provideToastAlert } from '@dataclouder/ngx-core';
 // Local
 import { environment } from './environments/environment';
-import { AgentCardService } from './app/services/conversation-cards-ai-service';
 import { ToastAlertService } from './app/services/toast.service';
-import { LessonsService } from './app/services/lessons.service';
+import { LessonsService } from './app/pages/lessons/lessons.service';
 import { authInterceptor } from './app/services/interception.service';
 import { MyPreset } from './mypreset';
 import { UserDataExchangeService } from './app/core/user-data-exchange.service';
 import { routes } from './app/app.routes';
 import { AppComponent } from './app/app.component';
 import { NotionService } from './app/services/notion.service';
-import { ApplicationConfig } from '@angular/core';
+import { ApplicationConfig, isDevMode } from '@angular/core';
 import { FormlyModule } from '@ngx-formly/core';
 import { FormlyFieldInput } from './app/pages/generics/generic-form/formly-components/input';
 import { FormlyFieldTextArea } from './app/pages/generics/generic-form/formly-components/textarea';
+import { provideServiceWorker } from '@angular/service-worker';
 
 export function loggingInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn): Observable<HttpEvent<unknown>> {
   console.log('Before interception request:', req.url);
@@ -75,6 +75,8 @@ export const appConfig: ApplicationConfig = {
       }
       return initializeApp(environment.firebase);
     }),
+    { provide: HTTP_CORE_CONFIG, useValue: { primaryUrl: environment.backendNodeUrl, secondaryUrl: environment.backendPythonUrl } },
+
     provideStorage(() => getStorage()),
 
     provideAuth(() => {
@@ -99,12 +101,14 @@ export const appConfig: ApplicationConfig = {
         },
       })
     ),
-    // Dataclouder Providers
-    provideChatAIService(AgentCardService),
+    //  📊 Dataclouder Providers
+    // provideChatAIService(AgentCardService),
     provideToastAlert(ToastAlertService),
     provideLessonsService(LessonsService),
     provideUserDataExchange(UserDataExchangeService),
     provideNotionService(NotionService),
+    provideAgentCardService(DefaultAgentCardsService), // Trick provide the same.
+
     provideAuthConfig({
       clientIds: {
         androidClientId: environment.mobile.androidClientId,
@@ -127,6 +131,10 @@ export const appConfig: ApplicationConfig = {
         validationMessages: [{ name: 'required', message: 'This field is required' }],
       })
     ),
+    provideServiceWorker('ngsw-worker.js', {
+      enabled: true,
+      registrationStrategy: 'registerWhenStable:30000',
+    }),
   ],
 };
 

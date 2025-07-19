@@ -1,7 +1,10 @@
 import { Routes } from '@angular/router';
 import { AuthGuardService } from './services/auth-guard.service';
 import { redirectToIfAuth } from '@dataclouder/app-auth';
+
 import { RouteNames } from './core/enums';
+import { authAndUserGuard } from '@dataclouder/ngx-users';
+import { environment } from '../environments/environment';
 
 export const routes: Routes = [
   {
@@ -26,13 +29,13 @@ export const routes: Routes = [
       },
     ],
   },
-
   {
     path: 'auth',
+    loadComponent: () => import('./auth/auth-layout.component').then(m => m.AuthLayoutComponent),
     children: [
       {
         path: '',
-        redirectTo: RouteNames.Signup,
+        redirectTo: RouteNames.Signin,
         pathMatch: 'full',
       },
       {
@@ -40,7 +43,6 @@ export const routes: Routes = [
         loadComponent: () => import('./login/login.page').then(m => m.LoginComponent),
         canActivate: [redirectToIfAuth('page/home')],
       },
-
       {
         path: RouteNames.Signup,
         loadComponent: () => import('./login/signup.component').then(m => m.AppSignupComponent),
@@ -48,56 +50,30 @@ export const routes: Routes = [
       },
     ],
   },
-
-  {
-    path: 'page/stack',
-    canActivate: [AuthGuardService],
-
-    loadComponent: () => import('./ionic-layout/stack-ionic/stack-ionic.component').then(m => m.StackIonicComponent),
-    children: [
-      {
-        path: 'conversation-form',
-        loadComponent: () => import('./pages/agent-cards/agent-card-form/agent-card-form').then(m => m.AgentCardFormPage),
-      },
-      {
-        path: 'conversation-form/:id',
-        loadComponent: () => import('./pages/agent-cards/agent-card-form/agent-card-form').then(m => m.AgentCardFormPage),
-      },
-
-      {
-        path: 'chat',
-        loadComponent: () => import('./pages/agent-cards/agent-card-chat/agent-card-chat').then(m => m.AgentCardChatComponent),
-      },
-      {
-        path: 'chat/:id',
-        loadComponent: () => import('./pages/agent-cards/agent-card-chat/agent-card-chat').then(m => m.AgentCardChatComponent),
-      },
-
-      {
-        path: 'conversation-details',
-        loadComponent: () => import('./pages/agent-cards/agent-card-details/agent-card-details').then(m => m.AgentCardDetailsPage),
-      },
-
-      {
-        path: 'conversation-details/:id',
-        loadComponent: () => import('./pages/agent-cards/agent-card-details/agent-card-details').then(m => m.AgentCardDetailsPage),
-      },
-
-      {
-        path: 'profile',
-        loadComponent: () => import('./pages/profile/profile.component').then(m => m.ProfileComponent),
-      },
-    ],
-  },
-
   {
     path: 'page',
-    canActivate: [AuthGuardService],
+    canActivate: environment.authenticationRequired ? [authAndUserGuard] : [],
+
     loadComponent: () => import('./ionic-layout/ionic-layout.component').then(m => m.IonicLayoutComponent),
     children: [
       {
         path: 'home',
         loadComponent: () => import('./pages/home/home.component').then(m => m.HomeComponent),
+      },
+
+      {
+        path: 'admin',
+        loadComponent: () => import('./pages/admin/admin').then(m => m.AdminComponent),
+        children: [
+          {
+            path: '',
+            loadComponent: () => import('./pages/admin/admin').then(m => m.AdminComponent),
+          },
+          {
+            path: 'users',
+            loadComponent: () => import('@dataclouder/ngx-users').then(m => m.AdminUserComponent),
+          },
+        ],
       },
 
       {
@@ -151,12 +127,98 @@ export const routes: Routes = [
       },
 
       {
+        path: 'deck',
+
+        children: [
+          {
+            path: '',
+            loadComponent: () => import('./deck-commander/deck-commander-list/deck-commander-list.component').then(m => m.DeckCommanderListComponent),
+          },
+          {
+            path: 'edit',
+            loadComponent: () => import('./deck-commander/deck-commander-form/deck-commander-form.component').then(m => m.DeckCommanderFormComponent),
+          },
+          {
+            path: 'edit/:id',
+            loadComponent: () => import('./deck-commander/deck-commander-form/deck-commander-form.component').then(m => m.DeckCommanderFormComponent),
+          },
+          {
+            path: 'details/:id',
+            loadComponent: () => import('./deck-commander/deck-commander-detail/deck-commander-detail.component').then(m => m.DeckCommanderDetailComponent),
+          },
+          {
+            path: 'dashboard',
+            loadComponent: () => import('./deck-commander/dashboard-commander/deck-commander-dashboard').then(m => m.DeckCommanderComponent),
+          },
+        ],
+      },
+
+      {
         path: 'test',
         loadComponent: () => import('./pages/test/test.component').then(m => m.TestComponent),
       },
       {
         path: 'agents',
-        loadComponent: () => import('./pages/agent-cards/agent-card-list/agent-card-list').then(m => m.AgentCardListPage),
+        loadComponent: () => import('./pages/agent-cards/agent-card-router').then(m => m.AgentCardRouter),
+        children: [
+          {
+            path: '',
+            loadComponent: () => import('./pages/agent-cards/agent-card-list/agent-card-list').then(m => m.AgentCardListPage),
+          },
+          {
+            path: 'edit',
+            loadComponent: () => import('./pages/agent-cards/agent-card-form/agent-card-form').then(m => m.AgentCardFormPage),
+          },
+          {
+            path: 'edit/:id',
+            loadComponent: () => import('./pages/agent-cards/agent-card-form/agent-card-form').then(m => m.AgentCardFormPage),
+          },
+          {
+            path: 'details/:id',
+            loadComponent: () => import('./pages/agent-cards/agent-card-details/agent-card-details').then(m => m.AgentCardDetailsPage),
+          },
+        ],
+      },
+    ],
+  },
+
+  {
+    path: 'page/stack',
+    canActivate: [AuthGuardService],
+
+    loadComponent: () => import('./ionic-layout/stack-ionic/stack-ionic.component').then(m => m.StackIonicComponent),
+    children: [
+      {
+        path: 'conversation-form',
+        loadComponent: () => import('./pages/agent-cards/agent-card-form/agent-card-form').then(m => m.AgentCardFormPage),
+      },
+      {
+        path: 'conversation-form/:id',
+        loadComponent: () => import('./pages/agent-cards/agent-card-form/agent-card-form').then(m => m.AgentCardFormPage),
+      },
+
+      {
+        path: 'chat',
+        loadComponent: () => import('./pages/agent-cards/agent-card-chat/agent-card-chat').then(m => m.AgentCardChatComponent),
+      },
+      {
+        path: 'chat/:id',
+        loadComponent: () => import('./pages/agent-cards/agent-card-chat/agent-card-chat').then(m => m.AgentCardChatComponent),
+      },
+
+      {
+        path: 'conversation-details',
+        loadComponent: () => import('./pages/agent-cards/agent-card-details/agent-card-details').then(m => m.AgentCardDetailsPage),
+      },
+
+      {
+        path: 'conversation-details/:id',
+        loadComponent: () => import('./pages/agent-cards/agent-card-details/agent-card-details').then(m => m.AgentCardDetailsPage),
+      },
+
+      {
+        path: 'profile',
+        loadComponent: () => import('./pages/profile/profile.component').then(m => m.ProfileComponent),
       },
     ],
   },

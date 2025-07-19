@@ -1,0 +1,22 @@
+/* Add styles for your reusable slider component here */
+
+/* Ensure the container has some dimensions */
+:host {
+  display: block;
+  width: 100%; /* Or specific dimensions */
+  height: 300px; /* Example height */
+}
+
+.swiper {
+  width: 100%;
+  height: 100%;
+}
+
+.swiper-slide {
+  /* Basic styling for slides, can be overridden by the dynamic component */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+

@@ -4,18 +4,9 @@ import { FormsModule } from '@angular/forms';
 import { IonContent } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { sendOutline, sendSharp, send } from 'ionicons/icons';
-import {
-  ChatUserSettings,
-  IConversationSettings,
-  ChatRole,
-  AgentCardListComponent,
-  AudioSpeed,
-  CONVERSATION_AI_TOKEN,
-  AgentCardsAbstractService,
-  IAgentCard,
-} from '@dataclouder/ngx-agent-cards';
+import { IConversationSettings, ChatRole, AgentCardListComponent, AudioSpeed, CONVERSATION_AI_TOKEN, IAgentCard } from '@dataclouder/ngx-agent-cards';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
-import { OnActionEvent, TOAST_ALERTS_TOKEN, ToastAlertsAbstractService } from '@dataclouder/ngx-core';
+import { ChatUserSettings, OnActionEvent, TOAST_ALERTS_TOKEN, ToastAlertsAbstractService } from '@dataclouder/ngx-core';
 import { MenuItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 
@@ -31,19 +22,19 @@ export class AgentCardListPage implements OnInit {
   private route = inject(ActivatedRoute);
   private cdr = inject(ChangeDetectorRef);
   private toastService = inject<ToastAlertsAbstractService>(TOAST_ALERTS_TOKEN);
-  private agentCardService = inject<AgentCardsAbstractService>(CONVERSATION_AI_TOKEN);
+  private agentCardService = inject(CONVERSATION_AI_TOKEN);
 
   public chatUserSettings: ChatUserSettings = {
     realTime: false,
     repeatRecording: false,
-    fixGrammar: false,
     superHearing: false,
     voice: 'default',
-    autoTranslate: false,
     highlightWords: false,
     synthVoice: false,
     speed: AudioSpeed.Regular,
     speedRate: 1,
+    userMessageTask: false,
+    assistantMessageTask: false,
   };
 
   public viewMode: 'table' | 'cards' = 'table';
@@ -130,7 +121,7 @@ export class AgentCardListPage implements OnInit {
       case 'delete':
         const areYouSure = confirm('¿Estás seguro de querer eliminar este origen?');
         if (areYouSure) {
-          await this.agentCardService.deleteConversationCard(item.id);
+          await this.agentCardService.completeAgentCard(item.id);
           // this.conversationCards = this.conversationCards.filter((card) => card._id !== id);
 
           this.toastService.success({ title: 'Conversation card deleted', subtitle: 'Pero tienes que actualizar la página para ver el cambio' });
@@ -145,15 +136,17 @@ export class AgentCardListPage implements OnInit {
   }
 
   handleAction(actionEvent: OnActionEvent) {
+    debugger;
     console.log('doAction', { item: actionEvent.item, action: actionEvent.action });
     if (actionEvent.action === 'edit') {
       this.goToEdit(actionEvent.item._id);
     } else if (actionEvent.action === 'new') {
-      // this.createNew();
       this.goToEdit();
     } else if (actionEvent.action === 'delete') {
       this.doAction('delete', actionEvent.item);
     } else if (actionEvent.action === 'details') {
+      this.goToDetails(actionEvent.item._id);
+    } else if (actionEvent.action === 'select') {
       this.goToDetails(actionEvent.item._id);
     } else {
       console.log('Unknown action:', actionEvent.action);

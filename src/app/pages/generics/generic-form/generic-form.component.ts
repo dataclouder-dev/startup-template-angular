@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
 import { IGeneric } from '../models/generics.model';
 import { GenericService } from '../generics.service';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -14,11 +13,10 @@ import { ChipModule } from 'primeng/chip';
 import { TooltipModule } from 'primeng/tooltip';
 import { AspectType, CropperComponentModal, ResolutionType, CloudStorageData } from '@dataclouder/ngx-cloud-storage';
 
-import { TOAST_ALERTS_TOKEN, ToastAlertsAbstractService } from '@dataclouder/ngx-core';
+import { EntityBaseFormComponent } from '@dataclouder/ngx-core';
 import { FormlyFieldConfig, FormlyModule } from '@ngx-formly/core';
 import { DialogModule } from 'primeng/dialog';
 import { GenericListComponent } from '../generic-list/generic-list.component';
-import { QuickTableComponent } from '../quick-table/quick-table';
 
 @Component({
   selector: 'app-source-form',
@@ -42,12 +40,16 @@ import { QuickTableComponent } from '../quick-table/quick-table';
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
 })
-export class GenericFormComponent implements OnInit {
-  private route = inject(ActivatedRoute);
-  private genericService = inject(GenericService);
+export class GenericFormComponent extends EntityBaseFormComponent<IGeneric> implements OnInit {
+  protected entityCommunicationService = inject(GenericService);
   private fb = inject(FormBuilder);
-  private router = inject(Router);
-  private toastService = inject<ToastAlertsAbstractService>(TOAST_ALERTS_TOKEN);
+
+  public form: FormGroup = this.fb.group({});
+
+  protected override patchForm(entity: IGeneric): void {
+    throw new Error('Method not implemented.');
+  }
+  private genericService = inject(GenericService);
   private cdr = inject(ChangeDetectorRef);
 
   public storageImgSettings = {
@@ -70,12 +72,12 @@ export class GenericFormComponent implements OnInit {
   });
 
   public peopleOptions = [
-    { id: '1', name: 'Yang Feng', description: 'Description with short description', image: 'assets/images/face-1.jpg' },
-    { id: '2', name: 'Juan Perez', description: 'Description ', image: 'assets/images/face-2.jpg' },
-    { id: '3', name: 'John Doe', description: 'Description with short description', image: 'assets/images/face-3.jpg' },
+    { id: '1', name: 'Yang Feng', description: 'Description with short description', image: 'assets/defaults/images/face-1.jpg' },
+    { id: '2', name: 'Juan Perez', description: 'Description ', image: 'assets/defaults/images/face-2.jpg' },
+    { id: '3', name: 'John Doe', description: 'Description with short description', image: 'assets/defaults/images/face-3.jpg' },
   ];
 
-  public selectedPeople: any[] = [{ id: '3', name: 'John Doe', description: 'Description with short description', image: 'assets/images/face-3.jpg' }];
+  public selectedPeople: any[] = [{ id: '3', name: 'John Doe', description: 'Description with short description', image: 'assets/defaults/images/face-3.jpg' }];
 
   public genericTypes = [
     { label: 'Type 1', value: 'type1' },
@@ -89,11 +91,6 @@ export class GenericFormComponent implements OnInit {
     { id: 'Relation 3', name: 'relation3', description: 'Description with short description' },
   ];
 
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[]);
-
-  constructor() {}
-
   public generic: IGeneric | null = null;
   public genericId = this.route.snapshot.params['id'];
 
@@ -103,19 +100,6 @@ export class GenericFormComponent implements OnInit {
       if (this.generic) {
         this.genericForm.patchValue(this.generic);
       }
-    }
-  }
-
-  async save() {
-    if (this.genericForm.valid) {
-      const generic = { ...this.generic, ...this.genericForm.value } as IGeneric;
-
-      const result = await this.genericService.saveGeneric(generic);
-
-      if (!this.genericId) {
-        this.router.navigate([result.id], { relativeTo: this.route });
-      }
-      this.toastService.success({ title: 'Origen guardado', subtitle: 'El origen ha sido guardado correctamente' });
     }
   }
 

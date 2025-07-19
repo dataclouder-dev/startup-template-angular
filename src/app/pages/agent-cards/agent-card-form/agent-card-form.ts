@@ -1,4 +1,3 @@
-
 import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular/standalone';
@@ -9,7 +8,7 @@ import { AlertController } from '@ionic/angular/standalone';
 
 import { environment } from 'src/environments/environment';
 import { RouteNames } from 'src/app/core/enums';
-import { AgentCardService } from 'src/app/services/conversation-cards-ai-service';
+import { AgentCardService } from 'src/app/services/agent-card-service';
 
 @Component({
   selector: 'app-agent-card-form',
@@ -71,7 +70,7 @@ export class AgentCardFormPage implements OnInit {
         characterCard: { ...originalCard.characterCard, data: response },
         lang: dataEvent.targetLang,
       };
-      await this.conversationCardsService.saveConversationCard(trasnlatedCard);
+      await this.conversationCardsService.saveAgentCard(trasnlatedCard);
 
       const successToast = await this.toastController.create({
         message: 'Conversación traducida correctamente. Revisa para confirmar, vuelvelo a intentar si no es correcto.',

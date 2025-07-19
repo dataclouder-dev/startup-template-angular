@@ -1,20 +1,12 @@
 import { Injectable, inject } from '@angular/core';
 import { ToastAlertsAbstractService, ToastData } from '@dataclouder/ngx-core';
 import { ToastController } from '@ionic/angular';
-// import { ToastAlertsAbstractService, ToastData } from '@dataclouder/ngx-agent-cards';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ToastAlertService extends ToastAlertsAbstractService {
   private toastController = inject(ToastController);
-
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[]);
-
-  constructor() {
-    super();
-  }
 
   private async presentToast(data: ToastData, color: string, duration: number) {
     const toast = await this.toastController.create({

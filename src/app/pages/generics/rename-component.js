@@ -1,15 +1,16 @@
-// 1) How to use: cd to the folder where the script is located and run the script with node script_change.js
+// 1) How to use: 'cd src/CompetitorAnalysis' or folder where the script is located and run 'node script_change.js'.
+//    The script will rename files/folders/content inside, and also the folder from where it is run.
 // 2) Dont forget to change the oldName and newName variables
 // 3) Manually import the Module and change path in app.module.ts
 const { readdirSync, statSync, renameSync, readFileSync, writeFileSync } = require('fs');
-const { join } = require('path');
+const { join, dirname, basename } = require('path');
 const readline = require('readline');
 
 const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
 
 const directory = './';
 const oldName = 'generic';
-const newName = ''; // Replace this with your desired name
+const newName = ''; // Replace this with your desired name use a format AllCapName
 
 function toKebabCase(str) {
   return str.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
@@ -75,7 +76,7 @@ function renameFiles(dir) {
 }
 
 if (!newName) {
-  console.error('Error: Please set the newName variable before running the script.');
+  console.error(' ⚠️ Not Yet: Please set the newName variable before running the script. Line 12 🤔 should be SINGULAR name not plural');
   process.exit(1);
 }
 
@@ -84,6 +85,26 @@ rl.question(`Are you sure you want to change all occurrences of '${oldName}' to 
     console.log('Proceeding with renaming...');
     // Execute the function
     renameFiles(directory);
+
+    // Rename the current directory itself
+    const currentDirPath = process.cwd();
+    const parentDir = dirname(currentDirPath);
+    const currentDirName = basename(currentDirPath);
+
+    if (currentDirName.toLowerCase() === oldName.toLowerCase()) {
+      const newDirNameKebabCase = toKebabCase(newName);
+      try {
+        // To rename the current directory, we need to be in its parent directory
+        process.chdir(parentDir);
+        renameSync(currentDirName, newDirNameKebabCase);
+        console.log(`Renamed current directory: ${currentDirName} → ${newDirNameKebabCase}`);
+        // Change back to the newly named directory so the process ends in the right place.
+        process.chdir(newDirNameKebabCase);
+      } catch (err) {
+        console.error(`Error renaming current directory ${currentDirName}:`, err);
+      }
+    }
+
     console.log('Renaming completed, dont forget to manually import the new name in app.module.ts');
   } else {
     console.log('Operation cancelled.');

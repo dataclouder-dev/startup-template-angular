@@ -1,0 +1,28 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
+.DeckCommander-list-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.DeckCommander-list-content {
+  margin-top: 10px;
+  flex: 1;
+  overflow-y: auto;
+  padding-bottom: 10px;
+}
+
+.card-source {
+  margin-bottom: 10px;
+  position: relative;
+}
+
+.paginator-container {
+  margin-top: auto;
+  padding-top: 10px;
+}
+

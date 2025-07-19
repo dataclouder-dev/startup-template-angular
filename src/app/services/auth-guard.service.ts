@@ -2,10 +2,11 @@ import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot, RouterStateSnapshot, Router, UrlTree, Route, UrlSegment } from '@angular/router';
 
 import { from, fromEvent, Observable, of } from 'rxjs';
-import { mergeMap, concatMap, tap, first, catchError } from 'rxjs/operators';
+import { mergeMap, concatMap, tap, catchError } from 'rxjs/operators';
 import { UserService } from '../dc-user-module/user.service';
 import { ToastAlertService } from './toast.service';
 import { FirebaseAuthService } from '@dataclouder/app-auth';
+import { LoadingBarService } from '@dataclouder/ngx-core';
 
 @Injectable({
   providedIn: 'root',
@@ -15,17 +16,18 @@ export class AuthGuardService {
   private router = inject(Router);
   private userService = inject(UserService);
   private toastAlertService = inject(ToastAlertService);
-
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[]);
-
-  constructor() {}
+  private loadingBarService = inject(LoadingBarService);
 
   offlineEvent = fromEvent(window, 'offline');
 
   public canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> {
     console.log('AuthGuardService -> canActivate -> next', next);
-    return this.isAuthAndLoaded$();
+    this.loadingBarService.showIndeterminate();
+    return this.isAuthAndLoaded$().pipe(
+      tap(() => {
+        this.loadingBarService.hideProgressBar();
+      })
+    );
   }
 
   private isAuthAndLoaded$(): Observable<boolean | UrlTree> {
@@ -40,7 +42,7 @@ export class AuthGuardService {
           return of(this.router.parseUrl('/auth/login'));
         }
 
-        if (user) {
+        if (user()) {
           return of(true);
         }
 

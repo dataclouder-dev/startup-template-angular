@@ -1,10 +1,10 @@
 import { ChangeDetectorRef, Component, Input, OnInit, inject } from '@angular/core';
 
-import { DCChatComponent, IConversationSettings, ChatUserSettings, ChatRole, AudioSpeed, IAgentCard } from '@dataclouder/ngx-agent-cards';
+import { DCChatComponent, IConversationSettings, ChatRole, AudioSpeed, IAgentCard } from '@dataclouder/ngx-agent-cards';
 import { ActivatedRoute } from '@angular/router';
-import { AgentCardService } from 'src/app/services/conversation-cards-ai-service';
+import { AgentCardService } from 'src/app/services/agent-card-service';
+import { ChatUserSettings } from '@dataclouder/ngx-core';
 
-// TODO cambiar este nombre.
 @Component({
   selector: 'app-agent-card-chat',
   standalone: true,
@@ -25,20 +25,15 @@ export class AgentCardChatComponent implements OnInit {
   public chatUserSettings: ChatUserSettings = {
     realTime: false,
     repeatRecording: false,
-    fixGrammar: false,
     superHearing: false,
     voice: 'en-US',
-    autoTranslate: false,
     synthVoice: false,
     highlightWords: false,
     speedRate: 1,
     speed: AudioSpeed.Regular,
+    userMessageTask: false,
+    assistantMessageTask: false,
   };
-
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[]);
-
-  constructor() {}
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(async params => {
@@ -46,12 +41,13 @@ export class AgentCardChatComponent implements OnInit {
       this.agentCard = JSON.parse(params.get('conversationCard')!);
       if (!this.agentCard) {
         const id = params.get('id') as string;
-        const card = await this.conversationCardsService.findConversationCardByID(id);
+        const card = await this.conversationCardsService.findAgentCardByID(id);
         console.log('card', card);
         this.agentCard = card;
         this.cdr.detectChanges();
       }
     });
   }
+
   // Add your component logic here
 }

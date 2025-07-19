@@ -2,7 +2,9 @@ export const environment = {
   projectName: 'Dataclouder Template',
   version: '0.0.11',
   envName: 'DEV',
-  production: false,
+  production: true,
+
+  authenticationRequired: true,
 
   // backendNodeUrl: 'http://localhost:8080',
   backendNodeUrl: 'https://node-server-514401908603.us-central1.run.app',

@@ -1,0 +1,21 @@
+<div class="container">
+  <div class="fullscreen-controls">
+    <button class="control-btn" id="fullscreenBtn" (click)="toggleFullscreen()">🔳 Fullscreen</button>
+    <button class="control-btn" id="kioskBtn" (click)="enterKioskMode()">📱 Kiosk Mode</button>
+  </div>
+
+  <div class="header">
+    <h1>Touch Stream Deck</h1>
+    <div class="status" id="status">{{ status() }}</div>
+  </div>
+
+  <div class="grid" id="buttonGrid">
+    @for (button of buttons(); track button.id) {
+    <div class="button" [attr.data-id]="button.id" (click)="handleButtonPress(button)">
+      <div class="touch-feedback"></div>
+      <div class="button-icon">{{ button.emoji }}</div>
+      <div class="button-label">{{ button.name }}</div>
+    </div>
+    }
+  </div>
+</div>

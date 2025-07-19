@@ -1,28 +1,13 @@
-import { DatePipe, JsonPipe, KeyValuePipe } from '@angular/common';
+import { JsonPipe, KeyValuePipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormBuilder, Validators, FormsModule, ReactiveFormsModule, FormControl } from '@angular/forms';
-import { FirebaseAuthService } from '@dataclouder/app-auth';
-// import { addMonths } from 'date-fns';
-import { EndPoint } from 'src/app/core/enums';
+
+import { Endpoints } from 'src/app/core/enums';
+
 import { AppAuthClaims, ExpireDateOptions, PermissionType, PlanOptions, RolOptions, RolType } from 'src/app/dc-user-module/user.class';
-import { UserService } from 'src/app/dc-user-module/user.service';
 import { HttpService } from 'src/app/services/http.service';
 import { IonicModule, ToastController } from '@ionic/angular';
 import { PermissionNamePipe } from './permision-name.pipe';
-
-// import { AdminApi, ExpireDateOptions, PermissionType, PermissionsOptions, PlanOptions, RolOptions, RolType } from 'src/app/core/enums';
-// import { ToastService } from 'src/app/core/system/toast.service';
-// import { HttpService } from 'src/app/core/system/http.service';
-// import { InputTextModule } from 'primeng/inputtext';
-// import { ButtonModule } from 'primeng/button';
-// import { DropdownModule } from 'primeng/dropdown';
-// import { AppAuthClaims } from 'src/app/core/classes';
-// import { MultiSelectModule } from 'primeng/multiselect';
-// import { JsonPipe, NgFor, DatePipe, NgIf, KeyValuePipe } from '@angular/common';
-// import { PermissionNamePipe } from './permision-name.pipe';
-// import { CalendarModule } from 'primeng/calendar';
-// import { UserService } from 'src/app/core/data-services/user.service';
-// import { FirebaseAuthService } from 'src/app/core/firebase-auth.service';
 
 type InputClaim = {
   type: string;
@@ -34,15 +19,12 @@ type InputClaim = {
 @Component({
   selector: 'app-admin-user',
   templateUrl: './admin-user.component.html',
-  styleUrls: ['./admin-user.component.scss'],
   standalone: true,
   imports: [FormsModule, ReactiveFormsModule, JsonPipe, PermissionNamePipe, KeyValuePipe, IonicModule],
 })
 export class AdminUserComponent {
   private formBuilder = inject(FormBuilder);
   private httpService = inject(HttpService);
-  private userService = inject(UserService);
-  private firebaseAuthService = inject(FirebaseAuthService);
   private toastController = inject(ToastController);
 
   public userType = PermissionType;
@@ -146,7 +128,7 @@ export class AdminUserComponent {
 
     this.existingUser = false;
 
-    const claims = await this.httpService.getDataFromService<AppAuthClaims>(`${EndPoint.Admin.Claims}/${email}`);
+    const claims = await this.httpService.getDataFromService<AppAuthClaims>(`${Endpoints.Admin.Claims}/${email}`);
     this.userClaims = { ...claims };
 
     console.log('claims', claims);
@@ -184,7 +166,7 @@ export class AdminUserComponent {
     const updatedData: any = this.formGroup.value;
     try {
       // TODO: check that the endpoint is correct
-      const claims = await this.httpService.postDataToService(EndPoint.Admin.Claims, updatedData);
+      const claims = await this.httpService.postDataToService(Endpoints.Admin.Claims, updatedData);
       await this.showToast(`Los cambios se verán reflejados la próxima vez que ${updatedData.email} inicie sesión`);
 
       // if (this.userService.getUserSnapshot().email === updatedData.email) {
@@ -210,7 +192,7 @@ export class AdminUserComponent {
     if (isConfirmed) {
       const email = this.deleteUserForm;
       try {
-        await this.httpService.deleteDataFromService(`${EndPoint.AdminUser}/${email}`);
+        await this.httpService.deleteDataFromService(`${Endpoints.AdminUser}/${email}`);
         await this.showToast(`El usuario ${email} fue eliminado`);
       } finally {
         this.deleteUserForm = '';
