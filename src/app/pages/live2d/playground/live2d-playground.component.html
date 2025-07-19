@@ -1,0 +1,36 @@
+<div class="container">
+  <h1>Live2D Model Inspector</h1>
+
+  <div class="model-controls">
+    <div class="model-selector">
+      <p-dropdown [options]="availableModels" [(ngModel)]="selectedModel" optionLabel="name" (onChange)="onModelChange()" placeholder="Select a model">
+      </p-dropdown>
+    </div>
+  </div>
+
+  <div class="zoom-control">
+    <label for="zoom">Zoom</label>
+    <p-slider [(ngModel)]="modelZoom" (onChange)="onZoomChange($event)" [min]="1" [max]="50"></p-slider>
+    <span>{{ modelZoom }}%</span>
+  </div>
+
+  <div class="animation-controls">
+    <button pButton type="button" label="Play Random Animation" (click)="playRandomAnimation()"></button>
+    <div class="motion-list" *ngIf="motionGroups.length > 0">
+      <h4>Available Animations</h4>
+      <ul>
+        <li *ngFor="let group of motionGroups">
+          <button pButton type="button" [label]="group" (click)="playAnimation(group)" class="p-button-sm p-button-raised p-button-rounded"></button>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="content-container">
+    <div class="model-display">
+      <canvas id="canvas" width="600" height="600"></canvas>
+    </div>
+
+    <app-model-info [modelParameters]="modelParameters" [modelParts]="modelParts" (parameterChanged)="updateModelParameter($event)"> </app-model-info>
+  </div>
+</div>

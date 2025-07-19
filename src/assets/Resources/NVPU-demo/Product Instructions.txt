@@ -1,0 +1,44 @@
+This model can only be obtained through 【BOOTH】@貓橋梓​​ and 【KO FI】​​@Nekohashi Azusa. 
+ Please do not resell or use it in violation of rules.
+——————
+nstructions for Face Capture Usage of Finished Model:
+There are two face capture files in the folder:
+For VBridger users: NVPU.vtube vb.json (remove spaces and use vb)
+For regular single-camera face capture users: NVPU.vtube vts.json (remove spaces and use vts)
+Otherwise, adjusted face enhancement data cannot be used.
+The input for Body Z2 is > FacePositionX (face position x translation), and you can choose your input.
+Please open the digital tablet for mouse actions to work.
+
+——————
+Instructions for Key Usage of Finished Model:
+
+All the following keys are Left CTRL + Numpad.
+1：Blushing
+2：Heart eyes
+3：Tearful expression qwq
+4：cry
+5：Starry eyes
+6：Angry#
+Q:side-swept bangs
+W:double braided pigtails
+E:Short hair
+R:Shoulder-length hair
+T:gas cylinder disappears
+Y:black large chest
+U:White chest
+I:flat chest
+O:Halo disappearance
+
+All the following keys are Left CTRL + Small numeric keypad.
+.：hooded shawl
+0：Cat ears
+1：Glasses
+2：Horn
+3：Eye mask
+4：individual microphone
+5：microphone gesture
+6：Microphone position
+7：digital tablet gestures
+8：digital pen XY startup
+9：coffee cup appears
+-：Remove all Expressions

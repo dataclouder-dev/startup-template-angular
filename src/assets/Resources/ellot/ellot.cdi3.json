@@ -1,0 +1,1055 @@
+{
+	"Version": 3,
+	"Parameters": [
+		{
+			"Id": "ParamEyeLOpen",
+			"GroupId": "ParamGroup",
+			"Name": "왼쪽 눈 깜빡임"
+		},
+		{
+			"Id": "ParamEyeLSmile",
+			"GroupId": "ParamGroup",
+			"Name": "왼쪽 눈 미소"
+		},
+		{
+			"Id": "ParamEyeROpen",
+			"GroupId": "ParamGroup",
+			"Name": "오른쪽 눈 깜빡임"
+		},
+		{
+			"Id": "ParamEyeRSmile",
+			"GroupId": "ParamGroup",
+			"Name": "오른쪽 눈 미소"
+		},
+		{
+			"Id": "ParamEyeBallX",
+			"GroupId": "ParamGroup",
+			"Name": "눈 X"
+		},
+		{
+			"Id": "ParamEyeBallY",
+			"GroupId": "ParamGroup",
+			"Name": "눈 Y"
+		},
+		{
+			"Id": "ParamBrowLY",
+			"GroupId": "ParamGroup",
+			"Name": "왼쪽 눈썹 위아래로"
+		},
+		{
+			"Id": "ParamBrowRY",
+			"GroupId": "ParamGroup",
+			"Name": "오른쪽 눈썹 위아래로"
+		},
+		{
+			"Id": "ParamBrowLForm",
+			"GroupId": "ParamGroup",
+			"Name": "왼쪽 눈썹 변형"
+		},
+		{
+			"Id": "ParamBrowRForm",
+			"GroupId": "ParamGroup",
+			"Name": "오른쪽 눈썹 변형"
+		},
+		{
+			"Id": "Param",
+			"GroupId": "ParamGroup",
+			"Name": "sad"
+		},
+		{
+			"Id": "ParamMouthForm",
+			"GroupId": "ParamGroup2",
+			"Name": "입 변형"
+		},
+		{
+			"Id": "ParamMouthOpenY",
+			"GroupId": "ParamGroup2",
+			"Name": "입 여닫기"
+		},
+		{
+			"Id": "Param2",
+			"GroupId": "ParamGroup2",
+			"Name": "입X"
+		},
+		{
+			"Id": "Param4",
+			"GroupId": "ParamGroup2",
+			"Name": "혀내밀기"
+		},
+		{
+			"Id": "Param149",
+			"GroupId": "ParamGroup2",
+			"Name": "Mouth funnel"
+		},
+		{
+			"Id": "Param150",
+			"GroupId": "ParamGroup2",
+			"Name": "Mouth Press LipOpen"
+		},
+		{
+			"Id": "Param151",
+			"GroupId": "ParamGroup2",
+			"Name": "Mouth Shrug"
+		},
+		{
+			"Id": "Param152",
+			"GroupId": "ParamGroup2",
+			"Name": "Mouth Pucker Widen"
+		},
+		{
+			"Id": "Param3",
+			"GroupId": "ParamGroup2",
+			"Name": "볼부풀기"
+		},
+		{
+			"Id": "ParamAngleX",
+			"GroupId": "ParamGroup3",
+			"Name": "각도 X"
+		},
+		{
+			"Id": "ParamAngleY",
+			"GroupId": "ParamGroup3",
+			"Name": "각도 Y"
+		},
+		{
+			"Id": "ParamAngleZ",
+			"GroupId": "ParamGroup3",
+			"Name": "각도 Z"
+		},
+		{
+			"Id": "ParamBodyAngleX",
+			"GroupId": "ParamGroup3",
+			"Name": "몸의 회전 X"
+		},
+		{
+			"Id": "ParamBodyAngleY",
+			"GroupId": "ParamGroup3",
+			"Name": "몸의 회전 Y"
+		},
+		{
+			"Id": "ParamBodyAngleZ",
+			"GroupId": "ParamGroup3",
+			"Name": "몸의 회전 Z"
+		},
+		{
+			"Id": "ParamBreath",
+			"GroupId": "ParamGroup3",
+			"Name": "호흡"
+		},
+		{
+			"Id": "Param5",
+			"GroupId": "ParamGroup4",
+			"Name": "앞머리1_p3"
+		},
+		{
+			"Id": "Param6",
+			"GroupId": "ParamGroup4",
+			"Name": "앞머리1_p2"
+		},
+		{
+			"Id": "Param7",
+			"GroupId": "ParamGroup4",
+			"Name": "앞머리1_p1"
+		},
+		{
+			"Id": "Param8",
+			"GroupId": "ParamGroup4",
+			"Name": "앞머리2_p3"
+		},
+		{
+			"Id": "Param47",
+			"GroupId": "ParamGroup4",
+			"Name": "앞머리2_p2"
+		},
+		{
+			"Id": "Param48",
+			"GroupId": "ParamGroup4",
+			"Name": "앞머리2_p1"
+		},
+		{
+			"Id": "Param9",
+			"GroupId": "ParamGroup4",
+			"Name": "앞머리3_p3"
+		},
+		{
+			"Id": "Param45",
+			"GroupId": "ParamGroup4",
+			"Name": "앞머리3_p2"
+		},
+		{
+			"Id": "Param46",
+			"GroupId": "ParamGroup4",
+			"Name": "앞머리3_p1"
+		},
+		{
+			"Id": "Param10",
+			"GroupId": "ParamGroup4",
+			"Name": "앞머리4_p3"
+		},
+		{
+			"Id": "Param39",
+			"GroupId": "ParamGroup4",
+			"Name": "앞머리4_p2"
+		},
+		{
+			"Id": "Param40",
+			"GroupId": "ParamGroup4",
+			"Name": "앞머리4_p1"
+		},
+		{
+			"Id": "Param11",
+			"GroupId": "ParamGroup4",
+			"Name": "앞머리5_p3"
+		},
+		{
+			"Id": "Param44",
+			"GroupId": "ParamGroup4",
+			"Name": "앞머리5_p2"
+		},
+		{
+			"Id": "Param41",
+			"GroupId": "ParamGroup4",
+			"Name": "앞머리5_p1"
+		},
+		{
+			"Id": "Param13",
+			"GroupId": "ParamGroup4",
+			"Name": "앞머리6+7_p3"
+		},
+		{
+			"Id": "Param37",
+			"GroupId": "ParamGroup4",
+			"Name": "앞머리6+7_p2"
+		},
+		{
+			"Id": "Param38",
+			"GroupId": "ParamGroup4",
+			"Name": "앞머리6+7_p1"
+		},
+		{
+			"Id": "Param14",
+			"GroupId": "ParamGroup4",
+			"Name": "앞머리8_p3"
+		},
+		{
+			"Id": "Param35",
+			"GroupId": "ParamGroup4",
+			"Name": "앞머리8_p2"
+		},
+		{
+			"Id": "Param36",
+			"GroupId": "ParamGroup4",
+			"Name": "앞머리8_p1"
+		},
+		{
+			"Id": "Param15",
+			"GroupId": "ParamGroup4",
+			"Name": "앞머리9_p3"
+		},
+		{
+			"Id": "Param33",
+			"GroupId": "ParamGroup4",
+			"Name": "앞머리9_p2"
+		},
+		{
+			"Id": "Param34",
+			"GroupId": "ParamGroup4",
+			"Name": "앞머리9_p1"
+		},
+		{
+			"Id": "Param16",
+			"GroupId": "ParamGroup4",
+			"Name": "앞머리10_p3"
+		},
+		{
+			"Id": "Param31",
+			"GroupId": "ParamGroup4",
+			"Name": "앞머리10_p2"
+		},
+		{
+			"Id": "Param32",
+			"GroupId": "ParamGroup4",
+			"Name": "앞머리10_p1"
+		},
+		{
+			"Id": "Param17",
+			"GroupId": "ParamGroup4",
+			"Name": "앞머리11+12_p3"
+		},
+		{
+			"Id": "Param29",
+			"GroupId": "ParamGroup4",
+			"Name": "앞머리11+12_p2"
+		},
+		{
+			"Id": "Param30",
+			"GroupId": "ParamGroup4",
+			"Name": "앞머리11+12_p1"
+		},
+		{
+			"Id": "Param18",
+			"GroupId": "ParamGroup4",
+			"Name": "앞머리13_p3"
+		},
+		{
+			"Id": "Param27",
+			"GroupId": "ParamGroup4",
+			"Name": "앞머리13_p2"
+		},
+		{
+			"Id": "Param28",
+			"GroupId": "ParamGroup4",
+			"Name": "앞머리13_p1"
+		},
+		{
+			"Id": "Param19",
+			"GroupId": "ParamGroup4",
+			"Name": "앞머리15_p3"
+		},
+		{
+			"Id": "Param25",
+			"GroupId": "ParamGroup4",
+			"Name": "앞머리15_p2"
+		},
+		{
+			"Id": "Param26",
+			"GroupId": "ParamGroup4",
+			"Name": "앞머리15_p1"
+		},
+		{
+			"Id": "Param21",
+			"GroupId": "ParamGroup4",
+			"Name": "더듬이_p2"
+		},
+		{
+			"Id": "Param22",
+			"GroupId": "ParamGroup4",
+			"Name": "더듬이_p1"
+		},
+		{
+			"Id": "Param12",
+			"GroupId": "ParamGroup4",
+			"Name": "L뒷머리1_p3"
+		},
+		{
+			"Id": "Param23",
+			"GroupId": "ParamGroup4",
+			"Name": "L뒷머리1_p2"
+		},
+		{
+			"Id": "Param20",
+			"GroupId": "ParamGroup4",
+			"Name": "L뒷머리1_p1"
+		},
+		{
+			"Id": "Param24",
+			"GroupId": "ParamGroup4",
+			"Name": "L뒷머리2_p3"
+		},
+		{
+			"Id": "Param42",
+			"GroupId": "ParamGroup4",
+			"Name": "L뒷머리2_p2"
+		},
+		{
+			"Id": "Param43",
+			"GroupId": "ParamGroup4",
+			"Name": "L뒷머리2_p1"
+		},
+		{
+			"Id": "Param49",
+			"GroupId": "ParamGroup4",
+			"Name": "R뒷머리1_p3"
+		},
+		{
+			"Id": "Param51",
+			"GroupId": "ParamGroup4",
+			"Name": "R뒷머리1_p2"
+		},
+		{
+			"Id": "Param52",
+			"GroupId": "ParamGroup4",
+			"Name": "R뒷머리1_p1"
+		},
+		{
+			"Id": "Param50",
+			"GroupId": "ParamGroup4",
+			"Name": "R뒷머리2_p3"
+		},
+		{
+			"Id": "Param53",
+			"GroupId": "ParamGroup4",
+			"Name": "R뒷머리2_p2"
+		},
+		{
+			"Id": "Param54",
+			"GroupId": "ParamGroup4",
+			"Name": "R뒷머리2_p1"
+		},
+		{
+			"Id": "Param61",
+			"GroupId": "ParamGroup4",
+			"Name": "뒷베이스_p2"
+		},
+		{
+			"Id": "Param62",
+			"GroupId": "ParamGroup4",
+			"Name": "뒷베이스_p1"
+		},
+		{
+			"Id": "Param143",
+			"GroupId": "ParamGroup4",
+			"Name": "뒷머리 1-1_p2"
+		},
+		{
+			"Id": "Param144",
+			"GroupId": "ParamGroup4",
+			"Name": "뒷머리 1-1_p1"
+		},
+		{
+			"Id": "Param55",
+			"GroupId": "ParamGroup5",
+			"Name": "앞머리1_y2"
+		},
+		{
+			"Id": "Param57",
+			"GroupId": "ParamGroup5",
+			"Name": "앞머리1_y1"
+		},
+		{
+			"Id": "Param56",
+			"GroupId": "ParamGroup5",
+			"Name": "앞머리2_y2"
+		},
+		{
+			"Id": "Param58",
+			"GroupId": "ParamGroup5",
+			"Name": "앞머리2_y1"
+		},
+		{
+			"Id": "Param59",
+			"GroupId": "ParamGroup5",
+			"Name": "더듬이_y2"
+		},
+		{
+			"Id": "Param60",
+			"GroupId": "ParamGroup5",
+			"Name": "더듬이_y1"
+		},
+		{
+			"Id": "Param63",
+			"GroupId": "ParamGroup5",
+			"Name": "뒷머리_y2"
+		},
+		{
+			"Id": "Param64",
+			"GroupId": "ParamGroup5",
+			"Name": "뒷머리_y1"
+		},
+		{
+			"Id": "Param145",
+			"GroupId": "ParamGroup5",
+			"Name": "뒷베이스_y2"
+		},
+		{
+			"Id": "Param146",
+			"GroupId": "ParamGroup5",
+			"Name": "뒷베이스_y1"
+		},
+		{
+			"Id": "Param147",
+			"GroupId": "ParamGroup5",
+			"Name": "뒷머리1-1_y2"
+		},
+		{
+			"Id": "Param148",
+			"GroupId": "ParamGroup5",
+			"Name": "뒷머리1-1_y1"
+		},
+		{
+			"Id": "Param65",
+			"GroupId": "ParamGroup6",
+			"Name": "흰셔츠 카라앞_p2"
+		},
+		{
+			"Id": "Param66",
+			"GroupId": "ParamGroup6",
+			"Name": "흰셔츠 카라앞_p1"
+		},
+		{
+			"Id": "Param67",
+			"GroupId": "ParamGroup6",
+			"Name": "자켓카라_p2"
+		},
+		{
+			"Id": "Param68",
+			"GroupId": "ParamGroup6",
+			"Name": "자켓카라_p1"
+		},
+		{
+			"Id": "Param69",
+			"GroupId": "ParamGroup6",
+			"Name": "흰셔츠하단_p2"
+		},
+		{
+			"Id": "Param70",
+			"GroupId": "ParamGroup6",
+			"Name": "흰셔츠하단_p1"
+		},
+		{
+			"Id": "Param71",
+			"GroupId": "ParamGroup6",
+			"Name": "조끼가슴_p2"
+		},
+		{
+			"Id": "Param72",
+			"GroupId": "ParamGroup6",
+			"Name": "조끼가슴_p1"
+		},
+		{
+			"Id": "Param73",
+			"GroupId": "ParamGroup6",
+			"Name": "R상체끈_p2"
+		},
+		{
+			"Id": "Param74",
+			"GroupId": "ParamGroup6",
+			"Name": "R상체끈_p1"
+		},
+		{
+			"Id": "Param84",
+			"GroupId": "ParamGroup6",
+			"Name": "L자켓_p2"
+		},
+		{
+			"Id": "Param85",
+			"GroupId": "ParamGroup6",
+			"Name": "L자켓_p1"
+		},
+		{
+			"Id": "Param86",
+			"GroupId": "ParamGroup6",
+			"Name": "R자켓_p2"
+		},
+		{
+			"Id": "Param87",
+			"GroupId": "ParamGroup6",
+			"Name": "R자켓_p1"
+		},
+		{
+			"Id": "Param89",
+			"GroupId": "ParamGroup6",
+			"Name": "흰셔츠 카라앞_y2"
+		},
+		{
+			"Id": "Param91",
+			"GroupId": "ParamGroup6",
+			"Name": "흰셔츠 카라앞_y1"
+		},
+		{
+			"Id": "Param88",
+			"GroupId": "ParamGroup6",
+			"Name": "조끼밑단_y2"
+		},
+		{
+			"Id": "Param94",
+			"GroupId": "ParamGroup6",
+			"Name": "조끼밑단_y1"
+		},
+		{
+			"Id": "Param93",
+			"GroupId": "ParamGroup6",
+			"Name": "흰셔츠밑단_y2"
+		},
+		{
+			"Id": "Param95",
+			"GroupId": "ParamGroup6",
+			"Name": "흰셔츠밑단_y1"
+		},
+		{
+			"Id": "Param136",
+			"GroupId": "ParamGroup6",
+			"Name": "카라y"
+		},
+		{
+			"Id": "Param75",
+			"GroupId": "ParamGroup7",
+			"Name": "뱃지1_p3"
+		},
+		{
+			"Id": "Param77",
+			"GroupId": "ParamGroup7",
+			"Name": "뱃지1_p2"
+		},
+		{
+			"Id": "Param76",
+			"GroupId": "ParamGroup7",
+			"Name": "뱃지1_p1"
+		},
+		{
+			"Id": "Param78",
+			"GroupId": "ParamGroup7",
+			"Name": "R귀걸이2_p2"
+		},
+		{
+			"Id": "Param79",
+			"GroupId": "ParamGroup7",
+			"Name": "R귀걸이2_p1"
+		},
+		{
+			"Id": "Param81",
+			"GroupId": "ParamGroup7",
+			"Name": "L귀걸이2_p1"
+		},
+		{
+			"Id": "Param80",
+			"GroupId": "ParamGroup7",
+			"Name": "L귀걸이빛_p3"
+		},
+		{
+			"Id": "Param83",
+			"GroupId": "ParamGroup7",
+			"Name": "L귀걸이빛_p2"
+		},
+		{
+			"Id": "Param82",
+			"GroupId": "ParamGroup7",
+			"Name": "L귀걸이빛_p1"
+		},
+		{
+			"Id": "Param92",
+			"GroupId": "ParamGroup7",
+			"Name": "목사슬1_p2"
+		},
+		{
+			"Id": "Param90",
+			"GroupId": "ParamGroup7",
+			"Name": "목사슬1_p1"
+		},
+		{
+			"Id": "Param96",
+			"GroupId": "ParamGroup7",
+			"Name": "쓴안경장식_p2"
+		},
+		{
+			"Id": "Param97",
+			"GroupId": "ParamGroup7",
+			"Name": "쓴안경장식_p1"
+		},
+		{
+			"Id": "Param98",
+			"GroupId": "ParamGroup7",
+			"Name": "위안경장식_p2"
+		},
+		{
+			"Id": "Param99",
+			"GroupId": "ParamGroup7",
+			"Name": "위안경장식_p1"
+		},
+		{
+			"Id": "Param100",
+			"GroupId": "ParamGroup7",
+			"Name": "위안경빛_p3"
+		},
+		{
+			"Id": "Param101",
+			"GroupId": "ParamGroup7",
+			"Name": "위안경빛_p2"
+		},
+		{
+			"Id": "Param102",
+			"GroupId": "ParamGroup7",
+			"Name": "위안경빛_p1"
+		},
+		{
+			"Id": "Param103",
+			"GroupId": "ParamGroup7",
+			"Name": "쓴안경빛_p3"
+		},
+		{
+			"Id": "Param104",
+			"GroupId": "ParamGroup7",
+			"Name": "쓴안경빛_p2"
+		},
+		{
+			"Id": "Param105",
+			"GroupId": "ParamGroup7",
+			"Name": "쓴안경빛_p1"
+		},
+		{
+			"Id": "Param106",
+			"GroupId": "ParamGroup7",
+			"Name": "B하라_p2"
+		},
+		{
+			"Id": "Param107",
+			"GroupId": "ParamGroup7",
+			"Name": "B하라_p1"
+		},
+		{
+			"Id": "Param108",
+			"GroupId": "ParamGroup7",
+			"Name": "R상체끈_y2"
+		},
+		{
+			"Id": "Param109",
+			"GroupId": "ParamGroup7",
+			"Name": "R상체끈_y1"
+		},
+		{
+			"Id": "Param110",
+			"GroupId": "ParamGroup7",
+			"Name": "자켓_y2"
+		},
+		{
+			"Id": "Param111",
+			"GroupId": "ParamGroup7",
+			"Name": "자켓_y1"
+		},
+		{
+			"Id": "Param112",
+			"GroupId": "ParamGroup7",
+			"Name": "L팔"
+		},
+		{
+			"Id": "Param114",
+			"GroupId": "ParamGroup7",
+			"Name": "L팔y"
+		},
+		{
+			"Id": "Param113",
+			"GroupId": "ParamGroup7",
+			"Name": "R팔"
+		},
+		{
+			"Id": "Param115",
+			"GroupId": "ParamGroup7",
+			"Name": "R팔y"
+		},
+		{
+			"Id": "Param116",
+			"GroupId": "ParamGroup7",
+			"Name": "R손"
+		},
+		{
+			"Id": "Param117",
+			"GroupId": "ParamGroup7",
+			"Name": "R손"
+		},
+		{
+			"Id": "Param126",
+			"GroupId": "ParamGroup7",
+			"Name": "R홍채x"
+		},
+		{
+			"Id": "Param127",
+			"GroupId": "ParamGroup7",
+			"Name": "R홍채y"
+		},
+		{
+			"Id": "Param128",
+			"GroupId": "ParamGroup7",
+			"Name": "L홍채x"
+		},
+		{
+			"Id": "Param129",
+			"GroupId": "ParamGroup7",
+			"Name": "L홍채y"
+		},
+		{
+			"Id": "Param130",
+			"GroupId": "ParamGroup7",
+			"Name": "R동공1"
+		},
+		{
+			"Id": "Param131",
+			"GroupId": "ParamGroup7",
+			"Name": "R동공1y"
+		},
+		{
+			"Id": "Param132",
+			"GroupId": "ParamGroup7",
+			"Name": "L동공1"
+		},
+		{
+			"Id": "Param133",
+			"GroupId": "ParamGroup7",
+			"Name": "L동공1y"
+		},
+		{
+			"Id": "Param134",
+			"GroupId": "ParamGroup7",
+			"Name": "R동공2"
+		},
+		{
+			"Id": "Param135",
+			"GroupId": "ParamGroup7",
+			"Name": "L동공2"
+		},
+		{
+			"Id": "Param137",
+			"GroupId": "ParamGroup7",
+			"Name": "게임기y"
+		},
+		{
+			"Id": "Param118",
+			"GroupId": "ParamGroup9",
+			"Name": "머리안경"
+		},
+		{
+			"Id": "Param119",
+			"GroupId": "ParamGroup9",
+			"Name": "얼굴안경"
+		},
+		{
+			"Id": "Param120",
+			"GroupId": "ParamGroup9",
+			"Name": "게임기"
+		},
+		{
+			"Id": "Param121",
+			"GroupId": "ParamGroup9",
+			"Name": "홍조"
+		},
+		{
+			"Id": "Param122",
+			"GroupId": "ParamGroup9",
+			"Name": "눈물"
+		},
+		{
+			"Id": "Param123",
+			"GroupId": "ParamGroup9",
+			"Name": "반짝눈"
+		},
+		{
+			"Id": "Param124",
+			"GroupId": "ParamGroup9",
+			"Name": "하트눈"
+		},
+		{
+			"Id": "Param125",
+			"GroupId": "ParamGroup9",
+			"Name": "음침"
+		},
+		{
+			"Id": "Param139",
+			"GroupId": "ParamGroup8",
+			"Name": "게임기애니"
+		},
+		{
+			"Id": "Param138",
+			"GroupId": "ParamGroup8",
+			"Name": "눈물애니"
+		},
+		{
+			"Id": "Param141",
+			"GroupId": "ParamGroup8",
+			"Name": "로봇x"
+		},
+		{
+			"Id": "Param142",
+			"GroupId": "ParamGroup8",
+			"Name": "로봇y"
+		},
+		{
+			"Id": "Param140",
+			"GroupId": "ParamGroup8",
+			"Name": "로봇애니"
+		}
+	],
+	"ParameterGroups": [
+		{
+			"Id": "ParamGroup",
+			"GroupId": "",
+			"Name": "눈"
+		},
+		{
+			"Id": "ParamGroup2",
+			"GroupId": "",
+			"Name": "입"
+		},
+		{
+			"Id": "ParamGroup3",
+			"GroupId": "",
+			"Name": "각도"
+		},
+		{
+			"Id": "ParamGroup4",
+			"GroupId": "",
+			"Name": "헤어물리X"
+		},
+		{
+			"Id": "ParamGroup5",
+			"GroupId": "",
+			"Name": "헤어물리Y"
+		},
+		{
+			"Id": "ParamGroup6",
+			"GroupId": "",
+			"Name": "의상물리"
+		},
+		{
+			"Id": "ParamGroup7",
+			"GroupId": "",
+			"Name": "기타물리"
+		},
+		{
+			"Id": "ParamGroup9",
+			"GroupId": "",
+			"Name": "단축키"
+		},
+		{
+			"Id": "ParamGroup8",
+			"GroupId": "",
+			"Name": "애니메이팅"
+		}
+	],
+	"Parts": [
+		{
+			"Id": "Part25",
+			"Name": "★손 추가파츠 25"
+		},
+		{
+			"Id": "Part",
+			"Name": "머리위안경 8"
+		},
+		{
+			"Id": "Part2",
+			"Name": "얼굴 97"
+		},
+		{
+			"Id": "Part14",
+			"Name": "상체 66"
+		},
+		{
+			"Id": "Part22",
+			"Name": "하체 6"
+		},
+		{
+			"Id": "Part23",
+			"Name": "로봇"
+		},
+		{
+			"Id": "PartSketch0",
+			"Name": "[ 밑그림 ]"
+		},
+		{
+			"Id": "Part26",
+			"Name": "게임기 오른손 7"
+		},
+		{
+			"Id": "Part27",
+			"Name": "게임기 왼손 7"
+		},
+		{
+			"Id": "Part28",
+			"Name": "게임기 7"
+		},
+		{
+			"Id": "Part3",
+			"Name": "앞머리와 안경 29"
+		},
+		{
+			"Id": "Part29",
+			"Name": "★표정 추가파츠"
+		},
+		{
+			"Id": "Part5",
+			"Name": "눈 26"
+		},
+		{
+			"Id": "Part8",
+			"Name": "코 3"
+		},
+		{
+			"Id": "Part9",
+			"Name": "입 8"
+		},
+		{
+			"Id": "Part10",
+			"Name": "얼굴 14"
+		},
+		{
+			"Id": "Part12",
+			"Name": "귀 6"
+		},
+		{
+			"Id": "Part13",
+			"Name": "뒷머리 11"
+		},
+		{
+			"Id": "Part15",
+			"Name": "왼팔 11"
+		},
+		{
+			"Id": "Part17",
+			"Name": "오른팔 13"
+		},
+		{
+			"Id": "Part19",
+			"Name": "상체 흉부-배꼽 39"
+		},
+		{
+			"Id": "Part4",
+			"Name": "안경 13"
+		},
+		{
+			"Id": "Part30",
+			"Name": "홍조"
+		},
+		{
+			"Id": "Part7",
+			"Name": "눈물"
+		},
+		{
+			"Id": "Part31",
+			"Name": "반짝눈"
+		},
+		{
+			"Id": "Part32",
+			"Name": "하트눈"
+		},
+		{
+			"Id": "Part6",
+			"Name": "오른쪽눈 13"
+		},
+		{
+			"Id": "Part11",
+			"Name": "앞머리 그림자 10"
+		},
+		{
+			"Id": "Part16",
+			"Name": "왼손 7"
+		},
+		{
+			"Id": "Part18",
+			"Name": "오른손 5"
+		},
+		{
+			"Id": "Part20",
+			"Name": "목 11"
+		},
+		{
+			"Id": "Part21",
+			"Name": "셔츠 액세서리1 3"
+		},
+		{
+			"Id": "Part24",
+			"Name": "복사눈"
+		}
+	],
+	"CombinedParameters": [
+		[
+			"ParamEyeBallX",
+			"ParamEyeBallY"
+		],
+		[
+			"ParamMouthForm",
+			"ParamMouthOpenY"
+		],
+		[
+			"Param141",
+			"Param142"
+		]
+	]
+}

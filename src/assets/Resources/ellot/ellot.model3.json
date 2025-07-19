@@ -1,0 +1,23 @@
+{
+	"Version": 3,
+	"FileReferences": {
+		"Moc": "ellot.moc3",
+		"Textures": [
+			"ellot.8192/texture_00.png"
+		],
+		"Physics": "ellot.physics3.json",
+		"DisplayInfo": "ellot.cdi3.json"
+	},
+	"Groups": [
+		{
+			"Target": "Parameter",
+			"Name": "LipSync",
+			"Ids": []
+		},
+		{
+			"Target": "Parameter",
+			"Name": "EyeBlink",
+			"Ids": []
+		}
+	]
+}

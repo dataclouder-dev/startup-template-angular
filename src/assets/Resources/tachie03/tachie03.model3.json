@@ -1,0 +1,23 @@
+{
+	"Version": 3,
+	"FileReferences": {
+		"Moc": "tachie03.moc3",
+		"Textures": [
+			"tachie03.16384/texture_00.png"
+		],
+		"Physics": "tachie03.physics3.json",
+		"DisplayInfo": "tachie03.cdi3.json"
+	},
+	"Groups": [
+		{
+			"Target": "Parameter",
+			"Name": "EyeBlink",
+			"Ids": []
+		},
+		{
+			"Target": "Parameter",
+			"Name": "LipSync",
+			"Ids": []
+		}
+	]
+}

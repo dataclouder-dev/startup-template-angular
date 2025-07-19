@@ -1,0 +1,28 @@
+{
+	"Version": 3,
+	"FileReferences": {
+		"Moc": "NVPU.moc3",
+		"Textures": [
+			"NVPU.4096/texture_00.png",
+			"NVPU.4096/texture_01.png",
+			"NVPU.4096/texture_02.png",
+			"NVPU.4096/texture_03.png",
+			"NVPU.4096/texture_04.png",
+			"NVPU.4096/texture_05.png"
+		],
+		"Physics": "NVPU.physics3.json",
+		"DisplayInfo": "NVPU.cdi3.json"
+	},
+	"Groups": [
+		{
+			"Target": "Parameter",
+			"Name": "EyeBlink",
+			"Ids": []
+		},
+		{
+			"Target": "Parameter",
+			"Name": "LipSync",
+			"Ids": []
+		}
+	]
+}

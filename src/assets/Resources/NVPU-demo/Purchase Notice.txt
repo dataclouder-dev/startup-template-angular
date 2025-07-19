@@ -1,0 +1,67 @@
+This product is a virtual item, and no refund requests for any reason will be accepted after delivery. Please confirm your agreement with all the terms and conditions before making the purchase!
+
+Note:
+
+This product includes all the content of the basic version. Be careful not to purchase it again.
+If you purchase the full version after buying the basic version, the cost of the basic version will not be refunded. Please consider this carefully before making a choice. (However, if you find the computer lagging after purchasing the full version, you can contact the artist/modeler with the purchase record to obtain the basic version.)
+We do not assist with issues unrelated to the model itself, such as how to use/adjust face capture, etc.
+※ Purchase Notice ※
+
+This model is a wholesale model sold multiple times.
+The copyright of this character belongs to the artist (Bilibili@犬尾卷-).
+This model can be used for all profit-making live broadcasts, recorded videos (except for the 7th and 8th clauses of this purchase notice). The two full-body illustrations can be used for live covers, promotional images, peripheral production, etc., and the income belongs to the user.
+You can commission work using this character, but it is prohibited to caricature this character.
+Prohibited actions include secondary sales, free sharing, or any behavior that harms the interests of the author. It is also prohibited for a guild to purchase a single copy and distribute it to multiple broadcasters.
+Unauthorized modification of texture sets is prohibited. Changes to the model's color require consultation with the author.
+Prohibited use of this model for any illegal or morally objectionable activities. Disputes arising from the use of this model are not the responsibility of the author.
+Prohibited use of this model to join guilds, clubs, or sign contracts with any platform (except for affiliated guild broadcasters, who can use it for live broadcasts).
+Users must not deliberately conceal information about this model, including the fact that it is a wholesale model and information about the author.
+Direct publication of the original illustrations is prohibited (watermarking or processing is required).
+The English version of this model is only sold on BOOTH and KO FI. Files downloaded from other sources are not the responsibility of the author.
+Purchasing this model implies agreement with all the terms of the purchase notice.
+If the user violates the above rules, the model author has the right to request the user to stop using the model.
+※ Contents of the Product Files ※
+
+Live2D model (folder containing executable files)
+Adjustable parameter instructions and face enhancement instructions
+Purchase notice and usage instructions
+※ Model Key Information ※
+The model has the following expressions/actions/adjustment keys:
+
+-- Facial expressions (7): --
+Blushing
+Heart eyes
+Angry#
+cry
+Tearful expression qwq
+Starry eyes
+Stick out tongue (key not set)
+
+-- Decorative accessories (5): --
+hooded shawl
+Cat ears
+Eye mask
+Glasses
+Horn
+
+-- Body colors (5): --
+black large chest
+White chest
+flat chest
+gas cylinder disappears
+Halo disappearance
+
+-- Hairstyles (4): --
+side-swept bangs
+double braided pigtails
+Short hair
+Shoulder-length hair
+
+-- Gestures (7): --
+individual microphone
+microphone gesture
+Microphone position (customizable)
+digital tablet gestures
+digital pen XY startup
+digital pen click
+coffee cup appears

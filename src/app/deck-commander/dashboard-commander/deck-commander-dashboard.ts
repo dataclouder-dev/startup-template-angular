@@ -208,6 +208,5 @@ export class DeckCommanderComponent implements OnInit, OnDestroy {
   public async executeCommand(deckCommander: IDeckCommander) {
     const results = await this.deckCommanderService.executeCommand(deckCommander);
     this.updateStatus('Command executed');
-    debugger;
   }
 }

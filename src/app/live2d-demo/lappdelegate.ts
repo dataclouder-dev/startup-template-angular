@@ -248,7 +248,6 @@ export class LAppDelegate {
    * Canvasを生成配置、Subdelegateを初期化する
    */
   private initializeSubdelegates(): void {
-    debugger;
     let width: number = 100;
     let height: number = 100;
     if (LAppDefine.CanvasNum > 3) {

@@ -1,0 +1,37 @@
+.animation-controls {
+  margin: 1rem 0;
+  padding: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.motion-list h4 {
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.motion-list ul {
+  list-style-type: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.motion-list li {
+  display: inline-block;
+}
+
+.zoom-control {
+  /* display: flex; */
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+/* .zoom-control .p-slider {
+  flex: 1;
+} */

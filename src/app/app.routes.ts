@@ -154,8 +154,14 @@ export const routes: Routes = [
       },
 
       {
-        path: 'test',
-        loadComponent: () => import('./pages/test/test.component').then(m => m.TestComponent),
+        path: 'live2d',
+        loadComponent: () => import('./pages/live2d/live2d.component').then(m => m.Live2dComponent),
+        children: [
+          {
+            path: 'playground',
+            loadComponent: () => import('./pages/live2d/playground/live2d-playground.component').then(m => m.Live2dPlaygroundComponent),
+          },
+        ],
       },
       {
         path: 'agents',
