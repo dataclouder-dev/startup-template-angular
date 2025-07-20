@@ -38,10 +38,6 @@ export class Live2dPlaygroundComponent implements AfterViewInit {
     { name: 'Hiyori', path: '/assets/Resources/Hiyori/Hiyori.model3.json', scale: 0.15 },
     { name: 'Mao', path: '/assets/Resources/Mao/Mao.model3.json', scale: 0.08 },
     { name: 'Haru', path: '/assets/Resources/Haru/Haru.model3.json', scale: 0.15 },
-    { name: 'Mio', path: '/assets/Resources/Mio/Mio.model3.json', scale: 0.15 },
-    { name: 'Mark', path: '/assets/Resources/Mark/Mark.model3.json', scale: 0.15 },
-    { name: 'Natori', path: '/assets/Resources/Natori/Natori.model3.json', scale: 0.15 },
-    { name: 'Rice', path: '/assets/Resources/Rice/Rice.model3.json', scale: 0.15 },
 
     { name: 'Alexia', path: '/assets/Resources/Alexia/Alexia.model3.json', scale: 0.07 },
     { name: 'Ellot', path: '/assets/Resources/ellot/ellot.model3.json', scale: 0.14 },
@@ -234,6 +230,32 @@ export class Live2dPlaygroundComponent implements AfterViewInit {
     if (this.motionGroups.length > 0) {
       const group = this.motionGroups[Math.floor(Math.random() * this.motionGroups.length)];
       this.playAnimation(group);
+    }
+  }
+
+  /**
+   * Makes the model speak using an audio file for lip-sync.
+   * @param audioUrl The URL of the audio file to play.
+   */
+  public speak(audioUrl: string): void {
+    if (!this.model) {
+      console.error('Model not available to speak');
+      return;
+    }
+
+    // The 'crossOrigin' option is important if the audio is not from the same domain.
+    this.model.speak(audioUrl, {
+      volume: 1.0,
+      crossOrigin: 'anonymous',
+    });
+  }
+
+  /**
+   * Stops any currently playing audio and lip-sync.
+   */
+  public stopSpeaking(): void {
+    if (this.model) {
+      this.model.stopSpeaking();
     }
   }
 }

@@ -16,6 +16,8 @@
 
   <div class="animation-controls">
     <button pButton type="button" label="Play Random Animation" (click)="playRandomAnimation()"></button>
+    <button pButton type="button" label="Speak" (click)="speak('/assets/audios/tour/intro2.mp3')" class="p-button-success"></button>
+    <button pButton type="button" label="Stop Speaking" (click)="stopSpeaking()" class="p-button-danger"></button>
     <div class="motion-list" *ngIf="motionGroups.length > 0">
       <h4>Available Animations</h4>
       <ul>
