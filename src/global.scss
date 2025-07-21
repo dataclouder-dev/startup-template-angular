@@ -133,41 +133,13 @@
     font-weight: 500 ;
 }
 
- body {
-    position: relative;  // Required for pseudo-element positioning
+ html,
+ body,
+ ion-app,
+ .ion-page,
+ ion-content {
+   background: transparent !important;
  }
-
- body::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-    background-image: url('/assets/pattern-randomized.svg');
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-    animation: float 40s ease-in-out infinite;
-}
-
-// Add dark mode specific styles
-body.dark::before {
-    background-image: url('/assets/pattern-randomized-dark2.svg');
-}
-
-@keyframes float {
-    0% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.1);
-    }
-    100% {
-        transform: scale(1);
-    }
-}
 
 
 .p-card{

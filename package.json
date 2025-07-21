@@ -12,6 +12,7 @@
     "start": "ng serve --host 0.0.0.0",
     "start:qa": "ng serve -c qa --host 0.0.0.0",
     "start:prod": "ng serve -c production --host 0.0.0.0",
+    "start:live2d": "node scripts/start-live2d.js",
     "build": "ng build",
     "build:dev": "ng build",
     "build:prod": "ng build -c production",
