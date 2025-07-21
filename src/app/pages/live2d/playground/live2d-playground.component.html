@@ -30,7 +30,9 @@
 
   <div class="content-container">
     <div class="model-display">
-      <canvas id="canvas" width="600" height="600"></canvas>
+      @if(selectedModel){
+      <app-live2d-model [modelPath]="selectedModel.path" [scale]="selectedModel.scale" (modelLoaded)="onModelLoaded($event)" #live2dModel></app-live2d-model>
+      }
     </div>
 
     <app-model-info [modelParameters]="modelParameters" [modelParts]="modelParts" (parameterChanged)="updateModelParameter($event)"> </app-model-info>

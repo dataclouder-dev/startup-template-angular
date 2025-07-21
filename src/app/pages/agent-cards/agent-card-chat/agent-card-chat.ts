@@ -1,18 +1,20 @@
-import { ChangeDetectorRef, Component, Input, OnInit, inject, effect } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit, inject, effect, ViewChild } from '@angular/core';
 
 import { DCChatComponent, IConversationSettings, ChatRole, AudioSpeed, IAgentCard, ChatMonitorService } from '@dataclouder/ngx-agent-cards';
 import { ActivatedRoute } from '@angular/router';
 import { AgentCardService } from 'src/app/services/agent-card-service';
 import { ChatUserSettings } from '@dataclouder/ngx-core';
+import { Live2dModelComponent } from 'src/app/components/live2d-model/live2d-model.component';
 
 @Component({
   selector: 'app-agent-card-chat',
   standalone: true,
-  imports: [DCChatComponent],
+  imports: [DCChatComponent, Live2dModelComponent],
   templateUrl: './agent-card-chat.html',
   styleUrls: ['./agent-card-chat.scss'],
 })
 export class AgentCardChatComponent implements OnInit {
+  @ViewChild(Live2dModelComponent) live2dModelComponent!: Live2dModelComponent;
   private route = inject(ActivatedRoute);
   private conversationCardsService = inject(AgentCardService);
   private cdr = inject(ChangeDetectorRef);
@@ -21,8 +23,8 @@ export class AgentCardChatComponent implements OnInit {
   constructor() {
     effect(() => {
       const message = this.chatMonitorService.messageAudioWillPlay$();
-      if (message) {
-        console.log('AgentCardChatComponent: Audio will play for message:', message);
+      if (message.audioUrl && this.live2dModelComponent) {
+        this.live2dModelComponent.speak(message.audioUrl, { volume: 0 });
       }
     });
   }
