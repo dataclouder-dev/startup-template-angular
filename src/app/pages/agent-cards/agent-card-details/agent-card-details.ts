@@ -1,8 +1,8 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, effect, inject } from '@angular/core';
 
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { DcAgentCardDetailsComponent, IAgentCard } from '@dataclouder/ngx-agent-cards';
+import { DcAgentCardDetailsComponent, IAgentCard, ChatMonitorService } from '@dataclouder/ngx-agent-cards';
 
 @Component({
   selector: 'app-agent-card-details',
@@ -15,10 +15,9 @@ export class AgentCardDetailsPage implements OnInit {
   private router = inject(Router);
   private route = inject(ActivatedRoute);
 
-  conversationId: any;
+  private chatMonitorService = inject(ChatMonitorService);
 
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[]);
+  conversationId: any;
 
   constructor() {
     // First try to get from state

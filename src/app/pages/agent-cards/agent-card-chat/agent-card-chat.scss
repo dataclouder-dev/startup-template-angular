@@ -69,4 +69,19 @@
   z-index: 3;
   height: 100%;
   width: 100%;
+  display: flex;
+}
+
+.chat-container {
+  width: 50%;
+  height: 100%;
+}
+
+.sticker-container {
+  width: 50%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
 }
