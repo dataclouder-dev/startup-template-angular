@@ -3,7 +3,6 @@ import { ChangeDetectionStrategy, Component, ViewChild, ChangeDetectorRef } from
 import { FormsModule } from '@angular/forms';
 import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
-import { DropdownModule } from 'primeng/dropdown';
 import { AccordionModule } from 'primeng/accordion';
 import { CardModule } from 'primeng/card';
 import { TableModule } from 'primeng/table';
@@ -11,6 +10,7 @@ import { SliderModule } from 'primeng/slider';
 import { ModelInfoComponent } from '../l2d-model-info/model-info.component';
 import { ModelParameters, ModelParts } from '../models/live2d-types';
 import { Live2dModelComponent } from '../../../components/live2d-model/live2d-model.component';
+import { SelectModule } from 'primeng/select';
 
 @Component({
   selector: 'app-live2d-playground',
@@ -19,7 +19,7 @@ import { Live2dModelComponent } from '../../../components/live2d-model/live2d-mo
     CommonModule,
     DialogModule,
     ButtonModule,
-    DropdownModule,
+    SelectModule,
     AccordionModule,
     FormsModule,
     CardModule,

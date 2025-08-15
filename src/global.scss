@@ -66,6 +66,8 @@
     // Check if works is the side-width
     --side-width: 270px;
     --side-max-width: 300px;
+
+
   }
   
 
@@ -102,6 +104,10 @@
     --ion-text-color-rgb: var(--primary-dark-color) ; // this control the icon not sure what other colors
     --ion-item-backdrop: blur(3px) ;
     --ion-item-background: transparent;
+
+
+    --p-tabs-tabpanel-background: rgb(113, 82, 171) ;
+
   }
   
   
@@ -161,3 +167,7 @@
 
 
   // Shepherd tour styles
+  p-paginator {
+    background: transparent !important;
+  }
+  

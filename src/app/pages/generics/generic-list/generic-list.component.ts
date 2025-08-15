@@ -41,7 +41,7 @@ import { TableModule } from 'primeng/table';
 export class GenericListComponent extends PaginationBase implements OnInit {
   // Services
   private toastService = inject<ToastAlertsAbstractService>(TOAST_ALERTS_TOKEN);
-  private sourceService = inject(GenericService);
+  private genericService = inject(GenericService);
   private cdr = inject(ChangeDetectorRef);
 
   // Inputs
@@ -76,7 +76,7 @@ export class GenericListComponent extends PaginationBase implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.filterConfig.returnProps = { _id: 1, id: 1, name: 1, description: 1, updatedAt: 1, image: 1 };
-    const response = await this.sourceService.getFilteredGenerics(this.filterConfig);
+    const response = await this.genericService.query(this.filterConfig);
     this.generics.set(response.rows);
     this.cdr.detectChanges();
     console.log(this.generics(), this.viewType);
@@ -117,7 +117,7 @@ export class GenericListComponent extends PaginationBase implements OnInit {
       case 'delete':
         const areYouSure = confirm('¿Estás seguro de querer eliminar este origen?');
         if (areYouSure) {
-          await this.sourceService.deleteGeneric(item.id);
+          await this.genericService.remove(item.id);
           this.generics.set(this.generics().filter(generic => generic.id !== item.id));
           this.toastService.success({
             title: 'Origen eliminado',

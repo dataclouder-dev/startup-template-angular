@@ -1,0 +1,23 @@
+{
+  "projectName": "Dataclouder Template",
+  "version": "0.0.13",
+  "envName": "DEV",
+  "production": false,
+  "authenticationRequired": true,
+  "backendNodeUrl": "http://localhost:8080",
+  "backendPythonUrl": "http://localhost:8000",
+  "mobile": {
+    "appleAppId": "com.dc-template.app.dev",
+    "appleRedirectURI": "https://dataclouder-dev.firebaseapp.com/__/auth/handler",
+    "androidClientId": "484991861457-chhvmiqtjq22je1nr9m13ouljrdeuhpi.apps.googleusercontent.com",
+    "iosClientId": "484991861457-o3j8n8fv21huerkd0pj8r719jssrtbnh.apps.googleusercontent.com"
+  },
+  "firebase": {
+    "apiKey": "AIzaSyC4LDGaigo4TJDSnCToPuIiOkcjJ8OpsoQ",
+    "authDomain": "dataclouder-dev.firebaseapp.com",
+    "projectId": "dataclouder-dev",
+    "storageBucket": "dataclouder-dev.firebasestorage.app",
+    "messagingSenderId": "514401908603",
+    "appId": "1:514401908603:web:dac63e04e6b0accd986fde"
+  }
+}

@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 import { RouterModule } from '@angular/router';
+import { GENERICS_ROUTES } from './generic.routes';
 
 @Component({
   selector: 'app-generics',
@@ -9,4 +10,6 @@ import { RouterModule } from '@angular/router';
   styleUrl: './generics.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class GenericsComponent {}
+export class GenericsComponent {
+  public static routes = GENERICS_ROUTES;
+}

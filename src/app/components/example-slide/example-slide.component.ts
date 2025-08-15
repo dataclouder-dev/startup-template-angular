@@ -1,17 +1,19 @@
 import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-example-slide',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   template: `
     <div class="example-slide-content">
-      <img *ngIf="data?.image" [src]="data.image" [alt]="data.title" />
+      @if (data?.image) {
+        <img [src]="data.image" [alt]="data.title" />
+      }
       <h4>{{ data?.title ?? 'No Title' }}</h4>
       <p>{{ data?.description ?? 'No Description' }}</p>
     </div>
-  `,
+    `,
   styles: [
     `
       .example-slide-content {

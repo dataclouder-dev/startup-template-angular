@@ -1,7 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 
 import { ActivatedRoute } from '@angular/router';
-import { DCLessonRendererComponent, ILesson, LESSONS_TOKEN, LessonsAbstractService, ILessonsSettings } from '@dataclouder/ngx-lessons';
+import { DCLessonRendererComponent, ILesson, LESSONS_TOKEN, ILessonsSettings } from '@dataclouder/ngx-lessons';
 
 @Component({
   selector: 'app-lesson-details',
@@ -12,7 +12,7 @@ import { DCLessonRendererComponent, ILesson, LESSONS_TOKEN, LessonsAbstractServi
 })
 export class LessonDetailsComponent implements OnInit {
   private activatedRoute = inject(ActivatedRoute);
-  private lessonService = inject<LessonsAbstractService>(LESSONS_TOKEN);
+  private lessonService = inject(LESSONS_TOKEN);
 
   public lesson!: ILesson;
   public lessonId: string = this.activatedRoute.snapshot.paramMap.get('id')!;

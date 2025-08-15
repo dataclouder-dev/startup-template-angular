@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { ChangeDetectionStrategy, Component, ElementRef, inject, viewChild, effect, signal, OnInit } from '@angular/core'; // Import effect
 
 import { InputTextModule } from 'primeng/inputtext';
@@ -28,7 +28,7 @@ register();
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, ButtonModule, InputTextModule, CardModule, DcLessonCardComponent],
+  imports: [ButtonModule, InputTextModule, CardModule, DcLessonCardComponent],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

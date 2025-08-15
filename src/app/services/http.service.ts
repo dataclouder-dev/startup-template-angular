@@ -107,30 +107,6 @@ export class HttpService {
     return lastValueFrom<any>(delete$);
   }
 
-  // public getObservable<T>(service: string, host = 'nodejs'): Observable<T> {
-  //   const hostUrl = this.getHostUrl(host);
-  //   const url = `${hostUrl}/${service}`;
-  //   return this.httpClient.get<T>(url, { observe: 'response' }).pipe(
-  //     tap(this.pipeCheckAppStatus.bind(this)),
-  //     catchError(this.pipeError.bind(this)),
-  //     map((response) => response.body),
-  //   );
-  // }
-
-  // private pipeCheckAppStatus(response: any) {
-  //   // reviso el tipo de status para hacer acciones adicionales
-  //   // agregar este tap a todos los métodos que necesiten verifcar el status.
-  //   // necesito bind para acceder a las variables locales
-  //   if ([AppHttpCode.GoodRefreshToken, AppHttpCode.ErrorRefreshToken].includes(response.status)) {
-  //     this.firebaseAuthService.refreshToken();
-  //   }
-
-  //   if (response.status === AppHttpCode.GoodPlanExpired) {
-  //     this.toastrService.warn('Tu plan expiró', 'Regresando a plan básico');
-  //     this.firebaseAuthService.refreshToken();
-  //   }
-  // }
-
   private pipeError(err: HttpErrorResponse) {
     this.handleError(err);
     return throwError(() => err);
@@ -196,7 +172,6 @@ export class HttpService {
     } else if (err.status === 211) {
       // probablmente nunca vea esta linea en accion pero solo por si acaso le pase a alguien
       console.log('refreshing token...');
-      // this.firebaseAuthService.refreshToken();
     } else {
       const error: any = err.error;
       const message = error?.error_message || 'Ocurrió un problema';

@@ -164,6 +164,10 @@ export const routes: Routes = [
         ],
       },
       {
+        path: 'ai-playground',
+        loadComponent: () => import('./pages/ai-playground/ai-playground.component').then(m => m.AiPlaygroundComponent),
+      },
+      {
         path: 'agents',
         loadComponent: () => import('./pages/agent-cards/agent-card-router').then(m => m.AgentCardRouter),
         children: [
@@ -182,6 +186,29 @@ export const routes: Routes = [
           {
             path: 'details/:id',
             loadComponent: () => import('./pages/agent-cards/agent-card-details/agent-card-details').then(m => m.AgentCardDetailsPage),
+          },
+        ],
+      },
+
+      {
+        path: 'balancer',
+        loadComponent: () => import('./api-balancer/api-balancers.component').then(m => m.ApiBalancersComponent),
+        children: [
+          {
+            path: '',
+            loadComponent: () => import('./api-balancer/api-balancer-list/api-balancer-list.component').then(m => m.ApiBalancerListComponent),
+          },
+          {
+            path: 'edit',
+            loadComponent: () => import('./api-balancer/api-balancer-form/api-balancer-form.component').then(m => m.ApiBalancerFormComponent),
+          },
+          {
+            path: 'edit/:id',
+            loadComponent: () => import('./api-balancer/api-balancer-form/api-balancer-form.component').then(m => m.ApiBalancerFormComponent),
+          },
+          {
+            path: 'details/:id',
+            loadComponent: () => import('./api-balancer/api-balancer-detail/api-balancer-detail.component').then(m => m.ApiBalancerDetailComponent),
           },
         ],
       },

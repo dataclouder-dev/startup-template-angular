@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, HostListener } from '@angular/core';
 import { IonButton, IonIcon } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
@@ -9,7 +9,7 @@ import { downloadOutline } from 'ionicons/icons';
   templateUrl: './pwa-install.component.html',
   styleUrls: ['./pwa-install.component.scss'],
   standalone: true,
-  imports: [CommonModule, IonButton, IonIcon],
+  imports: [IonButton, IonIcon],
 })
 export class PwaInstallComponent {
   installPrompt: any = null;

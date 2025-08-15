@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject, signal } from '@angular/core';
 import { GenericService } from '../generics.service';
 import { ActivatedRoute } from '@angular/router';
 import { JsonPipe } from '@angular/common';
@@ -24,7 +24,7 @@ export class GenericDetailComponent implements OnInit {
   }
 
   private async loadGeneric() {
-    const generic = await this.genericService.getGeneric(this.genericId);
+    const generic = await this.genericService.findOne(this.genericId);
     this.generic.set(generic);
   }
 }

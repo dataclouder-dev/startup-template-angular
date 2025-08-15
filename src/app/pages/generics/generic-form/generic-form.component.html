@@ -1,8 +1,8 @@
 <h3>Generics Form</h3>
 
 <div class="source-form-card">
-  <p-card [header]="genericId ? 'Edit Generic' : 'New Generic'">
-    <form [formGroup]="genericForm">
+  <p-card [header]="entityId() ? 'Edit Generic' : 'New Generic'">
+    <form [formGroup]="form">
       <div style="display: flex; gap: 10px">
         <div class="form-field">
           <label class="block" pTooltip="Image should be handle after upload">Subir imagen</label>
@@ -38,7 +38,7 @@
         <div class="form-field">
           <label class="block" pTooltip="Ejemplo use formly">Extension</label>
 
-          <formly-form [fields]="extraFields" [form]="genericForm.controls.extension"></formly-form>
+          <formly-form [fields]="extraFields" [form]="form.controls.extension"></formly-form>
         </div>
       </div>
 
@@ -78,7 +78,7 @@
     </form>
 
     <div style="display: flex; justify-content: flex-end">
-      <p-button (click)="save()" label="Save Generic" [disabled]="!genericForm.valid" icon="pi pi-check" iconPos="right"> </p-button>
+      <p-button (click)="save()" label="Save Generic" [disabled]="!form.valid" icon="pi pi-check" iconPos="right"> </p-button>
     </div>
 
     <div>

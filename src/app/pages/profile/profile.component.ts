@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, OnInit, inject } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -13,7 +13,7 @@ import { TOAST_ALERTS_TOKEN } from '@dataclouder/ngx-core';
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss'],
   standalone: true,
-  imports: [IonicModule, ReactiveFormsModule, CommonModule],
+  imports: [IonicModule, ReactiveFormsModule],
 })
 export class ProfileComponent implements OnInit {
   private fb = inject(FormBuilder);

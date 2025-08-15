@@ -4,7 +4,6 @@ import { IGeneric } from '../models/generics.model';
 import { GenericService } from '../generics.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CardModule } from 'primeng/card';
-import { DropdownModule } from 'primeng/dropdown';
 import { ButtonModule } from 'primeng/button';
 import { SelectModule } from 'primeng/select';
 import { InputTextModule } from 'primeng/inputtext';
@@ -24,7 +23,6 @@ import { GenericListComponent } from '../generic-list/generic-list.component';
     ReactiveFormsModule,
     CardModule,
     TextareaModule,
-    DropdownModule,
     ButtonModule,
     SelectModule,
     InputTextModule,
@@ -44,13 +42,18 @@ export class GenericFormComponent extends EntityBaseFormComponent<IGeneric> impl
   protected entityCommunicationService = inject(GenericService);
   private fb = inject(FormBuilder);
 
-  public form: FormGroup = this.fb.group({});
+  public form = this.fb.group({
+    name: ['', Validators.required],
+    description: [''],
+    image: [{} as CloudStorageData],
+    type: [''],
+    relation: [{ id: '', name: '', description: '' }],
+    extension: new FormGroup({}),
+  });
 
   protected override patchForm(entity: IGeneric): void {
     throw new Error('Method not implemented.');
   }
-  private genericService = inject(GenericService);
-  private cdr = inject(ChangeDetectorRef);
 
   public storageImgSettings = {
     path: `generics`,
@@ -61,15 +64,6 @@ export class GenericFormComponent extends EntityBaseFormComponent<IGeneric> impl
     { key: 'title', type: 'input', props: { label: 'Title', placeholder: 'Title', required: false } },
     { key: 'content', type: 'textarea', props: { label: 'Content', placeholder: 'Content', required: false } },
   ];
-
-  public genericForm = this.fb.group({
-    name: ['', Validators.required],
-    description: [''],
-    image: [{} as CloudStorageData],
-    type: [''],
-    relation: [{ id: '', name: '', description: '' }],
-    extension: new FormGroup({}),
-  });
 
   public peopleOptions = [
     { id: '1', name: 'Yang Feng', description: 'Description with short description', image: 'assets/defaults/images/face-1.jpg' },
@@ -91,17 +85,7 @@ export class GenericFormComponent extends EntityBaseFormComponent<IGeneric> impl
     { id: 'Relation 3', name: 'relation3', description: 'Description with short description' },
   ];
 
-  public generic: IGeneric | null = null;
-  public genericId = this.route.snapshot.params['id'];
-
-  async ngOnInit(): Promise<void> {
-    if (this.genericId) {
-      this.generic = await this.genericService.getGeneric(this.genericId);
-      if (this.generic) {
-        this.genericForm.patchValue(this.generic);
-      }
-    }
-  }
+  async ngOnInit(): Promise<void> {}
 
   public addItemToList(event: any) {
     this.selectedPeople.push(event.value);
@@ -136,7 +120,6 @@ export class GenericFormComponent extends EntityBaseFormComponent<IGeneric> impl
     // this.genericForm.patchValue({ relation: relation });
     this.isDialogVisible = false;
     this.relationPopupSelector.push(relation);
-    this.cdr.detectChanges();
     alert('Relation selected');
   }
 }

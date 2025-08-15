@@ -70,7 +70,7 @@ ${MarkdownWriterSkill}
 ${PersonalCoachSkill}
 Create una lección para desarrollo personal masculino:
 
-${lesson.prompt}
+${lesson.description}
 `;
 
 // 2) PROMPT TO GENERATE AN IMAGE

@@ -1,0 +1,47 @@
+:host {
+  display: block;
+  padding: 1rem;
+}
+
+.source-form-card {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.form-field {
+  margin-bottom: 1.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-field label {
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: #495057;
+}
+
+.form-field input, 
+.form-field textarea,
+.form-field ::ng-deep .p-element {
+  margin-top: 0.25rem;
+}
+
+/* Add some spacing for the button container */
+:host ::ng-deep .p-card .p-card-content > div:last-child {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* Optional: Add some styling to the card header */
+:host ::ng-deep .p-card .p-card-header {
+  background-color: #f8f9fa;
+  padding: 1rem;
+  border-bottom: 1px solid #dee2e6;
+}
+
+h3 {
+  color: #495057;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}

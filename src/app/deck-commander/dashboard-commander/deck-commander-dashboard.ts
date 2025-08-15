@@ -1,5 +1,5 @@
-import { Component, OnInit, OnDestroy, Inject, Renderer2, HostListener, inject, signal } from '@angular/core';
-import { DOCUMENT } from '@angular/common';
+import { Component, OnInit, OnDestroy, Inject, Renderer2, HostListener, inject, signal, DOCUMENT } from '@angular/core';
+
 import { DeckCommanderService } from '../deck-commanders.service';
 import { IDeckCommander } from '../models/deck-commanders.model';
 
