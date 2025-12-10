@@ -81,6 +81,7 @@ export class IonicLayoutComponent implements OnInit {
   private actionSheetController = inject(ActionSheetController);
   private menuController = inject(MenuController);
   public userService = inject(AppUserService);
+
   private config = inject(APP_CONFIG);
 
   public envName = this.config.envName;
@@ -120,14 +121,7 @@ export class IonicLayoutComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.firebaseAuthService.authState$.subscribe((auth: any) => {
-      if (auth) {
-        // this.isAdmin = this.user.isAdmin;
-        this.isAdmin = true;
-      }
-
-      console.log(this.user);
-    });
+    this.isAdmin = this.userService.isAdmin();
   }
 
   logout() {
