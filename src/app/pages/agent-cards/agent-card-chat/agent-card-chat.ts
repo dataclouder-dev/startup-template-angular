@@ -9,6 +9,7 @@ import {
   IConversationFlow,
   ConversationEvents,
   VideoPlayerService,
+  VideoPlayerNativeService,
 } from '@dataclouder/ngx-agent-cards';
 import { ActivatedRoute } from '@angular/router';
 import { ChatUserSettings, EModelQuality } from '@dataclouder/ngx-core';
@@ -24,7 +25,7 @@ import { ConceptStatus, ILearningUserState, KnowledgeLearningSystemService } fro
   templateUrl: './agent-card-chat.html',
   styleUrls: ['./agent-card-chat.scss'],
 })
-export class AgentCardChatComponent implements OnInit, AfterViewInit, OnDestroy {
+export class AgentCardChatComponent implements OnInit, OnDestroy {
   private route = inject(ActivatedRoute);
   private conversationCardsService = inject(CONVERSATION_AI_TOKEN);
   private cdr = inject(ChangeDetectorRef);
@@ -33,10 +34,7 @@ export class AgentCardChatComponent implements OnInit, AfterViewInit, OnDestroy 
   private userService = inject(UserService);
   private knowledgeLearningSystemService = inject(KnowledgeLearningSystemService);
   private agentCardsMasterStateService = inject(AGENT_CARDS_STATE_SERVICE);
-  private videoPlayerService = inject(VideoPlayerService);
-
-  public testVideo =
-    'https://firebasestorage.googleapis.com/v0/b/appingles-qa.appspot.com/o/conversation-cards%2F68d6a85874782b0505fce42c%2Fmotions%2Ffile%2F1758906445470-angry.mp4?alt=media&token=770a0831-3531-4130-b3f2-b288964cd9f8';
+  private videoPlayerService = inject(VideoPlayerNativeService);
 
   @ViewChild('videoPlayer') set videoPlayerRef(ref: ElementRef<HTMLVideoElement>) {
     if (ref) {
@@ -114,6 +112,7 @@ give 10 to 25 when user speaks well, cooperates, moves the conversation forward,
 
       if (this.agentCard) {
         this.videoPlayerService.setAgentCard(this.agentCard);
+        this.videoPlayerService.startConversation();
       }
     });
   }
@@ -156,10 +155,6 @@ give 10 to 25 when user speaks well, cooperates, moves the conversation forward,
     }
     // console.log(event);
     //
-  }
-
-  ngAfterViewInit(): void {
-    this.videoPlayerService.startConversation();
   }
 
   ngOnDestroy(): void {

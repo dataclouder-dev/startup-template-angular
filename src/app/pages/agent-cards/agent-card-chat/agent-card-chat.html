@@ -1,7 +1,7 @@
 @if(agentCard){
 <div class="media-layout">
   <!-- Background Image layer (Desktop: always, Mobile: only if no video) -->
-  <div class="image-background-layer" [class.hidden-mobile]="!!testVideo">
+  <div class="image-background-layer">
     <div class="blur-overlay"></div>
     <div class="image-wrapper">
       <img
@@ -16,11 +16,9 @@
   </div>
 
   <!-- Video layer (Desktop: centered, Mobile: background) -->
-  @if(testVideo) {
   <div class="video-container">
-    <video [src]="testVideo" autoplay muted loop playsinline></video>
+    <video #videoPlayer></video>
   </div>
-  }
 </div>
 
 <!-- Chat Content -->

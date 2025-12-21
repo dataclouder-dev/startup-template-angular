@@ -4,6 +4,7 @@
 @use 'tailwindcss';
 
 
+
 // 1) Importing css libraries
 @import "primeicons/primeicons.css";
 
@@ -66,6 +67,9 @@
     --side-width: 270px;
     --side-max-width: 300px;
 
+    // 
+    --chat-user-message-bg: rgba(48, 8, 113, 0.5);
+    --chat-assistant-message-bg: rgba(6, 78, 84, 0.5) ;
 
   }
   
