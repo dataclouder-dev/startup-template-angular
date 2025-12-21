@@ -66,7 +66,7 @@ bash
 make start
 ```
 
-After successful startup, your application will be available at `localhost:4200`.
+After successful startup, your application will be available at `localhost:7990`.
 
 At this point, it's recommended to save the project to your own Git repository and begin developing your business idea with this solid foundation in place.
 

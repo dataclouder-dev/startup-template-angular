@@ -83,3 +83,4 @@ Thumbs.db
 
 *storybook.log
 storybook-static
+/public/config.prod.json

@@ -10,5 +10,7 @@
   "profile-form.gender": "Género",
   "profile-form.profileInfo": "Información del perfil",
   "profile-settings-form.iSpeak": "I speak",
-  "profile-settings-form.wantToLearn": "I want to learn"
+  "profile-settings-form.wantToLearn": "I want to learn",
+  "dataclouder.agentCards.dcAgentCardDetails.startConversation": "Start Conversation",
+  "dataclouder.agentCards.dcAgentCardDetails.scenario": "Scenario"
 }

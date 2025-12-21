@@ -39,8 +39,6 @@ export class ToastAlertService extends ToastAlertsAbstractService {
   // }
 
   public success(data: ToastData) {
-    debugger;
-
     this.messageService.add({
       key: 'main-toast',
       severity: 'success',

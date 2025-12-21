@@ -21,7 +21,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AGENT_CARDS_STATE_SERVICE, DefaultAgentCardsService, IAgentCard, provideAgentCardService } from '@dataclouder/ngx-agent-cards';
 import { provideLessonsService, provideNotionService, DefaultLessonsService } from '@dataclouder/ngx-lessons';
 import { provideAuthConfig } from '@dataclouder/ngx-auth';
-import { HttpCoreService, HTTP_CORE_CONFIG, provideToastAlert, APP_CONFIG, IAppConfig } from '@dataclouder/ngx-core';
+import { HttpCoreService, provideToastAlert, APP_CONFIG, IAppConfig } from '@dataclouder/ngx-core';
 // Local
 import { ToastAlertService } from './app/services/toast.service';
 import { authInterceptor } from './app/services/interception.service';

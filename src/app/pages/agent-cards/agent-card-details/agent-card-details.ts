@@ -49,4 +49,6 @@ export class AgentCardDetailsPage implements OnInit {
       },
     });
   }
+
+  public checkData() {}
 }

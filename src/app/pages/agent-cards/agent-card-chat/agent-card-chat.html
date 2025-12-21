@@ -1,7 +1,9 @@
 @if(agentCard){
-<div class="image-background">
-  <div class="blur-background">
-    <div class="image-container">
+<div class="media-layout">
+  <!-- Background Image layer (Desktop: always, Mobile: only if no video) -->
+  <div class="image-background-layer" [class.hidden-mobile]="!!testVideo">
+    <div class="blur-overlay"></div>
+    <div class="image-wrapper">
       <img
         class="centered-image mobile-image"
         [src]="(agentCard.assets?.image?.url) || 'assets/defaults/images/default_conversation_card.webp'"
@@ -13,13 +15,23 @@
     </div>
   </div>
 
-  <div class="content">
-    <div class="chat-container">
-      <dc-chat (goalCompleted)="onGoalCompleted($event)" style="height: 100%" [agentCard]="agentCard" [conversationFlow]="DefaultConversationFlow" />
-    </div>
-    <!-- <div class="sticker-container">
-      <h5>Here is reserve for my Stiker</h5>
-    </div> -->
+  <!-- Video layer (Desktop: centered, Mobile: background) -->
+  @if(testVideo) {
+  <div class="video-container">
+    <video [src]="testVideo" autoplay muted loop playsinline></video>
+  </div>
+  }
+</div>
+
+<!-- Chat Content -->
+<div class="content">
+  <div class="chat-container">
+    <dc-chat
+      (goalCompleted)="onGoalCompleted($event)"
+      (chatEvent)="onChatEvent($event)"
+      style="height: 100%"
+      [agentCard]="agentCard"
+      [conversationFlow]="DefaultConversationFlow" />
   </div>
 </div>
 }

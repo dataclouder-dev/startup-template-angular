@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Input, OnInit, inject, effect } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit, inject, effect, ViewChild, ElementRef, AfterViewInit, OnDestroy } from '@angular/core';
 
 import {
   DCChatComponent,
@@ -8,6 +8,7 @@ import {
   AGENT_CARDS_STATE_SERVICE,
   IConversationFlow,
   ConversationEvents,
+  VideoPlayerService,
 } from '@dataclouder/ngx-agent-cards';
 import { ActivatedRoute } from '@angular/router';
 import { ChatUserSettings, EModelQuality } from '@dataclouder/ngx-core';
@@ -23,7 +24,7 @@ import { ConceptStatus, ILearningUserState, KnowledgeLearningSystemService } fro
   templateUrl: './agent-card-chat.html',
   styleUrls: ['./agent-card-chat.scss'],
 })
-export class AgentCardChatComponent implements OnInit {
+export class AgentCardChatComponent implements OnInit, AfterViewInit, OnDestroy {
   private route = inject(ActivatedRoute);
   private conversationCardsService = inject(CONVERSATION_AI_TOKEN);
   private cdr = inject(ChangeDetectorRef);
@@ -32,6 +33,18 @@ export class AgentCardChatComponent implements OnInit {
   private userService = inject(UserService);
   private knowledgeLearningSystemService = inject(KnowledgeLearningSystemService);
   private agentCardsMasterStateService = inject(AGENT_CARDS_STATE_SERVICE);
+  private videoPlayerService = inject(VideoPlayerService);
+
+  public testVideo =
+    'https://firebasestorage.googleapis.com/v0/b/appingles-qa.appspot.com/o/conversation-cards%2F68d6a85874782b0505fce42c%2Fmotions%2Ffile%2F1758906445470-angry.mp4?alt=media&token=770a0831-3531-4130-b3f2-b288964cd9f8';
+
+  @ViewChild('videoPlayer') set videoPlayerRef(ref: ElementRef<HTMLVideoElement>) {
+    if (ref) {
+      this.videoPlayer = ref;
+      this.videoPlayerService.initializePlayer(this.videoPlayer);
+    }
+  }
+  public videoPlayer!: ElementRef<HTMLVideoElement>;
 
   constructor() {
     effect(() => {
@@ -68,7 +81,7 @@ give 10 to 25 when user speaks well, cooperates, moves the conversation forward,
     challenges: [],
     dynamicConditions: [],
     moodState: {
-      enabled: false,
+      enabled: true,
       useAssetStatesOnly: false,
       detectableStates: [],
     },
@@ -98,6 +111,10 @@ give 10 to 25 when user speaks well, cooperates, moves the conversation forward,
         this.agentCard = card;
         this.cdr.detectChanges();
       }
+
+      if (this.agentCard) {
+        this.videoPlayerService.setAgentCard(this.agentCard);
+      }
     });
   }
 
@@ -106,7 +123,6 @@ give 10 to 25 when user speaks well, cooperates, moves the conversation forward,
     this.toastrService.success({ subtitle: 'Muy bien anotaré tu esfuerzo', title: 'La conversación esta completada, puedes cerrar el dialogo cuando gustes' });
 
     const path = `agentCards`;
-    debugger;
 
     const progress: ILearningUserState = {
       id: this.agentCard.id || '',
@@ -133,6 +149,21 @@ give 10 to 25 when user speaks well, cooperates, moves the conversation forward,
       console.log(response);
       this.agentCardsMasterStateService.updateUserState(progress);
     }
+  }
+
+  public onChatEvent(event: any) {
+    if (event.type == 'moodDetected') {
+    }
+    // console.log(event);
+    //
+  }
+
+  ngAfterViewInit(): void {
+    this.videoPlayerService.startConversation();
+  }
+
+  ngOnDestroy(): void {
+    this.videoPlayerService.cleanUp();
   }
 
   // Add your component logic here
