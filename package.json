@@ -4,7 +4,7 @@
     "appId": "dev.dataclouder.template",
     "appIdDev": "dev.dataclouder.template.dev"
   },
-  "version": "0.0.28",
+  "version": "0.0.30",
   "author": "Dataclouder",
   "homepage": "dataclouder.dev",
   "scripts": {

@@ -36,8 +36,10 @@ export class AgentCardChatComponent implements OnInit, OnDestroy {
   private agentCardsMasterStateService = inject(AGENT_CARDS_STATE_SERVICE);
   private videoPlayerService = inject(VideoPlayerNativeService);
 
+  public isVideoAvailable = false;
+
   @ViewChild('videoPlayer') set videoPlayerRef(ref: ElementRef<HTMLVideoElement>) {
-    if (ref) {
+    if (ref && this.isVideoAvailable) {
       this.videoPlayer = ref;
       this.videoPlayerService.initializePlayer(this.videoPlayer);
     }
@@ -111,8 +113,11 @@ give 10 to 25 when user speaks well, cooperates, moves the conversation forward,
       }
 
       if (this.agentCard) {
-        this.videoPlayerService.setAgentCard(this.agentCard);
-        this.videoPlayerService.startConversation();
+        this.isVideoAvailable = !!this.agentCard.assets?.motion?.url && (this.agentCard.assets?.motions?.length || 0) > 0;
+        if (this.isVideoAvailable) {
+          this.videoPlayerService.setAgentCard(this.agentCard);
+          this.videoPlayerService.startConversation();
+        }
       }
     });
   }

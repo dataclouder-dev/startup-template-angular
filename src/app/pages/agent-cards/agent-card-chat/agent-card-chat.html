@@ -16,9 +16,11 @@
   </div>
 
   <!-- Video layer (Desktop: centered, Mobile: background) -->
+  @if(isVideoAvailable){
   <div class="video-container">
     <video #videoPlayer></video>
   </div>
+  }
 </div>
 
 <!-- Chat Content -->

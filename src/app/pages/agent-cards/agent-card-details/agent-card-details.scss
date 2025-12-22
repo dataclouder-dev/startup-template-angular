@@ -1,4 +1,6 @@
-:host {
-  display: block;
+.center-container {
+  display: flex;
+  justify-content: center;
+  padding-top: 10vh;
   height: 100%;
 }

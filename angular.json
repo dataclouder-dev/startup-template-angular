@@ -36,6 +36,11 @@
                 "glob": "manifest.webmanifest",
                 "input": "src",
                 "output": "/"
+              },
+              {
+                "glob": "rms-processor.js",
+                "input": "public/js",
+                "output": "assets"
               }
             ],
             "styles": [
