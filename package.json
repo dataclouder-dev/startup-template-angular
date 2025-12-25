@@ -4,7 +4,7 @@
     "appId": "dev.dataclouder.template",
     "appIdDev": "dev.dataclouder.template.dev"
   },
-  "version": "0.0.30",
+  "version": "0.0.31",
   "author": "Dataclouder",
   "homepage": "dataclouder.dev",
   "scripts": {
@@ -67,9 +67,9 @@
     "@dataclouder/ngx-cloud-storage": "^0.0.31",
     "@dataclouder/ngx-core": "^0.1.48",
     "@dataclouder/ngx-knowledge": "^0.0.1",
-    "@dataclouder/ngx-lessons": "^0.1.17",
+    "@dataclouder/ngx-lessons": "^0.1.20",
     "@dataclouder/ngx-logs": "^0.0.2",
-    "@dataclouder/ngx-mic": "^0.1.3",
+    "@dataclouder/ngx-mic": "^0.1.4",
     "@dataclouder/ngx-tts": "^0.0.2",
     "@dataclouder/ngx-users": "^0.0.19",
     "@ionic/angular": "^8.7.10",

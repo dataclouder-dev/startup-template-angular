@@ -5,6 +5,9 @@ class RMSProcessor extends AudioWorkletProcessor {
 
     // Assuming mono input
     const channel = input[0];
+    if (!channel) {
+      return;
+    }
 
     let sum = 0;
     for (let i = 0; i < channel.length; i++) {
@@ -26,4 +29,3 @@ class RMSProcessor extends AudioWorkletProcessor {
 }
 
 registerProcessor('rms-processor', RMSProcessor);
-
