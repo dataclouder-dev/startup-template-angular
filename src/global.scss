@@ -67,7 +67,6 @@
     --side-width: 270px;
     --side-max-width: 300px;
 
-    // 
     --chat-user-message-bg: rgba(48, 8, 113, 0.5);
     --chat-assistant-message-bg: rgba(6, 78, 84, 0.5) ;
 
@@ -206,3 +205,15 @@ body.dark::before {
     content: '' !important;
   }
     
+
+ .p-drawer-bottom {
+    backdrop-filter: blur(2px);
+    background: transparent;
+    background-color: rgba(0, 0, 0, 0.1) !important;
+    // height: 95% !important;
+    height: 41rem !important;
+  }
+
+.p-drawer-header{
+  padding: 2px !important;
+}

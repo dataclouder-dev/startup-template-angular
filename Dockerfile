@@ -2,6 +2,10 @@
 FROM node:22-alpine AS builder
 LABEL stage="builder"
 
+# Pass version and git hash as build arguments
+ARG VERSION=unknown
+ARG GIT_HASH=unknown
+
 WORKDIR /app
 
 # Copy package files and install dependencies
@@ -19,6 +23,8 @@ RUN pnpm run build:prod
 # Stage 2: Serve the application with Nginx
 FROM nginx:1.27-alpine AS runner
 LABEL stage="runner"
+LABEL version=${VERSION}
+LABEL git_hash=${GIT_HASH}
 
 # Copy the built application from the builder stage to Nginx's webroot
 # Adjust '/app/dist/polilan' if your angular.json outputPath is different

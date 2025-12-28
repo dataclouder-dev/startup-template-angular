@@ -19,6 +19,10 @@ APP_ID ?= $(EXT).$(PROJECT_NAME).$(ENV) # User for mobile apps. example com.my-s
 DISPLAY_NAME ?= $(PROJECT_NAME)
 APP_ENV ?= $(ENV)
 
+# Versioning Strategy
+VERSION := $(shell node -p "require('./package.json').version")
+GIT_HASH := $(shell git rev-parse --short HEAD 2>/dev/null || echo "no-git")
+
 # Docker Configuration
 DOCKER_IMAGE_NAME    ?= $(PROJECT_NAME)-front
 IMAGE_FILENAME       := $(DOCKER_IMAGE_NAME).tar
@@ -123,12 +127,17 @@ deploy-cloudflare:
 ._build-docker:
 	@echo "1) 🚀 Building Angular app for production..."
 	@npm run build
-	@echo "2) 🐳 Building Docker image [$(DOCKER_IMAGE_NAME):latest] for [$(PLATFORM)]..."
-	@docker build --platform $(PLATFORM) --build-arg APP_ENV=$(APP_ENV) -t $(DOCKER_IMAGE_NAME):latest .
+	@echo "2) 🐳 Building Docker image [$(DOCKER_IMAGE_NAME):$(VERSION)] for [$(PLATFORM)]..."
+	@docker build --platform $(PLATFORM) \
+		--build-arg APP_ENV=$(APP_ENV) \
+		--build-arg VERSION=$(VERSION) \
+		--build-arg GIT_HASH=$(GIT_HASH) \
+		-t $(DOCKER_IMAGE_NAME):$(VERSION) \
+		-t $(DOCKER_IMAGE_NAME):latest .
 
 ._transfer:
 	@echo "3) 💾 Saving Docker image to [$(IMAGE_FILENAME)]..."
-	@docker save $(DOCKER_IMAGE_NAME):latest -o $(IMAGE_FILENAME)
+	@docker save $(DOCKER_IMAGE_NAME):$(VERSION) -o $(IMAGE_FILENAME)
 	@echo "4) 🚚 Transferring files to [$(TARGET_USER)@$(TARGET_HOST)]..."
 	@echo "  -> Transferring Docker image [$(IMAGE_FILENAME)] to [$(REMOTE_TAR_FILEPATH)]"
 	@$(SSH_CMD) $(TARGET_USER)@$(TARGET_HOST) "mkdir -p $(REMOTE_DEPLOY_PATH)"
@@ -157,7 +166,7 @@ deploy-cloudflare:
 			-p $(HOST_PORT):80 \
 			-v $(REMOTE_CONFIG_PATH):/usr/share/nginx/html/assets/config.json:ro \
 			--restart unless-stopped \
-			$(DOCKER_IMAGE_NAME):latest; \
+			$(DOCKER_IMAGE_NAME):$(VERSION); \
 		echo "  -> 🧹 Cleaning up remote tarball..."; \
 		rm $(REMOTE_TAR_FILEPATH); \
 		echo "  -> ✅ Remote deployment finished." '
@@ -168,7 +177,7 @@ deploy-cloudflare:
 	-@docker stop $(CONTAINER_NAME)
 	-@docker rm $(CONTAINER_NAME)
 	@echo "  -> 🚀 Starting new container [$(CONTAINER_NAME)]..."
-	@docker run -d --name $(CONTAINER_NAME) -p $(HOST_PORT):80 -v $(shell pwd)/src/assets/config.$(APP_ENV).json:/usr/share/nginx/html/assets/config.json --restart unless-stopped $(DOCKER_IMAGE_NAME):latest
+	@docker run -d --name $(CONTAINER_NAME) -p $(HOST_PORT):80 -v $(shell pwd)/src/assets/config.$(APP_ENV).json:/usr/share/nginx/html/assets/config.json --restart unless-stopped $(DOCKER_IMAGE_NAME):$(VERSION)
 
 ._local-cleanup:
 	@echo "6) 🧹 Cleaning up local tarball [$(IMAGE_FILENAME)]..."
@@ -177,6 +186,18 @@ deploy-cloudflare:
 # ==============================================================================
 # DEVELOPMENT & UTILITY TARGETS
 # ==============================================================================
+
+patch:
+	npm version patch
+	@echo "Bumped to version $(shell node -p "require('./package.json').version")"
+
+minor:
+	npm version minor
+	@echo "Bumped to version $(shell node -p "require('./package.json').version")"
+
+major:
+	npm version major
+	@echo "Bumped to version $(shell node -p "require('./package.json').version")"
 
 rename-project:
 	python3 scripts/rename_project.py "$(PROJECT_NAME)" "$(APP_ID)"
@@ -252,6 +273,13 @@ help:
 	@echo "  $(BLUE)make deploy-ailab$(NC)       - Build and deploy the app to the AI Lab server."
 	@echo "  $(BLUE)make deploy$(NC)             - Build and deploy the app to Firebase Hosting."
 	@echo "  $(BLUE)make deploy-release$(NC)     - Build and deploy a production release to Firebase."
+	@echo ""
+	@echo "----------------------------------------------------------------------"
+	@echo "  Versioning Targets"
+	@echo "----------------------------------------------------------------------"
+	@echo "  $(BLUE)make patch$(NC)             - Bump version (patch: 0.0.x) and create git tag."
+	@echo "  $(BLUE)make minor$(NC)             - Bump version (minor: 0.x.0) and create git tag."
+	@echo "  $(BLUE)make major$(NC)             - Bump version (major: x.0.0) and create git tag."
 	@echo ""
 	@echo "  You can override variables like this: make deploy-homelab HOST_PORT=8081"
 	@echo ""
