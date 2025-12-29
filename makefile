@@ -1,7 +1,7 @@
 # ==============================================================================
 # Shell & Formatting
 # ==============================================================================
-.PHONY: help start install clean ._remote_deploy_flow
+.PHONY: help start install clean ._remote_deploy_flow docker-build-and-run docker-run
 .DEFAULT_GOAL := help
 
 BLUE := \033[1;34m
@@ -29,6 +29,9 @@ IMAGE_FILENAME       := $(DOCKER_IMAGE_NAME).tar
 CONTAINER_NAME       ?= $(PROJECT_NAME)-front-app
 HOST_PORT ?= 7990
 
+# GHCR Configuration
+GHCR_USER ?= adamofig
+GHCR_REPO ?= ghcr.io/$(GHCR_USER)/$(DOCKER_IMAGE_NAME)
 
 # If your remote user needs a password for ssh/sudo, set it here or in your .env file.
 # For ssh, it will be used with sshpass. For sudo, it will be piped to sudo -S.
@@ -90,6 +93,27 @@ deploy-ailab: PLATFORM = linux/amd64
 deploy-ailab: APP_ENV = ailab
 deploy-ailab: ._remote_deploy_flow
 	@echo "✅ Deployment to AI Lab on http://$(TARGET_HOST):$(HOST_PORT)completed successfully."
+
+# Deploy to GitHub Container Registry (GHCR)
+push-ghcr: PLATFORM = linux/amd64
+push-ghcr: ._build-and-push-ghcr
+	@echo "✅ Deployment to GHCR ($(GHCR_REPO)) completed successfully."
+
+# Build Docker Image Locally
+docker-build: PLATFORM = linux/amd64
+docker-build: ._build-docker
+	@echo "✅ Docker image [$(DOCKER_IMAGE_NAME):latest] built successfully."
+
+# Run existing Local Docker Container (without building)
+docker-run: PLATFORM = linux/arm64
+docker-run: ._deploy-local
+	@echo "✅ Container [$(CONTAINER_NAME)] is running on http://localhost:$(HOST_PORT)"
+
+# Build and Run Local Docker Container
+docker-build-and-run: PLATFORM = linux/arm64
+docker-build-and-run: ._build-docker ._deploy-local
+	@echo "✅ Container [$(CONTAINER_NAME)] is running on http://localhost:$(HOST_PORT)"
+
 
 # Deploy to Firebase Hosting
 deploy:
@@ -177,11 +201,28 @@ deploy-cloudflare:
 	-@docker stop $(CONTAINER_NAME)
 	-@docker rm $(CONTAINER_NAME)
 	@echo "  -> 🚀 Starting new container [$(CONTAINER_NAME)]..."
-	@docker run -d --name $(CONTAINER_NAME) -p $(HOST_PORT):80 -v $(shell pwd)/src/assets/config.$(APP_ENV).json:/usr/share/nginx/html/assets/config.json --restart unless-stopped $(DOCKER_IMAGE_NAME):$(VERSION)
+	@CONFIG_FILE=$(LOCAL_CONFIG_PATH); \
+	if [ ! -f "$$CONFIG_FILE" ]; then \
+		echo "  -> ⚠️  Warning: $$CONFIG_FILE not found, falling back to public/config.json"; \
+		CONFIG_FILE=public/config.json; \
+	fi; \
+	docker run -d --name $(CONTAINER_NAME) -p $(HOST_PORT):80 -v $$(pwd)/$$CONFIG_FILE:/usr/share/nginx/html/assets/config.json --restart unless-stopped $(DOCKER_IMAGE_NAME):$(VERSION)
 
 ._local-cleanup:
 	@echo "6) 🧹 Cleaning up local tarball [$(IMAGE_FILENAME)]..."
 	@rm -f $(IMAGE_FILENAME)
+
+._ghcr-login-check:
+	@echo "🔑 Checking GHCR login status..."
+	@echo "🚨 If the next step fails, please run: echo \$$CR_PAT | docker login ghcr.io -u $(GHCR_USER) --password-stdin"
+
+._build-and-push-ghcr: ._ghcr-login-check ._build-docker
+	@echo "1) 🐳 Tagging and Pushing to GHCR [$(GHCR_REPO):$(VERSION)]..."
+	@docker tag $(DOCKER_IMAGE_NAME):$(VERSION) $(GHCR_REPO):$(VERSION)
+	@docker tag $(DOCKER_IMAGE_NAME):latest $(GHCR_REPO):latest
+	@echo "2) 🚀 Pushing to GHCR..."
+	@docker push $(GHCR_REPO):$(VERSION)
+	@docker push $(GHCR_REPO):latest
 
 # ==============================================================================
 # DEVELOPMENT & UTILITY TARGETS
@@ -273,6 +314,10 @@ help:
 	@echo "  $(BLUE)make deploy-ailab$(NC)       - Build and deploy the app to the AI Lab server."
 	@echo "  $(BLUE)make deploy$(NC)             - Build and deploy the app to Firebase Hosting."
 	@echo "  $(BLUE)make deploy-release$(NC)     - Build and deploy a production release to Firebase."
+	@echo "  $(BLUE)make push-ghcr$(NC)          - Build and push the Docker image to GHCR."
+	@echo "  $(BLUE)make build-docker$(NC)       - Build the Docker image locally."
+	@echo "  $(BLUE)make docker-build-and-run$(NC) - Build and run the app locally."
+	@echo "  $(BLUE)make docker-run$(NC)           - Run the already built Docker image locally."
 	@echo ""
 	@echo "----------------------------------------------------------------------"
 	@echo "  Versioning Targets"
