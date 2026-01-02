@@ -131,10 +131,10 @@ deploy-firebase:
 # Deploy to Cloudflare
 deploy-cloudflare:
 	@echo "🚀 Preparing production configuration for Cloudflare..."
+	npm run prebuild
 	@cp public/config.json public/config.json.backup
 	@cp public/config.prod.json public/config.json
 	@echo "🚀 Building and deploying to Cloudflare..."
-	npm run prebuild
 	npm run build:prod
 	npx wrangler deploy
 	@echo "🚀 Restoring original configuration..."
