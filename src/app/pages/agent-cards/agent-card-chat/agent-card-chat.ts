@@ -85,6 +85,26 @@ give 10 to 25 when user speaks well, cooperates, moves the conversation forward,
       useAssetStatesOnly: false,
       detectableStates: [],
     },
+
+    performancePrompt: `
+You are an expert conversation analyst. Analyze the user's performance in the following conversation focusing on communication skills, coherence and engagement..
+
+Structure your report as follows:
+# Performance Summary
+- **Communication Score**: [0-100]/100
+- **Coherence Level**: [Low|Medium|High|Exceptional]
+
+## Key Assessments
+- **Coherence**: [Brief assessment of how logical the flow was + 1 example]
+- **Engagement**: [How active and cooperative was the user?]
+- **Clarity**: [Effectiveness of the communication]
+
+## Actionable Feedback
+- **Immediate Focus**: [Main area to improve conversational flow]
+- **Next Steps**: [Concrete practice recommendation]
+
+Keep the total response concise (under 200 words) and use markdown headers and bullets.
+`,
   };
 
   public chatUserSettings: ChatUserSettings = {
