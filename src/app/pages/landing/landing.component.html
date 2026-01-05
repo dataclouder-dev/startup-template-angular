@@ -1,116 +1,189 @@
 <div class="ion-page" id="main-content">
-  <ion-header [translucent]="true">
-    <ion-toolbar>
+  <ion-header [translucent]="true" class="ion-no-border">
+    <ion-toolbar color="transparent" style="--background: rgba(5, 5, 5, 0.8); backdrop-filter: blur(20px);">
       <ion-title>
-        <div style="display: flex; align-items: center; gap: 10px">
-          <ion-img src="assets/icon/logo.svg" class="header-logo"></ion-img>
-          <span>{{ projectName.slice(0, 12) }}</span>
+        <div style="display: flex; align-items: center; gap: 12px">
+          <ion-img src="assets/icon/logo.svg" style="width: 32px; height: 32px; filter: drop-shadow(0 0 8px rgba(168, 85, 247, 0.5))"></ion-img>
+          <span style="font-weight: 800; letter-spacing: -0.02em; font-size: 1.2rem">{{ projectName }}</span>
         </div>
       </ion-title>
 
       <ion-buttons slot="end">
-        <ion-button shape="round" (click)="goToSignin()">
-          <ion-text>Sign In</ion-text>
+        <ion-button shape="round" fill="clear" (click)="goToSignin()" style="font-weight: 600">
+          <ion-text color="light">Sign In</ion-text>
         </ion-button>
-
-        <ion-button shape="round" (click)="goToSignup()">
-          <ion-text>Sign Up</ion-text>
+        <ion-button shape="round" fill="solid" (click)="goToSignup()" class="primary-button" style="margin-left: 12px">
+          <ion-text>Get Started</ion-text>
         </ion-button>
       </ion-buttons>
     </ion-toolbar>
   </ion-header>
 
-  <ion-content class="ion-padding">
+  <ion-content [fullscreen]="true">
     <div class="landing-container">
+      
       <!-- Hero Section -->
-
-      <div class="text-center">
-        <h2 class="text-3xl font-extrabold text-gray-900">Crear una cuenta</h2>
-        <p class="mt-2 text-sm text-gray-600">Comienza tu aventura con nosotros</p>
-      </div>
-
       <section class="hero-section">
-        <h1>Your Project Title</h1>
-        <p class="subtitle">A brief description of your project and its main value proposition.</p>
-      </section>
+        <div class="badge">
+          <ion-icon name="sparkles"></ion-icon>
+          <span>The new way of AI Interaction</span>
+        </div>
+        <h1 class="gradient-text">Agentic Persona Engineering</h1>
+        <p class="subtitle">
+          AI agents with personality, voice, and visual appearance that help you 
+          master any skill through simulated conversation.
+        </p>
+        
+        <div class="cta-group">
+          <ion-button (click)="goToSignup()" class="primary-button" style="--width: 200px">
+            Start Practicing
+          </ion-button>
+          <ion-button (click)="openUrl('https://home.control.markets')" fill="outline" class="secondary-button" style="--width: 200px">
+            Explore Demos
+          </ion-button>
+        </div>
 
-      <div class="feature-image-container">
-        <img class="feature-image" src="assets/defaults/images/default-feature-1.jpg" alt="Notion AI Integration" />
-        <div class="feature-image-overlay"></div>
-      </div>
-
-      <!-- Services Section -->
-      <section class="services-section">
-        <h2>Our Services</h2>
-        <div class="services-grid">
-          <div class="service-card">
-            <ion-icon name="code-slash"></ion-icon>
-            <h3>App Development</h3>
-            <p>Web application development and consulting for implementation of enterprise solutions.</p>
-          </div>
-          <div class="service-card">
-            <ion-icon name="cloud-upload"></ion-icon>
-            <h3>Cloud Migration</h3>
-            <p>Digital transformation through Google Cloud infrastructure modernization and migration strategies.</p>
-          </div>
-          <div class="service-card">
-            <ion-icon name="apps"></ion-icon>
-            <h3>Product Selection</h3>
-            <p>Guidance on choosing the right Google products and tools for your specific needs.</p>
+        <div class="feature-image-container" style="margin-top: 60px">
+          <img src="assets/landing/hero.png" alt="Agentic Persona Hero" />
+          <div class="overlay">
+            <h2 class="gradient-text">Character-Driven Architectures</h2>
           </div>
         </div>
       </section>
 
-      <div class="feature-image-container">
-        <img class="feature-image" src="assets/defaults/images/default-feature-2.jpg" alt="Notion AI Integration" />
-        <div class="feature-image-overlay"></div>
-      </div>
+      <!-- core concept -->
+      <section>
+        <div style="text-align: center; margin-bottom: 60px">
+          <h2 style="font-size: 3rem; margin-bottom: 16px">The Open Source Framework</h2>
+          <p style="color: #94a3b8; max-width: 600px; margin: 0 auto; line-height: 1.6">
+            We've connected character card specs from Silly Tavern with Google Agent Card protocols to create a fundamentally new concept.
+          </p>
+        </div>
 
-      <!-- Features Section -->
-      <section class="features-section">
-        <h2>What We Offer</h2>
         <div class="features-grid">
-          <div class="feature-card">
-            <ion-icon name="brush"></ion-icon>
-            <h3>Application Design</h3>
-            <p>Expert consultation on key technologies and custom application development.</p>
-          </div>
-          <div class="feature-card">
-            <ion-icon name="brain"></ion-icon>
-            <h3>Machine Learning</h3>
-            <p>Custom model development and data processing solutions.</p>
-          </div>
-          <div class="feature-card">
-            <ion-icon name="book"></ion-icon>
-            <h3>Advanced Consulting</h3>
-            <p>In-depth technical guidance and problem-solving for complex scenarios.</p>
+          @for (feature of features; track feature.title) {
+            <div class="feature-card">
+              <ion-icon [name]="feature.icon"></ion-icon>
+              <h3>{{ feature.title }}</h3>
+              <p>{{ feature.description }}</p>
+            </div>
+          }
+        </div>
+      </section>
+
+      <!-- Use Cases -->
+      <section style="background: rgba(168, 85, 247, 0.03); border-radius: 48px; padding: 80px 40px;">
+        <div style="text-align: center; margin-bottom: 60px">
+          <h2 class="gradient-text">Master Any Skill</h2>
+          <p style="color: #94a3b8">Real-world scenarios simulated by hyper-realistic personas.</p>
+        </div>
+
+        <div class="services-grid">
+          @for (useCase of useCases; track useCase.title) {
+            <div class="glass-card" style="text-align: left">
+              <div style="background: rgba(168, 85, 247, 0.1); width: 50px; height: 50px; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 24px">
+                <ion-icon [name]="useCase.icon" style="font-size: 24px; color: #a855f7"></ion-icon>
+              </div>
+              <h3>{{ useCase.title }}</h3>
+              <p style="color: #94a3b8; line-height: 1.6">{{ useCase.description }}</p>
+            </div>
+          }
+        </div>
+      </section>
+
+      <!-- Process Section -->
+      <section class="profile-section">
+        <div class="feature-image-container" style="flex: 1; border-radius: 24px">
+          <img src="assets/landing/mastery.png" alt="Skill Mastery Process" />
+        </div>
+        
+        <div class="profile-content">
+          <h2 class="gradient-text">The Creative Flow</h2>
+          <div style="display: flex; flex-direction: column; gap: 32px; margin-top: 40px">
+            <div style="display: flex; gap: 24px; align-items: flex-start">
+              <div style="background: #a855f7; color: white; width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-weight: bold">1</div>
+              <div>
+                <h4 style="margin: 0; font-size: 1.2rem">Set Your Goal</h4>
+                <p style="margin: 8px 0 0; color: #94a3b8">Define what you want to achieve or the situation you want to navigate.</p>
+              </div>
+            </div>
+            <div style="display: flex; gap: 24px; align-items: flex-start">
+              <div style="background: #a855f7; color: white; width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-weight: bold">2</div>
+              <div>
+                <h4 style="margin: 0; font-size: 1.2rem">Practice with Feedback</h4>
+                <p style="margin: 8px 0 0; color: #94a3b8">Interact with simulated personas that give you real-time hints and critique.</p>
+              </div>
+            </div>
+            <div style="display: flex; gap: 24px; align-items: flex-start">
+              <div style="background: #a855f7; color: white; width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-weight: bold">3</div>
+              <div>
+                <h4 style="margin: 0; font-size: 1.2rem">Track Your Mastery</h4>
+                <p style="margin: 8px 0 0; color: #94a3b8">Visualize your progress and feel the accomplishment of real-world skill growth.</p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      <!-- Contact Section -->
-      <section class="contact-section">
-        <h2>Get In Touch</h2>
-        <p>Ready to start your project? Contact us for more information.</p>
-        <ion-button expand="block" class="contact-button">Contact Us</ion-button>
+      <!-- Author Bio -->
+      <section class="profile-section" style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 32px;">
+        <div class="profile-content">
+          <div class="badge" style="margin-bottom: 16px">
+            <span>The Creator</span>
+          </div>
+          <h2 style="font-size: 3rem; margin: 0 0 16px;">Adamo Figueroa</h2>
+          <p style="font-size: 1.2rem; color: #e2e8f0; margin-bottom: 24px">
+            Full-stack engineer, AI & Data specialist with 10 years of building enterprise systems at scale.
+          </p>
+          <p>
+            A Swiss Army knife developer with deep experience in Python, Angular, AI orchestration, and Google Cloud. I build the quickest POCs and MVPs of the Wild West 🤠.
+          </p>
+          
+          <div style="display: flex; gap: 16px; margin-top: 32px">
+            <ion-button (click)="openUrl('https://resume.adamo-figueroa.workers.dev')" fill="outline" class="secondary-button">
+              View Portfolio
+            </ion-button>
+          </div>
+        </div>
+
+        <div class="profile-stats">
+          <div class="stat-card">
+            <span>10+</span>
+            <label>Years Exp</label>
+          </div>
+          <div class="stat-card">
+            <span>GCP</span>
+            <label>Expert</label>
+          </div>
+          <div class="stat-card">
+            <span>Open</span>
+            <label>Source</label>
+          </div>
+          <div class="stat-card">
+            <span>AI</span>
+            <label>Orchestrator</label>
+          </div>
+        </div>
       </section>
 
-      <div class="feature-image-container">
-        <img class="feature-image" src="assets/defaults/images/default-feature-3.jpg" alt="Notion AI Integration" />
-        <div class="feature-image-overlay"></div>
-      </div>
       <!-- Footer -->
       <footer class="landing-footer">
-        <div class="footer-content">
-          <div class="legal-links">
-            <a href="/privacy">Privacy Policy</a>
-            <a href="/terms">Terms of Use</a>
-          </div>
-          <p class="copyright">© Your Company. All rights reserved.</p>
+        <div style="margin-bottom: 40px">
+          <h3 class="gradient-text" style="font-size: 2rem">Let's Connect</h3>
+          <p style="color: #94a3b8">I'm open to conversations about the future of Agentic Personas.</p>
         </div>
+
+        <div class="footer-links">
+          <a (click)="openUrl('https://home.control.markets')">Demos</a>
+          <a (click)="openUrl('https://resume.adamo-figueroa.workers.dev')">Resume</a>
+          <!-- <a href="/privacy">Privacy</a> -->
+          <!-- <a href="/terms">Terms</a> -->
+        </div>
+        
+        <p style="color: #64748b; font-size: 0.9rem">© 2026 {{ projectName }}. All rights reserved.</p>
+        <p class="version-info" style="margin-top: 12px; font-size: 0.8rem; opacity: 0.5">{{ version }} - {{ envName }}</p>
       </footer>
 
-      <p class="version-info">{{ version }} - {{ envName }}</p>
     </div>
   </ion-content>
 </div>
