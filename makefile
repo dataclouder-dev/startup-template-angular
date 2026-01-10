@@ -132,13 +132,11 @@ deploy-firebase:
 deploy-cloudflare:
 	@echo "🚀 Preparing production configuration for Cloudflare..."
 	npm run prebuild
-	@cp public/config.json public/config.json.backup
-	@cp public/config.prod.json public/config.json
+	npm run config:prod
 	@echo "🚀 Building and deploying to Cloudflare..."
 	npm run build:prod
 	npx wrangler deploy
-	@echo "🚀 Restoring original configuration..."
-	@mv public/config.json.backup public/config.json
+	npm run config:dev
 	@echo "✅ Deployment to Cloudflare completed successfully."
 
 # Common remote deployment flow (internal)
@@ -149,9 +147,11 @@ deploy-cloudflare:
 # ==============================================================================
 
 ._build-docker:
-	@echo "1) 🚀 Building Angular app for production..."
-	@npm run build
-	@echo "2) 🐳 Building Docker image [$(DOCKER_IMAGE_NAME):$(VERSION)] for [$(PLATFORM)]..."
+	@echo "1) 🚀 Preparing configuration for [$(APP_ENV)]..."
+	-@npm run config:$(APP_ENV) || npm run config:dev
+	@echo "2) 🚀 Building Angular app for production..."
+	@npm run build:prod
+	@echo "3) 🐳 Building Docker image [$(DOCKER_IMAGE_NAME):$(VERSION)] for [$(PLATFORM)]..."
 	@docker build --platform $(PLATFORM) \
 		--build-arg APP_ENV=$(APP_ENV) \
 		--build-arg VERSION=$(VERSION) \
@@ -294,6 +294,7 @@ merge-upstream:
 
 deploy-release:
 	npm run prebuild
+	npm run config:prod
 	npm run build:prod
 	firebase deploy --project $(PROJECT_ID) --only hosting:$(PROJECT_ID)
 

@@ -107,7 +107,7 @@ export class IonicLayoutComponent implements OnInit {
 
   public testingPages = [{ title: 'Test', url: '/page/test', icon: 'code-working' }];
 
-  public isAdmin: boolean = false;
+  public isAdmin: boolean = this.userService.isAdmin();
 
   // Add this property to track dark mode state
   public isDarkMode: boolean = false;
@@ -121,7 +121,6 @@ export class IonicLayoutComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.isAdmin = this.userService.isAdmin();
   }
 
   logout() {

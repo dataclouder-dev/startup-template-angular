@@ -1,6 +1,6 @@
 {
   "projectName": "Dataclouder Template",
-  "version": "0.0.35",
+  "version": "0.0.36",
   "envName": "DEV",
   "production": false,
   "authenticationRequired": true,
