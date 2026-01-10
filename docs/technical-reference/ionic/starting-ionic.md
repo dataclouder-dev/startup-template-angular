@@ -23,6 +23,8 @@ This command runs the project on an Android device or emulator.
 - `-l` (Live Reload): Automatically refreshes the app when code changes are detected.
 - `--external`: Required to run on a physical device or external emulator.
 
+Sometimes i see a bug where the my fisical phone is not there, is wierd and anoying i have to restart my android and then works. 
+
 ### 2. Building for Production
 
 This template uses a specialized workflow to ensure the correct environment configuration (`config.json`) is used.
@@ -56,7 +58,17 @@ It is critical to understand the difference between "running" and "installing":
 - **Running (`ionic cap run`)**: Good for quickly testing UI changes. However, certain features like **Google Sign-In** or specific native plugins may not function correctly.
 - **Installing (`npm run android:dev`)**: Builds, signs, and installs the APK on your device. This is **required** for validating production-level features like authentication, as it ensures proper SHA-1/SHA-256 fingerprint matching for Firebase/Google services.
 
-### Install Android App 
+## Install Android App 
+
+
+npm run build:prod
+npx cap copy android: copia todo lo que esta en www a  android/app/src/main/assets/public, así android tiene la app web.
+
+npx cap open android
+
+Click play manually. and ill will install the app on your device.
+
+> Note that if you update the files even that you see in the android/app/src/main/assets/public folder, android studio may cache the files and not update them. so you have to build and install the app again.
 
 
 
@@ -64,12 +76,16 @@ It is critical to understand the difference between "running" and "installing":
 
 > Remember what you have in www folder is your web app, usally for regular apps the folder is dist,  so you make sure www have your last version. 
 
-
+1)
 npm run build:prod : the command uses config.prod.json 
-
+2)
 cap sync android : syncs the web assets to the native android project 
-
+3)
 cap open android: opens the android project in Android Studio
+
+manual install 
+
+
 
 
 
@@ -91,3 +107,19 @@ Connecting to physical devices can sometimes be unstable. Try these steps:
 
 ### Local Server Connection
 When debugging on a physical device, you may need to connect to a local development server. Note that if you install the app without live reload, it will point to the bundled web assets rather than your local machine's IP. Ensure your `capacitor.config.ts` or CLI arguments correctly point to your development server's IP if you need to debug live backend interactions.
+
+### "Connection Refused" or "Webpage not available"
+If you see this error in Android Studio, it usually means your last run used **Live Reload** (`-l`), which told Capacitor to look for a local server (`http://192.168.x.x:8100`). 
+
+To fix this and revert to using the locally built files:
+1. Run `npx cap copy android` (or `npm run android:prep-dev`).
+2. This resets the native configuration and clears the server URL.
+3. Rebuild the app in Android Studio. this can be out of the scope of your IDE editor for Ionic app. 
+
+
+### Keystore Missing Error
+If `npm run android:install-dev` fails with a message like `Keystore file ... not found`, it's because the project expects a signing key named `dataclouder.keystore` in the `android/app` folder.
+
+For local development, you have two options:
+1. **Use Android Studio's Play Button**: This uses a default debug key and avoids the keystore requirement.
+2. **Generate a local keystore**: If you must use the CLI `assemble` commands, you need to create the keystore or adjust `android/app/build.gradle` to use the default debug signing config.
