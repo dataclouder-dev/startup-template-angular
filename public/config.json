@@ -1,11 +1,11 @@
 {
   "projectName": "Dataclouder Template",
-  "version": "0.0.36",
-  "envName": "PROD",
-  "production": true,
+  "version": "0.0.39",
+  "envName": "DEV",
+  "production": false,
   "authenticationRequired": true,
-  "backendNodeUrl": "https://template-node.dataclouder.dev",
-  "backendPythonUrl": "",
+  "backendNodeUrl": "http://192.168.2.3:7991",
+  "backendPythonUrl": "http://192.168.2.3:8000",
   "aiServicesUrl": "https://ai-services.dataclouder.dev",
   "mobile": {
     "appleAppId": "com.dc-template.app.dev",

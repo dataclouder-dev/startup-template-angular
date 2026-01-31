@@ -1,6 +1,6 @@
 {
   "projectName": "Dataclouder Template Homelab",
-  "version": "0.0.36",
+  "version": "0.0.39",
   "envName": "DEV",
   "production": true,
   "authenticationRequired": true,

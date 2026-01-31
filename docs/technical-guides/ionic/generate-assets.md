@@ -18,3 +18,11 @@ npx capacitor-assets generate --assetPath public/ionic-assets
 
 Esto va a generar los iconos en los respectivos projects. de ios y android. 
 
+
+
+```diff
+- removed line
++ added line
+  unchanged line
+```
+
