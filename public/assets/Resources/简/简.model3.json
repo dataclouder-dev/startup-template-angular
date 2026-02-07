@@ -6,7 +6,19 @@
 			"简.8192/texture_00.png"
 		],
 		"Physics": "简.physics3.json",
-		"DisplayInfo": "简.cdi3.json"
+		"DisplayInfo": "简.cdi3.json",
+    "Expressions": [
+      { "Name": "右手", "File": "右手.exp3.json" },
+      { "Name": "左手", "File": "左手.exp3.json" },
+      { "Name": "星星眼", "File": "星星眼.exp3.json" },
+      { "Name": "泪", "File": "泪.exp3.json" },
+      { "Name": "爱心眼", "File": "爱心眼.exp3.json" },
+      { "Name": "生气", "File": "生气.exp3.json" },
+      { "Name": "白眼", "File": "白眼.exp3.json" },
+      { "Name": "脸红", "File": "脸红.exp3.json" },
+      { "Name": "脸黑", "File": "脸黑.exp3.json" },
+      { "Name": "血", "File": "血.exp3.json" }
+    ]
 	},
 	"Groups": [
 		{

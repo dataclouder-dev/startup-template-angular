@@ -1,40 +1,82 @@
-<div class="container">
-  <h1>Live2D Model Inspector</h1>
+<div class="playground-layout">
+  <!-- Left Sidebar for Controls -->
+  <aside class="sidebar">
+    <header class="sidebar-header">
+      <h1>Live2D Explorer</h1>
+      <p class="subtitle">Model Inspector & Testing</p>
+    </header>
 
-  <div class="model-controls">
-    <div class="model-selector">
-      <p-select [options]="availableModels" [(ngModel)]="selectedModel" optionLabel="name" (onChange)="onModelChange()" placeholder="Select a model">
+    <div class="control-group">
+      <label class="group-label">Model Selection</label>
+      <p-select [options]="availableModels" [(ngModel)]="selectedModel" optionLabel="name" (onChange)="onModelChange()" placeholder="Select a model" [style]="{'width':'100%'}">
       </p-select>
     </div>
-  </div>
 
-  <div class="zoom-control">
-    <label for="zoom">Zoom</label>
-    <p-slider [(ngModel)]="modelZoom" (onChange)="onZoomChange($event)" [min]="1" [max]="50"></p-slider>
-    <span>{{ modelZoom }}%</span>
-  </div>
-
-  <div class="animation-controls">
-    <button pButton type="button" label="Play Random Animation" (click)="playRandomAnimation()"></button>
-    <button pButton type="button" label="Speak" (click)="speak('/audios/tour/intro2.mp3')" class="p-button-success"></button>
-    <button pButton type="button" label="Stop Speaking" (click)="stopSpeaking()" class="p-button-danger"></button>
-    <div class="motion-list" *ngIf="motionGroups.length > 0">
-      <h4>Available Animations</h4>
-      <ul>
-        <li *ngFor="let group of motionGroups">
-          <button pButton type="button" [label]="group" (click)="playAnimation(group)" class="p-button-sm p-button-raised p-button-rounded"></button>
-        </li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="content-container">
-    <div class="model-display">
-      @if(selectedModel){
-      <app-live2d-model [modelPath]="selectedModel.path" [scale]="selectedModel.scale" (modelLoaded)="onModelLoaded($event)" #live2dModel></app-live2d-model>
-      }
+    <div class="control-group">
+      <div class="label-with-value">
+        <label class="group-label">Zoom</label>
+        <span class="value-badge">{{ modelZoom }}%</span>
+      </div>
+      <p-slider [(ngModel)]="modelZoom" (onChange)="onZoomChange($event)" [min]="1" [max]="50"></p-slider>
     </div>
 
-    <app-model-info [modelParameters]="modelParameters" [modelParts]="modelParts" (parameterChanged)="updateModelParameter($event)"> </app-model-info>
-  </div>
+    <div class="control-group">
+      <div class="label-with-value">
+        <label class="group-label">Position X</label>
+        <span class="value-badge">{{ modelX }}%</span>
+      </div>
+      <p-slider [(ngModel)]="modelX" (onChange)="onPositionXChange($event)" [min]="0" [max]="100"></p-slider>
+    </div>
+
+    <div class="control-group">
+      <div class="label-with-value">
+        <label class="group-label">Position Y</label>
+        <span class="value-badge">{{ modelY }}%</span>
+      </div>
+      <p-slider [(ngModel)]="modelY" (onChange)="onPositionYChange($event)" [min]="0" [max]="100"></p-slider>
+    </div>
+
+    <div class="control-group">
+      <label class="group-label">Model Actions</label>
+      <div class="action-buttons">
+        <button pButton type="button" label="Random Motion" icon="pi pi-refresh" (click)="playRandomAnimation()" class="p-button-outlined p-button-sm"></button>
+        <button pButton type="button" label="Speak" icon="pi pi-volume-up" (click)="speak('/audios/tour/intro2.mp3')" class="p-button-success p-button-sm"></button>
+        <button pButton type="button" label="Stop" icon="pi pi-power-off" (click)="stopSpeaking()" class="p-button-danger p-button-sm"></button>
+      </div>
+    </div>
+
+    <div class="control-group scrollable" *ngIf="expressions.length > 0">
+      <label class="group-label">Expressions</label>
+      <div class="motion-grid">
+        @for(exp of expressions; track $index){
+          <p-button [label]="exp" (click)='setExpression(exp)' size="small" class="motion-btn"></p-button>
+        }
+      </div>
+    </div>
+
+    <div class="control-group scrollable" *ngIf="motionGroups.length > 0">
+      <label class="group-label">Available Animations</label>
+      <div class="motion-grid">
+        @for(group of motionGroups; track $index){
+          <p-button [label]="group" (click)="playAnimation(group)" size="small" class="motion-btn"></p-button>
+        }
+      </div>
+    </div>
+    
+  </aside>
+
+  <!-- Right Main Content Area for Model -->
+  <main class="content-area">
+    <section class="model-viewport">
+      <div class="canvas-container">
+        @if(selectedModel){
+          <app-live2d-model [modelPath]="selectedModel.path" [scale]="selectedModel.scale" (modelLoaded)="onModelLoaded($event)" #live2dModel></app-live2d-model>
+        }
+      </div>
+    </section>
+
+    <section class="parameters-area">
+      <app-model-info [modelParameters]="modelParameters" [modelParts]="modelParts" (parameterChanged)="updateModelParameter($event)"> </app-model-info>
+    </section>
+  </main>
 </div>

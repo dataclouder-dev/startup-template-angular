@@ -38,8 +38,11 @@ export class Live2dPlaygroundComponent {
   modelParameters: ModelParameters | null = null;
   modelParts: ModelParts | null = null;
   motionGroups: string[] = [];
+  expressions: string[] = [];
 
   modelZoom = 15; // Initial zoom level
+  modelX = 50; // Initial X position (center)
+  modelY = 50; // Initial Y position (center)
 
   availableModels = [
     { name: 'Hiyori', path: '/assets/Resources/Hiyori/Hiyori.model3.json', scale: 0.15 },
@@ -56,10 +59,11 @@ export class Live2dPlaygroundComponent {
 
   constructor(private cdr: ChangeDetectorRef) {}
 
-  onModelLoaded(event: { parameters: ModelParameters | null; parts: ModelParts | null; motions: string[] }): void {
+  onModelLoaded(event: { parameters: ModelParameters | null; parts: ModelParts | null; motions: string[]; expressions: string[] }): void {
     this.modelParameters = event.parameters;
     this.modelParts = event.parts;
     this.motionGroups = event.motions;
+    this.expressions = event.expressions;
     this.cdr.detectChanges();
   }
 
@@ -71,6 +75,18 @@ export class Live2dPlaygroundComponent {
   onZoomChange(event: any): void {
     if (this.live2dModelComponent) {
       this.live2dModelComponent.onZoomChange(event.value);
+    }
+  }
+
+  onPositionXChange(event: any): void {
+    if (this.live2dModelComponent) {
+      this.live2dModelComponent.onXChange(event.value);
+    }
+  }
+
+  onPositionYChange(event: any): void {
+    if (this.live2dModelComponent) {
+      this.live2dModelComponent.onYChange(event.value);
     }
   }
 
@@ -101,6 +117,12 @@ export class Live2dPlaygroundComponent {
   public stopSpeaking(): void {
     if (this.live2dModelComponent) {
       this.live2dModelComponent.stopSpeaking();
+    }
+  }
+
+  public setExpression(expressionName: string): void {
+    if (this.live2dModelComponent) {
+      this.live2dModelComponent.setExpression(expressionName);
     }
   }
 }

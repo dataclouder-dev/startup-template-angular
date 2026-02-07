@@ -1,13 +1,13 @@
 # Live2D Model Loading and Rendering Documentation
 
-This document explains how the [`live2d-playground.component.ts`](src/app/pages/live2d/playground/live2d-playground.component.ts:1) loads, renders, and controls a Live2D model using Angular, Pixi.js, and the `pixi-live2d-display-lipsyncpatch` library.
+This document explains how the [`live2d-playground.component.ts`](src/app/pages/live2d/playground/live2d-playground.component.ts:1) loads, renders, and controls a Live2D model using Angular, Pixi.js v8, and the `untitled-pixi-live2d-engine` library.
 
 The core concept is to bypass the model's built-in, pre-defined animations (like idle motions) and instead control its movements directly by manipulating its underlying parameters in real-time.
 
 ## Core Technologies
 
-- **Pixi.js**: A fast, lightweight 2D rendering library that provides the WebGL-based canvas and rendering loop.
-- **`pixi-live2d-display-lipsyncpatch`**: A specialized library that acts as a bridge between Pixi.js and the Live2D Cubism Core. It handles the loading of `.model3.json` files and exposes the model as a displayable object within Pixi.js.
+- **Pixi.js v8**: A fast, lightweight 2D rendering library that provides the WebGL-based canvas and rendering loop.
+- **`untitled-pixi-live2d-engine`**: A specialized library that acts as a bridge between Pixi.js and the Live2D Cubism Core. It handles the loading of `.model3.json` files and exposes the model as a displayable object within Pixi.js.
 - **`Live2DCubismCore`**: The low-level, official library from Live2D that performs the core mathematical calculations for deforming the model's mesh based on parameter inputs.
 
 ## Why Manual Control vs. Live2D's Built-in Animations?

@@ -1,6 +1,6 @@
 # Live2D Integration Guide
 
-This guide explains how Live2D models are integrated into the project using [PixiJS](https://pixijs.com/) and the [pixi-live2d-display](https://github.com/guansss/pixi-live2d-display) library.
+This guide explains how Live2D models are integrated into the project using [PixiJS v8](https://pixijs.com/) and the [untitled-pixi-live2d-engine](https://github.com/Lost-Sorrow/untitled-pixi-live2d-engine) library.
 
 ## Setup
 
@@ -90,5 +90,7 @@ Solution: not sure, lower volume doesn't help. becouse model understand that is 
 ---
 
 ## Troubleshooting & Advanced
+- [Exploration & Testing Guide](file:///Users/adamo/Documents/GitHub/startup-template-angular/docs/live2d/EXPLORATION_GUIDE.md): Understanding Live2D basics and tools.
+- [Playground Guide](file:///Users/adamo/Documents/GitHub/startup-template-angular/docs/live2d/PLAYGROUND_GUIDE.md): How to use the built-in model inspector.
 - [Live2D Viewer & Transparency](file:///Users/adamo/Documents/GitHub/startup-template-angular/docs/live2d/live2d-viewer.md): How to test models in a transparent window.
 - [Manual Lip-Sync Implementation](file:///Users/adamo/Documents/GitHub/startup-template-angular/docs/live2d/MANUAL_LIP_SYNC.md): Detailed guide for real-time audio analysis and custom mouth control.

@@ -11,33 +11,35 @@ import {
   ChangeDetectorRef,
   OnChanges,
   SimpleChanges,
+  inject,
 } from '@angular/core';
-import { Live2DModel } from 'pixi-live2d-display-lipsyncpatch';
+import { Live2DModel } from 'untitled-pixi-live2d-engine/cubism'
+import * as PIXI from 'pixi.js';
 import { Application, Ticker } from 'pixi.js';
 import { ModelParameters, ModelParts } from '../../pages/live2d/models/live2d-types';
 
 @Component({
   selector: 'app-live2d-model',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   templateUrl: './live2d-model.component.html',
   styleUrls: ['./live2d-model.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Live2dModelComponent implements AfterViewInit, OnChanges {
   @ViewChild('canvas') canvasRef!: ElementRef<HTMLCanvasElement>;
 
   @Input() modelPath!: string;
   @Input() scale = 0.1;
-  @Output() modelLoaded = new EventEmitter<{ parameters: ModelParameters | null; parts: ModelParts | null; motions: string[] }>();
+  @Output() modelLoaded = new EventEmitter<{ parameters: ModelParameters | null; parts: ModelParts | null; motions: string[]; expressions: string[] }>();
 
   app!: Application;
   model: any;
   private modelParameters: ModelParameters | null = null;
   private modelParts: ModelParts | null = null;
   private motionGroups: string[] = [];
+  private expressions: string[] = [];
 
-  constructor(private cdr: ChangeDetectorRef) {}
+
 
   async ngAfterViewInit(): Promise<void> {
     await this.initializeCanvas();
@@ -51,12 +53,25 @@ export class Live2dModelComponent implements AfterViewInit, OnChanges {
   }
 
   async initializeCanvas(): Promise<void> {
-    this.app = new Application({
-      view: this.canvasRef.nativeElement,
-      backgroundColor: 0x000000,
-      backgroundAlpha: 0,
-      antialias: true,
-    });
+
+
+    this.app = new Application();
+
+    // console.log('PixiJS initialization, version:', (PIXI as any).VERSION);
+    
+    if (typeof (this.app as any).init === 'function') {
+      await this.app.init({
+        canvas: this.canvasRef.nativeElement,
+        backgroundColor: 0x000000,
+        backgroundAlpha: 0,
+        antialias: true,
+        resolution:  1.1,
+        autoDensity: false,
+      });
+    } else {
+      alert('Not able to load the model')
+
+    }
   }
 
   async loadModel(modelPath: string): Promise<void> {
@@ -65,10 +80,18 @@ export class Live2dModelComponent implements AfterViewInit, OnChanges {
       this.model.destroy();
     }
 
-    this.model = await Live2DModel.from(modelPath, {
-      ticker: Ticker.shared,
-      autoUpdate: false,
-    });
+    this.model =  await Live2DModel.from(
+    modelPath,
+      {
+        ticker: PIXI.Ticker.shared,
+        autoFocus: true,
+        autoHitTest: true,
+        breathDepth: 0.2,
+      }
+  )
+
+// this.model.internalModel.extendParallelMotionManager(2)
+
 
     this.app.stage.addChild(this.model);
 
@@ -79,28 +102,34 @@ export class Live2dModelComponent implements AfterViewInit, OnChanges {
     this.model.scale.set(this.scale);
     this.model.anchor.set(0.5, 0.5);
 
-    this.deactivateMotions();
-    this.modelLoaded.emit({ parameters: this.modelParameters, parts: this.modelParts, motions: this.motionGroups });
-    this.cdr.detectChanges();
+    // this.deactivateMotions();
+    this.modelLoaded.emit({ 
+      parameters: this.modelParameters, 
+      parts: this.modelParts, 
+      motions: this.motionGroups,
+      expressions: this.expressions
+    });
+    // this.cdr.detectChanges();
   }
 
   private deactivateMotions() {
-    if (this.model.internalModel) {
-      if (this.model.internalModel.motionManager) {
-        this.model.internalModel.motionManager.stopAllMotions();
+    const internalModel = this.model.internalModel as any;
+    if (internalModel) {
+      if (internalModel.motionManager) {
+        internalModel.motionManager.stopAllMotions();
       }
-      if (this.model.internalModel.eyeBlink) {
-        this.model.internalModel.eyeBlink.enabled = false;
+      if (internalModel.eyeBlink) {
+        internalModel.eyeBlink.enabled = false;
       }
-      if (this.model.internalModel.breath) {
-        this.model.internalModel.breath.enabled = false;
+      if (internalModel.breath) {
+        internalModel.breath.enabled = false;
       }
     }
 
-    Ticker.shared.add(() => {
+    Ticker.shared.add((ticker: Ticker) => {
       if (this.model && this.model.internalModel) {
-        this.model.internalModel.coreModel?.update();
-        this.model.update(Ticker.shared.deltaMS);
+        (this.model.internalModel as any).coreModel?.update();
+        this.model.update(ticker.deltaTime);
       }
     });
   }
@@ -129,7 +158,12 @@ export class Live2dModelComponent implements AfterViewInit, OnChanges {
       };
     }
     if (this.model.internalModel && this.model.internalModel.motionManager) {
-      this.motionGroups = Object.keys(this.model.internalModel.motionManager.motionGroups);
+      // this.motionGroups = Object.keys(this.model.internalModel.motionManager.motionGroups).filter(group => group && group.trim() !== '');
+            this.motionGroups = Object.keys(this.model.internalModel.motionManager.motionGroups);
+
+      if (this.model.internalModel.motionManager.expressionManager) {
+        this.expressions = this.model.internalModel.motionManager.expressionManager.definitions.map((def: any) => def.Name || def.name);
+      }
     }
   }
 
@@ -147,8 +181,10 @@ export class Live2dModelComponent implements AfterViewInit, OnChanges {
 
   public speak(audioUrl: string, options?: { volume?: number; crossOrigin?: string }): void {
     if (!this.model) return;
+    
+    
     this.model.speak(audioUrl, {
-      volume: options?.volume || 1.0,
+      volume: 0,
       crossOrigin: options?.crossOrigin || 'anonymous',
     });
   }
@@ -174,6 +210,28 @@ export class Live2dModelComponent implements AfterViewInit, OnChanges {
     if (this.model) {
       const newScale = value / 100;
       this.model.scale.set(newScale, newScale);
+    }
+  }
+
+  public onXChange(value: number): void {
+    if (this.model && this.canvasRef) {
+      // value is 0-100, transform to canvas width percentage
+      const newX = (value / 100) * this.canvasRef.nativeElement.width;
+      this.model.x = newX;
+    }
+  }
+
+  public onYChange(value: number): void {
+    if (this.model && this.canvasRef) {
+      // value is 0-100, transform to canvas height percentage
+      const newY = (value / 100) * this.canvasRef.nativeElement.height;
+      this.model.y = newY;
+    }
+  }
+
+  public setExpression(expressionName: string): void {
+    if (this.model) {
+      this.model.expression(expressionName);
     }
   }
 }
