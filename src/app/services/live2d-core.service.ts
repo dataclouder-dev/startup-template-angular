@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, from } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
+import { Live2DCubismCore } from 'pixi-live2d-display-lipsyncpatch';
 // import { Live2DCubismCore } from '../live2d/Core/live2dcubismcore';
 
 @Injectable({
