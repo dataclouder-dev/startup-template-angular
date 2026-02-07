@@ -9,9 +9,9 @@ export const stepsIntro: any[] = [
     title: 'Welcome to the Test Page',
     text: [
       'This is a guided tour of the test page features.',
-      '<div class="tour-image-container"><img src="assets/defaults/poli.webp" alt="Poli" style="max-width: 100%; height: auto;"></div>',
+      '<div class="tour-image-container"><img src="defaults/poli.webp" alt="Poli" style="max-width: 100%; height: auto;"></div>',
     ],
-    audioPath: 'assets/audio/start.mp3',
+    audioPath: 'audio/start.mp3',
   },
   {
     id: 'dialog-button',
@@ -22,17 +22,17 @@ export const stepsIntro: any[] = [
     title: 'Show Dialog Button',
     text: [
       'Click this button to open a dialog with a generic list component.',
-      '<div class="tour-image-container"><img src="assets/defaults/poliabajo.webp" alt="Yoga" style="max-width: 100%; height: auto;"></div>',
+      '<div class="tour-image-container"><img src="defaults/poliabajo.webp" alt="Yoga" style="max-width: 100%; height: auto;"></div>',
     ],
-    audioPath: 'assets/audio/intro2.mp3',
+    audioPath: 'audio/intro2.mp3',
   },
   {
     id: 'conclusion',
     title: 'Tour Complete',
     text: [
       'You have now seen all the main features of this page!',
-      '<div class="tour-image-container"><img src="assets/defaults/poli1.webp" alt="Poli" style="max-width: 100%; height: auto;"></div>',
+      '<div class="tour-image-container"><img src="defaults/poli1.webp" alt="Poli" style="max-width: 100%; height: auto;"></div>',
     ],
-    audioPath: 'assets/audio/intro3.mp3',
+    audioPath: 'audio/intro3.mp3',
   },
 ];

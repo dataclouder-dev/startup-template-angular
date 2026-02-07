@@ -47,7 +47,7 @@
 //     this.view.initialize(canvas);
 
 //     // Load model
-//     this.modelManager.loadModel('assets/live2d/models/Hiyori/Hiyori.model3.json');
+//     this.modelManager.loadModel('live2d/models/Hiyori/Hiyori.model3.json');
 
 //     // Start rendering
 //     this.startRendering();

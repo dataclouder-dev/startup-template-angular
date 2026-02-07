@@ -25,7 +25,7 @@ export class UserDataExchangeService implements UserDataExchangeAbstractService 
     return {
       name: userData?.firstname || 'Usuario',
       gender: userData?.gender || 'Masculino',
-      imgUrl: 'assets/defaults/images/default_conversation_card.webp',
+      imgUrl: 'defaults/images/default_conversation_card.webp',
       // age: new Date().getFullYear() - new Date(userData?.birthday).getFullYear(),
       age: 20,
     };

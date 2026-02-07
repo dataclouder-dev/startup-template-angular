@@ -9,7 +9,7 @@ import { APP_CONFIG } from '@dataclouder/ngx-core';
   template: `
     <div class="main-content">
       <div>
-        <h1 class="title"><img routerLink="/" style="width: 120px" src="assets/defaults/icons/logo.svg" alt="Logo" /></h1>
+        <h1 class="title"><img routerLink="/" style="width: 120px" src="defaults/icons/logo.svg" alt="Logo" /></h1>
       </div>
 
       <router-outlet></router-outlet>
