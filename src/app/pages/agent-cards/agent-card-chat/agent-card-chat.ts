@@ -47,14 +47,9 @@ export class AgentCardChatComponent implements OnInit, OnDestroy {
   }
   public videoPlayer!: ElementRef<HTMLVideoElement>;
 
-  constructor() {
-    effect(() => {
-      const message = this.chatMonitorService.messageAudioWillPlay$();
-      if (message) {
-        console.log('AgentCardChatComponent: Audio will play for message:', message);
-      }
-    });
-  }
+  @ViewChild(Live2dModelComponent) live2dModel?: Live2dModelComponent;
+
+  constructor() {}
 
   @Input() agentCard!: IAgentCard;
 
@@ -180,9 +175,15 @@ Keep the total response concise (under 200 words) and use markdown headers and b
 
   public onChatEvent(event: any) {
     if (event.type == 'moodDetected') {
+      // Handle mood
     }
-    // console.log(event);
-    //
+    if (event.type === 'audioStarted') {
+      const message = event.payload;
+      if (message && message.audioUrl) {
+        console.log('AgentCardChatComponent: Audio started for message:', message);
+        this.live2dModel?.speak(message.audioUrl, { volume: 0.0 });
+      }
+    }
   }
 
   ngOnDestroy(): void {
