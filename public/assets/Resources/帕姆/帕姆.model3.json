@@ -1,0 +1,70 @@
+{
+	"Version": 3,
+	"FileReferences": {
+		"Moc": "帕姆.moc3",
+		"Textures": [
+			"帕姆.2048/texture_00.png"
+		],
+		"Physics": "帕姆.physics3.json",
+		"DisplayInfo": "帕姆.cdi3.json",
+		"Motions": {
+			"Idle": [
+				{
+					"File": "1.motion3.json",
+					"FadeInTime": 0.5,
+					"FadeOutTime": 0.5
+				}
+			],
+			"Motion2": [
+				{
+					"File": "2.motion3.json",
+					"FadeInTime": 0.5,
+					"FadeOutTime": 0.5
+				}
+			],
+			"Motion3": [
+				{
+					"File": "3.motion3.json",
+					"FadeInTime": 0.5,
+					"FadeOutTime": 0.5
+				}
+			],
+			"Motion4": [
+				{
+					"File": "4.motion3.json",
+					"FadeInTime": 0.5,
+					"FadeOutTime": 0.5
+				}
+			],
+			"Motion5": [
+				{
+					"File": "5.motion3.json",
+					"FadeInTime": 0.5,
+					"FadeOutTime": 0.5
+				}
+			],
+			"Motion6": [
+				{
+					"File": "6.motion3.json",
+					"FadeInTime": 0.5,
+					"FadeOutTime": 0.5
+				}
+			]
+		}
+	},
+	"Groups": [
+		{
+			"Target": "Parameter",
+			"Name": "EyeBlink",
+			"Ids": [
+				"ParamEyeLOpen",
+				"ParamEyeROpen"
+			]
+		},
+		{
+			"Target": "Parameter",
+			"Name": "LipSync",
+			"Ids": []
+		}
+	]
+}

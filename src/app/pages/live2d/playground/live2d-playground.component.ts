@@ -53,6 +53,8 @@ export class Live2dPlaygroundComponent {
     { name: 'Tachie03', path: '/assets/Resources/tachie03/tachie03.model3.json', scale: 0.06 },
     { name: 'NVPU', path: '/assets/Resources/NVPU-demo/NVPU.model3.json', scale: 0.11 },
     { name: '简', path: '/assets/Resources/简/简.model3.json', scale: 0.08 },
+    { name: 'IceGIrl', path: '/assets/Resources/IceGIrl/IceGirl.model3.json', scale: 0.08 },
+    { name: '帕姆', path: '/assets/Resources/帕姆/帕姆.model3.json', scale: 0.08 },
   ];
 
   selectedModel = this.availableModels[0];
