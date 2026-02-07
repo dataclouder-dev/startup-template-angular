@@ -35,6 +35,8 @@ export class AgentCardListPage implements OnInit {
     speedRate: 1,
     userMessageTask: false,
     assistantMessageTask: false,
+    saveConversations: false,
+    multilingualHearing: false,
   };
 
   public viewMode: 'table' | 'cards' = 'table';

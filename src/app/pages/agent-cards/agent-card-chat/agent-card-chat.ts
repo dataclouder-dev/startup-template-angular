@@ -118,6 +118,8 @@ Keep the total response concise (under 200 words) and use markdown headers and b
     speed: AudioSpeed.Regular,
     userMessageTask: false,
     assistantMessageTask: false,
+    saveConversations: false,
+    multilingualHearing: false,
   };
 
   ngOnInit(): void {

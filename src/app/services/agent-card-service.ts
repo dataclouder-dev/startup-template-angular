@@ -117,6 +117,8 @@ export class AgentCardService {
         speed: AudioSpeed.Regular,
         userMessageTask: false,
         assistantMessageTask: false,
+        saveConversations: false,
+        multilingualHearing: false,
       } as ChatUserSettings);
     }
   }

@@ -75,8 +75,9 @@ export class DeckCommanderListComponent extends PaginationBase implements OnInit
   }
 
   async ngOnInit(): Promise<void> {
-    this.filterConfig.returnProps = { _id: 1, id: 1, name: 1, description: 1, updatedAt: 1, image: 1 };
-    const response = await this.sourceService.getFilteredDeckCommanders(this.filterConfig);
+    // Check later 
+    // this.filterConfig.update({ returnProps: { _id: 1, id: 1, name: 1, description: 1, updatedAt: 1, image: 1 } });
+    const response = await this.sourceService.getFilteredDeckCommanders(this.filterConfig());
     this.DeckCommanders.set(response.rows);
     this.cdr.detectChanges();
     console.log(this.DeckCommanders(), this.viewType);
