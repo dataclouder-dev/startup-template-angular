@@ -1,4 +1,4 @@
-import { CloudStorageData } from '@dataclouder/ngx-cloud-storage';
+import { FileStorageData } from '@dataclouder/ngx-cloud-storage';
 import { IAuditable } from '@dataclouder/ngx-core';
 
 export enum GenericType {
@@ -17,7 +17,7 @@ export interface IGeneric {
   _id: string;
   id: string;
   name?: string;
-  image?: CloudStorageData;
+  image?: FileStorageData;
   description?: string;
   type?: string;
   relation?: IGenericRelation;

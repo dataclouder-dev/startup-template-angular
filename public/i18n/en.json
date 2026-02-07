@@ -1,0 +1,16 @@
+{
+  "profile-form.iSpeak": "Yo hablo",
+  "profile-form.wantToLearn": "Quiero aprender",
+  "profile-form.levelIHave": "Tengo un nivel",
+  "profile-form.name": "Nombre/s",
+  "profile-form.lastname": "Apellidos",
+  "profile-form.birthday": "Fecha de nacimiento",
+  "profile-form.username": "Nombre de usuario",
+  "profile-form.reasons": "Razones para aprender lenguajes.",
+  "profile-form.gender": "Género",
+  "profile-form.profileInfo": "Información del perfil",
+  "profile-settings-form.iSpeak": "I speak",
+  "profile-settings-form.wantToLearn": "I want to learn",
+  "dataclouder.agentCards.dcAgentCardDetails.startConversation": "Start Conversation",
+  "dataclouder.agentCards.dcAgentCardDetails.scenario": "Scenario"
+}

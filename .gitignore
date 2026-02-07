@@ -80,3 +80,7 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+
+*storybook.log
+storybook-static
+/public/config.prod.json

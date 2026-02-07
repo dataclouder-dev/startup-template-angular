@@ -1,7 +1,7 @@
 # ==============================================================================
 # Shell & Formatting
 # ==============================================================================
-.PHONY: help start install clean ._remote_deploy_flow
+.PHONY: help start install clean ._remote_deploy_flow docker-build-and-run docker-run
 .DEFAULT_GOAL := help
 
 BLUE := \033[1;34m
@@ -19,12 +19,19 @@ APP_ID ?= $(EXT).$(PROJECT_NAME).$(ENV) # User for mobile apps. example com.my-s
 DISPLAY_NAME ?= $(PROJECT_NAME)
 APP_ENV ?= $(ENV)
 
+# Versioning Strategy
+VERSION := $(shell node -p "require('./package.json').version")
+GIT_HASH := $(shell git rev-parse --short HEAD 2>/dev/null || echo "no-git")
+
 # Docker Configuration
 DOCKER_IMAGE_NAME    ?= $(PROJECT_NAME)-front
 IMAGE_FILENAME       := $(DOCKER_IMAGE_NAME).tar
 CONTAINER_NAME       ?= $(PROJECT_NAME)-front-app
 HOST_PORT ?= 7990
 
+# GHCR Configuration
+GHCR_USER ?= adamofig
+GHCR_REPO ?= ghcr.io/$(GHCR_USER)/$(DOCKER_IMAGE_NAME)
 
 # If your remote user needs a password for ssh/sudo, set it here or in your .env file.
 # For ssh, it will be used with sshpass. For sudo, it will be piped to sudo -S.
@@ -50,14 +57,14 @@ endif
 # These are set by the main deploy targets below
 TARGET_USER          ?= local
 TARGET_HOST          ?= localhost
-REMOTE_DEPLOY_PATH   ?= /tmp
+REMOTE_DEPLOY_PATH   ?= /tmp/$(PROJECT_NAME)
 PLATFORM             ?= linux/amd64 # Default platform
 
 REMOTE_TAR_FILEPATH  = $(REMOTE_DEPLOY_PATH)/$(IMAGE_FILENAME)
 
 REMOTE_CONFIG_FILENAME = config.json
 REMOTE_CONFIG_PATH   = $(REMOTE_DEPLOY_PATH)/$(REMOTE_CONFIG_FILENAME)
-LOCAL_CONFIG_PATH    = src/assets/config.$(APP_ENV).json
+LOCAL_CONFIG_PATH    = public/config.$(APP_ENV).json
 
 
 # ==============================================================================
@@ -87,10 +94,50 @@ deploy-ailab: APP_ENV = ailab
 deploy-ailab: ._remote_deploy_flow
 	@echo "✅ Deployment to AI Lab on http://$(TARGET_HOST):$(HOST_PORT)completed successfully."
 
+# Deploy to GitHub Container Registry (GHCR)
+push-ghcr: PLATFORM = linux/amd64
+push-ghcr: ._build-and-push-ghcr
+	@echo "✅ Deployment to GHCR ($(GHCR_REPO)) completed successfully."
+
+# Build Docker Image Locally
+docker-build: PLATFORM = linux/amd64
+docker-build: ._build-docker
+	@echo "✅ Docker image [$(DOCKER_IMAGE_NAME):latest] built successfully."
+
+# Run existing Local Docker Container (without building)
+docker-run: PLATFORM = linux/arm64
+docker-run: ._deploy-local
+	@echo "✅ Container [$(CONTAINER_NAME)] is running on http://localhost:$(HOST_PORT)"
+
+# Build and Run Local Docker Container
+docker-build-and-run: PLATFORM = linux/arm64
+docker-build-and-run: ._build-docker ._deploy-local
+	@echo "✅ Container [$(CONTAINER_NAME)] is running on http://localhost:$(HOST_PORT)"
+
+
 # Deploy to Firebase Hosting
 deploy:
 	npm run build
 	firebase deploy --project $(PROJECT_ID) --only hosting:$(PROJECT_ID)
+
+# Deploy to Firebase Hosting
+deploy-firebase:
+	@echo "🚀 Building and deploying to Firebase..."
+	npm run prebuild
+	npm run build
+	firebase deploy --only hosting --project $(PROJECT_ID)
+	@echo "✅ Deployment to Firebase completed successfully."
+
+# Deploy to Cloudflare
+deploy-cloudflare:
+	@echo "🚀 Preparing production configuration for Cloudflare..."
+	npm run prebuild
+	npm run config:prod
+	@echo "🚀 Building and deploying to Cloudflare..."
+	npm run build:prod
+	npx wrangler deploy
+	npm run config:dev
+	@echo "✅ Deployment to Cloudflare completed successfully."
 
 # Common remote deployment flow (internal)
 ._remote_deploy_flow: ._build-docker ._transfer ._deploy-remote ._local-cleanup
@@ -100,16 +147,24 @@ deploy:
 # ==============================================================================
 
 ._build-docker:
-	@echo "1) 🚀 Building Angular app for production..."
-	@npm run build
-	@echo "2) 🐳 Building Docker image [$(DOCKER_IMAGE_NAME):latest] for [$(PLATFORM)]..."
-	@docker build --platform $(PLATFORM) --build-arg APP_ENV=$(APP_ENV) -t $(DOCKER_IMAGE_NAME):latest .
+	@echo "1) 🚀 Preparing configuration for [$(APP_ENV)]..."
+	-@npm run config:$(APP_ENV) || npm run config:dev
+	@echo "2) 🚀 Building Angular app for production..."
+	@npm run build:prod
+	@echo "3) 🐳 Building Docker image [$(DOCKER_IMAGE_NAME):$(VERSION)] for [$(PLATFORM)]..."
+	@docker build --platform $(PLATFORM) \
+		--build-arg APP_ENV=$(APP_ENV) \
+		--build-arg VERSION=$(VERSION) \
+		--build-arg GIT_HASH=$(GIT_HASH) \
+		-t $(DOCKER_IMAGE_NAME):$(VERSION) \
+		-t $(DOCKER_IMAGE_NAME):latest .
 
 ._transfer:
 	@echo "3) 💾 Saving Docker image to [$(IMAGE_FILENAME)]..."
-	@docker save $(DOCKER_IMAGE_NAME):latest -o $(IMAGE_FILENAME)
+	@docker save $(DOCKER_IMAGE_NAME):$(VERSION) -o $(IMAGE_FILENAME)
 	@echo "4) 🚚 Transferring files to [$(TARGET_USER)@$(TARGET_HOST)]..."
 	@echo "  -> Transferring Docker image [$(IMAGE_FILENAME)] to [$(REMOTE_TAR_FILEPATH)]"
+	@$(SSH_CMD) $(TARGET_USER)@$(TARGET_HOST) "mkdir -p $(REMOTE_DEPLOY_PATH)"
 	@$(SCP_CMD) $(IMAGE_FILENAME) $(TARGET_USER)@$(TARGET_HOST):$(REMOTE_TAR_FILEPATH)
 	@echo "  -> Transferring config file [$(LOCAL_CONFIG_PATH)] to [$(REMOTE_CONFIG_PATH)]"
 	@$(SCP_CMD) $(LOCAL_CONFIG_PATH) $(TARGET_USER)@$(TARGET_HOST):$(REMOTE_CONFIG_PATH)
@@ -135,7 +190,7 @@ deploy:
 			-p $(HOST_PORT):80 \
 			-v $(REMOTE_CONFIG_PATH):/usr/share/nginx/html/assets/config.json:ro \
 			--restart unless-stopped \
-			$(DOCKER_IMAGE_NAME):latest; \
+			$(DOCKER_IMAGE_NAME):$(VERSION); \
 		echo "  -> 🧹 Cleaning up remote tarball..."; \
 		rm $(REMOTE_TAR_FILEPATH); \
 		echo "  -> ✅ Remote deployment finished." '
@@ -146,15 +201,44 @@ deploy:
 	-@docker stop $(CONTAINER_NAME)
 	-@docker rm $(CONTAINER_NAME)
 	@echo "  -> 🚀 Starting new container [$(CONTAINER_NAME)]..."
-	@docker run -d --name $(CONTAINER_NAME) -p $(HOST_PORT):80 -v $(shell pwd)/src/assets/config.$(APP_ENV).json:/usr/share/nginx/html/assets/config.json --restart unless-stopped $(DOCKER_IMAGE_NAME):latest
+	@CONFIG_FILE=$(LOCAL_CONFIG_PATH); \
+	if [ ! -f "$$CONFIG_FILE" ]; then \
+		echo "  -> ⚠️  Warning: $$CONFIG_FILE not found, falling back to public/config.json"; \
+		CONFIG_FILE=public/config.json; \
+	fi; \
+	docker run -d --name $(CONTAINER_NAME) -p $(HOST_PORT):80 -v $$(pwd)/$$CONFIG_FILE:/usr/share/nginx/html/assets/config.json --restart unless-stopped $(DOCKER_IMAGE_NAME):$(VERSION)
 
 ._local-cleanup:
 	@echo "6) 🧹 Cleaning up local tarball [$(IMAGE_FILENAME)]..."
 	@rm -f $(IMAGE_FILENAME)
 
+._ghcr-login-check:
+	@echo "🔑 Checking GHCR login status..."
+	@echo "🚨 If the next step fails, please run: echo \$$CR_PAT | docker login ghcr.io -u $(GHCR_USER) --password-stdin"
+
+._build-and-push-ghcr: ._ghcr-login-check ._build-docker
+	@echo "1) 🐳 Tagging and Pushing to GHCR [$(GHCR_REPO):$(VERSION)]..."
+	@docker tag $(DOCKER_IMAGE_NAME):$(VERSION) $(GHCR_REPO):$(VERSION)
+	@docker tag $(DOCKER_IMAGE_NAME):latest $(GHCR_REPO):latest
+	@echo "2) 🚀 Pushing to GHCR..."
+	@docker push $(GHCR_REPO):$(VERSION)
+	@docker push $(GHCR_REPO):latest
+
 # ==============================================================================
 # DEVELOPMENT & UTILITY TARGETS
 # ==============================================================================
+
+patch:
+	npm version patch
+	@echo "Bumped to version $(shell node -p "require('./package.json').version")"
+
+minor:
+	npm version minor
+	@echo "Bumped to version $(shell node -p "require('./package.json').version")"
+
+major:
+	npm version major
+	@echo "Bumped to version $(shell node -p "require('./package.json').version")"
 
 rename-project:
 	python3 scripts/rename_project.py "$(PROJECT_NAME)" "$(APP_ID)"
@@ -210,6 +294,7 @@ merge-upstream:
 
 deploy-release:
 	npm run prebuild
+	npm run config:prod
 	npm run build:prod
 	firebase deploy --project $(PROJECT_ID) --only hosting:$(PROJECT_ID)
 
@@ -230,6 +315,17 @@ help:
 	@echo "  $(BLUE)make deploy-ailab$(NC)       - Build and deploy the app to the AI Lab server."
 	@echo "  $(BLUE)make deploy$(NC)             - Build and deploy the app to Firebase Hosting."
 	@echo "  $(BLUE)make deploy-release$(NC)     - Build and deploy a production release to Firebase."
+	@echo "  $(BLUE)make push-ghcr$(NC)          - Build and push the Docker image to GHCR."
+	@echo "  $(BLUE)make build-docker$(NC)       - Build the Docker image locally."
+	@echo "  $(BLUE)make docker-build-and-run$(NC) - Build and run the app locally."
+	@echo "  $(BLUE)make docker-run$(NC)           - Run the already built Docker image locally."
+	@echo ""
+	@echo "----------------------------------------------------------------------"
+	@echo "  Versioning Targets"
+	@echo "----------------------------------------------------------------------"
+	@echo "  $(BLUE)make patch$(NC)             - Bump version (patch: 0.0.x) and create git tag."
+	@echo "  $(BLUE)make minor$(NC)             - Bump version (minor: 0.x.0) and create git tag."
+	@echo "  $(BLUE)make major$(NC)             - Bump version (major: x.0.0) and create git tag."
 	@echo ""
 	@echo "  You can override variables like this: make deploy-homelab HOST_PORT=8081"
 	@echo ""

@@ -35,6 +35,8 @@ export class AgentCardListPage implements OnInit {
     speedRate: 1,
     userMessageTask: false,
     assistantMessageTask: false,
+    saveConversations: false,
+    multilingualHearing: false,
   };
 
   public viewMode: 'table' | 'cards' = 'table';
@@ -51,9 +53,6 @@ export class AgentCardListPage implements OnInit {
 
   messages: any[] = [];
   newMessage: string = '';
-
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[]);
 
   constructor() {
     addIcons({ send, sendOutline, sendSharp });
@@ -76,6 +75,7 @@ export class AgentCardListPage implements OnInit {
         conversation: idCard,
       },
     };
+
     this.router.navigate(['/page/stack/conversation-details', idCard], navigationExtras);
   }
 

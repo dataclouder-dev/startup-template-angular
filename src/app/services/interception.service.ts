@@ -2,7 +2,7 @@ import { mergeMap } from 'rxjs/operators';
 import { inject } from '@angular/core';
 import { HttpRequest, HttpHandlerFn } from '@angular/common/http';
 
-import { FirebaseAuthService } from '@dataclouder/app-auth';
+import { FirebaseAuthService } from '@dataclouder/ngx-auth';
 
 export function authInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn) {
   const fbAuthService = inject(FirebaseAuthService);

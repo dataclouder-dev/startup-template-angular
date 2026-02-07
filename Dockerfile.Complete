@@ -14,7 +14,7 @@ COPY . .
 
 # Build the application for production
 # Assumes output is in /app/dist/polilan (check angular.json if different)
-RUN npm run build:prod
+RUN pnpm run build:internalnet
 
 # Stage 2: Serve the application with Nginx
 FROM nginx:1.27-alpine AS runner

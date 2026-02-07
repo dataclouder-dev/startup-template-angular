@@ -34,14 +34,6 @@
         <p-select id="relation" [options]="relationObjects" formControlName="relation" optionLabel="name" placeholder="Select a relation" />
       </div>
 
-      <div style="padding-left: 15px">
-        <div class="form-field">
-          <label class="block" pTooltip="Ejemplo use formly">Extension</label>
-
-          <formly-form [fields]="extraFields" [form]="form.controls.extension"></formly-form>
-        </div>
-      </div>
-
       <div class="form-field">
         <label class="block" pTooltip="List of Objects handled by custom methods">Testimonials</label>
 
@@ -88,7 +80,7 @@
     </div>
 
     <p-dialog header="Search for relation" [(visible)]="isDialogVisible" [modal]="true" [style]="{ width: '50vw' }" draggable="false">
-      <app-generic-list [onlyView]="true" [viewType]="'table'" (onSelect)="handleRelationSelection($event)"></app-generic-list>
+      <app-generic-list [onlyView]="true" (onSelect)="handleRelationSelection($event)"></app-generic-list>
     </p-dialog>
   </p-card>
 </div>

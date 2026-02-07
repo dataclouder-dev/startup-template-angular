@@ -2,20 +2,17 @@ import { Component, inject } from '@angular/core';
 import { RouterOutlet, RouterLink } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { CardModule } from 'primeng/card';
+import { APP_CONFIG } from '@dataclouder/ngx-core';
 
 @Component({
   selector: 'app-auth-layout',
   template: `
     <div class="main-content">
       <div>
-        <h1 class="title">
-          <img routerLink="/" style="width: 200px" src="assets/app_icons/apiglota.svg" alt="Logo" />
-        </h1>
+        <h1 class="title"><img routerLink="/" style="width: 120px" src="assets/defaults/icons/logo.svg" alt="Logo" /></h1>
       </div>
 
-      <p-card>
-        <router-outlet></router-outlet>
-      </p-card>
+      <router-outlet></router-outlet>
 
       <p class="info-version">{{ envName }} {{ version }}</p>
     </div>
@@ -45,6 +42,7 @@ import { CardModule } from 'primeng/card';
   imports: [RouterOutlet, RouterLink, CardModule],
 })
 export class AuthLayoutComponent {
-  public envName = environment.envName;
-  public version = environment.version;
+  private config = inject(APP_CONFIG);
+  public envName = this.config.envName;
+  public version = this.config.version;
 }

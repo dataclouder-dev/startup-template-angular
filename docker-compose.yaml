@@ -1,0 +1,28 @@
+services:
+  frontend:
+    image: ghcr.io/adamofig/dataclouder-front:latest
+    container_name: dataclouder-front-app
+    # Force platform to amd64 because the GHCR image was built for Intel
+    # This allows it to run on Mac M1/M2/M3 via emulation
+    platform: linux/amd64
+    ports:
+      - "7990:80"
+    volumes:
+      - ./public/config.json:/usr/share/nginx/html/assets/config.json:ro
+    depends_on:
+      - dataclouder-node
+    restart: unless-stopped
+
+  dataclouder-node:
+    image: ghcr.io/adamofig/dataclouder-dev-node:latest
+    platform: linux/amd64
+    container_name: dataclouder-node-container
+    ports:
+      - "${HOST_PORT:-7991}:7991"
+    env_file:
+      - .env
+    volumes:
+      - ./.cred/key-qa.json:/usr/src/app/.cred/key-qa.json:ro
+    environment:
+      - GOOGLE_APPLICATION_CREDENTIALS=/usr/src/app/.cred/key-qa.json
+    restart: unless-stopped

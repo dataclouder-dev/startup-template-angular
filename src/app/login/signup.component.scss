@@ -4,5 +4,9 @@
 
 ::ng-deep .signup-card {
     box-shadow: none !important;
+    border-radius: 2px !important;
+    border: 2px solid var(--ion-color-primary) !important;
+    max-width: 600px !important;
+    width: 90vw !important;
 }
     

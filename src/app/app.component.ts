@@ -1,4 +1,3 @@
-
 import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
@@ -26,12 +25,14 @@ import {
   search,
 } from 'ionicons/icons';
 
+import { ToastModule } from 'primeng/toast';
+
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
   standalone: true,
-  imports: [IonApp, IonRouterOutlet, LoadingBarComponent],
+  imports: [IonApp, IonRouterOutlet, LoadingBarComponent, ToastModule],
 })
 export class AppComponent {
   private router = inject(Router);

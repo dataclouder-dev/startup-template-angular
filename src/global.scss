@@ -4,6 +4,7 @@
 @use 'tailwindcss';
 
 
+
 // 1) Importing css libraries
 @import "primeicons/primeicons.css";
 
@@ -17,16 +18,15 @@
 @import "@ionic/angular/css/display.css";
 
 /* Optional CSS utils that can be commented out */
-@import "@ionic/angular/css/padding.css";
-@import "@ionic/angular/css/float-elements.css";
-@import "@ionic/angular/css/text-alignment.css";
-@import "@ionic/angular/css/text-transformation.css";
-@import "@ionic/angular/css/flex-utils.css";
 
+@import "@ionic/angular/css/padding.css";
+
+// @import "@ionic/angular/css/float-elements.css";
+// @import "@ionic/angular/css/text-alignment.css";
+// @import "@ionic/angular/css/text-transformation.css";
+// @import "@ionic/angular/css/flex-utils.css";
 
 @import "@ionic/angular/css/palettes/dark.class.css"; 
-
-
 
 
 // 2) defining addional variables
@@ -67,6 +67,10 @@
     --side-width: 270px;
     --side-max-width: 300px;
 
+    --chat-user-message-bg: rgba(48, 8, 113, 0.5);
+    --chat-assistant-message-bg: rgba(6, 78, 84, 0.5) ;
+
+    --primary-color-unique: #2d0c62;
 
   }
   
@@ -150,24 +154,38 @@
 
 .p-card{
     background: --var(--p-primary-color) !important;
-    backdrop-filter: blur(1px);
-    border: 1px solid #16012c;
+    backdrop-filter: blur(8px);
+    border: 2px solid #16012c;
     transition: all 0.3s ease;
     box-shadow:  0 8px 32px rgba(0, 0, 0, 0.3), 0 3px 2px var(--p-primary-900);
     margin: 4px;
-    border-radius: 1px;
+    border-radius: 0px !important;
 }
 
 .p-card:hover {
-    /* filter: drop-shadow(0 0 0.75rem rgb(0, 229, 255)); */
-    filter: drop-shadow(-1px 1px 1px rgb(40, 1, 64));
-    transform: translateY(-2px);
-    transform: scale(1.01);
+  filter: drop-shadow(0 0 0.1rem rgba(0, 229, 255, 0.5));
+    box-shadow: 0 0 1rem rgba(40, 1, 64, 0.5);
+    transform: scale(1.005);
   }
-
 
   // Shepherd tour styles
   p-paginator {
     background: transparent !important;
   }
-  
+
+  .p-button-icon-only::after {
+    content: '' !important;
+  }
+    
+
+ .p-drawer-bottom {
+    backdrop-filter: blur(2px);
+    background: transparent;
+    background-color: rgba(0, 0, 0, 0.1) !important;
+    // height: 95% !important;
+    height: 41rem !important;
+  }
+
+.p-drawer-header{
+  padding: 2px !important;
+}

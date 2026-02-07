@@ -35,12 +35,12 @@
 
   <div class="paginator-container">
     <p-paginator
-      currentPageReportTemplate="{{ totalRecords }} conversations"
+      currentPageReportTemplate="{{ totalRecords() }} conversations"
       [showCurrentPageReport]="true"
       (onPageChange)="onPageChange($event)"
-      [first]="first"
+      [first]="first()"
       [rows]="rows"
-      [totalRecords]="totalRecords"
+      [totalRecords]="totalRecords()"
       [rowsPerPageOptions]="[10, 20, 30]">
     </p-paginator>
   </div>

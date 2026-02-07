@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DCSignupComponent } from '@dataclouder/app-auth';
+import { DCSignupComponent } from '@dataclouder/ngx-auth';
 
 // TODO: Creo que este no lo utilizo
 

@@ -5,13 +5,15 @@ PODS:
   - AppAuth/Core (1.7.5)
   - AppAuth/ExternalUserAgent (1.7.5):
     - AppAuth/Core
-  - Capacitor (6.1.2):
+  - Capacitor (6.2.1):
     - CapacitorCordova
   - CapacitorApp (6.0.1):
     - Capacitor
+  - CapacitorCommunityAppleSignIn (6.0.0):
+    - Capacitor
   - CapacitorCommunitySpeechRecognition (6.0.1):
     - Capacitor
-  - CapacitorCordova (6.1.2)
+  - CapacitorCordova (6.2.1)
   - CapacitorHaptics (6.0.1):
     - Capacitor
   - CapacitorKeyboard (6.0.2):
@@ -33,15 +35,16 @@ PODS:
     - Capacitor
 
 DEPENDENCIES:
-  - "Capacitor (from `../../node_modules/@capacitor/ios`)"
-  - "CapacitorApp (from `../../node_modules/@capacitor/app`)"
-  - "CapacitorCommunitySpeechRecognition (from `../../node_modules/@capacitor-community/speech-recognition`)"
-  - "CapacitorCordova (from `../../node_modules/@capacitor/ios`)"
-  - "CapacitorHaptics (from `../../node_modules/@capacitor/haptics`)"
-  - "CapacitorKeyboard (from `../../node_modules/@capacitor/keyboard`)"
-  - "CapacitorStatusBar (from `../../node_modules/@capacitor/status-bar`)"
-  - "CodetrixStudioCapacitorGoogleAuth (from `../../node_modules/@codetrix-studio/capacitor-google-auth`)"
-  - "JcesarmobileSslSkip (from `../../node_modules/@jcesarmobile/ssl-skip`)"
+  - "Capacitor (from `../../node_modules/.pnpm/@capacitor+ios@6.2.1_@capacitor+core@6.2.1/node_modules/@capacitor/ios`)"
+  - "CapacitorApp (from `../../node_modules/.pnpm/@capacitor+app@6.0.1_@capacitor+core@6.2.1/node_modules/@capacitor/app`)"
+  - "CapacitorCommunityAppleSignIn (from `../../node_modules/.pnpm/@capacitor-community+apple-sign-in@6.0.0_@capacitor+core@6.2.1/node_modules/@capacitor-community/apple-sign-in`)"
+  - "CapacitorCommunitySpeechRecognition (from `../../node_modules/.pnpm/@capacitor-community+speech-recognition@6.0.1_@capacitor+core@6.2.1/node_modules/@capacitor-community/speech-recognition`)"
+  - "CapacitorCordova (from `../../node_modules/.pnpm/@capacitor+ios@6.2.1_@capacitor+core@6.2.1/node_modules/@capacitor/ios`)"
+  - "CapacitorHaptics (from `../../node_modules/.pnpm/@capacitor+haptics@6.0.1_@capacitor+core@6.2.1/node_modules/@capacitor/haptics`)"
+  - "CapacitorKeyboard (from `../../node_modules/.pnpm/@capacitor+keyboard@6.0.2_@capacitor+core@6.2.1/node_modules/@capacitor/keyboard`)"
+  - "CapacitorStatusBar (from `../../node_modules/.pnpm/@capacitor+status-bar@6.0.1_@capacitor+core@6.2.1/node_modules/@capacitor/status-bar`)"
+  - "CodetrixStudioCapacitorGoogleAuth (from `../../node_modules/.pnpm/@codetrix-studio+capacitor-google-auth@3.4.0-rc.4_@capacitor+core@6.2.1/node_modules/@codetrix-studio/capacitor-google-auth`)"
+  - "JcesarmobileSslSkip (from `../../node_modules/.pnpm/@jcesarmobile+ssl-skip@0.4.0/node_modules/@jcesarmobile/ssl-skip`)"
 
 SPEC REPOS:
   trunk:
@@ -52,39 +55,42 @@ SPEC REPOS:
 
 EXTERNAL SOURCES:
   Capacitor:
-    :path: "../../node_modules/@capacitor/ios"
+    :path: "../../node_modules/.pnpm/@capacitor+ios@6.2.1_@capacitor+core@6.2.1/node_modules/@capacitor/ios"
   CapacitorApp:
-    :path: "../../node_modules/@capacitor/app"
+    :path: "../../node_modules/.pnpm/@capacitor+app@6.0.1_@capacitor+core@6.2.1/node_modules/@capacitor/app"
+  CapacitorCommunityAppleSignIn:
+    :path: "../../node_modules/.pnpm/@capacitor-community+apple-sign-in@6.0.0_@capacitor+core@6.2.1/node_modules/@capacitor-community/apple-sign-in"
   CapacitorCommunitySpeechRecognition:
-    :path: "../../node_modules/@capacitor-community/speech-recognition"
+    :path: "../../node_modules/.pnpm/@capacitor-community+speech-recognition@6.0.1_@capacitor+core@6.2.1/node_modules/@capacitor-community/speech-recognition"
   CapacitorCordova:
-    :path: "../../node_modules/@capacitor/ios"
+    :path: "../../node_modules/.pnpm/@capacitor+ios@6.2.1_@capacitor+core@6.2.1/node_modules/@capacitor/ios"
   CapacitorHaptics:
-    :path: "../../node_modules/@capacitor/haptics"
+    :path: "../../node_modules/.pnpm/@capacitor+haptics@6.0.1_@capacitor+core@6.2.1/node_modules/@capacitor/haptics"
   CapacitorKeyboard:
-    :path: "../../node_modules/@capacitor/keyboard"
+    :path: "../../node_modules/.pnpm/@capacitor+keyboard@6.0.2_@capacitor+core@6.2.1/node_modules/@capacitor/keyboard"
   CapacitorStatusBar:
-    :path: "../../node_modules/@capacitor/status-bar"
+    :path: "../../node_modules/.pnpm/@capacitor+status-bar@6.0.1_@capacitor+core@6.2.1/node_modules/@capacitor/status-bar"
   CodetrixStudioCapacitorGoogleAuth:
-    :path: "../../node_modules/@codetrix-studio/capacitor-google-auth"
+    :path: "../../node_modules/.pnpm/@codetrix-studio+capacitor-google-auth@3.4.0-rc.4_@capacitor+core@6.2.1/node_modules/@codetrix-studio/capacitor-google-auth"
   JcesarmobileSslSkip:
-    :path: "../../node_modules/@jcesarmobile/ssl-skip"
+    :path: "../../node_modules/.pnpm/@jcesarmobile+ssl-skip@0.4.0/node_modules/@jcesarmobile/ssl-skip"
 
 SPEC CHECKSUMS:
   AppAuth: 501c04eda8a8d11f179dbe8637b7a91bb7e5d2fa
-  Capacitor: 679f9673fdf30597493a6362a5d5bf233d46abc2
-  CapacitorApp: 0bc633b4eae40a1f32cd2834788fad3bc42da6a1
-  CapacitorCommunitySpeechRecognition: ed0f9d7e56d52dadd9cfd921d430e99ddb196981
-  CapacitorCordova: f48c89f96c319101cd2f0ce8a2b7449b5fb8b3dd
-  CapacitorHaptics: fe689ade56ef20ec9b041a753c6da70c5d8ec9a9
-  CapacitorKeyboard: 2700f9b18687be021e28b5a09b59eb151a46d5e0
-  CapacitorStatusBar: b81d4fb5d4e0064c712018071b3ab4b810b39a63
-  CodetrixStudioCapacitorGoogleAuth: fcce058390347c1ce5d8ac4764bdf1f5c1ee233b
+  Capacitor: c95400d761e376be9da6be5a05f226c0e865cebf
+  CapacitorApp: f51c08c64df914fc934239fd1b3fc809d62a02f6
+  CapacitorCommunityAppleSignIn: c9c2541ee7580618055a91b3516c3f0313fe2544
+  CapacitorCommunitySpeechRecognition: 73be1a178a23856d9706886d5f40ef06a6055438
+  CapacitorCordova: 8d93e14982f440181be7304aa9559ca631d77fff
+  CapacitorHaptics: 05d33e20e394b1977dfd2a00a2621e04098164c1
+  CapacitorKeyboard: 5bf4458dd989b56a60ea15c92cbca5fbfae6e9f9
+  CapacitorStatusBar: 9ed7f06318fd436917072a9bf60fda56d12c8bdb
+  CodetrixStudioCapacitorGoogleAuth: 9dcfabfb7dd804ad6231a1513bc6e81e620cbec6
   GoogleSignIn: 5651ce3a61e56ca864160e79b484cd9ed3f49b7a
   GTMAppAuth: 0ff230db599948a9ad7470ca667337803b3fc4dd
   GTMSessionFetcher: 3a63d75eecd6aa32c2fc79f578064e1214dfdec2
-  JcesarmobileSslSkip: b0f921e9d397a57f7983731209ca1ee244119c1f
+  JcesarmobileSslSkip: 5fa98636a64c36faa50f32ab4daf34e38f4d45b9
 
-PODFILE CHECKSUM: 46e35f9349b6809b99f192d6eb22be72cb30104d
+PODFILE CHECKSUM: 0321a380d6a43a94b28445573bb0862a6fecd091
 
 COCOAPODS: 1.16.2

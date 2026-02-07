@@ -50,6 +50,7 @@ export const Endpoints = {
     Chat: 'api/agent-cards/chat',
     ListModels: 'api/agent-cards/list_models',
     Whisper: 'api/agent-cards/whisper',
+    Random: 'api/agent-cards/random',
   },
 
   Lessons: {

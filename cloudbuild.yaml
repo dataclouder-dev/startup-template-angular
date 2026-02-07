@@ -41,9 +41,26 @@ steps:
     entrypoint: npm
     args: ['run', 'build:$_ENV']
     
+  - id: 'build-docker-image'
+    name: 'gcr.io/cloud-builders/docker'
+    args: [
+      'build',
+      '--build-arg', 'APP_ENV=$_ENV',
+      '--build-arg', 'VERSION=$_VERSION',
+      '--build-arg', 'GIT_HASH=$SHORT_SHA',
+      '-t', 'gcr.io/$PROJECT_ID/$_DOCKER_IMAGE_NAME:$_VERSION',
+      '-t', 'gcr.io/$PROJECT_ID/$_DOCKER_IMAGE_NAME:latest',
+      '.'
+    ]
+
   - id: deploy-to-hosting-firebase
     name: 'gcr.io/$PROJECT_ID/firebase'
     args: ['deploy', '--only=hosting', '--project=$PROJECT_ID']
+
+# Images to be pushed to GCR
+images:
+  - 'gcr.io/$PROJECT_ID/$_DOCKER_IMAGE_NAME:$_VERSION'
+  - 'gcr.io/$PROJECT_ID/$_DOCKER_IMAGE_NAME:latest'
 
 # Secrets you have to create in the secret manager and give access to the service account
 availableSecrets:
@@ -52,4 +69,9 @@ availableSecrets:
       env: 'ENVIRONMENT_CONFIG'
 options:
   logging: CLOUD_LOGGING_ONLY
+
+substitutions:
+  _ENV: prod
+  _VERSION: v0.0.0 # Should be overridden by trigger or passed via --substitutions
+  _DOCKER_IMAGE_NAME: dataclouder-front
 

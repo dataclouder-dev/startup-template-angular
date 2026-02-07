@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { DcLoginComponent } from '@dataclouder/app-auth';
+import { DcLoginComponent } from '@dataclouder/ngx-auth';
 
 @Component({
   selector: 'app-auth-component',

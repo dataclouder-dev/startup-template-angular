@@ -1,0 +1,7 @@
+{
+  "name": "startup-template",
+  "compatibility_date": "2025-08-10",
+  "assets": {
+    "directory": "./www/browser"
+  }
+}

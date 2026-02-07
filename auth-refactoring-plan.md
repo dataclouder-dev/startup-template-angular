@@ -7,7 +7,7 @@ This document outlines the plan to refactor the authentication routes in the app
 - **Routing:** The authentication routes are currently located under the `auth` path in `src/app/app.routes.ts`. The `signin` and `signup` paths directly load their respective components.
 - **Components:**
   - `LoginComponent` in `src/app/login/login.page.ts` handles the logic for the login screen. Its template consists of a single element, `<dc-login />`, which suggests the UI is encapsulated within a library component.
-  - `AppSignupComponent` in `src/app/login/signup.component.ts` acts as a wrapper for the `DCSignupComponent` from the `@dataclouder/app-auth` library.
+  - `AppSignupComponent` in `src/app/login/signup.component.ts` acts as a wrapper for the `DCSignupComponent` from the `@dataclouder/ngx-auth` library.
 
 ## Proposed Refactoring Plan
 
@@ -58,6 +58,6 @@ graph TD
 
 ### 3. Simplify Existing Components
 
-The existing `LoginComponent` and `AppSignupComponent` will not require any significant changes, as their UI is already provided by the `@dataclouder/app-auth` library components. This new structure will simply provide a consistent layout around them.
+The existing `LoginComponent` and `AppSignupComponent` will not require any significant changes, as their UI is already provided by the `@dataclouder/ngx-auth` library components. This new structure will simply provide a consistent layout around them.
 
 This approach will result in a cleaner, more maintainable, and better-organized authentication flow.

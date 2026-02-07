@@ -27,14 +27,15 @@ import {
 } from '@ionic/angular/standalone';
 import * as ionicons from 'ionicons/icons'; // import all icons
 
-import { environment } from 'src/environments/environment';
-import { FirebaseAuthService } from '@dataclouder/app-auth';
+import { FirebaseAuthService } from '@dataclouder/ngx-auth';
 import { ToggleButtonModule } from 'primeng/togglebutton';
 import { FormsModule } from '@angular/forms';
 import { addIcons } from 'ionicons';
-import { UserService } from '../dc-user-module/user.service';
-import { IUser } from '@dataclouder/ngx-users';
+import { AppUserService } from 'src/app/services/app-user.service';
 import { PwaInstallComponent } from '../components/pwa-install/pwa-install.component';
+import { APP_CONFIG } from '@dataclouder/ngx-core';
+import { ToggleSwitchModule } from 'primeng/toggleswitch';
+import { PlanIconPipe } from '@dataclouder/ngx-auth';
 
 @Component({
   selector: 'app-ionic-layout',
@@ -70,6 +71,8 @@ import { PwaInstallComponent } from '../components/pwa-install/pwa-install.compo
     ToggleButtonModule,
     FormsModule,
     PwaInstallComponent,
+    ToggleSwitchModule,
+    PlanIconPipe,
   ],
 })
 export class IonicLayoutComponent implements OnInit {
@@ -77,12 +80,14 @@ export class IonicLayoutComponent implements OnInit {
   private router = inject(Router);
   private actionSheetController = inject(ActionSheetController);
   private menuController = inject(MenuController);
-  public userService = inject(UserService);
+  public userService = inject(AppUserService);
 
-  public envName = environment.envName;
-  public projectName = environment.projectName;
-  public version = environment.version;
-  public user: IUser | null = this.userService.getUser();
+  private config = inject(APP_CONFIG);
+
+  public envName = this.config.envName;
+  public projectName = this.config.projectName;
+  public version = this.config.version;
+  public user = this.userService.user();
   public menuVisible: boolean = true;
 
   public appPages = [
@@ -97,11 +102,12 @@ export class IonicLayoutComponent implements OnInit {
   public adminPages = [
     { title: 'Admin Users', url: '/page/admin/users', icon: 'people' },
     { title: 'Admin Other', url: '/page/admin', icon: 'settings' },
+    { title: 'Agent Rules', url: '/page/admin/agent-rules', icon: 'receipt' },
   ];
 
   public testingPages = [{ title: 'Test', url: '/page/test', icon: 'code-working' }];
 
-  public isAdmin: boolean = false;
+  public isAdmin: boolean = this.userService.isAdmin();
 
   // Add this property to track dark mode state
   public isDarkMode: boolean = false;
@@ -115,18 +121,11 @@ export class IonicLayoutComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.firebaseAuthService.authState$.subscribe((auth: any) => {
-      if (auth) {
-        // this.isAdmin = this.user.isAdmin;
-        this.isAdmin = true;
-      }
-
-      console.log(this.user);
-    });
   }
 
   logout() {
     console.log('logout');
+    this.userService.clearUser();
     this.firebaseAuthService.logOut('/');
   }
 

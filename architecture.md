@@ -16,7 +16,7 @@ This document provides a high-level overview of the project's architecture, stru
   - Firebase Email/Password
   - Google Sign-In (`@codetrix-studio/capacitor-google-auth`)
   - Apple Sign-In (`@capacitor-community/apple-sign-in`)
-  - Custom authentication logic via `@dataclouder/app-auth`.
+  - Custom authentication logic via `@dataclouder/ngx-auth`.
 - **State Management:** Primarily handled via Angular services and RxJS. custom services like `UserDataExchangeService` might manage specific state slices.
 - **Forms:** Angular Reactive Forms, enhanced with Formly (`@ngx-formly/core`, `@ngx-formly/primeng`) for dynamic form generation.
 - **Key Libraries & Features:**
@@ -25,7 +25,7 @@ This document provides a high-level overview of the project's architecture, stru
   - **Rich Text Editing:** `@ckeditor/ckeditor5-angular`.
   - **Speech Recognition:** `@capacitor-community/speech-recognition`.
   - **Dataclouder Suite:** Significant integration with custom `@dataclouder/` modules:
-    - `@dataclouder/app-auth`
+    - `@dataclouder/ngx-auth`
     - `@dataclouder/ngx-agent-cards`
     - `@dataclouder/ngx-lessons`
     - `@dataclouder/ngx-cloud-storage`

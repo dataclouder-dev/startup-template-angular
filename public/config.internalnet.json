@@ -1,0 +1,24 @@
+{
+  "projectName": "Control Markets",
+  "version": "0.0.40",
+  "envName": "DEV",
+  "production": true,
+  "authenticationRequired": true,
+  "backendNodeUrl": "http://192.168.2.6:7991",
+  "backendPythonUrl": "http://192.168.2.6:7992",
+  "aiServicesUrl": "http://192.168.2.6:7993",
+  "mobile": {
+    "appleAppId": "com.dc-template.app.dev",
+    "appleRedirectURI": "https://dataclouder-dev.firebaseapp.com/__/auth/handler",
+    "androidClientId": "484991861457-chhvmiqtjq22je1nr9m13ouljrdeuhpi.apps.googleusercontent.com",
+    "iosClientId": "484991861457-o3j8n8fv21huerkd0pj8r719jssrtbnh.apps.googleusercontent.com"
+  },
+  "firebase": {
+    "apiKey": "AIzaSyAecVnUj1-IjKGDvBarhufKAfO-Y-RyTXw",
+    "authDomain": "golden-ad-dev.firebaseapp.com",
+    "projectId": "golden-ad-dev",
+    "storageBucket": "golden-ad-dev.firebasestorage.app",
+    "messagingSenderId": "164740776065",
+    "appId": "1:164740776065:web:e2c59fd82d71fe6817cd80"
+  }
+}

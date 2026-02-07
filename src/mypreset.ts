@@ -4,9 +4,9 @@ import { definePreset } from '@primeuix/themes';
 
 import Nora from '@primeng/themes/nora';
 
-import Aura from '@primeuix/themes/aura';
+// import Aura from '@primeuix/themes/aura';
 
-export const MyPreset = definePreset(Aura, {
+export const MyPreset = definePreset(Nora, {
   semantic: {
     colorScheme: {
       dark: {

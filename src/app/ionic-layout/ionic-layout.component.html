@@ -49,20 +49,23 @@
 
           <ion-buttons slot="end">
             <app-pwa-install />
-            <p-togglebutton [(ngModel)]="isDarkMode" onLabel="" offLabel="" styleClass="w-36" ariaLabel="Do you confirm" (onChange)="toggleDarkMode()">
-              <ng-template pTemplate="onicon" let-checked="checked">
-                <ion-icon [name]="checked ? 'sunny' : 'moon'"></ion-icon>
-              </ng-template>
-            </p-togglebutton>
 
-            <!-- <ion-toggle [checked]="isDarkMode" aria-label="Dark mode"> Dark Mode </ion-toggle> -->
+            <p-toggleswitch [(ngModel)]="isDarkMode" (onChange)="toggleDarkMode()">
+              <ng-template #handle let-checked="checked">
+                <i [class]="['!text-xs', 'pi', checked ? 'pi-moon' : 'pi-sun']"></i>
+              </ng-template>
+            </p-toggleswitch>
 
             <ion-button (click)="openActionSheet()">
               <span>
                 <ion-avatar style="width: 3em; height: 3em; position: relative">
+                  @if(userService.isAdmin()) {
                   <i style="right: -2px; top: -2px; position: absolute; color: rgb(255, 149, 0)" class="pi pi-key"></i>
+                  }
 
-                  <i style="left: -2px; bottom: -2px; position: absolute; color: rgb(255, 149, 0)" class="pi pi-star-fill"></i>
+                  <i
+                    style="left: -6px; bottom: 4px; position: absolute; color: rgb(255, 149, 0)"
+                    [class]="userService.user()?.claims?.plan?.type | planIcon"></i>
 
                   <img width="10px" alt="Silhouette of a person's head" [src]="user?.urlPicture || '/assets/defaults/icons/default-avatar.png'" />
                 </ion-avatar>

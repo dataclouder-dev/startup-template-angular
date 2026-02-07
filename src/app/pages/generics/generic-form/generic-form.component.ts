@@ -10,10 +10,9 @@ import { InputTextModule } from 'primeng/inputtext';
 import { TextareaModule } from 'primeng/textarea';
 import { ChipModule } from 'primeng/chip';
 import { TooltipModule } from 'primeng/tooltip';
-import { AspectType, CropperComponentModal, ResolutionType, CloudStorageData } from '@dataclouder/ngx-cloud-storage';
+import { AspectType, CropperComponentModal, ResolutionType, FileStorageData } from '@dataclouder/ngx-cloud-storage';
 
 import { EntityBaseFormComponent } from '@dataclouder/ngx-core';
-import { FormlyFieldConfig, FormlyModule } from '@ngx-formly/core';
 import { DialogModule } from 'primeng/dialog';
 import { GenericListComponent } from '../generic-list/generic-list.component';
 
@@ -29,7 +28,6 @@ import { GenericListComponent } from '../generic-list/generic-list.component';
     ChipModule,
     TooltipModule,
     CropperComponentModal,
-    FormlyModule,
     DialogModule,
     GenericListComponent,
   ],
@@ -45,14 +43,14 @@ export class GenericFormComponent extends EntityBaseFormComponent<IGeneric> impl
   public form = this.fb.group({
     name: ['', Validators.required],
     description: [''],
-    image: [{} as CloudStorageData],
+    image: [{} as FileStorageData],
     type: [''],
     relation: [{ id: '', name: '', description: '' }],
-    extension: new FormGroup({}),
   });
 
   protected override patchForm(entity: IGeneric): void {
-    throw new Error('Method not implemented.');
+    // NOTE: you may need to custom patchForm if contains arrays or custom logic.
+    this.form.patchValue(entity);
   }
 
   public storageImgSettings = {
@@ -60,7 +58,7 @@ export class GenericFormComponent extends EntityBaseFormComponent<IGeneric> impl
     cropSettings: { aspectRatio: AspectType.Square, resolutions: [ResolutionType.MediumLarge], resizeToWidth: 700 },
   };
 
-  extraFields: FormlyFieldConfig[] = [
+  extraFields: any[] = [
     { key: 'title', type: 'input', props: { label: 'Title', placeholder: 'Title', required: false } },
     { key: 'content', type: 'textarea', props: { label: 'Content', placeholder: 'Content', required: false } },
   ];

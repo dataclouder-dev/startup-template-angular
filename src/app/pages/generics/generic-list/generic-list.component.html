@@ -1,12 +1,12 @@
 @if (!onlyView()) {
-<p-button [icon]="viewType === 'card' ? 'pi pi-table' : 'pi pi-list'" label="Change View" [link]="true" (click)="toggleView()" />
+<p-button [icon]="viewType() === 'card' ? 'pi pi-table' : 'pi pi-list'" label="Change View" [link]="true" (click)="toggleView()" />
 }
 <div class="generic-list-container">
-  <dc-filter-bar [options]="filterBarOptions" (onNew)="onNew()" (onFilterAction)="doAction($event)"></dc-filter-bar>
+  <dc-filter-bar [isAdmin]="userService.isAdmin()" [options]="filterBarOptions" (onNew)="onNew()" (onFilterAction)="doAction($event)"></dc-filter-bar>
 
-  @if (viewType === 'card') {
+  @if (viewType() === 'card') {
   <div class="generic-list-content">
-    @for (generic of generics(); track generic.id) {
+    @for (generic of items(); track generic.id) {
     <div class="card-source">
       <div style="position: absolute; top: 4px; right: 4px; z-index: 1000">
         <p-speeddial
@@ -21,26 +21,26 @@
         <span>{{ generic?.auditable?.updatedAt | date : 'dd/MM/yyyy HH:mm' }}</span>
       </p-card>
     </div>
-    } @if (generics().length === 0) {
+    } @if (items().length === 0) {
     <p-card>
       <p>No generics found</p>
     </p-card>
     }
   </div>
-  } @else if ( viewType === 'table'){
+  } @else if ( viewType() === 'table'){
 
-  <app-quick-table [tableData]="generics()"></app-quick-table>
+  <app-quick-table [tableData]="items()"></app-quick-table>
 
   }
 
   <div class="paginator-container">
     <p-paginator
-      currentPageReportTemplate="{{ totalRecords }} conversations"
+      currentPageReportTemplate="{{ totalRecords() }} conversations"
       [showCurrentPageReport]="true"
       (onPageChange)="onPageChange($event)"
-      [first]="first"
+      [first]="first()"
       [rows]="rows"
-      [totalRecords]="totalRecords"
+      [totalRecords]="totalRecords()"
       [rowsPerPageOptions]="[10, 20, 30]">
     </p-paginator>
   </div>

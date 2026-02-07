@@ -1,10 +1,10 @@
 import { Routes } from '@angular/router';
 import { AuthGuardService } from './services/auth-guard.service';
-import { redirectToIfAuth } from '@dataclouder/app-auth';
+import { redirectToIfAuth } from '@dataclouder/ngx-auth';
 
 import { RouteNames } from './core/enums';
 import { authAndUserGuard } from '@dataclouder/ngx-users';
-import { environment } from '../environments/environment';
+import { ConversationRulesComponent } from '@dataclouder/ngx-agent-cards';
 
 export const routes: Routes = [
   {
@@ -52,7 +52,7 @@ export const routes: Routes = [
   },
   {
     path: 'page',
-    canActivate: environment.authenticationRequired ? [authAndUserGuard] : [],
+    canActivate: [authAndUserGuard],
 
     loadComponent: () => import('./ionic-layout/ionic-layout.component').then(m => m.IonicLayoutComponent),
     children: [
@@ -72,6 +72,11 @@ export const routes: Routes = [
           {
             path: 'users',
             loadComponent: () => import('@dataclouder/ngx-users').then(m => m.AdminUserComponent),
+          },
+
+          {
+            path: 'agent-rules',
+            loadChildren: () => import('@dataclouder/ngx-agent-cards').then(m => m.ConversationRulesComponent.routes),
           },
         ],
       },
@@ -105,25 +110,7 @@ export const routes: Routes = [
 
       {
         path: 'generics',
-        loadComponent: () => import('./pages/generics/generics.component').then(m => m.GenericsComponent),
-        children: [
-          {
-            path: '',
-            loadComponent: () => import('./pages/generics/generic-list/generic-list.component').then(m => m.GenericListComponent),
-          },
-          {
-            path: 'edit',
-            loadComponent: () => import('./pages/generics/generic-form/generic-form.component').then(m => m.GenericFormComponent),
-          },
-          {
-            path: 'edit/:id',
-            loadComponent: () => import('./pages/generics/generic-form/generic-form.component').then(m => m.GenericFormComponent),
-          },
-          {
-            path: 'details/:id',
-            loadComponent: () => import('./pages/generics/generic-detail/generic-detail.component').then(m => m.GenericDetailComponent),
-          },
-        ],
+        loadChildren: () => import('./pages/generics/generics.component').then(m => m.GenericsComponent.routes),
       },
 
       {
@@ -189,35 +176,11 @@ export const routes: Routes = [
           },
         ],
       },
-
-      {
-        path: 'balancer',
-        loadComponent: () => import('./api-balancer/api-balancers.component').then(m => m.ApiBalancersComponent),
-        children: [
-          {
-            path: '',
-            loadComponent: () => import('./api-balancer/api-balancer-list/api-balancer-list.component').then(m => m.ApiBalancerListComponent),
-          },
-          {
-            path: 'edit',
-            loadComponent: () => import('./api-balancer/api-balancer-form/api-balancer-form.component').then(m => m.ApiBalancerFormComponent),
-          },
-          {
-            path: 'edit/:id',
-            loadComponent: () => import('./api-balancer/api-balancer-form/api-balancer-form.component').then(m => m.ApiBalancerFormComponent),
-          },
-          {
-            path: 'details/:id',
-            loadComponent: () => import('./api-balancer/api-balancer-detail/api-balancer-detail.component').then(m => m.ApiBalancerDetailComponent),
-          },
-        ],
-      },
     ],
   },
 
   {
     path: 'page/stack',
-    canActivate: [AuthGuardService],
 
     loadComponent: () => import('./ionic-layout/stack-ionic/stack-ionic.component').then(m => m.StackIonicComponent),
     children: [

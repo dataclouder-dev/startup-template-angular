@@ -1,4 +1,3 @@
-
 import { ChangeDetectionStrategy, Component, ElementRef, inject, viewChild, effect, signal, OnInit } from '@angular/core'; // Import effect
 
 import { InputTextModule } from 'primeng/inputtext';
@@ -10,11 +9,11 @@ import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { AudioTourService } from 'src/app/services/audio-tour.service';
 import { stepsIntro } from './steps-tour-home';
-import { LessonsService } from 'src/app/pages/lessons/lessons.service';
 import { AgentCardService } from 'src/app/services/agent-card-service';
-import { IAgentCard } from '@dataclouder/ngx-agent-cards';
+import { AgentCardUI, IAgentCard } from '@dataclouder/ngx-agent-cards';
 import { ILesson } from '@dataclouder/ngx-lessons';
-import { DcLessonCardComponent } from '@dataclouder/ngx-lessons';
+import { DcLessonCardComponent, LESSONS_TOKEN } from '@dataclouder/ngx-lessons';
+import { TranslateDirective, TranslatePipe, TranslateService } from '@ngx-translate/core';
 
 // Define card interface for type safety
 interface CardItem {
@@ -28,7 +27,7 @@ register();
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [ButtonModule, InputTextModule, CardModule, DcLessonCardComponent],
+  imports: [ButtonModule, InputTextModule, CardModule, DcLessonCardComponent, AgentCardUI, TranslatePipe, TranslateDirective],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -37,11 +36,14 @@ register();
 export class HomeComponent implements OnInit {
   // Services
   private audioTourService = inject(AudioTourService);
-  private lessonsService = inject(LessonsService);
+  private lessonsService = inject(LESSONS_TOKEN);
   private agentCardService = inject(AgentCardService);
+  // Translate
+  private translate = inject(TranslateService);
 
   // Input States
   agentCards = signal<IAgentCard[]>([]);
+  dailyAgentCard = signal<IAgentCard>({} as IAgentCard);
   lessons = signal<ILesson[]>([]);
 
   // View Child
@@ -89,8 +91,9 @@ export class HomeComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    const agents = await this.agentCardService.findAgentCards({});
-    this.agentCards.set(agents.rows);
+    const agents = await this.agentCardService.getRandomAgentCard();
+
+    this.dailyAgentCard.set(agents[0]);
     const lessons = await this.lessonsService.getLessons({});
 
     this.lessons.set(lessons.rows);
@@ -112,5 +115,9 @@ export class HomeComponent implements OnInit {
 
   public goToLesson(lesson: any) {
     console.log('goToLesson', lesson);
+  }
+
+  public handleAction(event: any) {
+    console.log('handleAction', event);
   }
 }

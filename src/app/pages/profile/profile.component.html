@@ -1,64 +1,16 @@
-<form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
-  @if(this.userService.user()?.claims){
+<div class="form-container">
+  <app-profile-form [user]="userService.user()" [userForm]="userForm" (saveData)="saveData($event)"></app-profile-form>
 
-  <ion-chip color="primary">Plan: {{ this.userService.user()?.claims?.plan?.type }}</ion-chip>
-  <!-- <ion-chip color="primary">Admin: {{ this.userService.user()?.claims?.roles?.admin }}</ion-chip> -->
+  <p-card>
+    <dc-profile-settings-form
+      [settingsForm]="settingsForm"
+      [baseLanguagesOptions]="baseLanguagesOptions"
+      [targetLanguagesOptions]="[]"
+      [audioSpeedOptions]="audioSpeedOptions"
+      [hiddenFields]="hiddenFields"></dc-profile-settings-form>
+  </p-card>
 
-  }
-
-  <ion-list>
-    <ion-item>
-      <ion-label position="floating">Email</ion-label>
-      <ion-input type="email" formControlName="email"></ion-input>
-    </ion-item>
-
-    <!-- Personal Data Section -->
-    <ion-item-group formGroupName="personalData">
-      <ion-item-divider>
-        <ion-label>Personal Information</ion-label>
-      </ion-item-divider>
-
-      <ion-item>
-        <ion-label position="floating">First Name</ion-label>
-        <ion-input formControlName="firstname"></ion-input>
-      </ion-item>
-
-      <ion-item>
-        <ion-label position="floating">Last Name</ion-label>
-        <ion-input formControlName="lastname"></ion-input>
-      </ion-item>
-
-      <ion-item>
-        <ion-label position="floating">Gender</ion-label>
-        <ion-select formControlName="gender" placeholder="Select Gender">
-          <ion-select-option value="male">Male</ion-select-option>
-          <ion-select-option value="female">Female</ion-select-option>
-          <ion-select-option value="other">Other</ion-select-option>
-        </ion-select>
-      </ion-item>
-
-      <ion-item>
-        <ion-label position="floating">Birthday</ion-label>
-        <ion-datetime formControlName="birthday"></ion-datetime>
-      </ion-item>
-
-      <ion-item>
-        <ion-label position="floating">Nickname</ion-label>
-        <ion-input formControlName="nickname" type="text"></ion-input>
-      </ion-item>
-
-      <ion-item>
-        <ion-label position="floating">Emotional Name</ion-label>
-        <ion-input formControlName="emotionalName" type="text"></ion-input>
-      </ion-item>
-    </ion-item-group>
-
-    <!-- Profile Picture URL -->
-    <ion-item>
-      <ion-label position="floating">Profile Picture URL</ion-label>
-      <ion-input formControlName="urlPicture"></ion-input>
-    </ion-item>
-
-    <ion-button type="submit" expand="block" [disabled]="!profileForm.valid"> Save Profile </ion-button>
-  </ion-list>
-</form>
+  <p-card>
+    <dc-chat-settings-dialog></dc-chat-settings-dialog>
+  </p-card>
+</div>

@@ -1,4 +1,4 @@
-require_relative '../../node_modules/@capacitor/ios/scripts/pods_helpers'
+require_relative '../../node_modules/.pnpm/@capacitor+ios@6.2.1_@capacitor+core@6.2.1/node_modules/@capacitor/ios/scripts/pods_helpers'
 
 platform :ios, '13.0'
 use_frameworks!
@@ -9,15 +9,16 @@ use_frameworks!
 install! 'cocoapods', :disable_input_output_paths => true
 
 def capacitor_pods
-  pod 'Capacitor', :path => '../../node_modules/@capacitor/ios'
-  pod 'CapacitorCordova', :path => '../../node_modules/@capacitor/ios'
-  pod 'CapacitorCommunitySpeechRecognition', :path => '../../node_modules/@capacitor-community/speech-recognition'
-  pod 'CapacitorApp', :path => '../../node_modules/@capacitor/app'
-  pod 'CapacitorHaptics', :path => '../../node_modules/@capacitor/haptics'
-  pod 'CapacitorKeyboard', :path => '../../node_modules/@capacitor/keyboard'
-  pod 'CapacitorStatusBar', :path => '../../node_modules/@capacitor/status-bar'
-  pod 'CodetrixStudioCapacitorGoogleAuth', :path => '../../node_modules/@codetrix-studio/capacitor-google-auth'
-  pod 'JcesarmobileSslSkip', :path => '../../node_modules/@jcesarmobile/ssl-skip'
+  pod 'Capacitor', :path => '../../node_modules/.pnpm/@capacitor+ios@6.2.1_@capacitor+core@6.2.1/node_modules/@capacitor/ios'
+  pod 'CapacitorCordova', :path => '../../node_modules/.pnpm/@capacitor+ios@6.2.1_@capacitor+core@6.2.1/node_modules/@capacitor/ios'
+  pod 'CapacitorCommunityAppleSignIn', :path => '../../node_modules/.pnpm/@capacitor-community+apple-sign-in@6.0.0_@capacitor+core@6.2.1/node_modules/@capacitor-community/apple-sign-in'
+  pod 'CapacitorCommunitySpeechRecognition', :path => '../../node_modules/.pnpm/@capacitor-community+speech-recognition@6.0.1_@capacitor+core@6.2.1/node_modules/@capacitor-community/speech-recognition'
+  pod 'CapacitorApp', :path => '../../node_modules/.pnpm/@capacitor+app@6.0.1_@capacitor+core@6.2.1/node_modules/@capacitor/app'
+  pod 'CapacitorHaptics', :path => '../../node_modules/.pnpm/@capacitor+haptics@6.0.1_@capacitor+core@6.2.1/node_modules/@capacitor/haptics'
+  pod 'CapacitorKeyboard', :path => '../../node_modules/.pnpm/@capacitor+keyboard@6.0.2_@capacitor+core@6.2.1/node_modules/@capacitor/keyboard'
+  pod 'CapacitorStatusBar', :path => '../../node_modules/.pnpm/@capacitor+status-bar@6.0.1_@capacitor+core@6.2.1/node_modules/@capacitor/status-bar'
+  pod 'CodetrixStudioCapacitorGoogleAuth', :path => '../../node_modules/.pnpm/@codetrix-studio+capacitor-google-auth@3.4.0-rc.4_@capacitor+core@6.2.1/node_modules/@codetrix-studio/capacitor-google-auth'
+  pod 'JcesarmobileSslSkip', :path => '../../node_modules/.pnpm/@jcesarmobile+ssl-skip@0.4.0/node_modules/@jcesarmobile/ssl-skip'
 end
 
 target 'App' do

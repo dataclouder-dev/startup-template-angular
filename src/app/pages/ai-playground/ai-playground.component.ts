@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { VertexAllModelsComponent } from '@dataclouder/ngx-vertex';
+import { VertexAllModelsComponent } from '@dataclouder/ngx-ai-services';
 
 @Component({
   selector: 'app-ai-playground',

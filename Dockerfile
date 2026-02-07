@@ -1,18 +1,36 @@
-# NOTE: this docker assumes you already build your app just copy to the nginx server. 
+# Stage 1: Build the Angular application
+FROM node:22-alpine AS builder
+LABEL stage="builder"
 
-# Stage 1: Serve the application with Nginx (using pre-built assets)
-FROM nginx:1.27-alpine
+# Pass version and git hash as build arguments
+ARG VERSION=unknown
+ARG GIT_HASH=unknown
 
-# Set a label for clarity
-LABEL stage="nginx-server"
+WORKDIR /app
 
-# Copy the pre-built application (from Cloud Build's workspace) to Nginx's webroot
-# The 'dist/browser' directory is expected to exist in the build context
-# because the 'build-angular-for-env' step in cloudbuild.yaml creates it.
-COPY www/browser /usr/share/nginx/html
+# Copy package files and install dependencies
+# Using --legacy-peer-deps as your project might have peer dependency conflicts
+COPY package.json package-lock.json* ./
+RUN npm install -g pnpm && pnpm i
+
+# Copy the rest of the application source code
+COPY . .
+
+# Build the application for production
+# Assumes output is in /app/dist/polilan (check angular.json if different)
+RUN pnpm run build:prod
+
+# Stage 2: Serve the application with Nginx
+FROM nginx:1.27-alpine AS runner
+LABEL stage="runner"
+LABEL version=${VERSION}
+LABEL git_hash=${GIT_HASH}
+
+# Copy the built application from the builder stage to Nginx's webroot
+# Adjust '/app/dist/polilan' if your angular.json outputPath is different
+COPY --from=builder /app/www/browser /usr/share/nginx/html
 
 # Copy the custom Nginx configuration
-# Ensure nginx.conf is in the root of your project or adjust path.
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 # Expose port 80 (Nginx default port)

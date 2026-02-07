@@ -3,10 +3,10 @@ import { ActivatedRouteSnapshot, RouterStateSnapshot, Router, UrlTree, Route, Ur
 
 import { from, fromEvent, Observable, of } from 'rxjs';
 import { mergeMap, concatMap, tap, catchError } from 'rxjs/operators';
-import { UserService } from '../dc-user-module/user.service';
 import { ToastAlertService } from './toast.service';
-import { FirebaseAuthService } from '@dataclouder/app-auth';
+import { FirebaseAuthService } from '@dataclouder/ngx-auth';
 import { LoadingBarService } from '@dataclouder/ngx-core';
+import { AppUserService } from './app-user.service';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +14,7 @@ import { LoadingBarService } from '@dataclouder/ngx-core';
 export class AuthGuardService {
   private fbAuthService = inject(FirebaseAuthService);
   private router = inject(Router);
-  private userService = inject(UserService);
+  private userService = inject(AppUserService);
   private toastAlertService = inject(ToastAlertService);
   private loadingBarService = inject(LoadingBarService);
 
@@ -23,44 +23,45 @@ export class AuthGuardService {
   public canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> {
     console.log('AuthGuardService -> canActivate -> next', next);
     this.loadingBarService.showIndeterminate();
-    return this.isAuthAndLoaded$().pipe(
-      tap(() => {
-        this.loadingBarService.hideProgressBar();
-      })
-    );
+    // return this.isAuthAndLoaded$().pipe(
+    //   tap(() => {
+    //     this.loadingBarService.hideProgressBar();
+    //   })
+    // );
+    return of(true);
   }
 
-  private isAuthAndLoaded$(): Observable<boolean | UrlTree> {
-    const user = this.userService.user;
+  // private isAuthAndLoaded$(): Observable<boolean | UrlTree> {
+  //   const user = this.userService.user;
 
-    return this.fbAuthService.authState$.pipe(
-      tap(isAuth => {
-        console.log('AuthGuardService -> isAuthAndLoaded$ -> isAuth', isAuth);
-      }),
-      concatMap(isAuth => {
-        if (!isAuth) {
-          return of(this.router.parseUrl('/auth/login'));
-        }
+  //   return this.fbAuthService.authState$.pipe(
+  //     tap(isAuth => {
+  //       console.log('AuthGuardService -> isAuthAndLoaded$ -> isAuth', isAuth);
+  //     }),
+  //     concatMap(isAuth => {
+  //       if (!isAuth) {
+  //         return of(this.router.parseUrl('/auth/login'));
+  //       }
 
-        if (user()) {
-          return of(true);
-        }
+  //       if (user()) {
+  //         return of(true);
+  //       }
 
-        return from(this.userService.findUserWithToken()).pipe(
-          mergeMap(user => {
-            if (user) {
-              console.log('AuthGuardService -> isAuthAndLoaded$ -> user', user);
-              return of(true);
-            }
-            return of(this.router.parseUrl('/not-found'));
-          }),
-          catchError(error => {
-            this.toastAlertService.error({ title: 'Error', subtitle: 'Failed to retrieve user data' });
-            console.error('AuthGuardService -> isAuthAndLoaded$ -> error', error);
-            return of(this.router.parseUrl('/not-found'));
-          })
-        );
-      })
-    );
-  }
+  //       return from(this.userService.findOne()).pipe(
+  //         mergeMap(user => {
+  //           if (user) {
+  //             console.log('AuthGuardService -> isAuthAndLoaded$ -> user', user);
+  //             return of(true);
+  //           }
+  //           return of(this.router.parseUrl('/not-found'));
+  //         }),
+  //         catchError(error => {
+  //           this.toastAlertService.error({ title: 'Error', subtitle: 'Failed to retrieve user data' });
+  //           console.error('AuthGuardService -> isAuthAndLoaded$ -> error', error);
+  //           return of(this.router.parseUrl('/not-found'));
+  //         })
+  //       );
+  //     })
+  //   );
+  // }
 }
