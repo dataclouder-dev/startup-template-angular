@@ -25,7 +25,7 @@ export class SliderComponent {
   readonly slides = signal([
     {
       id: 1,
-      image: 'assets/defaults/images/default-feature-1.jpg',
+      image: 'defaults/images/default-feature-1.jpg',
       alt: 'Slide 1',
       title: 'Feature One',
       description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.',
@@ -33,7 +33,7 @@ export class SliderComponent {
     },
     {
       id: 2,
-      image: 'assets/defaults/images/default-feature-2.jpg',
+      image: 'defaults/images/default-feature-2.jpg',
       alt: 'Slide 2',
       title: 'Feature Two',
       description: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo.',
@@ -41,7 +41,7 @@ export class SliderComponent {
     },
     {
       id: 3,
-      image: 'assets/defaults/images/default-feature-3.jpg',
+      image: 'defaults/images/default-feature-3.jpg',
       alt: 'Slide 3',
       title: 'Feature Three',
       description: 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',

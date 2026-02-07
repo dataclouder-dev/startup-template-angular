@@ -155,7 +155,7 @@
     width: 100%;
     height: 100%;
     z-index: -1;
-    background-image: url('/assets/pattern-randomized.svg');
+    background-image: url('/pattern-randomized.svg');
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -164,7 +164,7 @@
 
 // Add dark mode specific styles
 body.dark::before {
-    background-image: url('/assets/pattern-randomized-dark2.svg');
+    background-image: url('/pattern-randomized-dark2.svg');
 }
 
 @keyframes float {

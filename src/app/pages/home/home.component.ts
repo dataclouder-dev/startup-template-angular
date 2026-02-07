@@ -56,21 +56,21 @@ export class HomeComponent implements OnInit {
   // Card data using signal for reactivity
   cards = signal<CardItem[]>([
     {
-      imageUrl: 'assets/defaults/images/default-feature-1.jpg',
+      imageUrl: 'defaults/images/default-feature-1.jpg',
       title: 'Advanced Card',
       subtitle: 'Card subtitle',
       content:
         'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!',
     },
     {
-      imageUrl: 'assets/defaults/images/default-feature-2.jpg',
+      imageUrl: 'defaults/images/default-feature-2.jpg',
       title: 'Advanced Card',
       subtitle: 'Card subtitle',
       content:
         'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!',
     },
     {
-      imageUrl: 'assets/defaults/images/default-feature-3.jpg',
+      imageUrl: 'defaults/images/default-feature-3.jpg',
       title: 'Advanced Card',
       subtitle: 'Card subtitle',
       content:

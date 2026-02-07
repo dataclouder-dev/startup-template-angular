@@ -64,12 +64,12 @@ export class GenericFormComponent extends EntityBaseFormComponent<IGeneric> impl
   ];
 
   public peopleOptions = [
-    { id: '1', name: 'Yang Feng', description: 'Description with short description', image: 'assets/defaults/images/face-1.jpg' },
-    { id: '2', name: 'Juan Perez', description: 'Description ', image: 'assets/defaults/images/face-2.jpg' },
-    { id: '3', name: 'John Doe', description: 'Description with short description', image: 'assets/defaults/images/face-3.jpg' },
+    { id: '1', name: 'Yang Feng', description: 'Description with short description', image: 'defaults/images/face-1.jpg' },
+    { id: '2', name: 'Juan Perez', description: 'Description ', image: 'defaults/images/face-2.jpg' },
+    { id: '3', name: 'John Doe', description: 'Description with short description', image: 'defaults/images/face-3.jpg' },
   ];
 
-  public selectedPeople: any[] = [{ id: '3', name: 'John Doe', description: 'Description with short description', image: 'assets/defaults/images/face-3.jpg' }];
+  public selectedPeople: any[] = [{ id: '3', name: 'John Doe', description: 'Description with short description', image: 'defaults/images/face-3.jpg' }];
 
   public genericTypes = [
     { label: 'Type 1', value: 'type1' },

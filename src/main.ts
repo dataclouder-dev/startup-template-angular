@@ -40,7 +40,7 @@ import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
 import { provideTranslateService } from '@ngx-translate/core';
 import { MessageService } from 'primeng/api';
 
-fetch('/assets/config.json')
+fetch('/config.json')
   .then(response => response.json())
   .then((config: IAppConfig) => {
     bootstrapApplication(AppComponent, {
@@ -57,7 +57,7 @@ fetch('/assets/config.json')
 
         provideTranslateService({
           loader: provideTranslateHttpLoader({
-            prefix: '/assets/i18n/',
+            prefix: '/i18n/',
             suffix: '.json',
           }),
           fallbackLang: 'en',
@@ -66,7 +66,7 @@ fetch('/assets/config.json')
 
         // provideTranslateService({
         //   loader: provideTranslateHttpLoader({
-        //     prefix: '/assets/i18n/',
+        //     prefix: '/i18n/',
         //     suffix: '.json',
         //   }),
 
