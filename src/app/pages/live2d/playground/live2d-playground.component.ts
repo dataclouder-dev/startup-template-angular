@@ -70,7 +70,9 @@ export class Live2dPlaygroundComponent {
   }
 
   async onModelChange(): Promise<void> {
-    this.modelZoom = this.selectedModel.scale * 100;
+    this.modelZoom = Math.round(this.selectedModel.scale * 100);
+    this.modelX = 50;
+    this.modelY = 50;
     // The model will be reloaded automatically by the child component due to the input binding change.
   }
 
@@ -126,5 +128,43 @@ export class Live2dPlaygroundComponent {
     if (this.live2dModelComponent) {
       this.live2dModelComponent.setExpression(expressionName);
     }
+  }
+
+  public onViewStateChanged(event: { zoom: number; x: number; y: number }): void {
+    this.modelZoom = event.zoom;
+    this.modelX = event.x;
+    this.modelY = event.y;
+    this.cdr.detectChanges();
+  }
+
+  public zoomToFace(): void {
+    if (this.live2dModelComponent) {
+      const transform = this.live2dModelComponent.getFaceTransform();
+      if (transform) {
+        this.modelZoom = transform.zoom;
+        this.modelX = transform.x;
+        this.modelY = transform.y;
+        
+        // Apply changes to the component
+        this.live2dModelComponent.onZoomChange(this.modelZoom);
+        this.live2dModelComponent.onXChange(this.modelX);
+        this.live2dModelComponent.onYChange(this.modelY);
+        
+        this.cdr.detectChanges();
+      }
+    }
+  }
+
+  public resetView(): void {
+    this.modelZoom = Math.round(this.selectedModel.scale * 100);
+    this.modelX = 50;
+    this.modelY = 50;
+    
+    if (this.live2dModelComponent) {
+      this.live2dModelComponent.onZoomChange(this.modelZoom);
+      this.live2dModelComponent.onXChange(this.modelX);
+      this.live2dModelComponent.onYChange(this.modelY);
+    }
+    this.cdr.detectChanges();
   }
 }

@@ -29,8 +29,9 @@ export class Live2dModelComponent implements AfterViewInit, OnChanges {
   @ViewChild('canvas') canvasRef!: ElementRef<HTMLCanvasElement>;
 
   @Input() modelPath!: string;
-  @Input() scale = 0.1;
+  @Input() scale = 0.4;
   @Output() modelLoaded = new EventEmitter<{ parameters: ModelParameters | null; parts: ModelParts | null; motions: string[]; expressions: string[] }>();
+  @Output() viewStateChanged = new EventEmitter<{ zoom: number; x: number; y: number }>();
 
   app!: Application;
   model: any;
@@ -62,11 +63,12 @@ export class Live2dModelComponent implements AfterViewInit, OnChanges {
     if (typeof (this.app as any).init === 'function') {
       await this.app.init({
         canvas: this.canvasRef.nativeElement,
+        resizeTo: this.canvasRef.nativeElement.parentElement || undefined,
         backgroundColor: 0x000000,
         backgroundAlpha: 0,
         antialias: true,
-        resolution:  1.1,
-        autoDensity: false,
+        resolution:  window.devicePixelRatio || 1,
+        autoDensity: true,
       });
     } else {
       alert('Not able to load the model')
@@ -97,10 +99,10 @@ export class Live2dModelComponent implements AfterViewInit, OnChanges {
 
     this.extractModelInfo();
 
-    this.model.x = this.canvasRef.nativeElement.width / 2;
-    this.model.y = this.canvasRef.nativeElement.height / 2;
-    this.model.scale.set(this.scale);
-    this.model.anchor.set(0.5, 0.5);
+    this.model.x = this.app.screen.width / 2;
+    this.model.y = this.app.screen.height / 2;
+    this.model.scale.set(.15);
+    this.model.anchor.set(0.5, .5);
 
     // this.deactivateMotions();
     this.modelLoaded.emit({ 
@@ -179,9 +181,19 @@ export class Live2dModelComponent implements AfterViewInit, OnChanges {
     }
   }
 
-  public speak(audioUrl: string, options?: { volume?: number; crossOrigin?: string }): void {
+  public speak(audioUrl: string, options?: { volume?: number; crossOrigin?: string; focus?: boolean }): void {
     if (!this.model) return;
     
+    // Auto-focus on face if requested (default true)
+    if (options?.focus !== false) {
+      const transform = this.getFaceTransform();
+      if (transform) {
+        this.onZoomChange(transform.zoom);
+        this.onXChange(transform.x);
+        this.onYChange(transform.y);
+        this.viewStateChanged.emit(transform);
+      }
+    }
     
     this.model.speak(audioUrl, {
       volume: 0,
@@ -214,17 +226,17 @@ export class Live2dModelComponent implements AfterViewInit, OnChanges {
   }
 
   public onXChange(value: number): void {
-    if (this.model && this.canvasRef) {
-      // value is 0-100, transform to canvas width percentage
-      const newX = (value / 100) * this.canvasRef.nativeElement.width;
+    if (this.model && this.app) {
+      // value is 0-100, transform to screen width percentage
+      const newX = (value / 100) * this.app.screen.width;
       this.model.x = newX;
     }
   }
 
   public onYChange(value: number): void {
-    if (this.model && this.canvasRef) {
-      // value is 0-100, transform to canvas height percentage
-      const newY = (value / 100) * this.canvasRef.nativeElement.height;
+    if (this.model && this.app) {
+      // value is 0-100, transform to screen height percentage
+      const newY = (value / 100) * this.app.screen.height;
       this.model.y = newY;
     }
   }
@@ -233,5 +245,74 @@ export class Live2dModelComponent implements AfterViewInit, OnChanges {
     if (this.model) {
       this.model.expression(expressionName);
     }
+  }
+
+  public getFaceTransform(): { zoom: number, x: number, y: number } | null {
+    if (!this.model || !this.app) return null;
+
+    // Try to find a face hit area
+    const hitAreas = this.model.internalModel?.settings?.hitAreas || [];
+    const headHitArea = hitAreas.find((h: any) => 
+      ['Head', 'Face', 'head', 'face'].some(name => (h.Name && h.Name.includes(name)) || (h.Id && h.Id.includes(name)))
+    );
+
+    let bounds: any;
+    if (headHitArea) {
+      try {
+        const hitAreaName = headHitArea.Name || headHitArea.Id;
+        bounds = this.model.getHitAreaBounds(hitAreaName);
+      } catch (e) {
+        console.warn('Failed to get hit area bounds, falling back to top 30%', e);
+      }
+    }
+
+    if (!bounds) {
+      // Fallback: Use the top 30% of the model's local bounds
+      const modelBounds = this.model.getLocalBounds();
+      bounds = {
+        x: modelBounds.x,
+        y: modelBounds.y,
+        width: modelBounds.width,
+        height: modelBounds.height * 0.3
+      };
+    }
+
+    // Target: face height should be about 50% of screen height for a good "close up"
+    const targetFaceHeight = this.app.screen.height * 0.6;
+    const suggestedScale = targetFaceHeight / bounds.height;
+    
+    // We want the zoom value in percentage (1-100)
+    const zoomValue = Math.min(Math.round(suggestedScale * 100), 100);
+
+    // Calculate the center of the face in local coordinates
+    const faceCenterX = bounds.x + (bounds.width / 2);
+    const faceCenterY = bounds.y + (bounds.height / 2);
+
+    // Get model's local bounds for anchor calculation
+    const localBounds = this.model.getLocalBounds();
+    const anchorX = 0.5;
+    const anchorY = 0.5;
+
+    // Calculate how much we need to offset the model so the face center is at the target screen position
+    // Offset in screen pixels = (localPoint - localAnchorPoint) * globalScale
+    const offsetX = (faceCenterX - (localBounds.x + localBounds.width * anchorX)) * suggestedScale;
+    const offsetY = (faceCenterY - (localBounds.y + localBounds.height * anchorY)) * suggestedScale;
+
+    // Target screen position for model.x and model.y
+    // We want the face to be in the upper part of the screen, not exactly centered
+    // 0.35 is usually a good "head-slightly-below-top" position
+    const verticalFocusPoint = 0.35; 
+    const targetX = (this.app.screen.width / 2) - offsetX;
+    const targetY = (this.app.screen.height * verticalFocusPoint) - offsetY;
+
+    // Convert to percentage values as used by the playground
+    const xPct = (targetX / this.app.screen.width) * 100;
+    const yPct = (targetY / this.app.screen.height) * 100;
+
+    return {
+      zoom: zoomValue,
+      x: Math.round(xPct),
+      y: Math.round(yPct)
+    };
   }
 }

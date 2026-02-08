@@ -31,9 +31,13 @@ The playground is available at the following route:
 - **Trigger Expression**: Clicking an expression button immediately applies that facial expression or pose to the model.
 
 ### 5. Interactions & Audio
-- **Zoom**: Adjust the model's size using the slider.
+- **Zoom**: Adjust the model's size using the slider (up to 100% for close-ups).
 - **Speak**: Test the lip-sync functionality using a sample audio file.
 - **Stop Speaking**: Immediately halts the current speech animation.
+
+### 6. Camera Controls
+- **Focus Face**: Intelligent framing that calculates the bounding box of the face (using hit areas like `Head` or `Face`) and automatically adjusts zoom and position to center it.
+- **Reset View**: Quickly restores the model to its original scale and centered position.
 
 ---
 
@@ -73,6 +77,13 @@ The playground uses the `Live2dModelComponent` which wraps the `untitled-pixi-li
     - The playground calls `live2dModelComponent.setExpression(name)`.
     - This calls `this.model.expression(name)` on the PIXI Live2D model instance, which handles the transition and mixing of parameters.
 4. **Reactive Updates**: Changing a slider in the inspector directly calls `setParameterValueById` on the underlying Live2D core model.
+5. **Face Tracking Logic (`getFaceTransform`)**:
+    - **Detection**: Searches `internalModel.settings.hitAreas` for IDs or Names containing "Head" or "Face".
+    - **Bounding Box**: Retrieves the global bounds using `getHitAreaBounds()`. If no hit area is found, it defaults to the top 30% of the model's total height.
+    - **Calculation**: 
+        - Calculates a `suggestedScale` so the face occupies ~50% of the viewport height.
+        - Calculates a target `X/Y` offset by comparing the face center to the model's anchor point.
+    - **Coordinate Mapping**: Converts absolute PixiJS screen pixels to the 0-100 percentage values used by the Playground UI.
 
 ---
 

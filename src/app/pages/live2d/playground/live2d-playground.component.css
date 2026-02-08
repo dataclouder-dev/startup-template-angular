@@ -129,7 +129,7 @@
 }
 
 .model-viewport {
-  flex: 0 0 600px; /* Fixed height for model viewport to allow table below */
+  flex: 1 1 auto; /* Make it flexible to use available space */
   position: relative;
   display: flex;
   justify-content: center;
@@ -162,6 +162,6 @@
     max-height: 40vh;
   }
   .model-viewport {
-      flex: 0 0 400px;
+      flex: 0 0 50vh;
   }
 }

@@ -17,7 +17,7 @@
         <label class="group-label">Zoom</label>
         <span class="value-badge">{{ modelZoom }}%</span>
       </div>
-      <p-slider [(ngModel)]="modelZoom" (onChange)="onZoomChange($event)" [min]="1" [max]="50"></p-slider>
+      <p-slider [(ngModel)]="modelZoom" (onChange)="onZoomChange($event)" [min]="1" [max]="100"></p-slider>
     </div>
 
     <div class="control-group">
@@ -37,9 +37,17 @@
     </div>
 
     <div class="control-group">
+      <label class="group-label">Camera</label>
+      <div class="action-buttons">
+        <button pButton type="button" label="Focus Face" icon="pi pi-user" (click)="zoomToFace()" class="p-button-info p-button-sm"></button>
+        <button pButton type="button" label="Reset View" icon="pi pi-refresh" (click)="resetView()" class="p-button-secondary p-button-sm"></button>
+      </div>
+    </div>
+
+    <div class="control-group">
       <label class="group-label">Model Actions</label>
       <div class="action-buttons">
-        <button pButton type="button" label="Random Motion" icon="pi pi-refresh" (click)="playRandomAnimation()" class="p-button-outlined p-button-sm"></button>
+        <button pButton type="button" label="Random Motion" icon="pi pi-play" (click)="playRandomAnimation()" class="p-button-outlined p-button-sm"></button>
         <button pButton type="button" label="Speak" icon="pi pi-volume-up" (click)="speak('/audios/tour/intro2.mp3')" class="p-button-success p-button-sm"></button>
         <button pButton type="button" label="Stop" icon="pi pi-power-off" (click)="stopSpeaking()" class="p-button-danger p-button-sm"></button>
       </div>
@@ -70,7 +78,7 @@
     <section class="model-viewport">
       <div class="canvas-container">
         @if(selectedModel){
-          <app-live2d-model [modelPath]="selectedModel.path" [scale]="selectedModel.scale" (modelLoaded)="onModelLoaded($event)" #live2dModel></app-live2d-model>
+          <app-live2d-model [modelPath]="selectedModel.path" [scale]="selectedModel.scale" (modelLoaded)="onModelLoaded($event)" (viewStateChanged)="onViewStateChanged($event)" #live2dModel></app-live2d-model>
         }
       </div>
     </section>

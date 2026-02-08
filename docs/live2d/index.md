@@ -44,12 +44,32 @@ The component provides methods to play motions:
 - `playRandomAnimation()`: Plays a random motion from the model's available groups.
 
 ### Speech (Lip-Sync)
-- `speak(audioUrl: string)`: Loads an audio file and synchronizes the model's mouth movement.
-- `stopSpeaking()`: Immediately stops current speech animation.
+- **Speak**: Test the lip-sync functionality using a sample audio file.
+- **Stop Speaking**: Immediately halts the current speech animation.
+
+### Camera Controls
+- **Focus Face**: Intelligent framing that calculates the bounding box of the face (using hit areas like `Head` or `Face`) and automatically adjusts zoom and position to center it.
+- **Reset View**: Quickly restores the model to its original scale and centered position.
+- **Extended Zoom**: The manual zoom slider supports up to 100% (close-up) scale for detailed inspection.
 
 ### Live Interactions
 - `updateModelParameter()`: Directly modify model parameters (e.g., eye movement, body rotation).
 - `onZoomChange(value: number)`: Dynamically adjust the model scale.
+- `getFaceTransform()`: Calculates the optimal zoom and coordinates to focus on the model's face based on hit areas.
+
+### Camera & Viewport Control
+The component supports intelligent framing:
+- **Focus Face**: Uses `getFaceTransform()` to identify the face region (via "Head" or "Face" hit areas) and centers it in the viewport with an optimized zoom.
+- **Auto-Positioning**: When switching models, the playground automatically resets the X/Y coordinates to center the new model.
+- **Extended Zoom**: The manual zoom slider supports up to 100% scale for close-up inspections.
+
+#### Face Tracking Logic (`getFaceTransform`)
+1. **Detection**: Searches `internalModel.settings.hitAreas` for IDs or Names containing "Head" or "Face".
+2. **Bounding Box**: Retrieves bounds using `getHitAreaBounds()`. If no hit area is found, it defaults to the top 30% of the model's total height.
+3. **Calculation**: 
+    - Calculates a `suggestedScale` so the face occupies ~50% of the viewport height.
+    - Calculates a target `X/Y` offset by comparing the face center to the model's anchor point.
+4. **Coordinate Mapping**: Converts absolute PixiJS screen pixels to the 0-100 percentage values used by the Playground UI.
 
 ## Audio Synchronization with Chat
 
