@@ -15,6 +15,12 @@ Parameters are the "controls" of a model. Each parameter has an ID (e.g., `Param
 - **Motions (`.motion3.json`)**: Time-based animations. They define a sequence of parameter changes (e.g., a "wave" or "greet" animation).
 - **Expressions (`.exp3.json`)**: Static "moods". They set parameter values relative to the base state (e.g., "angry" might set eye shape and mouth curve).
 
+### Physics (`.physics3.json`)
+Physics is the "motion engine" that gives the model its "soul" by adding **Secondary Animation**.
+- **Reactive Movement**: Physics handles things that happen as a *reaction* to other movements (e.g., hair swaying when the head turns, or clothes bouncing when the model shakes).
+-  **Real-time Inertia**: Movements are calculated frame-by-frame based on gravity and mass, making the model feel like it exists in a physical space.
+- **Micro-expressions**: Often used for "eye-blink bounce" or subtle accessory movement (like a swinging pendant) that isn't manually animated.
+
 > [!IMPORTANT]
 > **Expression Loading**: Expressions must be explicitly listed in the `model3.json` file under `FileReferences.Expressions` for them to be loaded by the engine. The engine supports both `Name` (standard Cubism export) and `name` (lowercase) property keys for the display name. If you have `.exp3.json` files but don't see them in the UI, check if they are defined in your model's JSON.
 
