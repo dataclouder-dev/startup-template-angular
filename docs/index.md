@@ -45,6 +45,7 @@ Deep dives into the architecture and core systems.
 - [Modularity Specs](./technical-reference/specs_systems_and_modularity.readme) - Guidelines for system modularity.
 - [User Data Retrieval](./technical-reference/user_retrive_data.readme) - Strategy for fetching and persisting user data.
 - [Getting Started with Ionic](./technical-reference/ionic/starting-ionic.md) - Basic setup for Ionic environments.
+- [Understanding the Layout](./technical-reference/layout/layout-understanding.md) - Deep dive into patterns for navbar, menus, and content.
 
 ---
 

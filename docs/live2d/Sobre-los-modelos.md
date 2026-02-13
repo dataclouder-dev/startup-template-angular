@@ -1,3 +1,8 @@
+### Esta debe ser una guia para enderder que hay detras de un modelo en sí. 
+
+Para probar la mejor manera es descargar algunos. 
+
+
 
 La mayoria los encuentro aqui. 
 
