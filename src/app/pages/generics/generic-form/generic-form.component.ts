@@ -10,7 +10,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { TextareaModule } from 'primeng/textarea';
 import { ChipModule } from 'primeng/chip';
 import { TooltipModule } from 'primeng/tooltip';
-import { AspectType, CropperComponentModal, ResolutionType, FileStorageData } from '@dataclouder/ngx-cloud-storage';
+import { AspectType, CropperComponentModal, ResolutionType, FileStorageData, BackendUploadComponent } from '@dataclouder/ngx-cloud-storage';
 
 import { EntityBaseFormComponent } from '@dataclouder/ngx-core';
 import { DialogModule } from 'primeng/dialog';
@@ -30,6 +30,7 @@ import { GenericListComponent } from '../generic-list/generic-list.component';
     CropperComponentModal,
     DialogModule,
     GenericListComponent,
+    BackendUploadComponent
   ],
   templateUrl: './generic-form.component.html',
   styleUrl: './generic-form.component.css',
@@ -39,6 +40,7 @@ import { GenericListComponent } from '../generic-list/generic-list.component';
 export class GenericFormComponent extends EntityBaseFormComponent<IGeneric> implements OnInit {
   protected entityCommunicationService = inject(GenericService);
   private fb = inject(FormBuilder);
+  private cdr = inject(ChangeDetectorRef);
 
   public form = this.fb.group({
     name: ['', Validators.required],
@@ -94,9 +96,10 @@ export class GenericFormComponent extends EntityBaseFormComponent<IGeneric> impl
     console.log(this.selectedPeople);
   }
 
-  public handleImageUpload(event: any) {
-    // this.genericForm.patchValue({ image: event });
-    alert('Image uploaded');
+  public handleImageUpload(event: FileStorageData) {
+    this.form.patchValue({ image: event });
+    this.save();
+    this.cdr.markForCheck();
   }
 
   public searchRelation() {
@@ -120,4 +123,6 @@ export class GenericFormComponent extends EntityBaseFormComponent<IGeneric> impl
     this.relationPopupSelector.push(relation);
     alert('Relation selected');
   }
+
+
 }

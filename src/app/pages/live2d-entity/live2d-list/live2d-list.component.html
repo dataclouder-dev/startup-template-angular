@@ -17,8 +17,10 @@
           [buttonProps]="{ severity: 'primary', rounded: true, outlined: true }" />
       </div>
       <p-card [header]="live2d.name">
-        <p class="m-0">{{ live2d.description | slice : 0 : 250 }}...</p>
-        <span>{{ live2d?.auditable?.updatedAt | date : 'dd/MM/yyyy HH:mm' }}</span>
+        <div class="card-body-content">
+          <img [src]="live2d.image?.url" class="list-image" />
+          <p class="m-0 description-text">{{ live2d.description | slice : 0 : 250 }}...</p>
+        </div>
       </p-card>
     </div>
     } @if (items().length === 0) {

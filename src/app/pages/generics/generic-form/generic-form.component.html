@@ -6,7 +6,7 @@
       <div style="display: flex; gap: 10px">
         <div class="form-field">
           <label class="block" pTooltip="Image should be handle after upload">Subir imagen</label>
-          <img width="218px" src="defaults/images/face-3.jpg" />
+          <img width="218px" [src]="form.get('image')?.value?.url || 'defaults/images/face-3.jpg'" />
           <dc-cropper-modal [imgStorageSettings]="storageImgSettings" (imageUploaded)="handleImageUpload($event)"></dc-cropper-modal>
         </div>
 
@@ -18,7 +18,7 @@
 
           <div class="form-field">
             <label for="description" class="block">Description</label>
-            <textarea id="description" pTextarea formControlName="description" rows="5" class="w-full" placeholder="Enter source content"> </textarea>
+            <textarea id="description" pTextarea formControlName="description" rows="3" class="w-full" placeholder="Enter source content"> </textarea>
           </div>
         </div>
       </div>
@@ -84,3 +84,5 @@
     </p-dialog>
   </p-card>
 </div>
+
+

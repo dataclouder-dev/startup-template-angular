@@ -21,6 +21,24 @@
   position: relative;
 }
 
+.card-body-content {
+  display: flex;
+  gap: 1.5rem;
+  align-items: flex-start;
+}
+
+.list-image {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
+.description-text {
+  flex: 1;
+}
+
 .paginator-container {
   margin-top: auto;
   padding-top: 10px;

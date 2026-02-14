@@ -10,7 +10,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { TextareaModule } from 'primeng/textarea';
 import { ChipModule } from 'primeng/chip';
 import { TooltipModule } from 'primeng/tooltip';
-import { AspectType, CropperComponentModal, ResolutionType, FileStorageData } from '@dataclouder/ngx-cloud-storage';
+import { AspectType, CropperComponentModal, ResolutionType, FileStorageData, BackendUploadComponent, CloudStorage } from '@dataclouder/ngx-cloud-storage';
 
 import { EntityBaseFormComponent } from '@dataclouder/ngx-core';
 import { DialogModule } from 'primeng/dialog';
@@ -30,7 +30,8 @@ import { Live2dListComponent } from '../live2d-list/live2d-list.component';
     CropperComponentModal,
     DialogModule,
     Live2dListComponent,
-  ],
+    BackendUploadComponent
+],
   templateUrl: './live2d-form.component.html',
   styleUrl: './live2d-form.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -39,6 +40,7 @@ import { Live2dListComponent } from '../live2d-list/live2d-list.component';
 export class Live2dFormComponent extends EntityBaseFormComponent<ILive2d> implements OnInit {
   protected entityCommunicationService = inject(Live2dService);
   private fb = inject(FormBuilder);
+  private cdr = inject(ChangeDetectorRef);
 
   public form = this.fb.group({
     name: ['', Validators.required],
@@ -46,6 +48,7 @@ export class Live2dFormComponent extends EntityBaseFormComponent<ILive2d> implem
     image: [{} as FileStorageData],
     type: [''],
     relation: [{ id: '', name: '', description: '' }],
+    files: this.fb.control<(FileStorageData & CloudStorage)[]>([]),
   });
 
   protected override patchForm(entity: ILive2d): void {
@@ -58,30 +61,8 @@ export class Live2dFormComponent extends EntityBaseFormComponent<ILive2d> implem
     cropSettings: { aspectRatio: AspectType.Square, resolutions: [ResolutionType.MediumLarge], resizeToWidth: 700 },
   };
 
-  extraFields: any[] = [
-    { key: 'title', type: 'input', props: { label: 'Title', placeholder: 'Title', required: false } },
-    { key: 'content', type: 'textarea', props: { label: 'Content', placeholder: 'Content', required: false } },
-  ];
-
-  public peopleOptions = [
-    { id: '1', name: 'Yang Feng', description: 'Description with short description', image: 'defaults/images/face-1.jpg' },
-    { id: '2', name: 'Juan Perez', description: 'Description ', image: 'defaults/images/face-2.jpg' },
-    { id: '3', name: 'John Doe', description: 'Description with short description', image: 'defaults/images/face-3.jpg' },
-  ];
 
   public selectedPeople: any[] = [{ id: '3', name: 'John Doe', description: 'Description with short description', image: 'defaults/images/face-3.jpg' }];
-
-  public live2dTypes = [
-    { label: 'Type 1', value: 'type1' },
-    { label: 'Type 2', value: 'type2' },
-    { label: 'Type 3', value: 'type3' },
-  ];
-
-  public relationObjects = [
-    { id: 'Relation 1', name: 'relation1', description: 'Description with short description' },
-    { id: 'Relation 2', name: 'relation2', description: 'Description with short description' },
-    { id: 'Relation 3', name: 'relation3', description: 'Description with short description' },
-  ];
 
   async ngOnInit(): Promise<void> {}
 
@@ -94,9 +75,10 @@ export class Live2dFormComponent extends EntityBaseFormComponent<ILive2d> implem
     console.log(this.selectedPeople);
   }
 
-  public handleImageUpload(event: any) {
-    // this.live2dForm.patchValue({ image: event });
-    alert('Image uploaded');
+  public handleImageUpload(event: FileStorageData) {
+    this.form.patchValue({ image: event });
+    this.save();
+    this.cdr.markForCheck();
   }
 
   public searchRelation() {
@@ -120,4 +102,22 @@ export class Live2dFormComponent extends EntityBaseFormComponent<ILive2d> implem
     this.relationPopupSelector.push(relation);
     alert('Relation selected');
   }
+
+  public handleUploadFinish(event: FileStorageData[]) {
+    console.log('Uploaded files:', event);
+    const currentFiles = this.form.get('files')?.value || [];
+    const updatedFiles = [...currentFiles, ...event];
+    this.form.patchValue({ files: updatedFiles });
+    this.save();
+    this.cdr.markForCheck();
+  }
+
+  public removeFile(file: FileStorageData) {
+    const currentFiles = this.form.get('files')?.value || [];
+    const updatedFiles = currentFiles.filter(f => f.url !== file.url);
+    this.form.patchValue({ files: updatedFiles });
+    this.save();
+    this.cdr.markForCheck();
+  }
+
 }
