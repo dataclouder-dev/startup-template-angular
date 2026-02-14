@@ -1,0 +1,86 @@
+<h3>Live2ds Form</h3>
+
+<div class="source-form-card">
+  <p-card [header]="entityId() ? 'Edit Live2d' : 'New Live2d'">
+    <form [formGroup]="form">
+      <div style="display: flex; gap: 10px">
+        <div class="form-field">
+          <label class="block" pTooltip="Image should be handle after upload">Subir imagen</label>
+          <img width="218px" src="defaults/images/face-3.jpg" />
+          <dc-cropper-modal [imgStorageSettings]="storageImgSettings" (imageUploaded)="handleImageUpload($event)"></dc-cropper-modal>
+        </div>
+
+        <div style="width: 100%">
+          <div class="form-field">
+            <label for="name" class="block">Name</label>
+            <input pInputText id="name" type="text" formControlName="name" placeholder="Enter source name" />
+          </div>
+
+          <div class="form-field">
+            <label for="description" class="block">Description</label>
+            <textarea id="description" pTextarea formControlName="description" rows="5" class="w-full" placeholder="Enter source content"> </textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-field">
+        <label for="type" class="block">Type</label>
+        <p-select id="type" [options]="live2dTypes" formControlName="type" optionLabel="label" optionValue="value" placeholder="Select a type" />
+      </div>
+
+      <!-- Different is releation contains a whole object meanwhile type is only string -->
+      <div class="form-field">
+        <label for="relation" class="block" pTooltip="One object attached to the form">Relation</label>
+        <p-select id="relation" [options]="relationObjects" formControlName="relation" optionLabel="name" placeholder="Select a relation" />
+      </div>
+
+      <div class="form-field">
+        <label class="block" pTooltip="List of Objects handled by custom methods">Testimonials</label>
+
+        <p-select [options]="peopleOptions" [placeholder]="'Select a testimonial'" [style]="{ width: '100%' }" (onChange)="addItemToList($event)">
+          <ng-template #selectedItem let-selectedOption>
+            @if(selectedOption) {
+            <div style="display: flex; align-items: center; gap: 10px">
+              <div>{{ selectedOption.name }}</div>
+            </div>
+            }
+          </ng-template>
+
+          <ng-template let-item #item>
+            <div style="display: flex; gap: 10px">
+              <img [src]="item.image" style="width: 18px" />
+              <div>{{ item?.name }}</div>
+            </div>
+          </ng-template>
+
+          <ng-template #dropdownicon>
+            <i class="pi pi-user-plus"></i>
+          </ng-template>
+        </p-select>
+
+        <div style="display: flex; gap: 10px; margin-top: 10px">
+          @for(person of selectedPeople; track person.id) {
+          <p-chip [label]="person.name" [image]="person.image" alt="Avatar image" [removable]="true" (onRemove)="removeItemFromList(person)" />
+          }
+        </div>
+      </div>
+      <div>
+        <p-button (click)="isDialogVisible = true" label="Search for relation" icon="pi pi-search" iconPos="right"> </p-button>
+      </div>
+    </form>
+
+    <div style="display: flex; justify-content: flex-end">
+      <p-button (click)="save()" label="Save Live2d" [disabled]="!form.valid" icon="pi pi-check" iconPos="right"> </p-button>
+    </div>
+
+    <div>
+      @for(relation of relationPopupSelector; track relation.id) {
+      <p-chip [label]="relation.name" [image]="relation.image" alt="Avatar image" [removable]="true" (onRemove)="removeRelationFromList(relation)" />
+      }
+    </div>
+
+    <p-dialog header="Search for relation" [(visible)]="isDialogVisible" [modal]="true" [style]="{ width: '50vw' }" draggable="false">
+      <app-live2d-list [onlyView]="true" (onSelect)="handleRelationSelection($event)"></app-live2d-list>
+    </p-dialog>
+  </p-card>
+</div>

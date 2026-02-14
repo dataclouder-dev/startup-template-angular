@@ -1,0 +1,47 @@
+@if (!onlyView()) {
+<p-button [icon]="viewType() === 'card' ? 'pi pi-table' : 'pi pi-list'" label="Change View" [link]="true" (click)="toggleView()" />
+}
+<div class="live2d-list-container">
+  <dc-filter-bar [isAdmin]="userService.isAdmin()" [options]="filterBarOptions" (onNew)="onNew()" (onFilterAction)="doAction($event)"></dc-filter-bar>
+
+  @if (viewType() === 'card') {
+  <div class="live2d-list-content">
+    @for (live2d of items(); track live2d.id) {
+    <div class="card-source">
+      <div style="position: absolute; top: 4px; right: 4px; z-index: 1000">
+        <p-speeddial
+          [model]="getCustomButtons(live2d)"
+          [radius]="70"
+          type="quarter-circle"
+          direction="down-left"
+          [buttonProps]="{ severity: 'primary', rounded: true, outlined: true }" />
+      </div>
+      <p-card [header]="live2d.name">
+        <p class="m-0">{{ live2d.description | slice : 0 : 250 }}...</p>
+        <span>{{ live2d?.auditable?.updatedAt | date : 'dd/MM/yyyy HH:mm' }}</span>
+      </p-card>
+    </div>
+    } @if (items().length === 0) {
+    <p-card>
+      <p>No live2ds found</p>
+    </p-card>
+    }
+  </div>
+  } @else if ( viewType() === 'table'){
+
+  <app-quick-table [tableData]="items()"></app-quick-table>
+
+  }
+
+  <div class="paginator-container">
+    <p-paginator
+      currentPageReportTemplate="{{ totalRecords() }} conversations"
+      [showCurrentPageReport]="true"
+      (onPageChange)="onPageChange($event)"
+      [first]="first()"
+      [rows]="rows"
+      [totalRecords]="totalRecords()"
+      [rowsPerPageOptions]="[10, 20, 30]">
+    </p-paginator>
+  </div>
+</div>

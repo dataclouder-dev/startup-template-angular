@@ -94,8 +94,8 @@ export class IonicLayoutComponent implements OnInit {
     { title: 'Home', url: '/page/home', icon: 'home' },
     { title: 'Lessons', url: '/page/lessons', icon: 'eye' },
     { title: 'Agents Conversation', url: '/page/agents', icon: 'chatbubble-ellipses' },
-    { title: 'Generics', url: '/page/generics', icon: 'code-working' },
-    { title: 'Live2D Playground', url: '/page/live2d/playground', icon: 'body' },
+    { title: 'Live2D Models', url: '/page/live2d', icon: 'body' },
+    { title: 'Live2D Playground', url: '/page/live-2d-playground', icon: 'game-controller' },
     { title: 'Test', url: '/page/test', icon: 'code-working' },
     { title: 'Profile', url: '/page/stack/profile', icon: 'person' },
   ];

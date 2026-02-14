@@ -1,4 +1,4 @@
-# Generic Component Template
+# Live2d Component Template
 
 This is an alpha version of a reusable component class system. The goal is to provide a "plug-and-play" section that you can easily copy and adapt to your business logic.
 
@@ -6,7 +6,7 @@ This is an alpha version of a reusable component class system. The goal is to pr
 
 ### 1) Copy and Setup Endpoints
 
-1. Copy the `generics` folder to your desired location (e.g., `src/app/pages/my-feature`).
+1. Copy the `live2ds` folder to your desired location (e.g., `src/app/pages/my-feature`).
 2. Add the corresponding endpoints to your environment or endpoint configuration:
 
 ```typescript
@@ -18,7 +18,7 @@ This is an alpha version of a reusable component class system. The goal is to pr
 
 ### 2) Rename the Component
 
-Use the provided utility script to rename all occurrences of "generic" to your new feature name.
+Use the provided utility script to rename all occurrences of "live2d" to your new feature name.
 
 1. Open a terminal in the newly copied folder.
 2. Run the script with your new class name (PascalCase):
@@ -28,8 +28,8 @@ node rename-component.js CompetitionAnalysis
 ```
 
 This script will:
-- Rename all files and folders (e.g., `generic-list` -> `competition-analysis-list`).
-- Update class names (`GenericListComponent` -> `CompetitionAnalysisListComponent`).
+- Rename all files and folders (e.g., `live2d-list` -> `competition-analysis-list`).
+- Update class names (`Live2dListComponent` -> `CompetitionAnalysisListComponent`).
 - Update selector prefixes and variable names.
 - Rename the root folder itself.
 
@@ -48,7 +48,7 @@ Example registration:
 
 ### 4) Adapt the Data Model
 
-- Replace the `IGeneric` interface with your actual business model.
+- Replace the `ILive2d` interface with your actual business model.
 - Update the table columns and form fields to match your data.
 
 ---
