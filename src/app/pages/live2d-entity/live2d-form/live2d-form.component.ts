@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
+import { CommonModule, DecimalPipe } from '@angular/common';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ILive2d } from '../models/live2ds.model';
 import { Live2dService } from '../live2ds.service';
@@ -30,7 +31,9 @@ import { Live2dListComponent } from '../live2d-list/live2d-list.component';
     CropperComponentModal,
     DialogModule,
     Live2dListComponent,
-    BackendUploadComponent
+    BackendUploadComponent,
+    DecimalPipe,
+    CommonModule
 ],
   templateUrl: './live2d-form.component.html',
   styleUrl: './live2d-form.component.css',
@@ -86,6 +89,8 @@ export class Live2dFormComponent extends EntityBaseFormComponent<ILive2d> implem
   }
 
   public isDialogVisible = false;
+  public isFileDetailsVisible = false;
+  public selectedFileForDetails: FileStorageData | null = null;
 
   public relationPopupSelector: any[] = [];
 
@@ -117,6 +122,12 @@ export class Live2dFormComponent extends EntityBaseFormComponent<ILive2d> implem
     const updatedFiles = currentFiles.filter(f => f.url !== file.url);
     this.form.patchValue({ files: updatedFiles });
     this.save();
+    this.cdr.markForCheck();
+  }
+
+  public showFileDetails(file: FileStorageData) {
+    this.selectedFileForDetails = file;
+    this.isFileDetailsVisible = true;
     this.cdr.markForCheck();
   }
 

@@ -46,12 +46,14 @@
 
 <div class="p-4">
   <h4>Files Attached</h4>
-  <div class="flex flex-column gap-2 mb-4">
+  <div class="flex flex-col gap-2 mb-4">
     @for(file of form.get('files')?.value; track file.url) {
-    <div class="flex align-items-center justify-content-between p-2 border-round surface-100 shadow-1">
-      <div class="flex align-items-center gap-2">
+    <div class="flex items-center justify-between p-2 rounded bg-zinc-100 shadow-sm">
+      <div class="flex items-center gap-2">
         <i class="pi pi-file text-primary" style="font-size: 1.5rem"></i>
-        <span class="font-medium">{{ file.name || file.path }}</span>
+        <button type="button" (click)="showFileDetails(file)" class="text-primary hover:underline font-medium bg-transparent border-none cursor-pointer p-0 text-left">
+          {{ file.name || $any(file).path }}
+        </button>
       </div>
       <p-button icon="pi pi-trash" [rounded]="true" [text]="true" severity="danger" (click)="removeFile(file)" pTooltip="Remove file" />
     </div>
@@ -60,5 +62,36 @@
     }
   </div>
 
-  <dc-backend-upload [storagePath]="'live2ds/' + entityId()" (onUploadFinish)="handleUploadFinish($event)"></dc-backend-upload>
+  <dc-backend-upload [storagePath]="'live2ds/' + entityId()" (onUploadFinish)="handleUploadFinish($event)" provider='CLOUDFLARE'></dc-backend-upload>
 </div>
+
+<p-dialog header="File Details" [(visible)]="isFileDetailsVisible" [modal]="true" [style]="{ width: '40rem' }" [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }">
+  @if (selectedFileForDetails) {
+  <div class="flex flex-col gap-4">
+    <div class="flex flex-col gap-1">
+      <span class="text-secondary font-semibold text-sm">NAME</span>
+      <span class="text-xl font-bold">{{ selectedFileForDetails.name }}</span>
+    </div>
+    <div class="flex flex-col gap-1">
+      <span class="text-secondary font-semibold text-sm">PATH</span>
+      <span class="break-all">{{ $any(selectedFileForDetails).path }}</span>
+    </div>
+    <div class="flex flex-col gap-1">
+      <span class="text-secondary font-semibold text-sm">URL</span>
+      <a [href]="selectedFileForDetails.url" target="_blank" class="text-primary hover:underline break-all">{{ selectedFileForDetails.url }}</a>
+    </div>
+    @if (selectedFileForDetails.size) {
+    <div class="flex flex-col gap-1">
+      <span class="text-secondary font-semibold text-sm">SIZE</span>
+      <span>{{ selectedFileForDetails.size | number }} bytes</span>
+    </div>
+    }
+    @if (selectedFileForDetails.type) {
+    <div class="flex flex-col gap-1">
+      <span class="text-secondary font-semibold text-sm">TYPE</span>
+      <span>{{ selectedFileForDetails.type }}</span>
+    </div>
+    }
+  </div>
+  }
+</p-dialog>

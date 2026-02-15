@@ -53,23 +53,27 @@
       </div>
     </div>
 
-    <div class="control-group scrollable" *ngIf="expressions.length > 0">
-      <label class="group-label">Expressions</label>
-      <div class="motion-grid">
-        @for(exp of expressions; track $index){
-          <p-button [label]="exp" (click)='setExpression(exp)' size="small" class="motion-btn"></p-button>
-        }
+    @if (expressions.length > 0) {
+      <div class="control-group scrollable">
+        <label class="group-label">Expressions</label>
+        <div class="motion-grid">
+          @for(exp of expressions; track $index){
+            <p-button [label]="exp" (click)='setExpression(exp)' size="small" class="motion-btn"></p-button>
+          }
+        </div>
       </div>
-    </div>
+    }
 
-    <div class="control-group scrollable" *ngIf="motionGroups.length > 0">
-      <label class="group-label">Available Animations</label>
-      <div class="motion-grid">
-        @for(group of motionGroups; track $index){
-          <p-button [label]="group" (click)="playAnimation(group)" size="small" class="motion-btn"></p-button>
-        }
+    @if (motionGroups.length > 0) {
+      <div class="control-group scrollable">
+        <label class="group-label">Available Animations</label>
+        <div class="motion-grid">
+          @for(group of motionGroups; track $index){
+            <p-button [label]="group" (click)="playAnimation(group)" size="small" class="motion-btn"></p-button>
+          }
+        </div>
       </div>
-    </div>
+    }
     
   </aside>
 

@@ -54,7 +54,7 @@ export class Live2dPlaygroundComponent {
     { name: 'NVPU', path: '/assets/Resources/NVPU-demo/NVPU.model3.json', scale: 0.11 },
     { name: '简', path: '/assets/Resources/简/简.model3.json', scale: 0.08 },
     { name: 'IceGIrl', path: '/assets/Resources/IceGIrl/IceGirl.model3.json', scale: 0.08 },
-    { name: 'conejo', path: '/assets/Resources/conejo/conejo.model3.json', scale: 0.08 },
+    { name: 'conejo', path: 'https://storage-qa.polilan.com/live2ds/698fc713548003d2fcd6c666/conejo/conejo.model3.json', scale: 0.08 },
   ];
 
   selectedModel = this.availableModels[0];
