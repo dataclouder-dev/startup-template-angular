@@ -94,9 +94,9 @@ export class GenericFormComponent extends EntityBaseFormComponent<IGeneric> impl
     console.log(this.selectedPeople);
   }
 
-  public handleImageUpload(event: any) {
-    // this.genericForm.patchValue({ image: event });
-    alert('Image uploaded');
+  public handleImageUpload(event: FileStorageData) {
+    this.form.patchValue({ image: event });
+    this.save();
   }
 
   public searchRelation() {
