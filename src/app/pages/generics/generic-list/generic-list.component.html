@@ -6,7 +6,7 @@
 
   @if (viewType() === 'card') {
   <div class="generic-list-content">
-    @for (generic of items(); track generic.id) {
+    @if (!isLoading()) { @for (generic of items(); track generic.id) {
     <div class="card-source">
       <div style="position: absolute; top: 4px; right: 4px; z-index: 1000">
         <p-speeddial
@@ -17,7 +17,10 @@
           [buttonProps]="{ severity: 'primary', rounded: true, outlined: true }" />
       </div>
       <p-card [header]="generic.name">
-        <p class="m-0">{{ generic.description | slice : 0 : 250 }}...</p>
+        <div style="display: flex; gap: 10px">
+          <img width="120px" [src]="generic.image?.url || 'defaults/images/face-3.jpg'" alt="Live2D image" />
+          <p class="m-0">{{ generic.description | slice : 0 : 250 }}...</p>
+        </div>
         <span>{{ generic?.auditable?.updatedAt | date : 'dd/MM/yyyy HH:mm' }}</span>
       </p-card>
     </div>
@@ -25,7 +28,24 @@
     <p-card>
       <p>No generics found</p>
     </p-card>
-    }
+    } } @else { @for (i of [1,2,3,4,5,6]; track i) {
+    <p-card>
+      <ng-template pTemplate="header">
+        <div class="p-4">
+          <p-skeleton width="80%" height="1.5rem" />
+        </div>
+      </ng-template>
+      <div style="display: flex; gap: 10px">
+        <p-skeleton width="120px" height="120px" />
+        <div style="flex: 1">
+          <p-skeleton width="100%" height="1rem" styleClass="mb-2" />
+          <p-skeleton width="90%" height="1rem" styleClass="mb-2" />
+          <p-skeleton width="60%" height="1rem" />
+        </div>
+      </div>
+      <p-skeleton width="40%" height="1rem" styleClass="mt-2" />
+    </p-card>
+    } }
   </div>
   } @else if ( viewType() === 'table'){
 

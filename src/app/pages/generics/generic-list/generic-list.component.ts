@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/cor
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 
-import { DCFilterBarComponent, EntityBaseListComponent, QuickTableComponent } from '@dataclouder/ngx-core';
+import { DCFilterBarComponent, EntityBaseListComponent, QuickTableComponent, EntityBaseListV2Component } from '@dataclouder/ngx-core';
 import { GenericService } from '../generics.service';
 import { IGeneric } from '../models/generics.model';
 import { RouterModule } from '@angular/router';
@@ -11,6 +11,7 @@ import { MenuItem } from 'primeng/api';
 import { DatePipe, SlicePipe } from '@angular/common';
 import { PaginatorModule } from 'primeng/paginator';
 import { TableModule } from 'primeng/table';
+import { SkeletonModule } from 'primeng/skeleton';
 import { UserService } from '@dataclouder/ngx-users';
 
 @Component({
@@ -26,12 +27,13 @@ import { UserService } from '@dataclouder/ngx-users';
     RouterModule,
     TableModule,
     QuickTableComponent,
+    SkeletonModule,
   ],
   templateUrl: './generic-list.component.html',
   styleUrl: './generic-list.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class GenericListComponent extends EntityBaseListComponent<IGeneric> implements OnInit {
+export class GenericListComponent extends EntityBaseListV2Component<IGeneric> implements OnInit {
   protected override entityCommunicationService = inject(GenericService);
   public userService = inject(UserService);
 

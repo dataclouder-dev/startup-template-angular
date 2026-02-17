@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { IGeneric } from './models/generics.model';
-import { EntityCommunicationService } from '@dataclouder/ngx-core';
+import { APP_CONFIG, EntityCommunicationService, IAppConfig } from '@dataclouder/ngx-core';
 
 const Endpoints = 'generic';
 
@@ -8,7 +8,10 @@ const Endpoints = 'generic';
   providedIn: 'root',
 })
 export class GenericService extends EntityCommunicationService<IGeneric> {
+  public config: IAppConfig = inject(APP_CONFIG);
+
   constructor() {
     super(Endpoints);
+    this.customHost = this.config.backendPythonUrl;
   }
 }
