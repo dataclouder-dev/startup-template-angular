@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 
 import { ActivatedRoute } from '@angular/router';
 import { ChatRole, ConversationType, IConversationSettings, TextEngines } from '@dataclouder/ngx-agent-cards';
@@ -17,7 +17,7 @@ export class LessonDetailsComponent implements OnInit {
 
   private lessonConversationService = inject(LessonConversationService);
 
-  public lesson!: ILesson;
+  public lesson = signal<ILesson | undefined>(undefined);
   public lessonId: string = this.activatedRoute.snapshot.paramMap.get('id')!;
 
   public settings: ILessonsSettings = {
@@ -36,7 +36,7 @@ export class LessonDetailsComponent implements OnInit {
     messages: [
       {
         role: ChatRole.System,
-        content: `Eres un asistente de IA para Dataclouder, una app para que se usa como plantilla para crear otras apps, tiene una sección donde se evaluan las lecciones, el usuario terminó de leer la lección, y ahora hablará contigo
+        content: `Eres un asistente de IA para Instinto X, una app para que se usa para el desarrollo masculino, y aprender a comunicarse, el usuario terminó de leer la lección, y ahora hablará contigo
     ayudalo a entender mejor la lección haciendole preguntas como si fuera una evaluación, se amable y hasle muchas preguntas para saber si entiende bien la lección, `,
       },
       {
@@ -52,7 +52,7 @@ export class LessonDetailsComponent implements OnInit {
 
   // Implementation will go here
   async ngOnInit(): Promise<void> {
-    this.lesson = await this.lessonService.getLesson(this.lessonId);
+    this.lesson.set(await this.lessonService.getLesson(this.lessonId));
     this.lessonConversationService.conversationSettings.set(this.conversationSettings);
   }
 }

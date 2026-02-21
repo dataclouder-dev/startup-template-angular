@@ -1,6 +1,10 @@
 <div class="lesson-details-container">
-  @if (lesson) {
+  @if (lesson()) {
 
-  <dc-lesson-renderer class="text-editor" [lessonInput]="lesson" [settings]="settings"></dc-lesson-renderer>
+  <dc-lesson-renderer class="text-editor" [lessonInput]="lesson()!" [settings]="settings"></dc-lesson-renderer>
+  } @else {
+  <div class="no-lesson-found">
+    <p>No se encontró la lección o se está cargando...</p>
+  </div>
   }
 </div>
