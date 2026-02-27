@@ -6,7 +6,7 @@
       <div style="display: flex; gap: 10px">
         <div class="form-field">
           <label class="block" pTooltip="Image should be handle after upload">Subir imagen</label>
-          <img width="218px" [src]="form.get('image')?.value?.url || 'defaults/images/face-3.jpg'" alt="Live2D image" />
+          <img width="218px" [src]="form.get('image')?.value?.url || 'defaults/images/face-3.jpg'" alt="generic image" />
           <dc-cropper-modal [imgStorageSettings]="storageImgSettings" (imageUploaded)="handleImageUpload($event)"></dc-cropper-modal>
         </div>
 

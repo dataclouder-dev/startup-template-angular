@@ -12,6 +12,7 @@ export class GenericService extends EntityCommunicationService<IGeneric> {
 
   constructor() {
     super(Endpoints);
-    this.customHost = this.config.backendPythonUrl;
+    // Overwirte if you want
+    // this.customHost = this.config.backendPythonUrl;
   }
 }
