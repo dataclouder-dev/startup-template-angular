@@ -38,6 +38,7 @@ Practical guides for building and extending the template.
 
 ### 📗 Technical Reference
 Deep dives into the architecture and core systems.
+- [Application Sections](./technical-reference/sections/index.md) - Documentation for logical sections and feature areas.
 - [Technical Details](./technical-reference/technical_details.md) - Full stack overview and configuration.
 - [Ionic & Capacitor Usage](./technical-reference/ionic/how-is-ionic-used.md) - How layouts and native features are structured.
 - [Understanding Ionic Commands](./technical-reference/ionic/understanding-ionic-command.md) - Guide to CLI abstractions and native scripts.
