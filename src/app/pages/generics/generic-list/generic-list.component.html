@@ -16,7 +16,7 @@
           direction="down-left"
           [buttonProps]="{ severity: 'primary', rounded: true, outlined: true }" />
       </div>
-      <p-card [header]="generic.name">
+      <p-card [header]="generic.name" (click)="doAction({item: generic, action: 'view'})" class="cursor-pointer">
         <div style="display: flex; gap: 10px">
           <img width="120px" [src]="generic.image?.url || 'defaults/images/face-3.jpg'" alt="Live2D image" />
           <p class="m-0">{{ generic.description | slice : 0 : 250 }}...</p>

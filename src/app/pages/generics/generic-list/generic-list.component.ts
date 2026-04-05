@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/cor
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 
-import { DCFilterBarComponent, EntityBaseListComponent, QuickTableComponent, EntityBaseListV2Component } from '@dataclouder/ngx-core';
+import { DCFilterBarComponent, QuickTableComponent, EntityBaseListV2Component } from '@dataclouder/ngx-core';
 import { GenericService } from '../generics.service';
 import { IGeneric } from '../models/generics.model';
 import { RouterModule } from '@angular/router';
