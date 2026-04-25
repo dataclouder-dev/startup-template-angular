@@ -32,7 +32,6 @@ import { GenericListComponent } from '../generic-list/generic-list.component';
     GenericListComponent,
   ],
   templateUrl: './generic-form.component.html',
-  styleUrl: './generic-form.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
 })

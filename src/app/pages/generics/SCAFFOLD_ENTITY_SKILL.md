@@ -26,20 +26,16 @@ src/app/pages/{entity-name}s/
 │   └── {entity-name}s.model.ts
 ├── {entity-name}-list/
 │   ├── {entity-name}-list.component.ts
-│   ├── {entity-name}-list.component.html
-│   └── {entity-name}-list.component.css
+│   └── {entity-name}-list.component.html
 ├── {entity-name}-detail/
 │   ├── {entity-name}-detail.component.ts
-│   ├── {entity-name}-detail.component.html
-│   └── {entity-name}-detail.component.css
+│   └── {entity-name}-detail.component.html
 ├── {entity-name}-form/
 │   ├── {entity-name}-form.component.ts
-│   ├── {entity-name}-form.component.html
-│   └── {entity-name}-form.component.css
+│   └── {entity-name}-form.component.html
 ├── {entity-name}.routes.ts
 ├── {entity-name}s.component.ts
 ├── {entity-name}s.component.html
-├── {entity-name}s.component.css
 └── {entity-name}s.service.ts
 ```
 
@@ -118,7 +114,6 @@ import { {EntityName_UPPER}S_ROUTES } from './{entity-name}.routes';
   selector: 'app-{entity-name}s',
   imports: [RouterModule],
   templateUrl: './{entity-name}s.component.html',
-  styleUrl: './{entity-name}s.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class {EntityName}sComponent {
@@ -132,12 +127,6 @@ export class {EntityName}sComponent {
 
 ```html
 <router-outlet />
-```
-
-**File:** `src/app/pages/{entity-name}s/{entity-name}s.component.css`
-
-```css
-/* empty */
 ```
 
 ---
@@ -217,7 +206,6 @@ import { UserService } from '@dataclouder/ngx-users';
     SkeletonModule,
   ],
   templateUrl: './{entity-name}-list.component.html',
-  styleUrl: './{entity-name}-list.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class {EntityName}ListComponent extends EntityBaseListV2Component<I{EntityName}> implements OnInit {
@@ -252,14 +240,14 @@ export class {EntityName}ListComponent extends EntityBaseListV2Component<I{Entit
 @if (!onlyView()) {
 <p-button [icon]="viewType() === 'card' ? 'pi pi-table' : 'pi pi-list'" label="Change View" [link]="true" (click)="toggleView()" />
 }
-<div class="{entity-name}-list-container">
+<div class="flex flex-col h-full">
   <dc-filter-bar [isAdmin]="userService.isAdmin()" [options]="filterBarOptions" (onNew)="onNew()" (onFilterAction)="doAction($event)"></dc-filter-bar>
 
   @if (viewType() === 'card') {
-  <div class="{entity-name}-list-content">
+  <div class="mt-2.5 flex-1 overflow-y-auto pb-2.5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
     @if (!isLoading()) { @for (item of items(); track item.id) {
-    <div class="card-item">
-      <div style="position: absolute; top: 4px; right: 4px; z-index: 1000">
+    <div class="mb-2.5 relative">
+      <div class="absolute top-1 right-1 z-[1000]">
         <p-speeddial
           [model]="getCustomButtons(item)"
           [radius]="70"
@@ -267,8 +255,8 @@ export class {EntityName}ListComponent extends EntityBaseListV2Component<I{Entit
           direction="down-left"
           [buttonProps]="{ severity: 'primary', rounded: true, outlined: true }" />
       </div>
-      <p-card [header]="item.name">
-        <div style="display: flex; gap: 10px">
+      <p-card [header]="item.name" (click)="doAction({item: item, action: 'view'})" class="cursor-pointer">
+        <div class="flex gap-2.5">
           <img width="120px" [src]="item.image?.url || 'defaults/images/face-3.jpg'" alt="item image" />
           <p class="m-0">{{ item.description | slice : 0 : 250 }}...</p>
         </div>
@@ -286,9 +274,9 @@ export class {EntityName}ListComponent extends EntityBaseListV2Component<I{Entit
           <p-skeleton width="80%" height="1.5rem" />
         </div>
       </ng-template>
-      <div style="display: flex; gap: 10px">
+      <div class="flex gap-2.5">
         <p-skeleton width="120px" height="120px" />
-        <div style="flex: 1">
+        <div class="flex-1">
           <p-skeleton width="100%" height="1rem" styleClass="mb-2" />
           <p-skeleton width="90%" height="1rem" styleClass="mb-2" />
           <p-skeleton width="60%" height="1rem" />
@@ -302,7 +290,7 @@ export class {EntityName}ListComponent extends EntityBaseListV2Component<I{Entit
   <app-quick-table [tableData]="items()"></app-quick-table>
   }
 
-  <div class="paginator-container">
+  <div class="mt-4">
     <p-paginator
       currentPageReportTemplate="{{ totalRecords() }} records"
       [showCurrentPageReport]="true"
@@ -314,29 +302,6 @@ export class {EntityName}ListComponent extends EntityBaseListV2Component<I{Entit
     </p-paginator>
   </div>
 </div>
-```
-
-**File:** `src/app/pages/{entity-name}s/{entity-name}-list/{entity-name}-list.component.css`
-
-```css
-.{entity-name}-list-container {
-  padding: 1rem;
-}
-
-.{entity-name}-list-content {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 1rem;
-  margin-top: 1rem;
-}
-
-.card-item {
-  position: relative;
-}
-
-.paginator-container {
-  margin-top: 1rem;
-}
 ```
 
 ---
@@ -356,7 +321,6 @@ import { I{EntityName} } from '../models/{entity-name}s.model';
   selector: 'app-{entity-name}-detail',
   imports: [JsonPipe],
   templateUrl: './{entity-name}-detail.component.html',
-  styleUrl: './{entity-name}-detail.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class {EntityName}DetailComponent implements OnInit {
@@ -392,13 +356,7 @@ export class {EntityName}DetailComponent implements OnInit {
 
 **Customization:** Replace the `<pre>` debug output with your actual detail UI layout once verified working.
 
-**File:** `src/app/pages/{entity-name}s/{entity-name}-detail/{entity-name}-detail.component.css`
 
-```css
-/* empty */
-```
-
----
 
 ## Step 7 — Form Component
 
@@ -436,7 +394,6 @@ import { {EntityName}ListComponent } from '../{entity-name}-list/{entity-name}-l
     {EntityName}ListComponent,
   ],
   templateUrl: './{entity-name}-form.component.html',
-  styleUrl: './{entity-name}-form.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
 })
@@ -488,41 +445,41 @@ export class {EntityName}FormComponent extends EntityBaseFormComponent<I{EntityN
 ```html
 <h3>{EntityName} Form</h3>
 
-<div class="{entity-name}-form-card">
+<div class="max-w-[800px] mx-auto p-4">
   <p-card [header]="entityId() ? 'Edit {EntityName}' : 'New {EntityName}'">
     <form [formGroup]="form">
-      <div style="display: flex; gap: 10px">
-        <div class="form-field">
-          <label class="block" pTooltip="Upload image after first save">Image</label>
+      <div class="flex gap-2.5">
+        <div class="mb-4">
+          <label class="block font-medium mb-1" pTooltip="Upload image after first save">Image</label>
           <img width="218px" [src]="form.get('image')?.value?.url || 'defaults/images/face-3.jpg'" alt="{entity-name} image" />
           <dc-cropper-modal [imgStorageSettings]="storageImgSettings" (imageUploaded)="handleImageUpload($event)"></dc-cropper-modal>
         </div>
 
-        <div style="width: 100%">
-          <div class="form-field">
-            <label for="name" class="block">Name</label>
-            <input pInputText id="name" type="text" formControlName="name" placeholder="Enter name" />
+        <div class="w-full">
+          <div class="mb-4">
+            <label for="name" class="block font-medium mb-1">Name</label>
+            <input pInputText id="name" type="text" formControlName="name" placeholder="Enter name" class="w-full" />
           </div>
 
-          <div class="form-field">
-            <label for="description" class="block">Description</label>
+          <div class="mb-4">
+            <label for="description" class="block font-medium mb-1">Description</label>
             <textarea id="description" pTextarea formControlName="description" rows="5" class="w-full" placeholder="Enter description"> </textarea>
           </div>
         </div>
       </div>
 
-      <div class="form-field">
-        <label for="type" class="block">Type</label>
-        <p-select id="type" [options]="{entityName}Types" formControlName="type" optionLabel="label" optionValue="value" placeholder="Select a type" />
+      <div class="mb-4">
+        <label for="type" class="block font-medium mb-1">Type</label>
+        <p-select id="type" [options]="{entityName}Types" formControlName="type" optionLabel="label" optionValue="value" placeholder="Select a type" styleClass="w-full" />
       </div>
 
       <!-- Optional: Search dialog to pick a related entity -->
-      <div>
+      <div class="mb-4">
         <p-button (click)="isDialogVisible = true" label="Search relation" icon="pi pi-search" iconPos="right"></p-button>
       </div>
     </form>
 
-    <div style="display: flex; justify-content: flex-end; margin-top: 1rem">
+    <div class="flex justify-end mt-4">
       <p-button (click)="save()" label="Save {EntityName}" [disabled]="!form.valid" icon="pi pi-check" iconPos="right"></p-button>
     </div>
 
@@ -531,32 +488,6 @@ export class {EntityName}FormComponent extends EntityBaseFormComponent<I{EntityN
     </p-dialog>
   </p-card>
 </div>
-```
-
-**File:** `src/app/pages/{entity-name}s/{entity-name}-form/{entity-name}-form.component.css`
-
-```css
-.{entity-name}-form-card {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 1rem;
-}
-
-.form-field {
-  margin-bottom: 1rem;
-}
-
-.form-field label {
-  margin-bottom: 0.25rem;
-  display: block;
-  font-weight: 500;
-}
-
-.form-field input,
-.form-field textarea,
-.form-field p-select {
-  width: 100%;
-}
 ```
 
 ---

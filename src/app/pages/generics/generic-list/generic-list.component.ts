@@ -30,7 +30,9 @@ import { UserService } from '@dataclouder/ngx-users';
     SkeletonModule,
   ],
   templateUrl: './generic-list.component.html',
-  styleUrl: './generic-list.component.css',
+  host: {
+    class: 'block h-full',
+  },
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GenericListComponent extends EntityBaseListV2Component<IGeneric> implements OnInit {

@@ -8,7 +8,6 @@ import { EntityBaseDetailComponent } from '@dataclouder/ngx-core';
   selector: 'app-generic-detail',
   imports: [JsonPipe],
   templateUrl: './generic-detail.component.html',
-  styleUrl: './generic-detail.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GenericDetailComponent extends EntityBaseDetailComponent<IGeneric> {
