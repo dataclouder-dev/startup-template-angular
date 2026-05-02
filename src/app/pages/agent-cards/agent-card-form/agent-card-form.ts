@@ -40,7 +40,8 @@ export class AgentCardFormPage implements OnInit {
     }).then(alert => alert.present);
   }
 
-  public async goToDetails(id: string) {
+  public async goToDetails(event: any) {
+    const id = event.id;
     this.router.navigate([RouteNames.Page, RouteNames.Stack, RouteNames.ConversationDetails, id]);
   }
 }

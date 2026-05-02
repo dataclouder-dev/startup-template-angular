@@ -41,7 +41,7 @@ export class AgentCardChatComponent implements OnInit, OnDestroy {
   @ViewChild('videoPlayer') set videoPlayerRef(ref: ElementRef<HTMLVideoElement>) {
     if (ref && this.isVideoAvailable) {
       this.videoPlayer = ref;
-      this.videoPlayerService.initializePlayer(this.videoPlayer);
+      // this.videoPlayerService.initializePlayer(this.videoPlayer);
     }
   }
   public videoPlayer!: ElementRef<HTMLVideoElement>;
