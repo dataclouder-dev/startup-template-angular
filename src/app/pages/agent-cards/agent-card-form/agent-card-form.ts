@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular/standalone';
 
@@ -28,6 +28,10 @@ export class AgentCardFormPage implements OnInit {
 
   public projectName = this.config.projectName;
 
+  public agentSettings = signal({
+    converseRoute: (entityId: string) => [RouteNames.Page, RouteNames.Stack, RouteNames.ConversationDetails, entityId],
+  });
+
   ngOnInit(): void {
     this.currentPath = this.router.url.split('/')[3];
   }
@@ -38,10 +42,5 @@ export class AgentCardFormPage implements OnInit {
       message: 'Conversation saved',
       buttons: ['OK'],
     }).then(alert => alert.present);
-  }
-
-  public async goToDetails(event: any) {
-    const id = event.id;
-    this.router.navigate([RouteNames.Page, RouteNames.Stack, RouteNames.ConversationDetails, id]);
   }
 }

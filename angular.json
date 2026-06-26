@@ -39,7 +39,7 @@
               {
                 "glob": "rms-processor.js",
                 "input": "public/js",
-                "output": "assets"
+                "output": "assets/js"
               }
             ],
             "styles": [
