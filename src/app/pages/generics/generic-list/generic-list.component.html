@@ -1,14 +1,11 @@
-@if (!onlyView()) {
-<p-button [icon]="viewType() === 'card' ? 'pi pi-table' : 'pi pi-list'" label="Change View" [link]="true" (click)="toggleView()" />
-}
-<div class="generic-list-container">
+<div class="flex flex-col h-full">
   <dc-filter-bar [isAdmin]="userService.isAdmin()" [options]="filterBarOptions" (onNew)="onNew()" (onFilterAction)="doAction($event)"></dc-filter-bar>
 
   @if (viewType() === 'card') {
-  <div class="generic-list-content">
-    @for (generic of items(); track generic.id) {
-    <div class="card-source">
-      <div style="position: absolute; top: 4px; right: 4px; z-index: 1000">
+  <div class="mt-2.5 flex-1 overflow-y-auto pb-2.5">
+    @if (!isLoading()) { @for (generic of items(); track generic.id) {
+    <div class="mb-2.5 relative">
+      <div class="absolute top-1 right-1 z-[1000]">
         <p-speeddial
           [model]="getCustomButtons(generic)"
           [radius]="70"
@@ -16,8 +13,11 @@
           direction="down-left"
           [buttonProps]="{ severity: 'primary', rounded: true, outlined: true }" />
       </div>
-      <p-card [header]="generic.name">
-        <p class="m-0">{{ generic.description | slice : 0 : 250 }}...</p>
+      <p-card [header]="generic.name" (click)="doAction({item: generic, action: 'view'})" class="cursor-pointer">
+        <div class="flex gap-2.5">
+          <img width="120px" [src]="generic.image?.url || 'defaults/images/face-3.jpg'" alt="Live2D image" />
+          <p class="m-0">{{ generic.description | slice : 0 : 250 }}...</p>
+        </div>
         <span>{{ generic?.auditable?.updatedAt | date : 'dd/MM/yyyy HH:mm' }}</span>
       </p-card>
     </div>
@@ -25,7 +25,24 @@
     <p-card>
       <p>No generics found</p>
     </p-card>
-    }
+    } } @else { @for (i of [1,2,3,4,5,6]; track i) {
+    <p-card>
+      <ng-template pTemplate="header">
+        <div class="p-4">
+          <p-skeleton width="80%" height="1.5rem" />
+        </div>
+      </ng-template>
+      <div class="flex gap-2.5">
+        <p-skeleton width="120px" height="120px" />
+        <div class="flex-1">
+          <p-skeleton width="100%" height="1rem" styleClass="mb-2" />
+          <p-skeleton width="90%" height="1rem" styleClass="mb-2" />
+          <p-skeleton width="60%" height="1rem" />
+        </div>
+      </div>
+      <p-skeleton width="40%" height="1rem" styleClass="mt-2" />
+    </p-card>
+    } }
   </div>
   } @else if ( viewType() === 'table'){
 
@@ -33,13 +50,13 @@
 
   }
 
-  <div class="paginator-container">
+  <div class="mt-auto pt-2.5">
     <p-paginator
       currentPageReportTemplate="{{ totalRecords() }} conversations"
       [showCurrentPageReport]="true"
       (onPageChange)="onPageChange($event)"
       [first]="first()"
-      [rows]="rows"
+      [rows]="rows()"
       [totalRecords]="totalRecords()"
       [rowsPerPageOptions]="[10, 20, 30]">
     </p-paginator>

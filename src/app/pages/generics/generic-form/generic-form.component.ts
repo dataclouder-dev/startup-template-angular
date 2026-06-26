@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IGeneric } from '../models/generics.model';
 import { GenericService } from '../generics.service';
@@ -33,11 +33,10 @@ import { GenericListComponent } from '../generic-list/generic-list.component';
     BackendUploadComponent
   ],
   templateUrl: './generic-form.component.html',
-  styleUrl: './generic-form.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
 })
-export class GenericFormComponent extends EntityBaseFormComponent<IGeneric> implements OnInit {
+export class GenericFormComponent extends EntityBaseFormComponent<IGeneric> {
   protected entityCommunicationService = inject(GenericService);
   private fb = inject(FormBuilder);
   private cdr = inject(ChangeDetectorRef);
@@ -85,7 +84,6 @@ export class GenericFormComponent extends EntityBaseFormComponent<IGeneric> impl
     { id: 'Relation 3', name: 'relation3', description: 'Description with short description' },
   ];
 
-  async ngOnInit(): Promise<void> {}
 
   public addItemToList(event: any) {
     this.selectedPeople.push(event.value);
@@ -99,7 +97,6 @@ export class GenericFormComponent extends EntityBaseFormComponent<IGeneric> impl
   public handleImageUpload(event: FileStorageData) {
     this.form.patchValue({ image: event });
     this.save();
-    this.cdr.markForCheck();
   }
 
   public searchRelation() {

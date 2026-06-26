@@ -14,7 +14,7 @@ git clone https://github.com/adamofig/dataclouder-python-fastapi-template.git "$
 git clone https://github.com/adamofig/dataclouder-node-nest-template.git "${PROJECT_ID}-node"
 
 # clone python backend
-git clone https://github.com/adamofig/dataclouder-ionic-template.git "${PROJECT_ID}-angular"
+git clone https://github.com/dataclouder-dev/startup-template-angular.git "${PROJECT_ID}-angular"
 
 
 # # make sure you have firebase-tools installed
