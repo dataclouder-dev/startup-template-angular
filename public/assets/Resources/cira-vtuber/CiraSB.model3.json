@@ -1,0 +1,36 @@
+{
+	"Version": 3,
+	"FileReferences": {
+		"Moc": "CiraSB.moc3",
+		"Textures": [
+			"CiraSB.8192/texture_00.png"
+		],
+		"DisplayInfo": "CiraSB.cdi3.json",
+		"Expressions": [
+			{ "Name": "Cansado", "File": "Cansado.exp3.json" },
+			{ "Name": "HyperNojado", "File": "HyperNojado.exp3.json" },
+			{ "Name": "Saludo", "File": "Saludo.exp3.json" },
+			{ "Name": "amorYpaz", "File": "amorYpaz.exp3.json" },
+			{ "Name": "asco", "File": "asco.exp3.json" },
+			{ "Name": "coraazonRoto", "File": "coraazonRoto.exp3.json" },
+			{ "Name": "enojado", "File": "enojado.exp3.json" },
+			{ "Name": "feliz", "File": "feliz.exp3.json" },
+			{ "Name": "idea", "File": "idea.exp3.json" },
+			{ "Name": "like", "File": "like.exp3.json" },
+			{ "Name": "ok", "File": "ok.exp3.json" },
+			{ "Name": "triste", "File": "triste.exp3.json" }
+		]
+	},
+	"Groups": [
+		{
+			"Target": "Parameter",
+			"Name": "EyeBlink",
+			"Ids": []
+		},
+		{
+			"Target": "Parameter",
+			"Name": "LipSync",
+			"Ids": []
+		}
+	]
+}

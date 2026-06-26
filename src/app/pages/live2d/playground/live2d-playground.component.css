@@ -10,17 +10,33 @@
 
 /* Sidebar Styling */
 .sidebar {
-  width: 350px;
   height: 100%;
   background: transparent;
   backdrop-filter: blur(20px);
-  border-right: 1px solid rgba(255, 255, 255, 0.1);
   display: flex;
   flex-direction: column;
   padding: 1.5rem;
   z-index: 10;
-  box-shadow: 10px 0 30px rgba(0, 0, 0, 0.5);
   overflow-y: auto;
+}
+
+.left-sidebar {
+  width: 320px;
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 10px 0 30px rgba(0, 0, 0, 0.3);
+}
+
+.right-sidebar {
+  width: 380px;
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: -10px 0 30px rgba(0, 0, 0, 0.3);
+}
+
+.inspector-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
 }
 
 .sidebar-header {
@@ -124,18 +140,21 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  overflow-y: auto;
+  overflow: hidden;
   background: rgba(0, 0, 0, 0.2);
 }
 
 .model-viewport {
-  flex: 1 1 auto; /* Make it flexible to use available space */
+  flex: 1 1 auto;
+  height: 100%;
+  width: 100%;
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
   background: transparent;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 1.5rem;
+  box-sizing: border-box;
 }
 
 .canvas-container {
@@ -144,24 +163,43 @@
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.parameters-area {
-    padding: 1.5rem;
-    background: transparent;
+  border: 2px dashed rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  background: rgba(0, 0, 0, 0.25);
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 /* Responsive adjustment */
-@media (max-width: 768px) {
+@media (max-width: 1200px) {
   .playground-layout {
     flex-direction: column;
+    overflow-y: auto;
+    height: auto;
   }
-  .sidebar {
+  
+  .left-sidebar, .right-sidebar {
     width: 100%;
     height: auto;
-    max-height: 40vh;
+    max-height: none;
+    border: none;
+    box-shadow: none;
   }
-  .model-viewport {
-      flex: 0 0 50vh;
+  
+  .left-sidebar {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .right-sidebar {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .content-area {
+    height: 60vh;
+    min-height: 400px;
+  }
+  
+  :host ::ng-deep .borderless-table .p-datatable-wrapper {
+    max-height: 400px !important;
   }
 }

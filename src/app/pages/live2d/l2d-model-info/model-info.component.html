@@ -1,77 +1,80 @@
-<div class="card flex justify-center">
-  <p-slider [(ngModel)]="value" styleClass="w-56" />
-</div>
 <div class="model-info">
   <div class="tab-buttons">
     <button pButton [ngClass]="{ 'active-tab': selectedTab() === 'parameters' }" (click)="setActiveTab('parameters')" label="Parameters"></button>
     <button pButton [ngClass]="{ 'active-tab': selectedTab() === 'parts' }" (click)="setActiveTab('parts')" label="Parts"></button>
   </div>
 
+  <div class="search-container">
+    <div class="search-wrapper">
+      <i class="pi pi-search search-icon"></i>
+      <input 
+        type="text" 
+        [ngModel]="searchQuery()" 
+        (ngModelChange)="searchQuery.set($event)" 
+        placeholder="Search parameters or parts..." 
+        class="search-input" />
+      <button *ngIf="searchQuery()" (click)="searchQuery.set('')" class="clear-btn" type="button">
+        <i class="pi pi-times"></i>
+      </button>
+    </div>
+  </div>
+
   <div class="tab-content">
     <!-- Parameters Tab -->
-    <div *ngIf="selectedTab() === 'parameters' && modelParameters">
-      <p-card header="Model Parameters ({{ modelParameters.count }})">
-        <p-table [value]="parametersTableData()" [scrollable]="true" scrollHeight="400px" styleClass="p-datatable-sm">
-          <ng-template pTemplate="header">
-            <tr>
-              <th>ID</th>
-              <th>Min</th>
-              <th>Max</th>
-              <th>Default</th>
-              <th>Current</th>
-              <th>Control</th>
-              <th>Action</th>
-            </tr>
-          </ng-template>
-          <ng-template pTemplate="body" let-param>
-            <tr>
-              <td>{{ param.id }}</td>
-              <td>{{ param.min | number : '1.2-2' }}</td>
-              <td>{{ param.max | number : '1.2-2' }}</td>
-              <td>{{ param.default | number : '1.2-2' }}</td>
-              <td>{{ param.current | number : '1.2-2' }}</td>
-              <td>
-                <div class="slider-container">
-                  <p-slider
-                    [(ngModel)]="param.value"
-                    [min]="param.min"
-                    [max]="param.max"
-                    [step]="0.01"
-                    styleClass="w-full"
-                    (onSlideEnd)="onParameterChange(param)">
-                  </p-slider>
-                  <span class="slider-value">{{ param.value.toFixed(2) }}</span>
+    <div *ngIf="selectedTab() === 'parameters' && modelParameters" class="tab-pane">
+      <p-table [value]="parametersTableData()" [scrollable]="true" scrollHeight="calc(100vh - 240px)" styleClass="p-datatable-sm borderless-table">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Parameter ID</th>
+            <th>Value & Range</th>
+            <th style="width: 50px"></th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-param>
+          <tr>
+            <td class="param-id" [title]="param.id">{{ param.id }}</td>
+            <td class="param-control">
+              <div class="slider-container">
+                <p-slider
+                  [(ngModel)]="param.value"
+                  [min]="param.min"
+                  [max]="param.max"
+                  [step]="0.01"
+                  styleClass="w-full"
+                  (onSlideEnd)="onParameterChange(param)">
+                </p-slider>
+                <div class="slider-meta">
+                  <span class="current-val">{{ param.value | number : '1.2-2' }}</span>
+                  <span class="range-val">({{ param.min | number : '1.1-2' }} to {{ param.max | number : '1.1-2' }})</span>
                 </div>
-              </td>
-              <td>
-                <button pButton icon="pi pi-refresh" class="p-button-sm p-button-outlined" (click)="resetParameter(param)" title="Reset to default"></button>
-              </td>
-            </tr>
-          </ng-template>
-        </p-table>
-      </p-card>
+              </div>
+            </td>
+            <td class="param-action">
+              <button pButton icon="pi pi-refresh" class="p-button-sm p-button-text p-button-rounded reset-btn" (click)="resetParameter(param)" [title]="'Reset to default: ' + param.default"></button>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
     </div>
 
     <!-- Parts Tab -->
-    <div *ngIf="selectedTab() === 'parts' && modelParts">
-      <p-card header="Model Parts ({{ modelParts.count }})">
-        <p-table [value]="partsTableData()" [scrollable]="true" scrollHeight="400px" styleClass="p-datatable-sm">
-          <ng-template pTemplate="header">
-            <tr>
-              <th>ID</th>
-              <th>Opacity</th>
-              <th>Parent Index</th>
-            </tr>
-          </ng-template>
-          <ng-template pTemplate="body" let-part>
-            <tr>
-              <td>{{ part.id }}</td>
-              <td>{{ part.opacity }}</td>
-              <td>{{ part.parentIndex }}</td>
-            </tr>
-          </ng-template>
-        </p-table>
-      </p-card>
+    <div *ngIf="selectedTab() === 'parts' && modelParts" class="tab-pane">
+      <p-table [value]="partsTableData()" [scrollable]="true" scrollHeight="calc(100vh - 240px)" styleClass="p-datatable-sm borderless-table">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Part ID</th>
+            <th>Opacity</th>
+            <th>Parent</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-part>
+          <tr>
+            <td class="part-id" [title]="part.id">{{ part.id }}</td>
+            <td>{{ part.opacity | number : '1.2-2' }}</td>
+            <td>{{ part.parentIndex !== -1 ? part.parentIndex : 'None' }}</td>
+          </tr>
+        </ng-template>
+      </p-table>
     </div>
   </div>
 </div>

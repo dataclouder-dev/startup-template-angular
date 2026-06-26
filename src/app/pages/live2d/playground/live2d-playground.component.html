@@ -1,39 +1,39 @@
 <div class="playground-layout">
   <!-- Left Sidebar for Controls -->
-  <aside class="sidebar">
+  <aside class="sidebar left-sidebar">
     <header class="sidebar-header">
       <h1>Live2D Explorer</h1>
-      <p class="subtitle">Model Inspector & Testing</p>
+      <p class="subtitle">Model Controls & Animations</p>
     </header>
 
     <div class="control-group">
       <label class="group-label">Model Selection</label>
-      <p-select [options]="availableModels" [(ngModel)]="selectedModel" optionLabel="name" (onChange)="onModelChange()" placeholder="Select a model" [style]="{'width':'100%'}">
+      <p-select [options]="availableModels" [ngModel]="selectedModel()" (ngModelChange)="selectedModel.set($event); onModelChange()" optionLabel="name" placeholder="Select a model" [style]="{'width':'100%'}">
       </p-select>
     </div>
 
     <div class="control-group">
       <div class="label-with-value">
         <label class="group-label">Zoom</label>
-        <span class="value-badge">{{ modelZoom }}%</span>
+        <span class="value-badge">{{ modelZoom() }}%</span>
       </div>
-      <p-slider [(ngModel)]="modelZoom" (onChange)="onZoomChange($event)" [min]="1" [max]="100"></p-slider>
+      <p-slider [ngModel]="modelZoom()" (onChange)="onZoomChange($event)" [min]="1" [max]="200"></p-slider>
     </div>
 
     <div class="control-group">
       <div class="label-with-value">
         <label class="group-label">Position X</label>
-        <span class="value-badge">{{ modelX }}%</span>
+        <span class="value-badge">{{ modelX() }}%</span>
       </div>
-      <p-slider [(ngModel)]="modelX" (onChange)="onPositionXChange($event)" [min]="0" [max]="100"></p-slider>
+      <p-slider [ngModel]="modelX()" (onChange)="onPositionXChange($event)" [min]="-100" [max]="200"></p-slider>
     </div>
 
     <div class="control-group">
       <div class="label-with-value">
         <label class="group-label">Position Y</label>
-        <span class="value-badge">{{ modelY }}%</span>
+        <span class="value-badge">{{ modelY() }}%</span>
       </div>
-      <p-slider [(ngModel)]="modelY" (onChange)="onPositionYChange($event)" [min]="0" [max]="100"></p-slider>
+      <p-slider [ngModel]="modelY()" (onChange)="onPositionYChange($event)" [min]="-100" [max]="200"></p-slider>
     </div>
 
     <div class="control-group">
@@ -53,22 +53,22 @@
       </div>
     </div>
 
-    @if (expressions.length > 0) {
+    @if (expressions().length > 0) {
       <div class="control-group scrollable">
         <label class="group-label">Expressions</label>
         <div class="motion-grid">
-          @for(exp of expressions; track $index){
+          @for(exp of expressions(); track $index){
             <p-button [label]="exp" (click)='setExpression(exp)' size="small" class="motion-btn"></p-button>
           }
         </div>
       </div>
     }
 
-    @if (motionGroups.length > 0) {
+    @if (motionGroups().length > 0) {
       <div class="control-group scrollable">
         <label class="group-label">Available Animations</label>
         <div class="motion-grid">
-          @for(group of motionGroups; track $index){
+          @for(group of motionGroups(); track $index){
             <p-button [label]="group" (click)="playAnimation(group)" size="small" class="motion-btn"></p-button>
           }
         </div>
@@ -77,18 +77,38 @@
     
   </aside>
 
-  <!-- Right Main Content Area for Model -->
+  <!-- Center Main Content Area for Model -->
   <main class="content-area">
     <section class="model-viewport">
       <div class="canvas-container">
-        @if(selectedModel){
-          <app-live2d-model [modelPath]="selectedModel.path" [scale]="selectedModel.scale" (modelLoaded)="onModelLoaded($event)" (viewStateChanged)="onViewStateChanged($event)" #live2dModel></app-live2d-model>
+        @if(selectedModel()){
+          <app-live2d-model 
+            [modelPath]="selectedModel().path" 
+            [scale]="selectedModel().scale" 
+            [zoom]="modelZoom()"
+            [x]="modelX()"
+            [y]="modelY()"
+            (modelLoaded)="onModelLoaded($event)" 
+            (viewStateChanged)="onViewStateChanged($event)" 
+            #live2dModel>
+          </app-live2d-model>
         }
       </div>
     </section>
-
-    <section class="parameters-area">
-      <app-model-info [modelParameters]="modelParameters" [modelParts]="modelParts" (parameterChanged)="updateModelParameter($event)"> </app-model-info>
-    </section>
   </main>
+
+  <!-- Right Sidebar for Model Inspector & Testing -->
+  <aside class="sidebar right-sidebar">
+    <header class="sidebar-header">
+      <h1>Model Inspector</h1>
+      <p class="subtitle">Parameters & Parts Testing</p>
+    </header>
+    <div class="inspector-content">
+      <app-model-info 
+        [modelParameters]="modelParameters()" 
+        [modelParts]="modelParts()" 
+        (parameterChanged)="updateModelParameter($event)">
+      </app-model-info>
+    </div>
+  </aside>
 </div>

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ViewChild, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
@@ -35,14 +35,15 @@ import { SelectModule } from 'primeng/select';
 export class Live2dPlaygroundComponent {
   @ViewChild('live2dModel') live2dModelComponent!: Live2dModelComponent;
 
-  modelParameters: ModelParameters | null = null;
-  modelParts: ModelParts | null = null;
-  motionGroups: string[] = [];
-  expressions: string[] = [];
+  // Angular Signals for reactive state management
+  modelParameters = signal<ModelParameters | null>(null);
+  modelParts = signal<ModelParts | null>(null);
+  motionGroups = signal<string[]>([]);
+  expressions = signal<string[]>([]);
 
-  modelZoom = 15; // Initial zoom level
-  modelX = 50; // Initial X position (center)
-  modelY = 50; // Initial Y position (center)
+  modelZoom = signal<number>(15); // Initial zoom level
+  modelX = signal<number>(50); // Initial X position (center)
+  modelY = signal<number>(50); // Initial Y position (center)
 
   availableModels = [
     { name: 'Hiyori', path: '/assets/Resources/Hiyori/Hiyori.model3.json', scale: 0.15 },
@@ -54,44 +55,37 @@ export class Live2dPlaygroundComponent {
     { name: 'NVPU', path: '/assets/Resources/NVPU-demo/NVPU.model3.json', scale: 0.11 },
     { name: '简', path: '/assets/Resources/简/简.model3.json', scale: 0.08 },
     { name: 'IceGIrl', path: '/assets/Resources/IceGIrl/IceGirl.model3.json', scale: 0.08 },
+    { name: 'Cira', path: '/assets/Resources/cira-vtuber/CiraSB.model3.json', scale: 0.38 },
     { name: 'conejo', path: 'https://storage-qa.polilan.com/live2ds/698fc713548003d2fcd6c666/conejo/conejo.model3.json', scale: 0.08 },
   ];
 
-  selectedModel = this.availableModels[0];
+  selectedModel = signal<any>(this.availableModels[0]);
 
-  constructor(private cdr: ChangeDetectorRef) {}
+  constructor() {}
 
   onModelLoaded(event: { parameters: ModelParameters | null; parts: ModelParts | null; motions: string[]; expressions: string[] }): void {
-    this.modelParameters = event.parameters;
-    this.modelParts = event.parts;
-    this.motionGroups = event.motions;
-    this.expressions = event.expressions;
-    this.cdr.detectChanges();
+    this.modelParameters.set(event.parameters);
+    this.modelParts.set(event.parts);
+    this.motionGroups.set(event.motions);
+    this.expressions.set(event.expressions);
   }
 
   async onModelChange(): Promise<void> {
-    this.modelZoom = Math.round(this.selectedModel.scale * 100);
-    this.modelX = 50;
-    this.modelY = 50;
-    // The model will be reloaded automatically by the child component due to the input binding change.
+    this.modelZoom.set(Math.round(this.selectedModel().scale * 100));
+    this.modelX.set(50);
+    this.modelY.set(50);
   }
 
   onZoomChange(event: any): void {
-    if (this.live2dModelComponent) {
-      this.live2dModelComponent.onZoomChange(event.value);
-    }
+    this.modelZoom.set(event.value);
   }
 
   onPositionXChange(event: any): void {
-    if (this.live2dModelComponent) {
-      this.live2dModelComponent.onXChange(event.value);
-    }
+    this.modelX.set(event.value);
   }
 
   onPositionYChange(event: any): void {
-    if (this.live2dModelComponent) {
-      this.live2dModelComponent.onYChange(event.value);
-    }
+    this.modelY.set(event.value);
   }
 
   updateModelParameter(event: { id: string; value: number; index: number }): void {
@@ -131,40 +125,25 @@ export class Live2dPlaygroundComponent {
   }
 
   public onViewStateChanged(event: { zoom: number; x: number; y: number }): void {
-    this.modelZoom = event.zoom;
-    this.modelX = event.x;
-    this.modelY = event.y;
-    this.cdr.detectChanges();
+    this.modelZoom.set(event.zoom);
+    this.modelX.set(event.x);
+    this.modelY.set(event.y);
   }
 
   public zoomToFace(): void {
     if (this.live2dModelComponent) {
       const transform = this.live2dModelComponent.getFaceTransform();
       if (transform) {
-        this.modelZoom = transform.zoom;
-        this.modelX = transform.x;
-        this.modelY = transform.y;
-        
-        // Apply changes to the component
-        this.live2dModelComponent.onZoomChange(this.modelZoom);
-        this.live2dModelComponent.onXChange(this.modelX);
-        this.live2dModelComponent.onYChange(this.modelY);
-        
-        this.cdr.detectChanges();
+        this.modelZoom.set(transform.zoom);
+        this.modelX.set(transform.x);
+        this.modelY.set(transform.y);
       }
     }
   }
 
   public resetView(): void {
-    this.modelZoom = Math.round(this.selectedModel.scale * 100);
-    this.modelX = 50;
-    this.modelY = 50;
-    
-    if (this.live2dModelComponent) {
-      this.live2dModelComponent.onZoomChange(this.modelZoom);
-      this.live2dModelComponent.onXChange(this.modelX);
-      this.live2dModelComponent.onYChange(this.modelY);
-    }
-    this.cdr.detectChanges();
+    this.modelZoom.set(Math.round(this.selectedModel().scale * 100));
+    this.modelX.set(50);
+    this.modelY.set(50);
   }
 }

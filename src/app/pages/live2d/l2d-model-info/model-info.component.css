@@ -1,55 +1,261 @@
+:host {
+  /* Default: Light mode colors */
+  --inspector-text-primary: #2d0c62;
+  --inspector-text-secondary: #6366f1;
+  --inspector-text-muted: #6b7280;
+  --inspector-header-color: #4f46e5;
+  --inspector-border: rgba(99, 102, 241, 0.15);
+  --inspector-bg-hover: rgba(99, 102, 241, 0.04);
+  --inspector-input-bg: rgba(99, 102, 241, 0.05);
+  --inspector-input-border: rgba(99, 102, 241, 0.25);
+  --inspector-input-text: #2d0c62;
+  --inspector-input-placeholder: rgba(45, 12, 98, 0.5);
+  --inspector-icon: #6366f1;
+  --inspector-th-bg: rgba(99, 102, 241, 0.06);
+}
+
+:root.ion-palette-dark :host {
+  /* Dark mode overrides */
+  --inspector-text-primary: rgba(255, 255, 255, 0.85);
+  --inspector-text-secondary: #818cf8;
+  --inspector-text-muted: rgba(255, 255, 255, 0.4);
+  --inspector-header-color: rgba(255, 255, 255, 0.6);
+  --inspector-border: rgba(255, 255, 255, 0.05);
+  --inspector-bg-hover: rgba(255, 255, 255, 0.02);
+  --inspector-input-bg: rgba(255, 255, 255, 0.05);
+  --inspector-input-border: rgba(255, 255, 255, 0.1);
+  --inspector-input-text: #ffffff;
+  --inspector-input-placeholder: rgba(255, 255, 255, 0.4);
+  --inspector-icon: rgba(255, 255, 255, 0.4);
+  --inspector-th-bg: rgba(255, 255, 255, 0.03);
+}
+
 .model-info {
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
+  gap: 0.75rem;
 }
 
 .tab-buttons {
   display: flex;
-  margin-bottom: 1rem;
+  gap: 0.5rem;
 }
 
 .tab-buttons button {
-  margin-right: 0.5rem;
+  flex: 1;
 }
 
 .active-tab {
-  background-color: var(--primary-color, #3B82F6);
-  color: white;
+  background: rgba(99, 102, 241, 0.25) !important;
+  border-color: #6366f1 !important;
+  color: #fff !important;
+  font-weight: 600;
 }
 
 .tab-content {
   flex: 1;
-  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
 }
 
-:host ::ng-deep .p-card {
+.tab-pane {
+  display: flex;
+  flex-direction: column;
   height: 100%;
 }
 
-:host ::ng-deep .p-card-body {
-  height: calc(100% - 60px);
+/* Search Box Styling */
+.search-container {
+  margin-bottom: 0.25rem;
 }
 
-:host ::ng-deep .p-card-content {
-  height: 100%;
+.search-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.search-icon {
+  position: absolute;
+  left: 0.75rem;
+  color: var(--inspector-icon);
+  font-size: 0.9rem;
+  pointer-events: none;
+}
+
+.search-input {
+  width: 100%;
+  padding: 0.5rem 2rem 0.5rem 2.25rem;
+  background: var(--inspector-input-bg);
+  border: 1px solid var(--inspector-input-border);
+  border-radius: 8px;
+  color: var(--inspector-input-text);
+  font-size: 0.85rem;
+  font-family: inherit;
+  transition: all 0.2s ease;
+}
+
+.search-input::placeholder {
+  color: var(--inspector-input-placeholder);
+}
+
+.search-input:focus {
+  outline: none;
+  background: var(--inspector-input-bg);
+  border-color: rgba(99, 102, 241, 0.6);
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.15);
+}
+
+.clear-btn {
+  position: absolute;
+  right: 0.75rem;
+  background: transparent;
+  border: none;
+  color: var(--inspector-icon);
+  cursor: pointer;
   padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.15s ease;
+}
+
+.clear-btn:hover {
+  color: var(--inspector-text-secondary);
+}
+
+/* PrimeNG Table styling overrides for dark mode & sidebar */
+:host ::ng-deep .borderless-table {
+  background: transparent !important;
+}
+
+:host ::ng-deep .borderless-table .p-datatable-thead > tr > th {
+  background: var(--inspector-th-bg) !important;
+  color: var(--inspector-header-color) !important;
+  font-size: 0.75rem !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+  padding: 0.5rem 0.75rem !important;
+  border-bottom: 1px solid var(--inspector-border) !important;
+}
+
+:host ::ng-deep .borderless-table .p-datatable-tbody > tr {
+  background: transparent !important;
+  color: var(--inspector-text-primary) !important;
+  transition: background-color 0.15s ease;
+}
+
+:host ::ng-deep .borderless-table .p-datatable-tbody > tr:hover {
+  background: var(--inspector-bg-hover) !important;
+}
+
+:host ::ng-deep .borderless-table .p-datatable-tbody > tr > td {
+  padding: 0.6rem 0.75rem !important;
+  border-bottom: 1px solid var(--inspector-border) !important;
+  vertical-align: middle;
+}
+
+.param-id, .part-id {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--inspector-text-primary);
+  max-width: 110px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.param-control {
+  min-width: 140px;
 }
 
 .slider-container {
   display: flex;
   flex-direction: column;
   width: 100%;
-  min-width: 150px;
-}
-
-.slider-value {
-  text-align: center;
-  font-size: 0.8rem;
-  margin-top: 0.25rem;
 }
 
 :host ::ng-deep .p-slider {
-  margin: 0.5rem 0;
+  background: rgba(99, 102, 241, 0.15) !important;
+  border-radius: 4px !important;
+  height: 4px !important;
+  margin: 0.35rem 0 !important;
+}
+
+:root.ion-palette-dark :host ::ng-deep .p-slider {
+  background: rgba(255, 255, 255, 0.1) !important;
+}
+
+:host ::ng-deep .p-slider-range {
+  background: #6366f1 !important;
+}
+
+:host ::ng-deep .p-slider-handle {
+  background: #fff !important;
+  border: 2px solid #6366f1 !important;
+  width: 12px !important;
+  height: 12px !important;
+  margin-top: -4px !important;
+  transition: transform 0.1s ease;
+}
+
+:host ::ng-deep .p-slider-handle:hover {
+  transform: scale(1.2);
+}
+
+.slider-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.7rem;
+  margin-top: 0.1rem;
+}
+
+.current-val {
+  color: var(--inspector-text-secondary);
+  font-weight: 600;
+}
+
+.range-val {
+  color: var(--inspector-text-muted);
+}
+
+.param-action {
+  text-align: center;
+}
+
+.reset-btn {
+  color: var(--inspector-text-muted) !important;
+  width: 24px !important;
+  height: 24px !important;
+  padding: 0 !important;
+}
+
+.reset-btn:hover {
+  color: var(--inspector-text-secondary) !important;
+  background: var(--inspector-bg-hover) !important;
+}
+
+/* Custom Scrollbar for PrimeNG Table */
+:host ::ng-deep .p-datatable-wrapper::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+:host ::ng-deep .p-datatable-wrapper::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+:host ::ng-deep .p-datatable-wrapper::-webkit-scrollbar-thumb {
+  background: var(--inspector-border);
+  border-radius: 4px;
+}
+
+:host ::ng-deep .p-datatable-wrapper::-webkit-scrollbar-thumb:hover {
+  background: var(--inspector-text-secondary);
 }

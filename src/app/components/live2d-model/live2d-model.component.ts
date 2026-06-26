@@ -1,16 +1,14 @@
 import { CommonModule } from '@angular/common';
 import {
-  ChangeDetectionStrategy,
   Component,
   ElementRef,
   ViewChild,
   AfterViewInit,
-  Input,
-  Output,
-  EventEmitter,
-  ChangeDetectorRef,
-  OnChanges,
-  SimpleChanges,
+  input,
+  output,
+  computed,
+  effect,
+  signal,
   inject,
 } from '@angular/core';
 import { Live2DModel } from 'untitled-pixi-live2d-engine/cubism'
@@ -25,13 +23,19 @@ import { ModelParameters, ModelParts } from '../../pages/live2d/models/live2d-ty
   templateUrl: './live2d-model.component.html',
   styleUrls: ['./live2d-model.component.css'],
 })
-export class Live2dModelComponent implements AfterViewInit, OnChanges {
+export class Live2dModelComponent implements AfterViewInit {
   @ViewChild('canvas') canvasRef!: ElementRef<HTMLCanvasElement>;
 
-  @Input() modelPath!: string;
-  @Input() scale = 0.4;
-  @Output() modelLoaded = new EventEmitter<{ parameters: ModelParameters | null; parts: ModelParts | null; motions: string[]; expressions: string[] }>();
-  @Output() viewStateChanged = new EventEmitter<{ zoom: number; x: number; y: number }>();
+  // Signal inputs
+  modelPath = input.required<string>();
+  scale = input<number>(0.4);
+  zoom = input<number | undefined>(undefined);
+  x = input<number>(50);
+  y = input<number>(50);
+
+  // Outputs (using new Angular output API)
+  modelLoaded = output<{ parameters: ModelParameters | null; parts: ModelParts | null; motions: string[]; expressions: string[] }>();
+  viewStateChanged = output<{ zoom: number; x: number; y: number }>();
 
   app!: Application;
   model: any;
@@ -40,25 +44,53 @@ export class Live2dModelComponent implements AfterViewInit, OnChanges {
   private motionGroups: string[] = [];
   private expressions: string[] = [];
 
+  private isViewInitialized = signal(false);
 
+  // Zoom fallback to scale * 100 if zoom input is undefined
+  effectiveZoom = computed(() => {
+    const z = this.zoom();
+    if (z !== undefined) {
+      return z;
+    }
+    return Math.round(this.scale() * 100);
+  });
+
+  // Pointer dragging state
+  private isDragging = false;
+  private dragStart = { x: 0, y: 0 };
+  private dragStartModel = { x: 50, y: 50 };
+
+  constructor() {
+    // Reactive model loading once canvas is initialized
+    effect(() => {
+      const path = this.modelPath();
+      if (this.isViewInitialized()) {
+        this.loadModel(path);
+      }
+    });
+
+    // Reactive scale and position transform updates
+    effect(() => {
+      const currentZoom = this.effectiveZoom();
+      const currentX = this.x();
+      const currentY = this.y();
+      
+      this.updateModelTransform(currentZoom, currentX, currentY);
+    });
+  }
 
   async ngAfterViewInit(): Promise<void> {
     await this.initializeCanvas();
-    await this.loadModel(this.modelPath);
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['modelPath'] && !changes['modelPath'].isFirstChange()) {
-      this.loadModel(this.modelPath);
-    }
+    
+    // Register wheel event programmatically to ensure it's not passive
+    // and prevent default scroll on the parent page.
+    this.canvasRef.nativeElement.addEventListener('wheel', this.onWheel.bind(this), { passive: false });
+    
+    this.isViewInitialized.set(true);
   }
 
   async initializeCanvas(): Promise<void> {
-
-
     this.app = new Application();
-
-    // console.log('PixiJS initialization, version:', (PIXI as any).VERSION);
     
     if (typeof (this.app as any).init === 'function') {
       await this.app.init({
@@ -67,12 +99,11 @@ export class Live2dModelComponent implements AfterViewInit, OnChanges {
         backgroundColor: 0x000000,
         backgroundAlpha: 0,
         antialias: true,
-        resolution:  window.devicePixelRatio || 1,
+        resolution: window.devicePixelRatio || 1,
         autoDensity: true,
       });
     } else {
-      alert('Not able to load the model')
-
+      alert('Not able to load the model');
     }
   }
 
@@ -82,58 +113,51 @@ export class Live2dModelComponent implements AfterViewInit, OnChanges {
       this.model.destroy();
     }
 
-    this.model =  await Live2DModel.from(
-    modelPath,
+    this.model = await Live2DModel.from(
+      modelPath,
       {
         ticker: PIXI.Ticker.shared,
         autoFocus: true,
         autoHitTest: true,
         breathDepth: 0.2,
       }
-  )
-
-// this.model.internalModel.extendParallelMotionManager(2)
-
+    );
 
     this.app.stage.addChild(this.model);
-
     this.extractModelInfo();
 
-    this.model.x = this.app.screen.width / 2;
-    this.model.y = this.app.screen.height / 2;
-    this.model.scale.set(.15);
-    this.model.anchor.set(0.5, .5);
+    this.model.anchor.set(0.5, 0.5);
+    
+    // Apply initial coordinates from inputs/signals
+    this.updateModelTransform(this.effectiveZoom(), this.x(), this.y());
 
-    // this.deactivateMotions();
     this.modelLoaded.emit({ 
       parameters: this.modelParameters, 
       parts: this.modelParts, 
       motions: this.motionGroups,
       expressions: this.expressions
     });
-    // this.cdr.detectChanges();
   }
 
-  private deactivateMotions() {
-    const internalModel = this.model.internalModel as any;
-    if (internalModel) {
-      if (internalModel.motionManager) {
-        internalModel.motionManager.stopAllMotions();
+  private updateModelTransform(zoomVal: number, xVal: number, yVal: number): void {
+    if (!this.model) return;
+    
+    const targetScale = zoomVal / 100;
+    if (Math.abs(this.model.scale.x - targetScale) > 0.001) {
+      this.model.scale.set(targetScale, targetScale);
+    }
+    
+    if (this.app) {
+      const targetX = (xVal / 100) * this.app.screen.width;
+      if (Math.abs(this.model.x - targetX) > 1) {
+        this.model.x = targetX;
       }
-      if (internalModel.eyeBlink) {
-        internalModel.eyeBlink.enabled = false;
-      }
-      if (internalModel.breath) {
-        internalModel.breath.enabled = false;
+      
+      const targetY = (yVal / 100) * this.app.screen.height;
+      if (Math.abs(this.model.y - targetY) > 1) {
+        this.model.y = targetY;
       }
     }
-
-    Ticker.shared.add((ticker: Ticker) => {
-      if (this.model && this.model.internalModel) {
-        (this.model.internalModel as any).coreModel?.update();
-        this.model.update(ticker.deltaTime);
-      }
-    });
   }
 
   private extractModelInfo(): void {
@@ -160,8 +184,7 @@ export class Live2dModelComponent implements AfterViewInit, OnChanges {
       };
     }
     if (this.model.internalModel && this.model.internalModel.motionManager) {
-      // this.motionGroups = Object.keys(this.model.internalModel.motionManager.motionGroups).filter(group => group && group.trim() !== '');
-            this.motionGroups = Object.keys(this.model.internalModel.motionManager.motionGroups);
+      this.motionGroups = Object.keys(this.model.internalModel.motionManager.motionGroups);
 
       if (this.model.internalModel.motionManager.expressionManager) {
         this.expressions = this.model.internalModel.motionManager.expressionManager.definitions.map((def: any) => def.Name || def.name);
@@ -184,13 +207,9 @@ export class Live2dModelComponent implements AfterViewInit, OnChanges {
   public speak(audioUrl: string, options?: { volume?: number; crossOrigin?: string; focus?: boolean }): void {
     if (!this.model) return;
     
-    // Auto-focus on face if requested (default true)
     if (options?.focus !== false) {
       const transform = this.getFaceTransform();
       if (transform) {
-        this.onZoomChange(transform.zoom);
-        this.onXChange(transform.x);
-        this.onYChange(transform.y);
         this.viewStateChanged.emit(transform);
       }
     }
@@ -218,39 +237,112 @@ export class Live2dModelComponent implements AfterViewInit, OnChanges {
     }
   }
 
-  public onZoomChange(value: number): void {
-    if (this.model) {
-      const newScale = value / 100;
-      this.model.scale.set(newScale, newScale);
-    }
-  }
-
-  public onXChange(value: number): void {
-    if (this.model && this.app) {
-      // value is 0-100, transform to screen width percentage
-      const newX = (value / 100) * this.app.screen.width;
-      this.model.x = newX;
-    }
-  }
-
-  public onYChange(value: number): void {
-    if (this.model && this.app) {
-      // value is 0-100, transform to screen height percentage
-      const newY = (value / 100) * this.app.screen.height;
-      this.model.y = newY;
-    }
-  }
-
   public setExpression(expressionName: string): void {
     if (this.model) {
       this.model.expression(expressionName);
     }
   }
 
+  // Pointer drag event handlers
+  public onPointerDown(event: PointerEvent): void {
+    if (!this.model || !this.app) return;
+
+    this.isDragging = true;
+    this.dragStart.x = event.clientX;
+    this.dragStart.y = event.clientY;
+
+    this.dragStartModel.x = this.x();
+    this.dragStartModel.y = this.y();
+
+    const canvas = this.canvasRef.nativeElement;
+    canvas.setPointerCapture(event.pointerId);
+  }
+
+  public onPointerMove(event: PointerEvent): void {
+    if (!this.isDragging || !this.model || !this.app) return;
+
+    const dx = event.clientX - this.dragStart.x;
+    const dy = event.clientY - this.dragStart.y;
+
+    const canvasWidth = this.app.screen.width;
+    const canvasHeight = this.app.screen.height;
+
+    const dxPct = (dx / canvasWidth) * 100;
+    const dyPct = (dy / canvasHeight) * 100;
+
+    const newX = Math.round(this.dragStartModel.x + dxPct);
+    const newY = Math.round(this.dragStartModel.y + dyPct);
+
+    this.viewStateChanged.emit({
+      zoom: this.effectiveZoom(),
+      x: newX,
+      y: newY
+    });
+  }
+
+  public onPointerUp(event: PointerEvent): void {
+    if (this.isDragging) {
+      this.isDragging = false;
+      const canvas = this.canvasRef.nativeElement;
+      try {
+        canvas.releasePointerCapture(event.pointerId);
+      } catch (e) {
+        // Ignore
+      }
+    }
+  }
+
+  // Wheel scroll event handler for zoom centering on cursor
+  private onWheel(event: WheelEvent): void {
+    event.preventDefault();
+
+    if (!this.model || !this.app) return;
+
+    const zoomFactor = 1.05;
+    const currentZoom = this.effectiveZoom();
+    let targetZoom = currentZoom;
+
+    if (event.deltaY < 0) {
+      targetZoom = currentZoom * zoomFactor;
+    } else {
+      targetZoom = currentZoom / zoomFactor;
+    }
+
+    const roundedZoom = Math.max(1, Math.min(Math.round(targetZoom), 200));
+
+    // Get pointer coordinates relative to canvas bounding box
+    const rect = this.canvasRef.nativeElement.getBoundingClientRect();
+    const mouseX = event.clientX - rect.left;
+    const mouseY = event.clientY - rect.top;
+
+    const canvasWidth = this.app.screen.width;
+    const canvasHeight = this.app.screen.height;
+
+    // Convert current model position from percentages to pixels
+    const oldModelX = (this.x() / 100) * canvasWidth;
+    const oldModelY = (this.y() / 100) * canvasHeight;
+
+    const oldScale = Math.max(0.001, currentZoom / 100);
+    const newScale = roundedZoom / 100;
+
+    // Calculate new model position so that the point under the cursor remains unchanged
+    const newModelX = mouseX - (mouseX - oldModelX) * (newScale / oldScale);
+    const newModelY = mouseY - (mouseY - oldModelY) * (newScale / oldScale);
+
+    // Convert back to percentages
+    const newXPct = Math.round((newModelX / canvasWidth) * 100);
+    const newYPct = Math.round((newModelY / canvasHeight) * 100);
+
+    this.viewStateChanged.emit({
+      zoom: roundedZoom,
+      x: newXPct,
+      y: newYPct
+    });
+  }
+
   public getFaceTransform(): { zoom: number, x: number, y: number } | null {
     if (!this.model || !this.app) return null;
 
-    // Try to find a face hit area
     const hitAreas = this.model.internalModel?.settings?.hitAreas || [];
     const headHitArea = hitAreas.find((h: any) => 
       ['Head', 'Face', 'head', 'face'].some(name => (h.Name && h.Name.includes(name)) || (h.Id && h.Id.includes(name)))
@@ -267,7 +359,6 @@ export class Live2dModelComponent implements AfterViewInit, OnChanges {
     }
 
     if (!bounds) {
-      // Fallback: Use the top 30% of the model's local bounds
       const modelBounds = this.model.getLocalBounds();
       bounds = {
         x: modelBounds.x,
@@ -277,35 +368,24 @@ export class Live2dModelComponent implements AfterViewInit, OnChanges {
       };
     }
 
-    // Target: face height should be about 50% of screen height for a good "close up"
     const targetFaceHeight = this.app.screen.height * 0.6;
     const suggestedScale = targetFaceHeight / bounds.height;
-    
-    // We want the zoom value in percentage (1-100)
-    const zoomValue = Math.min(Math.round(suggestedScale * 100), 100);
+    const zoomValue = Math.min(Math.round(suggestedScale * 100), 200);
 
-    // Calculate the center of the face in local coordinates
     const faceCenterX = bounds.x + (bounds.width / 2);
     const faceCenterY = bounds.y + (bounds.height / 2);
 
-    // Get model's local bounds for anchor calculation
     const localBounds = this.model.getLocalBounds();
     const anchorX = 0.5;
     const anchorY = 0.5;
 
-    // Calculate how much we need to offset the model so the face center is at the target screen position
-    // Offset in screen pixels = (localPoint - localAnchorPoint) * globalScale
     const offsetX = (faceCenterX - (localBounds.x + localBounds.width * anchorX)) * suggestedScale;
     const offsetY = (faceCenterY - (localBounds.y + localBounds.height * anchorY)) * suggestedScale;
 
-    // Target screen position for model.x and model.y
-    // We want the face to be in the upper part of the screen, not exactly centered
-    // 0.35 is usually a good "head-slightly-below-top" position
     const verticalFocusPoint = 0.35; 
     const targetX = (this.app.screen.width / 2) - offsetX;
     const targetY = (this.app.screen.height * verticalFocusPoint) - offsetY;
 
-    // Convert to percentage values as used by the playground
     const xPct = (targetX / this.app.screen.width) * 100;
     const yPct = (targetY / this.app.screen.height) * 100;
 

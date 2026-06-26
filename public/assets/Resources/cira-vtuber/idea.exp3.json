@@ -1,0 +1,45 @@
+{
+	"Type": "Live2D Expression",
+	"Parameters": [
+		{
+			"Id": "Param17",
+			"Value": 1,
+			"Blend": "Add"
+		},
+		{
+			"Id": "ParamBrowRY",
+			"Value": 1,
+			"Blend": "Add"
+		},
+		{
+			"Id": "ParamBrowLY",
+			"Value": 0.83,
+			"Blend": "Add"
+		},
+		{
+			"Id": "ParamMouthForm",
+			"Value": 1,
+			"Blend": "Add"
+		},
+		{
+			"Id": "Param5",
+			"Value": 1,
+			"Blend": "Add"
+		},
+		{
+			"Id": "Param6",
+			"Value": 1,
+			"Blend": "Add"
+		},
+		{
+			"Id": "ParamAngleZ",
+			"Value": -16.705,
+			"Blend": "Add"
+		},
+		{
+			"Id": "ParamAngleY",
+			"Value": -30,
+			"Blend": "Add"
+		}
+	]
+}

@@ -1,1 +1,6 @@
-<canvas #canvas class="canvas-container"></canvas>
+<canvas #canvas
+        class="canvas-container"
+        (pointerdown)="onPointerDown($event)"
+        (pointermove)="onPointerMove($event)"
+        (pointerup)="onPointerUp($event)"
+        (pointercancel)="onPointerUp($event)"></canvas>

@@ -36,6 +36,7 @@ export class ModelInfoComponent {
 
   // UI state
   selectedTab = signal<string>('parameters');
+  searchQuery = signal<string>('');
   paramValues = signal<{ [key: string]: number }>({});
 
   // Computed values for table data
@@ -64,10 +65,11 @@ export class ModelInfoComponent {
   private getParametersTableData(): any[] {
     const modelParams = this.modelParametersSignal();
     const currentParamValues = this.paramValues();
+    const query = this.searchQuery().toLowerCase().trim();
 
     if (!modelParams) return [];
 
-    return modelParams.ids.map((id: string, index: number) => {
+    const data = modelParams.ids.map((id: string, index: number) => {
       return {
         id: id,
         index: index,
@@ -75,23 +77,35 @@ export class ModelInfoComponent {
         max: modelParams.maximumValues[index],
         default: modelParams.defaultValues[index],
         current: modelParams.currentValues[index],
-        value: currentParamValues[id] || modelParams.currentValues[index] || 0,
+        value: currentParamValues[id] !== undefined ? currentParamValues[id] : modelParams.currentValues[index] || 0,
       };
     });
+
+    if (query) {
+      return data.filter(param => param.id.toLowerCase().includes(query));
+    }
+    return data;
   }
 
   // Helper function to get parts data in a format suitable for display
   private getPartsTableData(): any[] {
     const modelParts = this.modelPartsSignal();
+    const query = this.searchQuery().toLowerCase().trim();
+
     if (!modelParts) return [];
 
-    return modelParts.ids.map((id: string, index: number) => {
+    const data = modelParts.ids.map((id: string, index: number) => {
       return {
         id: id,
         opacity: modelParts.opacities[index],
         parentIndex: modelParts.parentIndices[index],
       };
     });
+
+    if (query) {
+      return data.filter(part => part.id.toLowerCase().includes(query));
+    }
+    return data;
   }
 
   // Update parameter value and emit change event
