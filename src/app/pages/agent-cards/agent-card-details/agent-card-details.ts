@@ -2,14 +2,14 @@ import { Component, OnInit, effect, inject } from '@angular/core';
 
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { DcAgentCardConverseComponent, IAgentCard, ChatMonitorService } from '@dataclouder/ngx-agent-cards';
+import { DcAgentCardAvatarComponent, IAgentCard, ChatMonitorService } from '@dataclouder/ngx-agent-cards';
 
 @Component({
   selector: 'app-agent-card-details',
   templateUrl: './agent-card-details.html',
   styleUrls: ['./agent-card-details.scss'],
   standalone: true,
-  imports: [DcAgentCardConverseComponent],
+  imports: [DcAgentCardAvatarComponent],
 })
 export class AgentCardDetailsPage implements OnInit {
   private router = inject(Router);

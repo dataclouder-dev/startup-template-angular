@@ -14,12 +14,24 @@ export interface IGenericRelation {
 }
 
 export interface IGeneric {
-  _id: string;
-  id: string;
-  name?: string;
-  image?: FileStorageData;
-  description?: string;
-  type?: string;
-  relation?: IGenericRelation;
+  _id?: string;
+  id?: string;
+  name: string;
+  image: FileStorageData;
+  description: string;
+  type: string;
+  relation: IGenericRelation;
   auditable?: IAuditable;
 }
+
+export const emptyGeneric = (): IGeneric => ({
+  _id: '',
+  id: '',
+  name: '',
+  description: '',
+  image: {} as FileStorageData,
+  type: '',
+  relation: { id: '', name: '', description: '' },
+});
+
+

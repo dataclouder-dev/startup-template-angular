@@ -1,8 +1,8 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { IGeneric } from '../models/generics.model';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { form, FormField, required } from '@angular/forms/signals';
+import { emptyGeneric, IGeneric } from '../models/generics.model';
 import { GenericService } from '../generics.service';
-import { ReactiveFormsModule } from '@angular/forms';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { SelectModule } from 'primeng/select';
@@ -11,15 +11,15 @@ import { TextareaModule } from 'primeng/textarea';
 import { ChipModule } from 'primeng/chip';
 import { TooltipModule } from 'primeng/tooltip';
 import { AspectType, CropperComponentModal, ResolutionType, FileStorageData } from '@dataclouder/ngx-cloud-storage';
-
-import { EntityBaseFormComponent } from '@dataclouder/ngx-core';
+import { EntityBaseSignalFormComponent } from '@dataclouder/ngx-core';
 import { DialogModule } from 'primeng/dialog';
 import { GenericListComponent } from '../generic-list/generic-list.component';
 
 @Component({
   selector: 'app-source-form',
   imports: [
-    ReactiveFormsModule,
+    FormField,
+    FormsModule,
     CardModule,
     TextareaModule,
     ButtonModule,
@@ -35,22 +35,14 @@ import { GenericListComponent } from '../generic-list/generic-list.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
 })
-export class GenericFormComponent extends EntityBaseFormComponent<IGeneric> {
-  protected entityCommunicationService = inject(GenericService);
-  private fb = inject(FormBuilder);
+export class GenericFormComponent extends EntityBaseSignalFormComponent<IGeneric> {
+  protected override entityCommunicationService = inject(GenericService);
 
-  public form = this.fb.group({
-    name: ['', Validators.required],
-    description: [''],
-    image: [{} as FileStorageData],
-    type: [''],
-    relation: [{ id: '', name: '', description: '' }],
+  public entityForm = signal<IGeneric>(emptyGeneric());
+
+  public form = form(this.entityForm, s => {
+    required(s.name, { message: 'El nombre es obligatorio' });
   });
-
-  protected override patchForm(entity: IGeneric): void {
-    // NOTE: you may need to custom patchForm if contains arrays or custom logic.
-    this.form.patchValue(entity);
-  }
 
   public storageImgSettings = {
     path: `generics`,
@@ -82,7 +74,6 @@ export class GenericFormComponent extends EntityBaseFormComponent<IGeneric> {
     { id: 'Relation 3', name: 'relation3', description: 'Description with short description' },
   ];
 
-
   public addItemToList(event: any) {
     this.selectedPeople.push(event.value);
   }
@@ -93,7 +84,7 @@ export class GenericFormComponent extends EntityBaseFormComponent<IGeneric> {
   }
 
   public handleImageUpload(event: FileStorageData) {
-    this.form.patchValue({ image: event });
+    this.entityForm.update(m => ({ ...m, image: event }));
     this.save();
   }
 
@@ -112,10 +103,13 @@ export class GenericFormComponent extends EntityBaseFormComponent<IGeneric> {
 
   public handleRelationSelection(relation: IGeneric) {
     console.log(relation);
-
-    // this.genericForm.patchValue({ relation: relation });
+    this.entityForm.update(m => ({
+      ...m,
+      relation: { id: relation._id || relation.id || '', name: relation.name || '', description: relation.description || '' },
+    }));
     this.isDialogVisible = false;
     this.relationPopupSelector.push(relation);
     alert('Relation selected');
   }
 }
+

@@ -57,18 +57,27 @@ export enum {EntityName}Type {
 }
 
 export interface I{EntityName} {
-  _id: string;
-  id: string;
-  name?: string;
-  image?: FileStorageData;
-  description?: string;
-  type?: string;
+  _id?: string;
+  id?: string;
+  name: string;
+  image: FileStorageData;
+  description: string;
+  type: string;
   // TODO: add your entity-specific fields here
   auditable?: IAuditable;
 }
+
+export const empty{EntityName} = (): I{EntityName} => ({
+  _id: '',
+  id: '',
+  name: '',
+  description: '',
+  image: {} as FileStorageData,
+  type: '',
+});
 ```
 
-**Customization:** Add all domain-specific fields inside the interface.
+**Customization:** Add all domain-specific fields inside the interface and factory function (non-optional editable fields to ensure proper Signal Form typing).
 
 ---
 
@@ -363,11 +372,11 @@ export class {EntityName}DetailComponent implements OnInit {
 **File:** `src/app/pages/{entity-name}s/{entity-name}-form/{entity-name}-form.component.ts`
 
 ```typescript
-import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { I{EntityName} } from '../models/{entity-name}s.model';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { form, FormField, required } from '@angular/forms/signals';
+import { empty{EntityName}, I{EntityName} } from '../models/{entity-name}s.model';
 import { {EntityName}Service } from '../{entity-name}s.service';
-import { ReactiveFormsModule } from '@angular/forms';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { SelectModule } from 'primeng/select';
@@ -375,14 +384,15 @@ import { InputTextModule } from 'primeng/inputtext';
 import { TextareaModule } from 'primeng/textarea';
 import { TooltipModule } from 'primeng/tooltip';
 import { AspectType, CropperComponentModal, ResolutionType, FileStorageData } from '@dataclouder/ngx-cloud-storage';
-import { EntityBaseFormComponent } from '@dataclouder/ngx-core';
+import { EntityBaseSignalFormComponent } from '@dataclouder/ngx-core';
 import { DialogModule } from 'primeng/dialog';
 import { {EntityName}ListComponent } from '../{entity-name}-list/{entity-name}-list.component';
 
 @Component({
   selector: 'app-{entity-name}-form',
   imports: [
-    ReactiveFormsModule,
+    FormField,
+    FormsModule,
     CardModule,
     TextareaModule,
     ButtonModule,
@@ -397,21 +407,14 @@ import { {EntityName}ListComponent } from '../{entity-name}-list/{entity-name}-l
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
 })
-export class {EntityName}FormComponent extends EntityBaseFormComponent<I{EntityName}> implements OnInit {
-  protected entityCommunicationService = inject({EntityName}Service);
-  private fb = inject(FormBuilder);
+export class {EntityName}FormComponent extends EntityBaseSignalFormComponent<I{EntityName}> {
+  protected override entityCommunicationService = inject({EntityName}Service);
 
-  // TODO: adjust FormGroup fields to match your entity interface
-  public form = this.fb.group({
-    name: ['', Validators.required],
-    description: [''],
-    image: [{} as FileStorageData],
-    type: [''],
+  public entityForm = signal<I{EntityName}>(empty{EntityName}());
+
+  public form = form(this.entityForm, s => {
+    required(s.name, { message: 'Name is required' });
   });
-
-  protected override patchForm(entity: I{EntityName}): void {
-    this.form.patchValue(entity);
-  }
 
   public storageImgSettings = {
     path: `{entity-name}s`,
@@ -426,10 +429,8 @@ export class {EntityName}FormComponent extends EntityBaseFormComponent<I{EntityN
 
   public isDialogVisible = false;
 
-  async ngOnInit(): Promise<void> {}
-
   public handleImageUpload(event: FileStorageData) {
-    this.form.patchValue({ image: event });
+    this.entityForm.update(m => ({ ...m, image: event }));
     this.save();
   }
 
@@ -447,40 +448,48 @@ export class {EntityName}FormComponent extends EntityBaseFormComponent<I{EntityN
 
 <div class="max-w-[800px] mx-auto p-4">
   <p-card [header]="entityId() ? 'Edit {EntityName}' : 'New {EntityName}'">
-    <form [formGroup]="form">
-      <div class="flex gap-2.5">
+    <div class="flex gap-2.5">
+      <div class="mb-4">
+        <label class="block font-medium mb-1" pTooltip="Upload image after first save">Image</label>
+        <img width="218px" [src]="entityForm().image?.url || 'defaults/images/face-3.jpg'" alt="{entity-name} image" />
+        <dc-cropper-modal [imgStorageSettings]="storageImgSettings" (imageUploaded)="handleImageUpload($event)"></dc-cropper-modal>
+      </div>
+
+      <div class="w-full">
         <div class="mb-4">
-          <label class="block font-medium mb-1" pTooltip="Upload image after first save">Image</label>
-          <img width="218px" [src]="form.get('image')?.value?.url || 'defaults/images/face-3.jpg'" alt="{entity-name} image" />
-          <dc-cropper-modal [imgStorageSettings]="storageImgSettings" (imageUploaded)="handleImageUpload($event)"></dc-cropper-modal>
+          <label for="name" class="block font-medium mb-1">Name</label>
+          <input pInputText id="name" type="text" [formField]="form.name" placeholder="Enter name" class="w-full" />
         </div>
 
-        <div class="w-full">
-          <div class="mb-4">
-            <label for="name" class="block font-medium mb-1">Name</label>
-            <input pInputText id="name" type="text" formControlName="name" placeholder="Enter name" class="w-full" />
-          </div>
-
-          <div class="mb-4">
-            <label for="description" class="block font-medium mb-1">Description</label>
-            <textarea id="description" pTextarea formControlName="description" rows="5" class="w-full" placeholder="Enter description"> </textarea>
-          </div>
+        <div class="mb-4">
+          <label for="description" class="block font-medium mb-1">Description</label>
+          <textarea id="description" pTextarea [formField]="form.description" rows="5" class="w-full" placeholder="Enter description"> </textarea>
         </div>
       </div>
+    </div>
 
-      <div class="mb-4">
-        <label for="type" class="block font-medium mb-1">Type</label>
-        <p-select id="type" [options]="{entityName}Types" formControlName="type" optionLabel="label" optionValue="value" placeholder="Select a type" styleClass="w-full" />
-      </div>
+    <div class="mb-4">
+      <label for="type" class="block font-medium mb-1">Type</label>
+      <p-select
+        id="type"
+        [options]="{entityName}Types"
+        [ngModel]="entityForm().type"
+        (ngModelChange)="entityForm.update(m => ({ ...m, type: $event }))"
+        (onBlur)="form.type().markAsTouched()"
+        optionLabel="label"
+        optionValue="value"
+        placeholder="Select a type"
+        styleClass="w-full"
+      />
+    </div>
 
-      <!-- Optional: Search dialog to pick a related entity -->
-      <div class="mb-4">
-        <p-button (click)="isDialogVisible = true" label="Search relation" icon="pi pi-search" iconPos="right"></p-button>
-      </div>
-    </form>
+    <!-- Optional: Search dialog to pick a related entity -->
+    <div class="mb-4">
+      <p-button (click)="isDialogVisible = true" label="Search relation" icon="pi pi-search" iconPos="right"></p-button>
+    </div>
 
     <div class="flex justify-end mt-4">
-      <p-button (click)="save()" label="Save {EntityName}" [disabled]="!form.valid" icon="pi pi-check" iconPos="right"></p-button>
+      <p-button (click)="save()" label="Save {EntityName}" [disabled]="!isValid() || isSaving()" [loading]="isSaving()" icon="pi pi-check" iconPos="right"></p-button>
     </div>
 
     <p-dialog header="Search for relation" [(visible)]="isDialogVisible" [modal]="true" [style]="{ width: '50vw' }" draggable="false">
@@ -538,8 +547,8 @@ Use this table to do all name replacements. The example column shows the `Lesson
 After generating all files, verify:
 
 - [ ] All `{placeholder}` tokens have been replaced — zero remaining in any file
-- [ ] The model interface has the correct domain fields
-- [ ] `FormGroup` fields in the form component match the model interface
+- [ ] The model interface has the correct domain fields and `empty{EntityName}` factory
+- [ ] `entityForm` signal and `form` schema match the model interface
 - [ ] `storageImgSettings.path` uses the plural kebab-case entity name
 - [ ] The route is registered in `app.routes.ts`
 - [ ] The `selector` in each `@Component` uses `app-{entity-name}-*`
@@ -549,9 +558,10 @@ After generating all files, verify:
 
 ## Notes for the AI
 
-- The base classes (`EntityBaseListV2Component`, `EntityBaseFormComponent`, `EntityCommunicationService`) come from `@dataclouder/ngx-core` — do not reimplement their logic.
-- `EntityBaseFormComponent` provides `save()`, `entityId()`, and `patchForm()` lifecycle. Override `patchForm()` if the entity has nested arrays or custom patch logic.
+- The base classes (`EntityBaseListV2Component`, `EntityBaseSignalFormComponent`, `EntityCommunicationService`) come from `@dataclouder/ngx-core` — do not reimplement their logic.
+- `EntityBaseSignalFormComponent` provides `save()`, `entityId()`, `isValid()`, `isSaving()`, `isDirty()`, and `loadEntity()` lifecycle.
 - `EntityBaseListV2Component` provides `items()`, `isLoading()`, `totalRecords()`, `first()`, `rows()`, `viewType()`, `toggleView()`, `onNew()`, `onPageChange()`, `doAction()`, and `filterBarOptions`. Do not redeclare these.
 - The `doAction()` method in the list handles navigation to `edit/:id`, `details/:id`, and delete — this is wired in the base class automatically.
 - The `onlyView` input and `onSelect` output on the list component are used when embedding the list inside a dialog (the relation picker pattern in the form).
 - After scaffolding, run `ng build` or `ng serve` to verify no TypeScript errors before customizing the UI.
+

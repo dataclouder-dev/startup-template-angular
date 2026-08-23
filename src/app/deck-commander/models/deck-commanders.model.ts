@@ -19,12 +19,25 @@ export enum CommandType {
 export interface IDeckCommander {
   _id?: string;
   id?: string;
-  name?: string;
-  description?: string;
-  img?: string;
-  type?: CommandType;
-  command?: string;
-  action?: string;
-  emoji?: string;
+  name: string;
+  description: string;
+  img: string;
+  type: CommandType;
+  command: string;
+  action: string;
+  emoji: string;
   auditable?: IAuditable;
 }
+
+export const emptyDeckCommander = (): IDeckCommander => ({
+  _id: '',
+  id: '',
+  name: '',
+  description: '',
+  img: '',
+  type: CommandType.Button,
+  command: '',
+  action: '',
+  emoji: '',
+});
+

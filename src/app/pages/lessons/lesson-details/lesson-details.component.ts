@@ -45,8 +45,10 @@ export class LessonDetailsComponent implements OnInit {
       },
     ],
 
-    tts: {
-      voice: 'es-US-Chirp3-HD-algenib',
+    voice: {
+      main: {
+        voice: 'es-US-Chirp3-HD-algenib',
+      },
     },
   };
 

@@ -34,10 +34,12 @@ While List and Form are heavily abstracted, the Detail view is usually **manual*
 - **Pattern**: It uses `GenericService.findOne(id)` to fetch data and then you build the UI as needed.
 
 ### 4. The Form Component (`generic-form/`)
-Extends `EntityBaseFormComponent<IGeneric>`.
-- **Abstracted Save**: The `save()` logic is handled by the base class.
-- **Customizable**: You build the `FormGroup` manually to match your entity fields (Name, Description, Relations).
+Extends `EntityBaseSignalFormComponent<IGeneric>`.
+- **Signal Forms**: Built using `@angular/forms/signals` (`form()`, `required()`, `[formField]`).
+- **Abstracted Save**: The `save()` logic is handled by the base class with automatic `submit()` validation.
+- **Computed Signals**: `entityId()`, `isValid()`, `isSaving()` and `isDirty()` are provided reactively.
 - **Rich Integration**: Includes image uploading (with cropping) and a **Search Dialog** that reuses the `GenericListComponent` to pick related entities (a powerful "pick and choose" pattern).
+
 
 ---
 

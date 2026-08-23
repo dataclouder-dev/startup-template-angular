@@ -1,4 +1,4 @@
-@import 'src/theme/variables.scss';
+@use 'src/theme/variables.scss' as *;
 
 :host {
   --primary-glow: radial-gradient(circle, rgba(138, 43, 226, 0.15) 0%, rgba(0, 0, 0, 0) 70%);

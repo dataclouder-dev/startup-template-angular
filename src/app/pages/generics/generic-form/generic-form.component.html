@@ -2,75 +2,92 @@
 
 <div class="max-w-[800px] mx-auto p-4">
   <p-card [header]="entityId() ? 'Edit Generic' : 'New Generic'">
-    <form [formGroup]="form">
-      <div class="flex gap-2.5">
+    <div class="flex gap-2.5">
+      <div class="mb-4">
+        <label class="block font-medium mb-1" pTooltip="Image should be handle after upload">Subir imagen</label>
+        <img width="218px" [src]="entityForm().image?.url || 'defaults/images/face-3.jpg'" alt="generic image" />
+        <dc-cropper-modal [imgStorageSettings]="storageImgSettings" (imageUploaded)="handleImageUpload($event)"></dc-cropper-modal>
+      </div>
+
+      <div class="w-full">
         <div class="mb-4">
-          <label class="block font-medium mb-1" pTooltip="Image should be handle after upload">Subir imagen</label>
-          <img width="218px" [src]="form.get('image')?.value?.url || 'defaults/images/face-3.jpg'" alt="generic image" />
-          <dc-cropper-modal [imgStorageSettings]="storageImgSettings" (imageUploaded)="handleImageUpload($event)"></dc-cropper-modal>
+          <label for="name" class="block font-medium mb-1">Name</label>
+          <input pInputText id="name" type="text" [formField]="form.name" placeholder="Enter source name" class="w-full" />
         </div>
 
-        <div class="w-full">
-          <div class="mb-4">
-            <label for="name" class="block font-medium mb-1">Name</label>
-            <input pInputText id="name" type="text" formControlName="name" placeholder="Enter source name" class="w-full" />
-          </div>
-
-          <div class="mb-4">
-            <label for="description" class="block font-medium mb-1">Description</label>
-            <textarea id="description" pTextarea formControlName="description" rows="5" class="w-full" placeholder="Enter source content"> </textarea>
-          </div>
+        <div class="mb-4">
+          <label for="description" class="block font-medium mb-1">Description</label>
+          <textarea id="description" pTextarea [formField]="form.description" rows="5" class="w-full" placeholder="Enter source content"> </textarea>
         </div>
       </div>
+    </div>
 
-      <div class="mb-4">
-        <label for="type" class="block font-medium mb-1">Type</label>
-        <p-select id="type" [options]="genericTypes" formControlName="type" optionLabel="label" optionValue="value" placeholder="Select a type" styleClass="w-full" />
-      </div>
+    <div class="mb-4">
+      <label for="type" class="block font-medium mb-1">Type</label>
+      <p-select
+        id="type"
+        [options]="genericTypes"
+        [ngModel]="entityForm().type"
+        (ngModelChange)="entityForm.update(m => ({ ...m, type: $event }))"
+        (onBlur)="form.type().markAsTouched()"
+        optionLabel="label"
+        optionValue="value"
+        placeholder="Select a type"
+        styleClass="w-full"
+      />
+    </div>
 
-      <!-- Different is releation contains a whole object meanwhile type is only string -->
-      <div class="mb-4">
-        <label for="relation" class="block font-medium mb-1" pTooltip="One object attached to the form">Relation</label>
-        <p-select id="relation" [options]="relationObjects" formControlName="relation" optionLabel="name" placeholder="Select a relation" styleClass="w-full" />
-      </div>
+    <!-- Different is releation contains a whole object meanwhile type is only string -->
+    <div class="mb-4">
+      <label for="relation" class="block font-medium mb-1" pTooltip="One object attached to the form">Relation</label>
+      <p-select
+        id="relation"
+        [options]="relationObjects"
+        [ngModel]="entityForm().relation"
+        (ngModelChange)="entityForm.update(m => ({ ...m, relation: $event }))"
+        (onBlur)="form.relation().markAsTouched()"
+        optionLabel="name"
+        placeholder="Select a relation"
+        styleClass="w-full"
+      />
+    </div>
 
-      <div class="mb-4">
-        <label class="block font-medium mb-1" pTooltip="List of Objects handled by custom methods">Testimonials</label>
+    <div class="mb-4">
+      <label class="block font-medium mb-1" pTooltip="List of Objects handled by custom methods">Testimonials</label>
 
-        <p-select [options]="peopleOptions" [placeholder]="'Select a testimonial'" styleClass="w-full" (onChange)="addItemToList($event)">
-          <ng-template #selectedItem let-selectedOption>
-            @if(selectedOption) {
-            <div class="flex items-center gap-2">
-              <div>{{ selectedOption.name }}</div>
-            </div>
-            }
-          </ng-template>
-
-          <ng-template let-item #item>
-            <div class="flex gap-2">
-              <img [src]="item.image" class="w-[18px]" />
-              <div>{{ item?.name }}</div>
-            </div>
-          </ng-template>
-
-          <ng-template #dropdownicon>
-            <i class="pi pi-user-plus"></i>
-          </ng-template>
-        </p-select>
-
-        <div class="flex gap-2.5 mt-2.5">
-          @for(person of selectedPeople; track person.id) {
-          <p-chip [label]="person.name" [image]="person.image" alt="Avatar image" [removable]="true" (onRemove)="removeItemFromList(person)" />
+      <p-select [options]="peopleOptions" [placeholder]="'Select a testimonial'" styleClass="w-full" (onChange)="addItemToList($event)">
+        <ng-template #selectedItem let-selectedOption>
+          @if(selectedOption) {
+          <div class="flex items-center gap-2">
+            <div>{{ selectedOption.name }}</div>
+          </div>
           }
-        </div>
+        </ng-template>
+
+        <ng-template let-item #item>
+          <div class="flex gap-2">
+            <img [src]="item.image" class="w-[18px]" />
+            <div>{{ item?.name }}</div>
+          </div>
+        </ng-template>
+
+        <ng-template #dropdownicon>
+          <i class="pi pi-user-plus"></i>
+        </ng-template>
+      </p-select>
+
+      <div class="flex gap-2.5 mt-2.5">
+        @for(person of selectedPeople; track person.id) {
+        <p-chip [label]="person.name" [image]="person.image" alt="Avatar image" [removable]="true" (onRemove)="removeItemFromList(person)" />
+        }
       </div>
-      <div>
-        <p-button (click)="isDialogVisible = true" label="Search for relation" icon="pi pi-search" iconPos="right"> </p-button>
-      </div>
-    </form>
+    </div>
+    <div>
+      <p-button (click)="isDialogVisible = true" label="Search for relation" icon="pi pi-search" iconPos="right"> </p-button>
+    </div>
 
     <div class="flex justify-end mt-4">
-      <p-button (click)="save()" label="Save Generic" [disabled]="!form.valid" icon="pi pi-check" iconPos="right"> </p-button>
+      <p-button (click)="save()" label="Save Generic" [disabled]="!isValid() || isSaving()" [loading]="isSaving()" icon="pi pi-check" iconPos="right"> </p-button>
     </div>
 
     <div class="mt-4 flex gap-2.5 flex-wrap">
@@ -84,3 +101,4 @@
     </p-dialog>
   </p-card>
 </div>
+
