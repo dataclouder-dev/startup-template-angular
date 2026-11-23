@@ -1,38 +1,17 @@
-//  this is special step for my service over shepherd.js
-export const stepsIntro: any[] = [
+import type { TourStep } from '@dataclouder/ngx-tour';
+
+/**
+ * Recorrido guiado de ejemplo para Home usando `@dataclouder/ngx-tour` (driver.js).
+ * Ancla cada paso a un atributo `data-tour="<anchor>"` en la plantilla o déjalo sin ancla
+ * para un paso introductorio centrado.
+ */
+export const stepsIntro: TourStep[] = [
   {
-    id: 'intro',
-    attachTo: {
-      element: '#home-tab',
-      on: 'top' as const,
-    },
-    title: 'Welcome to the Test Page',
-    text: [
-      'This is a guided tour of the test page features.',
-      '<div class="tour-image-container"><img src="defaults/poli.webp" alt="Poli" style="max-width: 100%; height: auto;"></div>',
-    ],
-    audioPath: 'audio/start.mp3',
+    title: 'Welcome to Startup Template',
+    body: 'This is a guided tour powered by @dataclouder/ngx-tour (driver.js).',
   },
   {
-    id: 'dialog-button',
-    attachTo: {
-      element: '#swiper-1',
-      on: 'bottom' as const,
-    },
-    title: 'Show Dialog Button',
-    text: [
-      'Click this button to open a dialog with a generic list component.',
-      '<div class="tour-image-container"><img src="defaults/poliabajo.webp" alt="Yoga" style="max-width: 100%; height: auto;"></div>',
-    ],
-    audioPath: 'audio/intro2.mp3',
-  },
-  {
-    id: 'conclusion',
     title: 'Tour Complete',
-    text: [
-      'You have now seen all the main features of this page!',
-      '<div class="tour-image-container"><img src="defaults/poli1.webp" alt="Poli" style="max-width: 100%; height: auto;"></div>',
-    ],
-    audioPath: 'audio/intro3.mp3',
+    body: 'Add data-tour attributes to your UI elements and declare steps here to guide new users.',
   },
 ];

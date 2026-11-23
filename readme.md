@@ -15,16 +15,25 @@ This repository contains the ionic/angular template.
 Run these commands to get started quickly:
 
 ```bash
-# 1. Clone the repository (replace 'your-project-directory' with your desired directory name)
-git clone https://github.com/dataclouder-dev/startup-template-angular.git
+# 1. Clone the repository WITH submodules (includes libs/ngx-dataclouder)
+git clone --recurse-submodules https://github.com/dataclouder-dev/startup-template-angular.git
 
-# 2. Run the setup script will ask you for a name to rename the project.
+# If already cloned without submodules:
+git submodule update --init
+git -C libs/ngx-dataclouder checkout main
+
+# 2. Install dependencies (pnpm) and verify build
+pnpm install
+pnpm exec ng build
+
+# 3. Pull latest shared @dataclouder/ngx-* libraries
+pnpm run update:dc
+
+# 4. Run the setup script to rename the project
 node scripts/setup_project.js
-
-# 3. Deploy to Firebase
-make deploy
-
 ```
+
+> **Stack vigente (2026-11-22):** Angular `22.x`, TypeScript `6.x`, Ionic `8`, Capacitor `8`, PrimeNG `21` (`@primeuix/themes`), Tailwind `4`, `@dataclouder/ngx-*` desde submódulo `libs/ngx-dataclouder` (`adamofig/dataclouder-ngx-libs`) y tours en `@dataclouder/ngx-tour` (`driver.js`).
 
 Then understand architecture and install backend in the other repository.
 

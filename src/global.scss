@@ -1,4 +1,5 @@
-@use "./shepherd.scss";
+@use 'driver.js/dist/driver.css';
+@use '../libs/ngx-dataclouder/ngx-tour/src/styles/dc-tour';
 @use 'swiper/css/bundle';
 
 @use 'tailwindcss';

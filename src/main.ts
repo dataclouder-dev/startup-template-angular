@@ -21,7 +21,8 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AGENT_CARDS_STATE_SERVICE, DefaultAgentCardsService, IAgentCard, provideAgentCardService } from '@dataclouder/ngx-agent-cards';
 import { provideLessonsService, provideNotionService, DefaultLessonsService } from '@dataclouder/ngx-lessons';
 import { provideAuthConfig } from '@dataclouder/ngx-auth';
-import { HttpCoreService, provideToastAlert, APP_CONFIG, IAppConfig } from '@dataclouder/ngx-core';
+import { HttpCoreService, provideToastAlert, APP_CONFIG, IAppConfig, DC_ENTITY_ACTION_POLICY, IEntityAction } from '@dataclouder/ngx-core';
+import { provideDcTour } from '@dataclouder/ngx-tour';
 // Local
 import { ToastAlertService } from './app/services/toast.service';
 import { authInterceptor } from './app/services/interception.service';
@@ -48,6 +49,13 @@ fetch('/config.json')
         { provide: APP_CONFIG, useValue: config },
 
         { provide: UserService, useExisting: AppUserService },
+        {
+          provide: DC_ENTITY_ACTION_POLICY,
+          useFactory: () => {
+            const userService = inject(UserService);
+            return (action: IEntityAction) => (action.id === 'create' ? userService.isAdmin() : true);
+          },
+        },
 
         provideMasterState<IAgentCard>(AGENT_CARDS_STATE_SERVICE, {
           pathTable: 'agent-cards',
@@ -93,6 +101,10 @@ fetch('/config.json')
           },
         }),
         provideRouter(routes, withPreloading(PreloadAllModules)),
+        provideDcTour({
+          voiceStorageKey: 'template.tour.voice',
+          voiceByDefault: false,
+        }),
         provideHttpClient(withInterceptors([authInterceptor])),
         { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
         provideIonicAngular(),

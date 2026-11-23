@@ -8,7 +8,6 @@ import {
   AGENT_CARDS_STATE_SERVICE,
   IConversationFlow,
   ConversationEvents,
-  VideoPlayerService,
   VideoPlayerNativeService,
 } from '@dataclouder/ngx-agent-cards';
 import { ActivatedRoute } from '@angular/router';

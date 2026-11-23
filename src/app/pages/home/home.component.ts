@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ElementRef, inject, viewChild, effect, signal, OnInit } from '@angular/core'; // Import effect
+import { ChangeDetectionStrategy, Component, DestroyRef, ElementRef, inject, viewChild, effect, signal, OnInit } from '@angular/core'; // Import effect
 
 import { InputTextModule } from 'primeng/inputtext';
 
@@ -7,13 +7,13 @@ import Swiper from 'swiper';
 import { register } from 'swiper/element/bundle';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
-import { AudioTourService } from 'src/app/services/audio-tour.service';
+import { SectionTourService } from '@dataclouder/ngx-tour';
 import { stepsIntro } from './steps-tour-home';
 import { AgentCardService } from 'src/app/services/agent-card-service';
 import { AgentCardUI, IAgentCard } from '@dataclouder/ngx-agent-cards';
 import { ILesson } from '@dataclouder/ngx-lessons';
 import { DcLessonCardComponent, LESSONS_TOKEN } from '@dataclouder/ngx-lessons';
-import { TranslateDirective, TranslatePipe, TranslateService } from '@ngx-translate/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 
 // Define card interface for type safety
 interface CardItem {
@@ -27,7 +27,7 @@ register();
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [ButtonModule, InputTextModule, CardModule, DcLessonCardComponent, AgentCardUI, TranslatePipe, TranslateDirective],
+  imports: [ButtonModule, InputTextModule, CardModule, DcLessonCardComponent, AgentCardUI, TranslatePipe],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -35,7 +35,8 @@ register();
 })
 export class HomeComponent implements OnInit {
   // Services
-  private audioTourService = inject(AudioTourService);
+  private destroyRef = inject(DestroyRef);
+  private sectionTourService = inject(SectionTourService);
   private lessonsService = inject(LESSONS_TOKEN);
   private agentCardService = inject(AgentCardService);
   // Translate
@@ -100,8 +101,8 @@ export class HomeComponent implements OnInit {
   }
 
   public startTour(): void {
-    this.audioTourService.setupTour(stepsIntro);
-    this.audioTourService.startTour();
+    this.sectionTourService.registerTour({ title: 'Home', steps: stepsIntro }, this.destroyRef);
+    void this.sectionTourService.start();
   }
 
   swiperSlideChanged(e: any) {

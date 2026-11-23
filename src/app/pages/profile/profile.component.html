@@ -1,9 +1,12 @@
 <div class="form-container">
-  <app-profile-form [user]="userService.user()" [userForm]="userForm" (saveData)="saveData($event)"></app-profile-form>
+  @if (userService.user(); as user) {
+    <app-profile-form [user]="user" (saveData)="saveData($event)"></app-profile-form>
+  }
 
   <p-card>
     <dc-profile-settings-form
-      [settingsForm]="settingsForm"
+      [value]="settingsModel()"
+      (valueChange)="settingsModel.set($event)"
       [baseLanguagesOptions]="baseLanguagesOptions"
       [targetLanguagesOptions]="[]"
       [audioSpeedOptions]="audioSpeedOptions"

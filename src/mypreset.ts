@@ -1,8 +1,5 @@
-// import { definePreset } from '@primeng/themes';
-// import Aura from '@primeng/themes/aura';
 import { definePreset } from '@primeuix/themes';
-
-import Nora from '@primeng/themes/nora';
+import Nora from '@primeuix/themes/nora';
 
 // import Aura from '@primeuix/themes/aura';
 
