@@ -1,10 +1,8 @@
 import { Routes } from '@angular/router';
-import { AuthGuardService } from './services/auth-guard.service';
-import { redirectToIfAuth } from '@dataclouder/ngx-auth';
+import { redirectIfLocalJwtAuth } from '@dataclouder/ngx-auth';
 
 import { RouteNames } from './core/enums';
-import { authAndUserGuard } from '@dataclouder/ngx-users';
-import { ConversationRulesComponent } from '@dataclouder/ngx-agent-cards';
+import { adminOnlyGuard, localJwtUserGuard } from './services/local-jwt-user.guard';
 
 export const routes: Routes = [
   {
@@ -13,7 +11,7 @@ export const routes: Routes = [
       {
         path: '',
         loadComponent: () => import('./pages/landing/landing.component').then(m => m.LandingComponent),
-        canActivate: [redirectToIfAuth('page/home')],
+        canActivate: [redirectIfLocalJwtAuth('/page/home')],
       },
       {
         path: 'privacy-policy',
@@ -29,6 +27,7 @@ export const routes: Routes = [
       },
       {
         path: 'design-system',
+        canActivate: [localJwtUserGuard, adminOnlyGuard],
         loadComponent: () => import('./pages/design-system/design-system.component').then(m => m.DesignSystemComponent),
       },
     ],
@@ -45,18 +44,18 @@ export const routes: Routes = [
       {
         path: RouteNames.Signin,
         loadComponent: () => import('./login/login.page').then(m => m.LoginComponent),
-        canActivate: [redirectToIfAuth('page/home')],
+        canActivate: [redirectIfLocalJwtAuth('/page/home')],
       },
       {
         path: RouteNames.Signup,
         loadComponent: () => import('./login/signup.component').then(m => m.AppSignupComponent),
-        canActivate: [redirectToIfAuth('page/home')],
+        canActivate: [redirectIfLocalJwtAuth('/page/home')],
       },
     ],
   },
   {
     path: 'page',
-    canActivate: [authAndUserGuard],
+    canActivate: [localJwtUserGuard],
 
     loadComponent: () => import('./ionic-layout/ionic-layout.component').then(m => m.IonicLayoutComponent),
     children: [
@@ -67,6 +66,7 @@ export const routes: Routes = [
 
       {
         path: 'admin',
+        canActivate: [adminOnlyGuard],
         loadComponent: () => import('./pages/admin/admin').then(m => m.AdminComponent),
         children: [
           {
@@ -114,11 +114,13 @@ export const routes: Routes = [
 
       {
         path: 'generics',
+        canActivate: [adminOnlyGuard],
         loadChildren: () => import('./pages/generics/generics.component').then(m => m.GenericsComponent.routes),
       },
 
       {
         path: 'deck',
+        canActivate: [adminOnlyGuard],
 
         children: [
           {
@@ -146,10 +148,12 @@ export const routes: Routes = [
 
       {
         path: 'test',
+        canActivate: [adminOnlyGuard],
         loadComponent: () => import('./pages/test/test.component').then(m => m.TestComponent),
       },
       {
         path: 'ai-playground',
+        canActivate: [adminOnlyGuard],
         loadComponent: () => import('./pages/ai-playground/ai-playground.component').then(m => m.AiPlaygroundComponent),
       },
       {
@@ -179,6 +183,7 @@ export const routes: Routes = [
 
   {
     path: 'page/stack',
+    canActivate: [localJwtUserGuard],
 
     loadComponent: () => import('./ionic-layout/stack-ionic/stack-ionic.component').then(m => m.StackIonicComponent),
     children: [

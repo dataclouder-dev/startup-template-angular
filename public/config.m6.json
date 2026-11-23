@@ -7,6 +7,16 @@
   "backendNodeUrl": "https://template-node.dataclouder.dev",
   "backendPythonUrl": "",
   "aiServicesUrl": "https://ai-services.dataclouder.dev",
+  "auth": {
+    "provider": "local-jwt",
+    "googleClientId": "",
+    "googleTrustNote": "Acceso seguro con tu cuenta Dataclouder"
+  },
+  "analytics": {
+    "appId": "startup-template",
+    "metaPixelId": "",
+    "googleTagId": ""
+  },
   "mobile": {
     "appleAppId": "com.dc-template.app.dev",
     "appleRedirectURI": "https://dataclouder-dev.firebaseapp.com/__/auth/handler",

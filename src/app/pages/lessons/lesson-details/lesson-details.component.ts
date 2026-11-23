@@ -3,6 +3,7 @@ import { Component, OnInit, inject, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ChatRole, ConversationType, IConversationSettings, TextEngines } from '@dataclouder/ngx-agent-cards';
 import { DCLessonRendererComponent, ILesson, LESSONS_TOKEN, ILessonsSettings, LessonConversationService } from '@dataclouder/ngx-lessons';
+import { DcAnalyticsService } from '@dataclouder/ngx-analytics';
 
 @Component({
   selector: 'app-lesson-details',
@@ -16,6 +17,7 @@ export class LessonDetailsComponent implements OnInit {
   private lessonService = inject(LESSONS_TOKEN);
 
   private lessonConversationService = inject(LessonConversationService);
+  private analytics = inject(DcAnalyticsService);
 
   public lesson = signal<ILesson | undefined>(undefined);
   public lessonId: string = this.activatedRoute.snapshot.paramMap.get('id')!;
@@ -54,6 +56,7 @@ export class LessonDetailsComponent implements OnInit {
 
   // Implementation will go here
   async ngOnInit(): Promise<void> {
+    this.analytics.track('lesson_start', { lessonId: this.lessonId });
     this.lesson.set(await this.lessonService.getLesson(this.lessonId));
     this.lessonConversationService.conversationSettings.set(this.conversationSettings);
   }

@@ -7,6 +7,16 @@
   "backendNodeUrl": "http://localhost:7991",
   "backendPythonUrl": "http://192.168.2.3:8000",
   "aiServicesUrl": "http://localhost:3330",
+  "auth": {
+    "provider": "local-jwt",
+    "googleClientId": "",
+    "googleTrustNote": "Acceso seguro con tu cuenta Dataclouder"
+  },
+  "analytics": {
+    "appId": "startup-template",
+    "metaPixelId": "",
+    "googleTagId": ""
+  },
   "mobile": {
     "appleAppId": "com.dc-template.app.dev",
     "appleRedirectURI": "https://dataclouder-dev.firebaseapp.com/__/auth/handler",

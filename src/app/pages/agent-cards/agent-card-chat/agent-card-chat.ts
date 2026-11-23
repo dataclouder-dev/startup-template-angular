@@ -16,6 +16,7 @@ import { CONVERSATION_AI_TOKEN } from '@dataclouder/ngx-agent-cards';
 import { TOAST_ALERTS_TOKEN } from '@dataclouder/ngx-core';
 import { UserService } from '@dataclouder/ngx-users';
 import { ConceptStatus, ILearningUserState, KnowledgeLearningSystemService } from '@dataclouder/ngx-knowledge';
+import { DcAnalyticsService } from '@dataclouder/ngx-analytics';
 
 @Component({
   selector: 'app-agent-card-chat',
@@ -34,6 +35,7 @@ export class AgentCardChatComponent implements OnInit, OnDestroy {
   private knowledgeLearningSystemService = inject(KnowledgeLearningSystemService);
   private agentCardsMasterStateService = inject(AGENT_CARDS_STATE_SERVICE);
   private videoPlayerService = inject(VideoPlayerNativeService);
+  private analytics = inject(DcAnalyticsService);
 
   public isVideoAvailable = false;
 
@@ -134,6 +136,7 @@ Keep the total response concise (under 200 words) and use markdown headers and b
       }
 
       if (this.agentCard) {
+        this.analytics.track('roleplay_start', { agentCardId: this.agentCard.id });
         this.isVideoAvailable = !!this.agentCard.assets?.motion?.url && (this.agentCard.assets?.motions?.length || 0) > 0;
         if (this.isVideoAvailable) {
           this.videoPlayerService.setAgentCard(this.agentCard);

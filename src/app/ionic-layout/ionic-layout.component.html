@@ -16,7 +16,7 @@
           }
 
           <!-- Admin Section -->
-          @if (isAdmin) {
+          @if (userService.isAdmin()) {
           <ion-list-header>Admin Section</ion-list-header>
           @for (p of adminPages; track p; let i = $index) {
           <ion-menu-toggle auto-hide="false">

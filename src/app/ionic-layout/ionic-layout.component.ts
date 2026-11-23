@@ -27,7 +27,7 @@ import {
 } from '@ionic/angular/standalone';
 import * as ionicons from 'ionicons/icons'; // import all icons
 
-import { FirebaseAuthService } from '@dataclouder/ngx-auth';
+import { LocalJwtAuthService, PlanIconPipe } from '@dataclouder/ngx-auth';
 import { ToggleButtonModule } from 'primeng/togglebutton';
 import { FormsModule } from '@angular/forms';
 import { addIcons } from 'ionicons';
@@ -35,7 +35,6 @@ import { AppUserService } from 'src/app/services/app-user.service';
 import { PwaInstallComponent } from '../components/pwa-install/pwa-install.component';
 import { APP_CONFIG } from '@dataclouder/ngx-core';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
-import { PlanIconPipe } from '@dataclouder/ngx-auth';
 
 @Component({
   selector: 'app-ionic-layout',
@@ -76,7 +75,7 @@ import { PlanIconPipe } from '@dataclouder/ngx-auth';
   ],
 })
 export class IonicLayoutComponent implements OnInit {
-  private firebaseAuthService = inject(FirebaseAuthService);
+  private localJwtAuthService = inject(LocalJwtAuthService);
   private router = inject(Router);
   private actionSheetController = inject(ActionSheetController);
   private menuController = inject(MenuController);
@@ -94,8 +93,6 @@ export class IonicLayoutComponent implements OnInit {
     { title: 'Home', url: '/page/home', icon: 'home' },
     { title: 'Lessons', url: '/page/lessons', icon: 'eye' },
     { title: 'Agents Conversation', url: '/page/agents', icon: 'chatbubble-ellipses' },
-    { title: 'Generics', url: '/page/generics', icon: 'code-working' },
-    { title: 'Test', url: '/page/test', icon: 'code-working' },
     { title: 'Profile', url: '/page/stack/profile', icon: 'person' },
   ];
 
@@ -103,6 +100,10 @@ export class IonicLayoutComponent implements OnInit {
     { title: 'Admin Users', url: '/page/admin/users', icon: 'people' },
     { title: 'Admin Other', url: '/page/admin', icon: 'settings' },
     { title: 'Agent Rules', url: '/page/admin/agent-rules', icon: 'receipt' },
+    { title: 'Generics', url: '/page/generics', icon: 'code-working' },
+    { title: 'Test', url: '/page/test', icon: 'flask' },
+    { title: 'AI Playground', url: '/page/ai-playground', icon: 'sparkles' },
+    { title: 'Design System', url: '/design-system', icon: 'color-palette' },
   ];
 
   public testingPages = [{ title: 'Test', url: '/page/test', icon: 'code-working' }];
@@ -123,10 +124,10 @@ export class IonicLayoutComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  logout() {
-    console.log('logout');
+  async logout() {
     this.userService.clearUser();
-    this.firebaseAuthService.logOut('/');
+    await this.localJwtAuthService.logout(false);
+    await this.router.navigateByUrl('/');
   }
 
   navigateTo(path: string) {

@@ -1,49 +1,52 @@
 import { bootstrapApplication } from '@angular/platform-browser';
-import { importProvidersFrom, provideZoneChangeDetection, isDevMode, ApplicationConfig, APP_INITIALIZER, inject, provideAppInitializer } from '@angular/core';
+import { isDevMode, inject, provideAppInitializer } from '@angular/core';
 import { RouteReuseStrategy, provideRouter, withPreloading, PreloadAllModules } from '@angular/router';
-import { HttpClient, provideHttpClient, withInterceptors, withInterceptorsFromDi } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-// Firebase
-import { provideStorage, getStorage } from '@angular/fire/storage';
-import { getApp, initializeApp, provideFirebaseApp } from '@angular/fire/app';
-import { provideAuth, getAuth, initializeAuth, indexedDBLocalPersistence } from '@angular/fire/auth';
-import { FIREBASE_OPTIONS } from '@angular/fire/compat';
 // Ionic
 import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular/standalone';
-import { Capacitor } from '@capacitor/core';
 // PrimeNG
 import { DialogService } from 'primeng/dynamicdialog';
 import { providePrimeNG } from 'primeng/config';
+import { MessageService } from 'primeng/api';
 // Third Party
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
+import { provideTranslateService } from '@ngx-translate/core';
+import { provideServiceWorker } from '@angular/service-worker';
+import { provideMarkdown } from 'ngx-markdown';
 // DC Libs
 import { AGENT_CARDS_STATE_SERVICE, DefaultAgentCardsService, IAgentCard, provideAgentCardService } from '@dataclouder/ngx-agent-cards';
 import { provideLessonsService, provideNotionService, DefaultLessonsService } from '@dataclouder/ngx-lessons';
-import { provideAuthConfig } from '@dataclouder/ngx-auth';
+import { localJwtAuthInterceptor, provideLocalJwtAuth } from '@dataclouder/ngx-auth';
+import { provideDcAnalytics } from '@dataclouder/ngx-analytics';
 import { HttpCoreService, provideToastAlert, APP_CONFIG, IAppConfig, DC_ENTITY_ACTION_POLICY, IEntityAction } from '@dataclouder/ngx-core';
 import { provideDcTour } from '@dataclouder/ngx-tour';
+import { provideMasterState } from '@dataclouder/ngx-knowledge';
+import { UserService } from '@dataclouder/ngx-users';
 // Local
 import { ToastAlertService } from './app/services/toast.service';
-import { authInterceptor } from './app/services/interception.service';
 import { MyPreset } from './mypreset';
 import { routes } from './app/app.routes';
 import { AppComponent } from './app/app.component';
 import { NotionService } from './app/services/notion.service';
-
-import { provideServiceWorker } from '@angular/service-worker';
-import { provideMarkdown } from 'ngx-markdown';
-import { provideMasterState } from '@dataclouder/ngx-knowledge';
 import { AppUserService } from './app/services/app-user.service';
-import { UserService } from '@dataclouder/ngx-users';
 
-import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
-import { provideTranslateService } from '@ngx-translate/core';
-import { MessageService } from 'primeng/api';
+interface TemplateAppConfig extends IAppConfig {
+  auth?: {
+    provider?: 'local-jwt' | 'firebase';
+    googleClientId?: string;
+    googleTrustNote?: string;
+  };
+  analytics?: {
+    appId?: string;
+    metaPixelId?: string;
+    googleTagId?: string;
+  };
+}
 
 fetch('/config.json')
   .then(response => response.json())
-  .then((config: IAppConfig) => {
+  .then((config: TemplateAppConfig) => {
     bootstrapApplication(AppComponent, {
       providers: [
         { provide: APP_CONFIG, useValue: config },
@@ -72,15 +75,6 @@ fetch('/config.json')
           lang: 'en',
         }),
 
-        // provideTranslateService({
-        //   loader: provideTranslateHttpLoader({
-        //     prefix: '/i18n/',
-        //     suffix: '.json',
-        //   }),
-
-        //   defaultLanguage: 'en',
-        // }),
-
         provideAppInitializer(() => {
           const httpCore = inject(HttpCoreService);
           httpCore.setConfig({
@@ -105,43 +99,31 @@ fetch('/config.json')
           voiceStorageKey: 'template.tour.voice',
           voiceByDefault: false,
         }),
-        provideHttpClient(withInterceptors([authInterceptor])),
+        provideHttpClient(withInterceptors([localJwtAuthInterceptor])),
+        ...provideLocalJwtAuth({
+          apiBaseUrl: config.backendNodeUrl,
+          googleClientId: config.auth?.googleClientId || '',
+          googleTrustNote: config.auth?.googleTrustNote || 'Acceso seguro con tu cuenta Dataclouder',
+          loginRoute: '/auth/signin',
+          afterLoginRoute: '/page/home',
+          withCredentials: true,
+        }),
+        provideDcAnalytics({
+          apiBaseUrl: config.backendNodeUrl,
+          appId: config.analytics?.appId || 'startup-template',
+          metaPixelId: config.analytics?.metaPixelId,
+          googleTagId: config.analytics?.googleTagId,
+          autoPageViews: false,
+        }),
         { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
         provideIonicAngular(),
         provideMarkdown(),
-        // 🔥 Firebase
-
-        { provide: FIREBASE_OPTIONS, useValue: config.firebase },
-        provideFirebaseApp(() => initializeApp(config.firebase)),
-        provideStorage(() => getStorage()),
-        provideAuth(() => {
-          if (Capacitor.isNativePlatform()) {
-            return initializeAuth(getApp(), {
-              persistence: indexedDBLocalPersistence,
-            });
-          } else {
-            return getAuth();
-          }
-        }),
         DialogService,
         MessageService,
 
         provideToastAlert(ToastAlertService),
         provideNotionService(NotionService),
         provideAgentCardService(DefaultAgentCardsService),
-        provideAuthConfig({
-          clientIds: {
-            androidClientId: config.mobile.androidClientId,
-            webClientId: config.mobile.iosClientId,
-            iosClientId: config.mobile.iosClientId,
-          },
-          settings: {
-            loginRedirectUri: '/auth/signin',
-            signupRedirectUri: '/auth/signup',
-            afterLoginRedirectUri: '/',
-            appleRedirectURI: config.mobile.appleRedirectURI,
-          },
-        }),
 
         provideServiceWorker('ngsw-worker.js', {
           enabled: !isDevMode(),
