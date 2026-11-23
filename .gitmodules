@@ -1,4 +1,4 @@
 [submodule "libs/ngx-dataclouder"]
 	path = libs/ngx-dataclouder
-	url = https://github.com/adamofig/dataclouder-ngx-libs.git
+	url = ../../adamofig/dataclouder-ngx-libs.git
 	branch = main

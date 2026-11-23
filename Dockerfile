@@ -1,40 +1,47 @@
 # Stage 1: Build the Angular application
-FROM node:22-alpine AS builder
+FROM node:22-slim AS builder
 LABEL stage="builder"
-
-# Pass version and git hash as build arguments
-ARG VERSION=unknown
-ARG GIT_HASH=unknown
 
 WORKDIR /app
 
-# Copy package files and install dependencies
-# Using --legacy-peer-deps as your project might have peer dependency conflicts
-COPY package.json package-lock.json* ./
-RUN npm install -g pnpm && pnpm i
+ENV NODE_OPTIONS=--max-old-space-size=4096
+ENV PNPM_HOME=/pnpm
+ENV PATH=$PNPM_HOME:$PATH
+ENV PNPM_CONFIG_STRICT_DEP_BUILDS=false
+ENV PNPM_CONFIG_VERIFY_DEPS_BEFORE_RUN=false
 
-# Copy the rest of the application source code
+RUN corepack enable && corepack prepare pnpm@10.15.0 --activate
+
+# Copy package files and install dependencies
+COPY package.json pnpm-lock.yaml ./
+RUN --mount=type=cache,id=pnpm-store,target=/pnpm/store \
+    pnpm config set store-dir /pnpm/store && \
+    pnpm install --frozen-lockfile --prefer-offline
+
+# Copy the rest of the application source code (including libs/ngx-dataclouder submodule)
 COPY . .
 
-# Build the application for production
-# Assumes output is in /app/dist/polilan (check angular.json if different)
-RUN pnpm run build:prod
+# Overwrite the default config.json with the chosen config file
+ARG CONFIG_FILE=config.m6.json
+RUN cp public/${CONFIG_FILE} public/config.json
+
+# Build the application for production (run ng directly to skip prebuild's version-patch step)
+RUN pnpm exec ng build -c production
+
+# Pre-compress static assets so nginx can serve them with gzip_static
+RUN find /app/www/browser -type f \
+      \( -name "*.js" -o -name "*.css" -o -name "*.html" -o -name "*.svg" \
+         -o -name "*.json" -o -name "*.txt" -o -name "*.ico" -o -name "*.map" \) \
+      -size +256c \
+      -exec gzip -9 -k {} \;
 
 # Stage 2: Serve the application with Nginx
-FROM nginx:1.27-alpine AS runner
+FROM nginx:1.27-alpine-slim AS runner
 LABEL stage="runner"
-LABEL version=${VERSION}
-LABEL git_hash=${GIT_HASH}
 
-# Copy the built application from the builder stage to Nginx's webroot
-# Adjust '/app/dist/polilan' if your angular.json outputPath is different
 COPY --from=builder /app/www/browser /usr/share/nginx/html
-
-# Copy the custom Nginx configuration
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Expose port 80 (Nginx default port)
 EXPOSE 80
 
-# Start Nginx when the container launches
 CMD ["nginx", "-g", "daemon off;"]
