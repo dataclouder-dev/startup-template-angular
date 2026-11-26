@@ -26,6 +26,7 @@ import {
 } from 'ionicons/icons';
 
 import { ToastModule } from 'primeng/toast';
+import { AppUpdateService } from './services/app-update.service';
 
 @Component({
   selector: 'app-root',
@@ -36,11 +37,13 @@ import { ToastModule } from 'primeng/toast';
 })
 export class AppComponent {
   private router = inject(Router);
+  private appUpdateService = inject(AppUpdateService);
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[]);
 
   constructor() {
+    this.appUpdateService.init();
     addIcons({
       mailOutline,
       mailSharp,
