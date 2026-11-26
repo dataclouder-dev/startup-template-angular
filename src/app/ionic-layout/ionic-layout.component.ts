@@ -93,12 +93,13 @@ export class IonicLayoutComponent implements OnInit {
     { title: 'Home', url: '/page/home', icon: 'home' },
     { title: 'Lessons', url: '/page/lessons', icon: 'eye' },
     { title: 'Agents Conversation', url: '/page/agents', icon: 'chatbubble-ellipses' },
+    { title: 'Suscripción', url: '/page/billing', icon: 'card' },
     { title: 'Profile', url: '/page/stack/profile', icon: 'person' },
   ];
 
   public adminPages = [
+    { title: 'Planes y Precios', url: '/page/admin/pricing', icon: 'pricetag' },
     { title: 'Admin Users', url: '/page/admin/users', icon: 'people' },
-    { title: 'Admin Other', url: '/page/admin', icon: 'settings' },
     { title: 'Agent Rules', url: '/page/admin/agent-rules', icon: 'receipt' },
     { title: 'Generics', url: '/page/generics', icon: 'code-working' },
     { title: 'Test', url: '/page/test', icon: 'flask' },
@@ -107,8 +108,6 @@ export class IonicLayoutComponent implements OnInit {
   ];
 
   public testingPages = [{ title: 'Test', url: '/page/test', icon: 'code-working' }];
-
-  public isAdmin: boolean = this.userService.isAdmin();
 
   // Add this property to track dark mode state
   public isDarkMode: boolean = false;

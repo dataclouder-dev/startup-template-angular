@@ -1,4 +1,6 @@
-import { Component, inject, signal } from '@angular/core';
+import { DatePipe } from '@angular/common';
+import { Component, computed, inject, signal } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import {
@@ -9,7 +11,9 @@ import {
 } from '@dataclouder/ngx-users';
 import { AudioSpeed, TOAST_ALERTS_TOKEN } from '@dataclouder/ngx-core';
 import { AppUserService } from 'src/app/services/app-user.service';
+import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
+import { TagModule } from 'primeng/tag';
 import { DCConversationUserChatSettingsComponent } from '@dataclouder/ngx-agent-cards';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -31,10 +35,14 @@ export const AudioSpeedOptions = [
   styleUrls: ['./profile.component.scss'],
   standalone: true,
   imports: [
+    DatePipe,
+    RouterLink,
     IonicModule,
     ProfileFormComponent,
     ProfileSettingsFormComponent,
+    ButtonModule,
     CardModule,
+    TagModule,
     DCConversationUserChatSettingsComponent,
     TranslateModule,
   ],
@@ -45,6 +53,13 @@ export class ProfileComponent {
   public hiddenFields = { targetLanguage: true };
   public audioSpeedOptions = AudioSpeedOptions;
   public baseLanguagesOptions = BaseLanguagesOptions;
+
+  public planExpirationDate = computed<Date | null>(() => {
+    const rawExp = this.userService.user()?.claims?.plan?.exp;
+    if (!rawExp) return null;
+    const parsed = new Date(rawExp);
+    return Number.isFinite(parsed.getTime()) ? parsed : null;
+  });
 
   public settingsModel = signal<ProfileSettingsValue>({
     ...emptyProfileSettings(),

@@ -20,6 +20,7 @@ import { provideLessonsService, provideNotionService, DefaultLessonsService } fr
 import { localJwtAuthInterceptor, provideLocalJwtAuth } from '@dataclouder/ngx-auth';
 import { provideDcAnalytics } from '@dataclouder/ngx-analytics';
 import { HttpCoreService, provideToastAlert, APP_CONFIG, IAppConfig, DC_ENTITY_ACTION_POLICY, IEntityAction } from '@dataclouder/ngx-core';
+import { DC_PRICING_ADMIN_CONFIG } from '@dataclouder/ngx-payment';
 import { provideDcTour } from '@dataclouder/ngx-tour';
 import { provideMasterState } from '@dataclouder/ngx-knowledge';
 import { UserService } from '@dataclouder/ngx-users';
@@ -53,10 +54,20 @@ fetch('/config.json')
 
         { provide: UserService, useExisting: AppUserService },
         {
+          provide: DC_PRICING_ADMIN_CONFIG,
+          useValue: {
+            chargeCurrency: 'mxn',
+            draftDefaults: { months: 1, priceMXN: 199, priceUSD: 10 },
+          },
+        },
+        {
           provide: DC_ENTITY_ACTION_POLICY,
           useFactory: () => {
             const userService = inject(UserService);
-            return (action: IEntityAction) => (action.id === 'create' ? userService.isAdmin() : true);
+            return (action: IEntityAction) =>
+              action.id === 'create' || action.id === 'edit' || action.id === 'delete'
+                ? userService.isAdmin()
+                : true;
           },
         },
 

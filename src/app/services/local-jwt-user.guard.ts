@@ -1,6 +1,7 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router, UrlTree } from '@angular/router';
 import { LocalJwtAuthService } from '@dataclouder/ngx-auth';
+import { TOAST_ALERTS_TOKEN } from '@dataclouder/ngx-core';
 import { UserService } from '@dataclouder/ngx-users';
 
 /**
@@ -39,5 +40,13 @@ export const localJwtUserGuard: CanActivateFn = async (): Promise<boolean | UrlT
 export const adminOnlyGuard: CanActivateFn = (): boolean | UrlTree => {
   const userService = inject(UserService);
   const router = inject(Router);
-  return userService.isAdmin() ? true : router.parseUrl('/page/home');
+  const toastService = inject(TOAST_ALERTS_TOKEN);
+  if (!userService.isAdmin()) {
+    toastService.warn({
+      title: 'Acceso restringido',
+      subtitle: 'Solo un administrador puede acceder a esta sección.',
+    });
+    return router.parseUrl('/page/home');
+  }
+  return true;
 };

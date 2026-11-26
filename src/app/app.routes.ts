@@ -65,17 +65,28 @@ export const routes: Routes = [
       },
 
       {
+        path: 'billing',
+        loadComponent: () => import('./pages/billing/billing.component').then(m => m.BillingComponent),
+      },
+
+      {
         path: 'admin',
         canActivate: [adminOnlyGuard],
         loadComponent: () => import('./pages/admin/admin').then(m => m.AdminComponent),
         children: [
           {
             path: '',
-            loadComponent: () => import('./pages/admin/admin').then(m => m.AdminComponent),
+            redirectTo: 'pricing',
+            pathMatch: 'full',
           },
           {
             path: 'users',
             loadComponent: () => import('@dataclouder/ngx-users').then(m => m.AdminUserComponent),
+          },
+
+          {
+            path: 'pricing',
+            loadChildren: () => import('@dataclouder/ngx-payment').then(m => m.ADMIN_PRICING_ROUTES),
           },
 
           {
